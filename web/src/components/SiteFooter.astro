@@ -1,0 +1,107 @@
+---
+import type {SiteSettings} from '../lib/types'
+import {DEFAULT_LOCALE, localizePath, type SiteLocale} from '../lib/i18n'
+import {SITE_LOGO, STITCH_SOCIAL_LINKS} from '../lib/stitch-design'
+import {getFooterCopy, getUiStrings} from '../lib/ui-strings'
+
+interface Props {
+  siteSettings: SiteSettings
+  locale?: SiteLocale
+}
+
+const {siteSettings, locale = DEFAULT_LOCALE} = Astro.props
+const footer = getFooterCopy(locale)
+const ui = getUiStrings(locale)
+const homePath = localizePath('/', locale)
+const year = new Date().getFullYear()
+---
+
+<footer class="w-full border-t border-white/10 bg-primary px-margin-container py-section-mobile text-white md:py-section-desktop">
+  <div class="mx-auto grid max-w-7xl grid-cols-1 gap-gutter px-margin-container md:grid-cols-4">
+    <div class="space-y-6">
+      <img alt={siteSettings.siteName} class="h-10 w-auto" src={SITE_LOGO} />
+      <p class="text-sm leading-relaxed text-white/70">{footer.tagline}</p>
+    </div>
+    <div>
+      <h5 class="mb-6 text-label-md font-bold uppercase tracking-widest text-secondary">
+        {footer.navigationTitle}
+      </h5>
+      <ul class="space-y-3">
+        {
+          footer.navLinks.map((link) => (
+            <li>
+              <a
+                class="text-sm text-white/80 transition-colors hover:text-secondary"
+                href={link.href.startsWith('#') ? `${homePath}${link.href.slice(1)}` : link.href}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div>
+      <h5 class="mb-6 text-label-md font-bold uppercase tracking-widest text-secondary">
+        {footer.socialTitle}
+      </h5>
+      <ul class="space-y-3">
+        {
+          STITCH_SOCIAL_LINKS.map((link) => (
+            <li>
+              <a
+                class="text-sm text-white/80 transition-colors hover:text-secondary"
+                href={link.href}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div>
+      <h5 class="mb-6 text-label-md font-bold uppercase tracking-widest text-secondary">
+        {footer.contactTitle}
+      </h5>
+      <p class="mb-2 text-sm text-white/80">{siteSettings.contactAddress}</p>
+      <p class="mb-2 text-sm text-white/80">
+        <a
+          class="transition-colors hover:text-secondary"
+          href={`mailto:${siteSettings.contactEmail}`}
+        >
+          {siteSettings.contactEmail}
+        </a>
+      </p>
+      {
+        siteSettings.contactPhone ? (
+          <p class="mb-4 text-sm text-white/80">
+            <a
+              class="transition-colors hover:text-secondary"
+              href={`tel:${siteSettings.contactPhone.replace(/\s/g, '')}`}
+            >
+              {siteSettings.contactPhone}
+            </a>
+          </p>
+        ) : null
+      }
+      <p class="text-xs text-white/60">{ui.footerRemote}</p>
+    </div>
+  </div>
+  <div class="mx-auto mt-12 flex max-w-7xl flex-col items-center justify-between gap-4 border-t border-white/10 px-margin-container pt-8 md:flex-row">
+    <p class="text-xs text-white/60">
+      © {year} {siteSettings.siteName}. {footer.rights}
+    </p>
+    <div class="flex gap-6 text-xs text-white/60">
+      {
+        footer.legalLinks.map((link) => (
+          <a class="hover:text-secondary" href={link.href}>
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</footer>

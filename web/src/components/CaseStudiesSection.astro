@@ -1,0 +1,32 @@
+---
+import {DEFAULT_LOCALE, type SiteLocale} from '../lib/i18n'
+import type {CaseStudy} from '../lib/types'
+import {getUiStrings} from '../lib/ui-strings'
+import CaseStudyCard from './CaseStudyCard.astro'
+
+interface Props {
+  caseStudies: CaseStudy[]
+  locale?: SiteLocale
+}
+
+const {caseStudies, locale = DEFAULT_LOCALE} = Astro.props
+const ui = getUiStrings(locale)
+---
+
+<section class="bg-surface-bright px-margin-container py-section-mobile md:py-section-desktop" id="cases">
+  <div class="mx-auto max-w-7xl">
+    <div class="scroll-reveal mb-12 text-center md:text-left">
+      <h2 class="mb-4 text-headline-lg text-primary">{ui.caseStudiesTitle}</h2>
+      <p class="mx-auto max-w-2xl text-on-surface-variant md:mx-0">
+        {ui.caseStudiesSubtitle}
+      </p>
+    </div>
+    <div class="grid gap-gutter md:grid-cols-3">
+      {
+        caseStudies.map((study, index) => (
+          <CaseStudyCard caseStudy={study} locale={locale} staggerClass={`stagger-${(index % 3) + 1}`} />
+        ))
+      }
+    </div>
+  </div>
+</section>

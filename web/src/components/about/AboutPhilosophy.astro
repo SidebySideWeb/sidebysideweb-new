@@ -1,0 +1,36 @@
+---
+import type {AboutPage} from '../../lib/types'
+
+interface Props {
+  about: AboutPage
+}
+
+const {about} = Astro.props
+const paragraphs = about.philosophyParagraphs ?? []
+---
+
+<section class="scroll-reveal bg-primary py-section-mobile text-on-primary md:py-section-desktop">
+  <div class="mx-auto max-w-7xl px-margin-container text-center md:text-left">
+    <span class="material-symbols-outlined mb-4 block text-[80px] leading-none text-secondary">
+      format_quote
+    </span>
+    <h2 class="mb-8 max-w-4xl text-headline-xl">
+      {about.philosophyHeadline}
+      {about.philosophyHighlight ? (
+        <>
+          <br class="hidden md:block" />
+          <span class="text-secondary-container">{about.philosophyHighlight}</span>
+        </>
+      ) : null}
+    </h2>
+    {
+      paragraphs.length ? (
+        <div class="grid grid-cols-1 gap-gutter font-body-lg text-on-primary-container md:grid-cols-2">
+          {paragraphs.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </div>
+      ) : null
+    }
+  </div>
+</section>

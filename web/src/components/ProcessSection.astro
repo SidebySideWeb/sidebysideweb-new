@@ -1,0 +1,53 @@
+---
+import {DEFAULT_LOCALE, type SiteLocale} from '../lib/i18n'
+import type {ProcessStep} from '../lib/types'
+import {getUiStrings} from '../lib/ui-strings'
+
+interface Props {
+  processSteps: ProcessStep[]
+  locale?: SiteLocale
+}
+
+const {processSteps, locale = DEFAULT_LOCALE} = Astro.props
+const ui = getUiStrings(locale)
+---
+
+<section class="mx-auto max-w-7xl overflow-hidden px-margin-container py-section-mobile md:py-section-desktop">
+  <div class="scroll-reveal mb-20 text-center">
+    <h2 class="text-headline-lg text-primary">{ui.processTitle}</h2>
+  </div>
+  <div class="relative">
+    <div
+      class="process-timeline-line absolute top-0 bottom-0 left-1/2 hidden w-px -translate-x-1/2 bg-outline-variant md:block"
+    />
+    <div class="space-y-16 md:space-y-32">
+      {
+        processSteps.map((step, index) => {
+          const isEven = index % 2 === 1
+          const slideClass = isEven ? 'step-content-from-right' : 'step-content-from-left'
+          return (
+            <div
+              class={`process-step flex w-full flex-col items-center md:justify-between ${isEven ? 'md:flex-row-reverse' : 'md:flex-row'}`}
+            >
+              <div
+                class={`step-content scroll-reveal ${slideClass} md:w-5/12 stagger-${index + 1} ${isEven ? 'text-center md:text-left' : 'text-center md:text-right'}`}
+              >
+                <span class="mb-2 block text-sm font-bold uppercase tracking-widest text-secondary">
+                  {ui.stepLabel} {step.stepNumber}
+                </span>
+                <h4 class="mb-4 text-headline-md text-primary">{step.title}</h4>
+                <p class="text-on-surface-variant">{step.description}</p>
+              </div>
+              <div
+                class={`step-badge scroll-reveal stagger-${index + 1} z-10 my-6 flex h-12 w-12 items-center justify-center rounded-full border-4 border-white bg-primary font-bold text-white shadow-lg md:my-0`}
+              >
+                {step.stepNumber}
+              </div>
+              <div class="md:w-5/12" />
+            </div>
+          )
+        })
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,66 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro'
+import {getHomePageData} from '../../lib/cms'
+import {localizePath, resolvePageLocale} from '../../lib/i18n'
+
+export const prerender = false
+
+const locale = resolvePageLocale(Astro.currentLocale)
+const {siteSettings} = await getHomePageData(locale)
+---
+
+<LegalLayout
+  title="Privacy Policy"
+  description="Privacy policy for sidebysideweb.gr"
+  lastUpdated="July 13, 2026"
+  siteSettings={siteSettings}
+  locale={locale}
+>
+  <p>
+    Side by Side Web Studio ("we", "the company") respects your privacy and is committed to
+    protecting your personal data in accordance with the General Data Protection Regulation (GDPR).
+  </p>
+
+  <h2>1. Data Controller</h2>
+  <p>
+    The data controller is Side by Side Web Studio. For any matter relating to your personal data,
+    contact us at{' '}
+    <a class="text-secondary hover:underline" href={`mailto:${siteSettings.contactEmail}`}>
+      {siteSettings.contactEmail}
+    </a>.
+  </p>
+
+  <h2>2. Data We Collect</h2>
+  <p>We may collect the following data when you contact us:</p>
+  <ul>
+    <li>Full name</li>
+    <li>Email address</li>
+    <li>Phone number</li>
+    <li>Content of messages you send us</li>
+  </ul>
+
+  <h2>3. Purpose of Processing</h2>
+  <p>Your data is used exclusively to:</p>
+  <ul>
+    <li>Respond to contact requests</li>
+    <li>Provide consulting services</li>
+    <li>Improve the website user experience</li>
+  </ul>
+
+  <h2>4. Cookies</h2>
+  <p>
+    This website may use cookies. For details, see our{' '}
+    <a class="text-secondary hover:underline" href={localizePath('/cookies-policy', locale)}>
+      Cookie Policy
+    </a>.
+  </p>
+
+  <h2>5. Your Rights</h2>
+  <p>You have the right to access, rectify, erase, restrict, and object to processing.</p>
+
+  <h2>6. Security</h2>
+  <p>
+    We implement appropriate technical and organizational measures to protect your data from
+    unauthorized access.
+  </p>
+</LegalLayout>

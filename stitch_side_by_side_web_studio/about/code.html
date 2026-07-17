@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="el"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dimitris Geronikolos | Σύμβουλος Τεχνικών Έργων | Side by Side</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-container": "#828fb4",
+                    "secondary-fixed": "#ffdbd0",
+                    "on-error-container": "#93000a",
+                    "error-container": "#ffdad6",
+                    "surface-white": "#FFFFFF",
+                    "on-primary-fixed-variant": "#394667",
+                    "inverse-primary": "#b8c6ed",
+                    "secondary-fixed-dim": "#ffb59d",
+                    "surface-container-high": "#e8e8e8",
+                    "surface-tint": "#505e80",
+                    "surface-dim": "#dadada",
+                    "secondary": "#ab3500",
+                    "primary-container": "#1a2847",
+                    "accent-teal": "#2DD4BF",
+                    "tertiary-fixed": "#ffddaf",
+                    "primary": "#041332",
+                    "on-primary-fixed": "#0b1a39",
+                    "inverse-surface": "#2f3131",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-container": "#5d1900",
+                    "error": "#ba1a1a",
+                    "outline-variant": "#c5c6cf",
+                    "secondary-container": "#fe6a34",
+                    "surface": "#f9f9f9",
+                    "primary-fixed": "#d9e2ff",
+                    "primary-fixed-dim": "#b8c6ed",
+                    "text-muted": "#64748B",
+                    "on-secondary-fixed-variant": "#832600",
+                    "surface-container": "#eeeeee",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#390c00",
+                    "background": "#f9f9f9",
+                    "tertiary-fixed-dim": "#e6c18c",
+                    "tertiary-container": "#3a2500",
+                    "on-surface-variant": "#45464e",
+                    "outline": "#75777e",
+                    "on-surface": "#1a1c1c",
+                    "inverse-on-surface": "#f1f1f1",
+                    "surface-container-highest": "#e2e2e2",
+                    "surface-container-low": "#f3f3f3",
+                    "on-background": "#1a1c1c",
+                    "surface-bright": "#f9f9f9",
+                    "on-tertiary-container": "#ac8b5b",
+                    "on-tertiary-fixed": "#281800",
+                    "tertiary": "#1f1200",
+                    "on-primary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-variant": "#e2e2e2",
+                    "on-tertiary-fixed-variant": "#5b4219"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-container": "32px",
+                    "section-desktop": "80px",
+                    "base": "8px",
+                    "section-mobile": "40px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-xl-mobile": ["Inter"],
+                    "headline-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["44px", {"lineHeight": "1.2", "letterSpacing": "-0.015em", "fontWeight": "700"}],
+                    "body-lg": ["20px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-xl": ["56px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-xl-mobile": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .link-underline {
+            position: relative;
+        }
+        .link-underline::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #041332;
+            transition: width 0.3s ease-in-out;
+        }
+        .link-underline:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-background font-body-md text-on-background antialiased">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-white/90 backdrop-blur-md shadow-sm h-20 transition-all duration-300">
+<nav class="flex justify-between items-center px-margin-container h-full max-w-[1280px] mx-auto">
+<div class="flex items-center gap-4">
+<img alt="Side by Side Logo" class="h-10 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxiIMw8G2RvgCrfxym9Obdn8GQz3erM_uGXR59_oW-Uob4JxPmzPE-TsVlx1ihv4RxLD2MZa5OhObJYv8mKtlZcQXin8q4PDvCv-lZQriD895PpxvCxVna4YF3yyAWHYMTbaa1BCfxJo815OIcBX0_A0aILdGkXRkr3rjEe8RxLswajJ5jd3sB44abVKj2HB0K4e12kBdZx10qRlyDN14TC48Dg3vW0_Y_Z1SSmQ2FaNy3GQh5pYrR4xyV7ubL7zPozA"/>
+<span class="font-headline-md text-headline-md font-bold text-primary">Side by Side</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-label-md text-label-md text-primary hover:text-secondary transition-all duration-300" href="#">Υπηρεσίες</a>
+<a class="font-label-md text-label-md text-primary hover:text-secondary transition-all duration-300" href="#">Μελέτες Περιπτώσεων</a>
+<a class="font-label-md text-label-md text-secondary border-b-2 border-secondary pb-1 transition-all duration-300" href="#">Σχετικά</a>
+<a class="font-label-md text-label-md text-primary hover:text-secondary transition-all duration-300" href="#">Επικοινωνία</a>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-lg font-label-md hover:scale-[1.05] active:scale-95 transition-all duration-200">
+                    Επικοινωνία
+                </button>
+</div>
+<!-- Mobile Menu Toggle -->
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</nav>
+</header>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="reveal px-margin-container py-section-desktop max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+<div class="md:col-span-7">
+<nav class="flex items-center gap-2 text-text-muted mb-6 font-label-md">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary">Σχετικά</span>
+</nav>
+<h1 class="font-headline-xl text-headline-xl text-primary mb-2">Dimitris Geronikolos</h1>
+<h2 class="font-headline-md text-headline-md text-secondary mb-6">Σύμβουλος Τεχνικών Έργων</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mb-8">
+                    15+ χρόνια εμπειρίας. 50+ επιτυχημένα projects. Ειδικός σε σύνθετα προβλήματα που απαιτούν συνδυασμό στρατηγικής και τεχνικής αρτιότητας.
+                </p>
+<div class="flex gap-4">
+<button class="bg-primary text-on-primary px-8 py-4 rounded-lg font-label-md transition-all duration-300 hover:scale-[1.05] active:scale-95 shadow-md">
+                        Δείτε το Portfolio
+                    </button>
+<button class="border-2 border-primary text-primary px-8 py-4 rounded-lg font-label-md transition-all duration-300 hover:bg-primary hover:text-on-primary active:scale-95">
+                        Βιογραφικό
+                    </button>
+</div>
+</div>
+<div class="md:col-span-5 relative mt-12 md:mt-0">
+<div class="aspect-square w-full rounded-xl overflow-hidden shadow-xl transform rotate-1 hover:rotate-0 transition-transform duration-500">
+<img class="w-full h-full object-cover" data-alt="A professional, high-end portrait of Dimitris Geronikolos, a mature male consultant in his early 40s. He is wearing a sharp, dark navy blazer over a crisp white shirt, looking confidently at the camera with a subtle, trustworthy smile. The setting is a minimalist, modern office space with soft, natural lighting coming from a large window. The background is slightly out of focus, showing clean architectural lines and a neutral palette, emphasizing his authoritative yet approachable persona." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsGyv9rt7_-77ttDYV6yvFSSpet91FaNhGu8Gf95MThWTu218vR3RJnlMe-kX1W8zfK34_53TijPrWpj1Ozr_M6ljIBB7Uu9TI40Ee6LQvl6yh0LHX02s1enLA0ryYRtuph_UoFkmN3UTbVKTFReRJFztJEdH9mUsz0sDiihdR1td55O9KW-PKxIpg7C4q9mOHKE-wyU4ezeTBriAn1enBWh6xdXx6MtvpPzI9AxpLXjNhppWiXYVz"/>
+</div>
+<div class="absolute -bottom-6 -left-6 bg-secondary text-on-primary p-6 rounded-lg shadow-lg">
+<span class="block font-headline-md text-headline-md leading-none">15+</span>
+<span class="text-label-md uppercase tracking-wider">Years Experience</span>
+</div>
+</div>
+</section>
+<!-- Philosophy Section -->
+<section class="reveal bg-primary py-section-desktop text-on-primary">
+<div class="px-margin-container max-w-[1280px] mx-auto text-center md:text-left">
+<span class="material-symbols-outlined text-secondary text-[80px] mb-4 block leading-none">format_quote</span>
+<h2 class="font-headline-xl text-headline-xl mb-8 max-w-4xl">
+                    Δεν με ενδιαφέρει να εντυπωσιάσω. <br class="hidden md:block"/>
+<span class="text-secondary-container">Με ενδιαφέρει να βοηθήσω.</span>
+</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter text-on-primary-container font-body-lg">
+<p>
+                        Στον κόσμο της τεχνολογίας, είναι εύκολο να χαθεί κανείς στις εντυπωσιακές ορολογίες και τις τελευταίες τάσεις. Η δική μου προσέγγιση είναι διαφορετική: "Listen first, code later". Πριν προτείνω οποιαδήποτε λύση, αφιερώνω χρόνο για να κατανοήσω πλήρως το επιχειρηματικό πρόβλημα, τους περιορισμούς και τους στόχους σας.
+                    </p>
+<p>
+                        Η επιτυχία ενός τεχνικού έργου δεν μετριέται με τις γραμμές κώδικα, αλλά με την αξία που προσφέρει στην επιχείρηση. Στόχος μου είναι να γεφυρώσω το χάσμα μεταξύ της στρατηγικής υψηλού επιπέδου και της τεχνικής εκτέλεσης, διασφαλίζοντας ότι κάθε επένδυση μετατρέπεται σε βιώσιμο αποτέλεσμα.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Story Section -->
+<section class="reveal px-margin-container py-section-desktop max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<div class="md:col-span-7 prose prose-lg max-w-none">
+<div class="mb-12">
+<h3 class="font-headline-md text-headline-md text-primary mb-4">Πώς ξεκίνησα</h3>
+<p class="text-on-surface-variant font-body-md leading-relaxed">
+                        Το ταξίδι μου ξεκίνησε το 2010 ως Full-Stack Developer. Εκεί έμαθα τις βάσεις: πώς να χτίζω συστήματα που αντέχουν στην πίεση και πώς να γράφω κώδικα που είναι εύκολα συντηρήσιμος. Σύντομα όμως συνειδητοποίησα ότι οι καλύτερες λύσεις δεν προέρχονται από την οθόνη, αλλά από την επικοινωνία με τους ανθρώπους.
+                    </p>
+</div>
+<div class="mb-12">
+<h3 class="font-headline-md text-headline-md text-primary mb-4">Η Αλλαγή</h3>
+<p class="text-on-surface-variant font-body-md leading-relaxed">
+                        Μετά από 7 χρόνια στην πρώτη γραμμή της ανάπτυξης, πέρασα σε ρόλους Project Management και Technical Lead. Διαχειρίστηκα ομάδες και budgets, αντιμετωπίζοντας τις πραγματικές προκλήσεις των επιχειρήσεων: deadlines, scope creep και την ανάγκη για ROI. Αυτό ήταν το σημείο όπου ο προγραμματιστής "συνάντησε" τον σύμβουλο.
+                    </p>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary mb-4">Σήμερα</h3>
+<p class="text-on-surface-variant font-body-md leading-relaxed">
+                        Σήμερα, ως ανεξάρτητος σύμβουλος, βοηθώ εταιρείες και οργανισμούς να πλοηγηθούν στο σύνθετο ψηφιακό τοπίο. Είτε πρόκειται για τον επανασχεδιασμό μιας αρχιτεκτονικής είτε για την επίβλεψη μιας κρίσιμης υλοποίησης, φέρνω μαζί μου την εμπειρία δεκάδων επιτυχημένων έργων και μια αμετακίνητη δέσμευση στην ποιότητα.
+                    </p>
+</div>
+</div>
+<div class="md:col-span-5 flex flex-col justify-center">
+<div class="relative pl-8 border-l-2 border-outline-variant space-y-12 py-4">
+<div class="relative">
+<div class="absolute -left-[41px] top-0 w-4 h-4 rounded-full bg-secondary ring-4 ring-background"></div>
+<span class="block font-label-md text-secondary mb-1">2010 - 2015</span>
+<h4 class="font-headline-md text-[20px] text-primary">Senior Developer &amp; Lead</h4>
+<p class="text-text-muted font-body-md">Θεμελίωση τεχνικών γνώσεων σε enterprise περιβάλλοντα.</p>
+</div>
+<div class="relative">
+<div class="absolute -left-[41px] top-0 w-4 h-4 rounded-full bg-primary ring-4 ring-background"></div>
+<span class="block font-label-md text-secondary mb-1">2016 - 2021</span>
+<h4 class="font-headline-md text-[20px] text-primary">Project Manager &amp; Strategist</h4>
+<p class="text-text-muted font-body-md">Διαχείριση σύνθετων τεχνικών έργων και ομάδων.</p>
+</div>
+<div class="relative">
+<div class="absolute -left-[41px] top-0 w-4 h-4 rounded-full bg-secondary ring-4 ring-background"></div>
+<span class="block font-label-md text-secondary mb-1">2022 - Σήμερα</span>
+<h4 class="font-headline-md text-[20px] text-primary">Independent Consultant</h4>
+<p class="text-text-muted font-body-md">Στρατηγική συμβουλευτική και επίβλεψη high-stakes έργων.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Work Style Section -->
+<section class="reveal bg-surface-container-low py-section-desktop">
+<div class="px-margin-container max-w-[1280px] mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-headline-md text-headline-md text-primary mb-4">Πώς Δουλεύω</h2>
+<p class="text-on-surface-variant max-w-xl mx-auto">Μια δοκιμασμένη μεθοδολογία που εξασφαλίζει την επιτυχία κάθε project, από τη σύλληψη μέχρι την παράδοση.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Card 1 -->
+<div class="bg-white p-10 rounded-xl border border-outline-variant hover:border-primary hover:-translate-y-2 hover:shadow-xl transition-all duration-300 group">
+<div class="w-16 h-16 bg-secondary/10 rounded-lg flex items-center justify-center mb-8 group-hover:bg-secondary transition-colors duration-300">
+<span class="material-symbols-outlined text-secondary text-[32px] group-hover:text-white transition-colors duration-300">search</span>
+</div>
+<h3 class="font-headline-md text-[24px] text-primary mb-4">Ανάλυση Πρώτα</h3>
+<p class="text-text-muted font-body-md">
+                            Βαθιά κατάδυση στις ανάγκες σας. Καθορίζουμε το "γιατί" πριν αποφασίσουμε το "πώς", αποφεύγοντας δαπανηρά λάθη στο μέλλον.
+                        </p>
+</div>
+<!-- Card 2 -->
+<div class="bg-white p-10 rounded-xl border border-outline-variant hover:border-primary hover:-translate-y-2 hover:shadow-xl transition-all duration-300 group">
+<div class="w-16 h-16 bg-secondary/10 rounded-lg flex items-center justify-center mb-8 group-hover:bg-secondary transition-colors duration-300">
+<span class="material-symbols-outlined text-secondary text-[32px] group-hover:text-white transition-colors duration-300">rocket_launch</span>
+</div>
+<h3 class="font-headline-md text-[24px] text-primary mb-4">Υλοποίηση Σωστά</h3>
+<p class="text-text-muted font-body-md">
+                            Χρησιμοποιούμε τις βέλτιστες πρακτικές και τις πιο σύγχρονες τεχνολογίες για να χτίσουμε λύσεις που είναι ασφαλείς και επεκτάσιμες.
+                        </p>
+</div>
+<!-- Card 3 -->
+<div class="bg-white p-10 rounded-xl border border-outline-variant hover:border-primary hover:-translate-y-2 hover:shadow-xl transition-all duration-300 group">
+<div class="w-16 h-16 bg-secondary/10 rounded-lg flex items-center justify-center mb-8 group-hover:bg-secondary transition-colors duration-300">
+<span class="material-symbols-outlined text-secondary text-[32px] group-hover:text-white transition-colors duration-300">handshake</span>
+</div>
+<h3 class="font-headline-md text-[24px] text-primary mb-4">Υποστήριξη Μακροχρόνια</h3>
+<p class="text-text-muted font-body-md">
+                            Δεν εξαφανιζόμαστε μετά το launch. Παραμένουμε δίπλα σας για να διασφαλίσουμε την ομαλή λειτουργία και την εξέλιξη του έργου.
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Section -->
+<section class="reveal px-margin-container py-section-desktop max-w-[1280px] mx-auto border-b border-outline-variant">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-gutter text-center">
+<div class="stat-item">
+<span class="block font-headline-xl text-headline-xl text-secondary mb-2" data-count="50">0</span>
+<span class="text-label-md uppercase tracking-widest text-primary font-bold">Projects</span>
+</div>
+<div class="stat-item">
+<span class="block font-headline-xl text-headline-xl text-secondary mb-2" data-count="15">0</span>
+<span class="text-label-md uppercase tracking-widest text-primary font-bold">Χρόνια Εμπειρίας</span>
+</div>
+<div class="stat-item">
+<span class="block font-headline-xl text-headline-xl text-secondary mb-2" data-count="2">0M+</span>
+<span class="text-label-md uppercase tracking-widest text-primary font-bold">Αξία Delivered</span>
+</div>
+<div class="stat-item">
+<span class="block font-headline-xl text-headline-xl text-secondary mb-2" data-count="100">0%</span>
+<span class="text-label-md uppercase tracking-widest text-primary font-bold">Παραδόθηκαν</span>
+</div>
+</div>
+</section>
+<!-- Comparison Section -->
+<section class="reveal px-margin-container py-section-desktop max-w-[1280px] mx-auto">
+<h2 class="font-headline-md text-headline-md text-primary text-center mb-16">Γιατί να Επιλέξετε Εμένα;</h2>
+<div class="space-y-12">
+<!-- Comparison 1 -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-white p-8 rounded-xl border border-outline-variant">
+<div class="p-6 opacity-50">
+<h4 class="font-headline-md text-[20px] mb-4 text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-error">close</span>
+                            Τυπικός Developer
+                        </h4>
+<ul class="space-y-3 font-body-md">
+<li>Focus μόνο στον κώδικα</li>
+<li>Περιορισμένη κατανόηση του Business</li>
+<li>Δυσκολία στην επικοινωνία με stakeholders</li>
+<li>Αντιδραστική προσέγγιση προβλημάτων</li>
+</ul>
+</div>
+<div class="p-6 bg-primary-container text-on-primary rounded-lg border-l-4 border-secondary shadow-lg">
+<h4 class="font-headline-md text-[20px] mb-4 text-on-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container">check_circle</span>
+                            Dimitris Geronikolos
+                        </h4>
+<ul class="space-y-3 font-body-md text-on-primary-container">
+<li class="text-white">Στρατηγική &amp; Business Alignment</li>
+<li class="text-white">Full-stack τεχνική εποπτεία</li>
+<li class="text-white">Ξεκάθαρη επικοινωνία σε όλα τα επίπεδα</li>
+<li class="text-white">Προληπτικός σχεδιασμός &amp; πρόβλεψη κινδύνων</li>
+</ul>
+</div>
+</div>
+<!-- Comparison 2 -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-white p-8 rounded-xl border border-outline-variant">
+<div class="p-6 opacity-50">
+<h4 class="font-headline-md text-[20px] mb-4 text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-error">close</span>
+                            Μεγάλο Agency
+                        </h4>
+<ul class="space-y-3 font-body-md">
+<li>Υψηλό overhead &amp; γραφειοκρατία</li>
+<li>Εναλλαγή προσωπικού στο έργο</li>
+<li>Απρόσωπη επικοινωνία</li>
+<li>"One-size-fits-all" λύσεις</li>
+</ul>
+</div>
+<div class="p-6 bg-primary-container text-on-primary rounded-lg border-l-4 border-secondary shadow-lg">
+<h4 class="font-headline-md text-[20px] mb-4 text-on-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container">check_circle</span>
+                            Solo Practice
+                        </h4>
+<ul class="space-y-3 font-body-md text-on-primary-container">
+<li class="text-white">Άμεση, προσωπική ευθύνη</li>
+<li class="text-white">Αφοσιωμένος χρόνος και προσοχή</li>
+<li class="text-white">Ευέλικτη και γρήγορη λήψη αποφάσεων</li>
+<li class="text-white">Tailor-made λύσεις στις ανάγκες σας</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials -->
+<section class="reveal bg-surface py-section-desktop">
+<div class="px-margin-container max-w-[1280px] mx-auto">
+<h2 class="font-headline-md text-headline-md text-primary text-center mb-16">Τι λένε οι πελάτες</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bg-white p-8 rounded-xl shadow-sm border border-outline-variant">
+<div class="flex text-secondary-container mb-4">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-on-surface-variant font-body-md italic mb-6">"Ο Δημήτρης έδωσε λύση σε ένα πρόβλημα που μας ταλαιπωρούσε 6 μήνες, μέσα σε μόλις δύο εβδομάδες ανάλυσης."</p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-on-primary font-bold">ΓΠ</div>
+<div>
+<span class="block font-label-md text-primary">Γιώργος Παπαδόπουλος</span>
+<span class="text-[12px] text-text-muted">CEO, TechFlow Inc</span>
+</div>
+</div>
+</div>
+<div class="bg-white p-8 rounded-xl shadow-sm border border-outline-variant">
+<div class="flex text-secondary-container mb-4">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-on-surface-variant font-body-md italic mb-6">"Είναι σπάνιο να βρίσκεις κάποιον που να καταλαβαίνει τόσο καλά τις επιχειρηματικές ανάγκες όσο και την τεχνική πλευρά."</p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-on-primary font-bold">ΕΛ</div>
+<div>
+<span class="block font-label-md text-primary">Ελένη Λαζάρου</span>
+<span class="text-[12px] text-text-muted">Operations Manager, BlueShip</span>
+</div>
+</div>
+</div>
+<div class="bg-white p-8 rounded-xl shadow-sm border border-outline-variant">
+<div class="flex text-secondary-container mb-4">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-on-surface-variant font-body-md italic mb-6">"Η εμπειρία του ήταν καθοριστική για το επιτυχημένο launch της πλατφόρμας μας. Επαγγελματίας σε όλα του."</p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-on-primary font-bold">ΜΑ</div>
+<div>
+<span class="block font-label-md text-primary">Μιχάλης Αντωνίου</span>
+<span class="text-[12px] text-text-muted">CTO, FinGrid</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="reveal bg-primary py-section-desktop text-on-primary">
+<div class="px-margin-container max-w-[800px] mx-auto text-center">
+<h2 class="font-headline-xl text-headline-xl mb-6">Έτοιμος να Δουλέψουμε Μαζί;</h2>
+<p class="font-body-lg text-on-primary-container mb-10">
+                    Ας συζητήσουμε τις προκλήσεις του έργου σας σε μια δωρεάν κλήση 30 λεπτών. Χωρίς δεσμεύσεις, μόνο ειλικρινής συμβουλευτική.
+                </p>
+<button class="bg-secondary-container text-on-secondary px-10 py-5 rounded-lg font-headline-md text-[24px] transition-all duration-300 hover:scale-[1.05] active:scale-95 shadow-xl">
+                    Ζητήστε Δωρεάν Κλήση
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-section-desktop bg-primary text-on-primary">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-container max-w-[1280px] mx-auto">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-3 mb-6">
+<img alt="Side by Side Logo" class="h-8 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOvIKw9OXEZgCkAaSbBBjr46iQ8-DTKy7ix0D18cL6mpuWVpiFrY3ZwqEAfcBPFTih1epSJv3t8APRBZOMtVEzG36yf3b31_DtBDp0qfZ-a5HIq5yaFxgSgPMdxTFw-7JRuhSoV6ec3IUY7eV54gfUOz63IScbzzxZ0BmOzUUqggsEnS5_3i0sF5MyWlzZLBg_bX3ItxCTXL8J_WZJYGTmNaYaoPkWW1etg5jlUEOHms6dNB0X1zYK1Q6xtseMmntzpA"/>
+<span class="font-headline-md text-headline-md font-bold text-on-primary">Side by Side</span>
+</div>
+<p class="text-on-primary/70 font-body-md">
+                    Technical Excellence through Strategic Consultancy.
+                </p>
+</div>
+<div>
+<h4 class="font-label-md uppercase tracking-widest mb-6">Υπηρεσίες</h4>
+<ul class="space-y-4 font-body-md text-on-primary/80">
+<li><a class="hover:text-secondary-fixed transition-colors" href="#">Technical Audit</a></li>
+<li><a class="hover:text-secondary-fixed transition-colors" href="#">Project Management</a></li>
+<li><a class="hover:text-secondary-fixed transition-colors" href="#">Architecture Design</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md uppercase tracking-widest mb-6">Social</h4>
+<ul class="space-y-4 font-body-md">
+<li><a class="text-on-primary/80 hover:text-secondary-fixed transition-transform hover:translate-x-1 block" href="#">LinkedIn</a></li>
+<li><a class="text-on-primary/80 hover:text-secondary-fixed transition-transform hover:translate-x-1 block" href="#">Twitter</a></li>
+<li><a class="text-on-primary/80 hover:text-secondary-fixed transition-transform hover:translate-x-1 block" href="#">Dribbble</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md uppercase tracking-widest mb-6">Legal</h4>
+<ul class="space-y-4 font-body-md text-on-primary/80">
+<li><a class="hover:text-secondary-fixed transition-colors" href="#">Terms of Service</a></li>
+<li><a class="hover:text-secondary-fixed transition-colors" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+</div>
+<div class="px-margin-container max-w-[1280px] mx-auto mt-16 pt-8 border-t border-on-primary/10 text-center md:text-left text-on-primary/50 text-label-md">
+            © 2024 Side by Side Web Studio. All rights reserved.
+        </div>
+</footer>
+<script>
+        // Reveal on scroll
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Stats count up animation
+        const statObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const countEl = entry.target.querySelector('[data-count]');
+                    if (countEl) {
+                        const target = parseInt(countEl.getAttribute('data-count'));
+                        let current = 0;
+                        const duration = 2000;
+                        const stepTime = Math.abs(Math.floor(duration / target));
+                        
+                        const timer = setInterval(() => {
+                            current += 1;
+                            countEl.textContent = current + (countEl.textContent.includes('M+') ? 'M+' : (countEl.textContent.includes('%') ? '%' : '+'));
+                            if (current >= target) {
+                                countEl.textContent = target + (countEl.textContent.includes('M+') ? 'M+' : (countEl.textContent.includes('%') ? '%' : '+'));
+                                clearInterval(timer);
+                            }
+                        }, stepTime);
+                    }
+                    statObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-item').forEach(item => statObserver.observe(item));
+
+        // Smooth header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('h-16', 'shadow-md');
+                header.classList.remove('h-20', 'shadow-sm');
+            } else {
+                header.classList.add('h-20', 'shadow-sm');
+                header.classList.remove('h-16', 'shadow-md');
+            }
+        });
+    </script>
+</body></html>

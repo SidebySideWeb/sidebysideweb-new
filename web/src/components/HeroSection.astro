@@ -1,0 +1,67 @@
+---
+import type {HeroSection} from '../lib/types'
+import {resolveHeroImage} from '../lib/image'
+import {isBookingCta} from '../lib/cal-com'
+import CalBookingButton from './CalBookingButton.astro'
+
+interface Props {
+  hero: HeroSection
+}
+
+const {hero} = Astro.props
+const heroImageUrl = resolveHeroImage(hero.heroImage, hero.heroImageUrl)
+const ctaLink = hero.ctaLink ?? '#contact'
+const useCalBooking = isBookingCta(ctaLink)
+---
+
+<header class="hero-gradient flex min-h-screen items-center px-margin-container pt-[70px]">
+  <div class="mx-auto grid w-full max-w-7xl items-center gap-gutter md:grid-cols-2">
+    <div class="space-y-8">
+      <h1 class="animate-fade-in-up text-headline-xl text-primary">
+        {hero.headline}
+      </h1>
+      <p class="animate-fade-in-up stagger-1 max-w-xl text-body-lg text-on-surface-variant">
+        {hero.subheading}
+      </p>
+      <div class="animate-fade-in-up stagger-2 space-y-4">
+        {
+          useCalBooking ? (
+            <CalBookingButton
+              class="btn-primary-orange inline-flex h-[56px] rounded-lg px-8"
+              label={hero.ctaText ?? 'Ζητήστε Ανάλυση Δωρεάν'}
+            />
+          ) : (
+            <a class="btn-primary-orange inline-flex h-[56px] rounded-lg px-8" href={ctaLink}>
+              {hero.ctaText}
+            </a>
+          )
+        }
+        {
+          hero.trustSignals?.length ? (
+            <div class="flex flex-wrap gap-x-6 gap-y-2 pt-2">
+              {hero.trustSignals.map((signal) => (
+                <div class="flex items-center gap-2 text-sm text-on-surface-variant">
+                  <span class="material-symbols-outlined text-lg text-accent-teal">
+                    {signal.icon ?? 'check_circle'}
+                  </span>
+                  <span>{signal.text}</span>
+                </div>
+              ))}
+            </div>
+          ) : null
+        }
+      </div>
+    </div>
+    <div class="animate-fade-in-up stagger-3 relative hidden h-[500px] w-full md:block">
+      <div class="absolute inset-0 rotate-2 rounded-xl border border-outline-variant bg-primary/5" />
+      <div class="absolute inset-0 overflow-hidden rounded-xl border border-outline-variant bg-white p-4 shadow-2xl">
+        <div
+          class="h-full w-full rounded-lg bg-cover bg-center shadow-inner"
+          style={`background-image: url('${heroImageUrl}')`}
+          role="img"
+          aria-label={hero.heroImage?.alt ?? 'Side by Side Web Studio'}
+        />
+      </div>
+    </div>
+  </div>
+</header>

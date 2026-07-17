@@ -1,0 +1,33 @@
+---
+import {blocksToPlainText} from '../../lib/cms'
+import {DEFAULT_LOCALE, type SiteLocale} from '../../lib/i18n'
+import type {CaseStudy} from '../../lib/types'
+import {getUiStrings} from '../../lib/ui-strings'
+
+interface Props {
+  caseStudy: CaseStudy
+  locale?: SiteLocale
+}
+
+const {caseStudy, locale = DEFAULT_LOCALE} = Astro.props
+const ui = getUiStrings(locale)
+const narrative = blocksToPlainText(caseStudy.fullContent as unknown[])
+const paragraphs = narrative.split(/\n\n+/).filter(Boolean)
+---
+
+{
+  paragraphs.length ? (
+    <section class="bg-surface-white py-section-mobile md:py-section-desktop">
+      <div class="scroll-reveal mx-auto max-w-3xl px-margin-container">
+        <h2 class="mb-8 border-l-4 border-secondary pl-6 text-headline-md text-primary">
+          {ui.narrativeTitle}
+        </h2>
+        <div class="space-y-6 text-body-lg leading-relaxed text-on-surface-variant">
+          {paragraphs.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </div>
+      </div>
+    </section>
+  ) : null
+}

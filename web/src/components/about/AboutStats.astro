@@ -1,0 +1,39 @@
+---
+import type {AboutPage} from '../../lib/types'
+
+interface Props {
+  about: AboutPage
+}
+
+const {about} = Astro.props
+const stats = about.stats ?? []
+---
+
+{
+  stats.length ? (
+    <section class="scroll-reveal mx-auto max-w-7xl border-b border-outline-variant px-margin-container py-section-mobile md:py-section-desktop">
+      <div class="grid grid-cols-2 gap-gutter text-center md:grid-cols-4">
+        {
+          stats.map((stat, index) => (
+            <div class={`about-stat scroll-reveal stagger-${index + 1}`}>
+              <span
+                class="counter mb-2 block text-headline-xl text-secondary tabular-nums"
+                data-target={stat.value}
+                data-suffix={stat.suffix ?? ''}
+                data-fallback={`${stat.value ?? ''}${stat.suffix ?? ''}`}
+                data-duration="2000"
+              >
+                0{stat.suffix ?? ''}
+              </span>
+              {stat.label ? (
+                <span class="text-label-md font-bold uppercase tracking-widest text-primary">
+                  {stat.label}
+                </span>
+              ) : null}
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  ) : null
+}

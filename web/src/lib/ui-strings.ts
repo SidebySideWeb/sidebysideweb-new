@@ -1,0 +1,275 @@
+import {localizePath} from './i18n'
+import type {SiteLocale} from './i18n'
+
+export interface NavLink {
+  label: string
+  href: string
+}
+
+const NAV_LINKS: Record<SiteLocale, NavLink[]> = {
+  el: [
+    {label: 'Αρχική', href: '/'},
+    {label: 'Υπηρεσίες', href: '#services'},
+    {label: 'Μελέτες', href: '#cases'},
+    {label: 'Ενημέρωση', href: '#blog'},
+    {label: 'Σχετικά', href: '/about'},
+    {label: 'Επικοινωνία', href: '#contact'},
+  ],
+  en: [
+    {label: 'Home', href: '/'},
+    {label: 'Services', href: '#services'},
+    {label: 'Case Studies', href: '#cases'},
+    {label: 'Insights', href: '#blog'},
+    {label: 'About', href: '/about'},
+    {label: 'Contact', href: '#contact'},
+  ],
+}
+
+export function getNavLinks(locale: SiteLocale): NavLink[] {
+  return NAV_LINKS[locale].map((link) => ({
+    ...link,
+    href: link.href.startsWith('#') ? link.href : localizePath(link.href, locale),
+  }))
+}
+
+export const FOOTER_COPY: Record<
+  SiteLocale,
+  {
+    tagline: string
+    navigationTitle: string
+    socialTitle: string
+    contactTitle: string
+    navLinks: NavLink[]
+    legalLinks: NavLink[]
+    rights: string
+  }
+> = {
+  el: {
+    tagline:
+      'Στρατηγικός σχεδιασμός και ανάπτυξη λογισμικού για επιχειρήσεις που απαιτούν το καλύτερο. Γεφυρώνουμε το χάσμα μεταξύ στρατηγικής και κώδικα.',
+    navigationTitle: 'Πλοήγηση',
+    socialTitle: 'Social',
+    contactTitle: 'Επικοινωνία',
+    navLinks: [
+      {label: 'Υπηρεσίες', href: '#services'},
+      {label: 'Μελέτες Περιπτώσεων', href: '#cases'},
+      {label: 'Ενημέρωση & Νέα', href: '#blog'},
+      {label: 'Σχετικά με εμάς', href: '/about'},
+    ],
+    legalLinks: [
+      {label: 'Πολιτική Απορρήτου', href: '/privacy-policy'},
+      {label: 'Πολιτική Cookies', href: '/cookies-policy'},
+    ],
+    rights: 'Με επιφύλαξη παντός δικαιώματος.',
+  },
+  en: {
+    tagline:
+      'Strategic planning and software development for businesses that demand the best. We bridge the gap between strategy and code.',
+    navigationTitle: 'Navigation',
+    socialTitle: 'Social',
+    contactTitle: 'Contact',
+    navLinks: [
+      {label: 'Services', href: '#services'},
+      {label: 'Case Studies', href: '#cases'},
+      {label: 'Insights & News', href: '#blog'},
+      {label: 'About us', href: '/about'},
+    ],
+    legalLinks: [
+      {label: 'Privacy Policy', href: '/privacy-policy'},
+      {label: 'Cookie Policy', href: '/cookies-policy'},
+    ],
+    rights: 'All rights reserved.',
+  },
+}
+
+export function getFooterCopy(locale: SiteLocale) {
+  const copy = FOOTER_COPY[locale]
+  return {
+    ...copy,
+    navLinks: copy.navLinks.map((link) => ({
+      ...link,
+      href: link.href.startsWith('#') ? link.href : localizePath(link.href, locale),
+    })),
+    legalLinks: copy.legalLinks.map((link) => ({
+      ...link,
+      href: localizePath(link.href, locale),
+    })),
+  }
+}
+
+export const UI_STRINGS: Record<
+  SiteLocale,
+  {
+    navContact: string
+    langSwitchTo: string
+    navAltSuffix: string
+    caseStudyBreadcrumbHome: string
+    caseStudyBreadcrumbCases: string
+    caseStudyCtaTitle: string
+    caseStudyCtaBody: string
+    caseStudyCtaButton: string
+    contactCtaTitle: string
+    contactCtaBody: string
+    contactCtaButton: string
+    contactCtaConfidentiality: string
+    contactCtaResponse: string
+    contactCtaExpertise: string
+    aboutNavContact: string
+    aboutBreadcrumbHome: string
+    aboutBreadcrumbAbout: string
+    menuAriaLabel: string
+    processTitle: string
+    valuePropositionSubtitle: string
+    servicesTitle: string
+    servicesSubtitle: string
+    servicesInvestment: string
+    servicesDuration: string
+    servicesAvailability: string
+    servicesLearnMore: string
+    caseStudiesTitle: string
+    caseStudiesSubtitle: string
+    caseStudyReadMore: string
+    faqTitle: string
+    problemTitle: string
+    problemDefaultLabel: string
+    solutionTitle: string
+    solutionFallback: string
+    resultsTitle: string
+    investmentTitle: string
+    investmentSubtitle: string
+    investmentCost: string
+    investmentTimeline: string
+    investmentPayback: string
+    narrativeTitle: string
+    relatedServicesTitle: string
+    relatedCaseStudiesTitle: string
+    headerInvestment: string
+    headerDuration: string
+    headerResult: string
+    footerRemote: string
+    stepLabel: string
+    notFoundTitle: string
+    notFoundBody: string
+    notFoundCta: string
+    legalLastUpdated: string
+  }
+> = {
+  el: {
+    navContact: 'Επικοινωνία',
+    langSwitchTo: 'EN',
+    navAltSuffix: 'Σύμβουλος Τεχνικών Έργων',
+    caseStudyBreadcrumbHome: 'Αρχική',
+    caseStudyBreadcrumbCases: 'Μελέτες Περιπτώσεων',
+    caseStudyCtaTitle: 'Έτοιμος για Παρόμοιο Έργο;',
+    caseStudyCtaBody:
+      'Κλείστε μια δωρεάν συμβουλευτική κλήση 30 λεπτών. Χωρίς δεσμεύσεις, μόνο καθαρές απαντήσεις.',
+    caseStudyCtaButton: 'Ζητήστε Ανάλυση Δωρεάν',
+    contactCtaTitle: 'Έτοιμος να Λύσεις το Τεχνικό σου Πρόβλημα;',
+    contactCtaBody:
+      'Κλείστε μια δωρεάν συμβουλευτική κλήση 30 λεπτών. Χωρίς δεσμεύσεις, μόνο καθαρές απαντήσεις και στρατηγική.',
+    contactCtaButton: 'Κλείσε Δωρεάν Κλήση',
+    contactCtaConfidentiality: '100% Εμπιστευτικότητα',
+    contactCtaResponse: 'Απάντηση σε 24 ώρες',
+    contactCtaExpertise: 'Verified Expertise',
+    aboutNavContact: 'Επικοινωνία',
+    aboutBreadcrumbHome: 'Αρχική',
+    aboutBreadcrumbAbout: 'Σχετικά',
+    menuAriaLabel: 'Μενού',
+    processTitle: 'Πώς Δουλεύουμε (Βήμα-Προς-Βήμα)',
+    valuePropositionSubtitle:
+      'Η προσέγγισή μου συνδυάζει την επιχειρηματική λογική με την τεχνική αρτιότητα.',
+    servicesTitle: 'Εξειδικευμένες Υπηρεσίες',
+    servicesSubtitle: 'Καλύπτουμε όλο το φάσμα των τεχνικών σας αναγκών με επαγγελματισμό.',
+    servicesInvestment: 'Επένδυση',
+    servicesDuration: 'Διάρκεια',
+    servicesAvailability: 'Διαθεσιμότητα',
+    servicesLearnMore: 'Μάθετε περισσότερα',
+    caseStudiesTitle: 'Μελέτες Περιπτώσεων',
+    caseStudiesSubtitle: 'Πραγματικά προβλήματα που λύθηκαν με στρατηγική και τεχνολογία.',
+    caseStudyReadMore: 'Διαβάστε την Μελέτη',
+    faqTitle: 'Συχνές Ερωτήσεις - Απαντήσεις',
+    problemTitle: 'Το Πρόβλημα',
+    problemDefaultLabel: 'Βασική Γραμμή Απόδοσης',
+    solutionTitle: 'Η Λύση',
+    solutionFallback: 'Ενσωμάτωση και υλοποίηση στο πλαίσιο της λύσης.',
+    resultsTitle: 'Αποτελέσματα',
+    investmentTitle: 'Ανάλυση Επένδυσης',
+    investmentSubtitle: 'Διαφανείς χρεώσεις και μετρήσιμα αποτελέσματα που δικαιολογούν κάθε ευρώ.',
+    investmentCost: 'Κόστος',
+    investmentTimeline: 'Διάρκεια',
+    investmentPayback: 'Χρόνος απόσβεσης επένδυσης.',
+    narrativeTitle: 'Η Ιστορία του Έργου',
+    relatedServicesTitle: 'Υπηρεσίες που Χρησιμοποιήθηκαν',
+    relatedCaseStudiesTitle: 'Άλλες Μελέτες Περιπτώσεων',
+    headerInvestment: 'Επένδυση',
+    headerDuration: 'Διάρκεια',
+    headerResult: 'Αποτέλεσμα',
+    footerRemote: 'Διαθέσιμοι για remote projects παγκοσμίως.',
+    stepLabel: 'Βήμα',
+    notFoundTitle: 'Η μελέτη δεν βρέθηκε',
+    notFoundBody: 'Η σελίδα που ζητήσατε δεν υπάρχει ή έχει μετακινηθεί.',
+    notFoundCta: 'Επιστροφή στις μελέτες',
+    legalLastUpdated: 'Τελευταία ενημέρωση:',
+  },
+  en: {
+    navContact: 'Contact',
+    langSwitchTo: 'EL',
+    navAltSuffix: 'Technical Projects Consultant',
+    caseStudyBreadcrumbHome: 'Home',
+    caseStudyBreadcrumbCases: 'Case Studies',
+    caseStudyCtaTitle: 'Ready for a Similar Project?',
+    caseStudyCtaBody:
+      'Book a free 30-minute consultation. No obligations — just clear answers.',
+    caseStudyCtaButton: 'Request a Free Analysis',
+    contactCtaTitle: 'Ready to Solve Your Technical Challenge?',
+    contactCtaBody:
+      'Book a free 30-minute consultation. No obligations — just clear answers and strategy.',
+    contactCtaButton: 'Book a Free Call',
+    contactCtaConfidentiality: '100% Confidential',
+    contactCtaResponse: 'Response within 24 hours',
+    contactCtaExpertise: 'Verified Expertise',
+    aboutNavContact: 'Contact',
+    aboutBreadcrumbHome: 'Home',
+    aboutBreadcrumbAbout: 'About',
+    menuAriaLabel: 'Menu',
+    processTitle: 'How We Work (Step by Step)',
+    valuePropositionSubtitle:
+      'My approach combines business logic with technical excellence.',
+    servicesTitle: 'Specialized Services',
+    servicesSubtitle: 'We cover the full spectrum of your technical needs with professionalism.',
+    servicesInvestment: 'Investment',
+    servicesDuration: 'Duration',
+    servicesAvailability: 'Availability',
+    servicesLearnMore: 'Learn more',
+    caseStudiesTitle: 'Case Studies',
+    caseStudiesSubtitle: 'Real problems solved with strategy and technology.',
+    caseStudyReadMore: 'Read the Case Study',
+    faqTitle: 'Frequently Asked Questions',
+    problemTitle: 'The Problem',
+    problemDefaultLabel: 'Baseline Performance',
+    solutionTitle: 'The Solution',
+    solutionFallback: 'Integration and implementation within the solution scope.',
+    resultsTitle: 'Results',
+    investmentTitle: 'Investment Analysis',
+    investmentSubtitle: 'Transparent pricing and measurable outcomes that justify every euro.',
+    investmentCost: 'Cost',
+    investmentTimeline: 'Timeline',
+    investmentPayback: 'Investment payback period.',
+    narrativeTitle: 'Project Story',
+    relatedServicesTitle: 'Services Used',
+    relatedCaseStudiesTitle: 'Other Case Studies',
+    headerInvestment: 'Investment',
+    headerDuration: 'Duration',
+    headerResult: 'Result',
+    footerRemote: 'Available for remote projects worldwide.',
+    stepLabel: 'Step',
+    notFoundTitle: 'Case study not found',
+    notFoundBody: 'The page you requested does not exist or has been moved.',
+    notFoundCta: 'Back to case studies',
+    legalLastUpdated: 'Last updated:',
+  },
+}
+
+export function getUiStrings(locale: SiteLocale) {
+  return UI_STRINGS[locale]
+}

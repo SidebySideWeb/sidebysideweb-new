@@ -1,0 +1,39 @@
+---
+import {initials} from '../lib/cms'
+import type {Testimonial} from '../lib/types'
+
+interface Props {
+  testimonials: Testimonial[]
+}
+
+const {testimonials} = Astro.props
+---
+
+<section class="mx-auto max-w-7xl px-margin-container py-section-mobile md:py-section-desktop">
+  <div class="scroll-reveal mb-16 text-center">
+    <h2 class="mb-4 text-headline-lg text-primary">Τι Λένε οι Πελάτες Μου</h2>
+  </div>
+  <div class="grid gap-gutter md:grid-cols-3">
+    {
+      testimonials.map((item, index) => (
+        <div
+          class={`scroll-reveal card-elevated rounded-xl p-8 italic text-on-surface-variant stagger-${index + 1}`}
+        >
+          <p class="mb-6">"{item.quote}"</p>
+          <div class="flex items-center gap-4 not-italic">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-surface-container font-bold text-primary">
+              {initials(item.author)}
+            </div>
+            <div>
+              <p class="text-sm font-bold text-primary">{item.author}</p>
+              <p class="text-xs">
+                {item.role}
+                {item.company ? `, ${item.company}` : ''}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>

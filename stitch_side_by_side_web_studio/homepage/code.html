@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="light" lang="el"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#e2e2e2",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#1a2847",
+                    "surface-bright": "#f9f9f9",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-tint": "#505e80",
+                    "on-tertiary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "surface-white": "#FFFFFF",
+                    "on-surface": "#1a1c1c",
+                    "surface-container-highest": "#e2e2e2",
+                    "on-secondary-container": "#5d1900",
+                    "secondary-container": "#FF6B35",
+                    "tertiary-fixed-dim": "#e6c18c",
+                    "primary-fixed": "#d9e2ff",
+                    "outline": "#75777e",
+                    "on-secondary-fixed": "#390c00",
+                    "surface-dim": "#dadada",
+                    "inverse-surface": "#2f3131",
+                    "surface-container": "#eeeeee",
+                    "on-tertiary-container": "#ac8b5b",
+                    "on-surface-variant": "#45464e",
+                    "primary": "#041332",
+                    "on-tertiary-fixed": "#281800",
+                    "secondary-fixed-dim": "#ffb59d",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#b8c6ed",
+                    "secondary-fixed": "#ffdbd0",
+                    "on-primary-container": "#828fb4",
+                    "on-primary-fixed": "#0b1a39",
+                    "background": "#f9f9f9",
+                    "surface-container-low": "#f3f3f3",
+                    "on-secondary-fixed-variant": "#832600",
+                    "surface-container-high": "#e8e8e8",
+                    "on-tertiary-fixed-variant": "#5b4219",
+                    "on-primary-fixed-variant": "#394667",
+                    "outline-variant": "#c5c6cf",
+                    "tertiary": "#1f1200",
+                    "primary-fixed-dim": "#b8c6ed",
+                    "tertiary-container": "#3a2500",
+                    "on-error": "#ffffff",
+                    "inverse-on-surface": "#f1f1f1",
+                    "text-muted": "#64748B",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#ffddaf",
+                    "secondary": "#ab3500",
+                    "surface": "#f9f9f9",
+                    "on-error-container": "#93000a",
+                    "on-background": "#1a1c1c",
+                    "accent-teal": "#2DD4BF"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "section-desktop": "80px",
+                    "base": "8px",
+                    "section-mobile": "40px",
+                    "margin-container": "32px"
+            },
+            "fontFamily": {
+                    "headline-xl-mobile": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-xl-mobile": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-lg": ["44px", {"lineHeight": "1.2", "letterSpacing": "-0.015em", "fontWeight": "700"}],
+                    "headline-md": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-xl": ["56px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["20px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    }catch(_e){}</script>
+<style>
+    .case-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid transparent; }
+    .case-card:hover { transform: translateY(-4px); border-color: #FF6B35; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
+    .case-image { transition: transform 0.5s ease; }
+    .case-card:hover .case-image { transform: scale(1.05); }
+    .btn-primary-orange { background-color: #FF6B35; color: white; display: inline-flex; align-items: center; justify-content: center; transition: background-color 0.3s; }
+    .btn-primary-orange:hover { background-color: #e65a2b; }
+    .sliding-link { color: #FF6B35; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; }
+    .sliding-link:hover { text-decoration: underline; }
+</style>
+</head><body class="bg-background text-on-background font-body-md selection:bg-secondary-container selection:text-on-secondary-fixed">
+<!-- Section 1: Navigation Bar -->
+<nav class="fixed top-0 w-full h-[70px] bg-primary z-50 shadow-sm"><div class="flex justify-between items-center px-margin-container max-w-7xl mx-auto h-full">
+<a class="flex items-center" href="#">
+<img alt="Side by Side Web Studio" class="h-10 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdLpAS-qewI2x6W1avGO75PN_xMT3WK_FO9E0OpTlnlXmFSWsyZfA7ODoIz2muxB1a5CgkJf48-04JjfS65x-fZuG6PiUipX-BgVdEBC2knsDoLjTaRFvZ7mHmXa3O-mztFcAGC-Ctvn7lvICToT5lNxcaFtvwLRowsyU344kc2-wrKvdHGGcuwmPitj4ZscVlhtwV0RMfCHnE88_7V4fb6s15CQmb-6K2PxlLLGTyCt9n69k4z_xzskZtrYtDcOGjaQ"/>
+</a>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-secondary-container font-bold border-b-2 border-secondary-container pb-1 font-body-md" href="#">Αρχική</a>
+<a class="text-white hover:text-secondary-container transition-colors font-body-md" href="#services">Υπηρεσίες</a>
+<a class="text-white hover:text-secondary-container transition-colors font-body-md" href="#cases">Μελέτες</a>
+<a class="text-white hover:text-secondary-container transition-colors font-body-md" href="#blog">Ενημέρωση</a>
+<a class="text-white hover:text-secondary-container transition-colors font-body-md" href="#about">Σχετικά</a>
+<a class="text-white hover:text-secondary-container transition-colors font-body-md" href="#contact">Επικοινωνία</a>
+<span class="text-white font-label-md px-3 py-1 bg-white/10 rounded-full cursor-pointer hover:bg-white/20 transition-colors">EN / EL</span>
+</div>
+<button class="md:hidden text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div></nav>
+<!-- Section 2: Hero Section -->
+<header class="min-h-screen flex items-center pt-[70px] px-margin-container">
+<div class="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-gutter items-center">
+<div class="space-y-8">
+<h1 class="font-headline-xl text-headline-xl text-primary">
+                Συμβουλός Τεχνικών Έργων: Ανάλυση, Σχεδίαση &amp; Υλοποίηση Λύσεων
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                Βοηθώ επιχειρήσεις να μετατρέψουν σύνθετες τεχνικές προκλήσεις σε ανταγωνιστικά πλεονεκτήματα. Από τη στρατηγική ανάλυση μέχρι την παράδοση κώδικα, είμαι ο συνεργάτης που εγγυάται το αποτέλεσμα.
+            </p>
+<div class="space-y-4">
+<a class="btn-primary-orange h-[56px] px-8 font-label-md rounded-lg" href="#contact">
+                    Ζητήστε Ανάλυση Δωρεάν (30 λεπτά)
+                </a>
+<div class="flex flex-wrap gap-x-6 gap-y-2 pt-2">
+<div class="flex items-center gap-2 text-sm text-on-surface-variant"><span class="material-symbols-outlined text-accent-teal text-lg">check_circle</span> 15+ Χρόνια Εμπειρίας</div>
+<div class="flex items-center gap-2 text-sm text-on-surface-variant"><span class="material-symbols-outlined text-accent-teal text-lg">check_circle</span> 100+ Projects</div>
+<div class="flex items-center gap-2 text-sm text-on-surface-variant"><span class="material-symbols-outlined text-accent-teal text-lg">check_circle</span> Εγγυημένο ROI</div>
+</div>
+</div>
+</div>
+<div class="hidden md:block relative h-[500px] w-full">
+<div class="absolute inset-0 bg-primary/5 rounded-xl border border-outline-variant transform rotate-2"></div>
+<div class="absolute inset-0 bg-white rounded-xl shadow-2xl overflow-hidden border border-outline-variant p-4">
+<div class="w-full h-full bg-cover bg-center rounded-lg shadow-inner" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCmAjd_HTFGnVbptZv59W3VrktQrT9LWnTBPhYtrNXNSUrPx03hIQ1WMckJKmjPcP7xB72lT377AjjqtREkqffwwzJXTx8ERX_1vjH2ch5dtCu30DZt6-bLGo96g1WH1leXqAZUYgLk8n1xa6l3pj6ivPx7b78riDGDkU5MTcN8ZpiCj-NtHvh31DBbxTlKW2-FITYtHT1WkMc-I7uF5Z3rBQAUYzJEQLaqXEnTr0C0Hh7JCJw-TBpv')"></div>
+</div>
+</div>
+</div>
+</header>
+<!-- Section 7: Case Studies -->
+<section class="py-section-desktop bg-surface-bright px-margin-container" id="cases">
+<div class="max-w-7xl mx-auto">
+<div class="text-center md:text-left mb-12">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-4">Μελέτες Περιπτώσεων</h2>
+<p class="text-on-surface-variant max-w-2xl">Πραγματικά προβλήματα που λύθηκαν με στρατηγική και τεχνολογία.</p>
+</div>
+<div class="grid md:grid-cols-3 gap-gutter">
+<!-- Card 1: Attiki Odos -->
+<article class="case-card bg-white rounded-xl overflow-hidden flex flex-col">
+<div class="h-[200px] overflow-hidden">
+<div class="case-image w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBqHiyi06DDfwLc2WQeNIOYdoFMHExFBCeQLwZbuMC4V9BW6eWttaYdP_232Jyd6m5__Kl5-hCnelZlf5onmFEhLnqXRY6V48kkVcD4OlrJlE6Thim507p2fKKF1K4TKYdR9mENyxOisXPGYxB3YvbbonmPzVQ4Ie5STyhnklHCVGB-zfHTXBCOC341I18iFkRAMFbdJt3gI5XTQpziVw9gE_dHy-bi-s-eSYeeR3Gkii4p_JCUyN53')"></div>
+</div>
+<div class="p-6 flex-grow flex flex-col">
+<span class="text-[10px] font-bold uppercase tracking-widest text-secondary-container mb-2">Automation &amp; Workflows</span>
+<h3 class="font-headline-md text-[20px] text-primary mb-3 leading-tight">Λύνοντας Workflow Chaos - Attiki Odos Twitter Automation</h3>
+<p class="text-on-surface-variant text-sm mb-6 flex-grow">Ένας μεγάλος όμιλος με χειροκίνητες κοινωνικές διαδικασίες. Χτίσαμε αυτοματοποιημένο σύστημα που επαναχρησιμοποιεί περιεχόμενο και ποστάρει σε real-time.</p>
+<div class="grid grid-cols-3 gap-2 py-4 border-y border-outline-variant mb-6">
+<div class="text-center"><p class="text-primary font-bold text-sm">250+</p><p class="text-[10px] text-on-surface-variant uppercase">Αναρτήσεις</p></div>
+<div class="text-center"><p class="text-primary font-bold text-sm">€3,500</p><p class="text-[10px] text-on-surface-variant uppercase">Επένδυση</p></div>
+<div class="text-center"><p class="text-primary font-bold text-sm">3 Εβδ.</p><p class="text-[10px] text-on-surface-variant uppercase">Διάρκεια</p></div>
+</div>
+<a class="sliding-link text-sm mt-auto" href="#">Διαβάστε την Μελέτη <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+</div>
+</article>
+<!-- Card 2: Metaixmio -->
+<article class="case-card bg-white rounded-xl overflow-hidden flex flex-col">
+<div class="h-[200px] overflow-hidden">
+<div class="case-image w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAxhm8CyU_TNtqfmm3qV0qk6aYHQP42VULh0p9V7Fcs3LrDgFkEvndZCpFKnUTEUlPHC55cptum-fARZVx105OT-vfnbG0AxhyVd2qHOzWYghlOzVtTIIDFMYwwAgq4VaoFeAU-Ycg49IgOIL7OQSuJd1KzOfcajitegSSjElDVtJ1mkAR36LTtNhJVMvMKfB3XCooY0Ap5PmTf4t3kytTBHScNgivwmJ9F4aqEmuIG77QbOfnmJRR2')"></div>
+</div>
+<div class="p-6 flex-grow flex flex-col">
+<span class="text-[10px] font-bold uppercase tracking-widest text-secondary-container mb-2">SaaS MVP</span>
+<h3 class="font-headline-md text-[20px] text-primary mb-3 leading-tight">SaaS MVP Launch σε Χρόνο Ρεκόρ - Metaixmio</h3>
+<p class="text-on-surface-variant text-sm mb-6 flex-grow">Ανάγκη για γρήγορο market entry με Agile Development &amp; Serverless Architecture. Launch σε 8 εβδομάδες με 2000 users.</p>
+<div class="grid grid-cols-3 gap-2 py-4 border-y border-outline-variant mb-6">
+<div class="text-center"><p class="text-primary font-bold text-sm">2000+</p><p class="text-[10px] text-on-surface-variant uppercase">Users</p></div>
+<div class="text-center"><p class="text-primary font-bold text-sm">€18,000</p><p class="text-[10px] text-on-surface-variant uppercase">Επένδυση</p></div>
+<div class="text-center"><p class="text-primary font-bold text-sm">2 Μήνες</p><p class="text-[10px] text-on-surface-variant uppercase">Διάρκεια</p></div>
+</div>
+<a class="sliding-link text-sm mt-auto" href="#">Διαβάστε την Μελέτη <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+</div>
+</article>
+<!-- Card 3: Real Estate Automation -->
+<article class="case-card bg-white rounded-xl overflow-hidden flex flex-col">
+<div class="h-[200px] overflow-hidden">
+<div class="case-image w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBYnV74UIxW0TXfOPdIuNxDYuDspvtBiQlhDfsQQfEt6QRg-BE7tvnbjmNvO3NK2SRRWgX-Xw88j016xy5ug4KBgWNIUrODnkBVAdwtuuK8RgIucFe-j_U3eVDJqyZK-ni1lKXGh4uNxI_von_SIM9JBE5b5L2dUQWoM_m0XsQtVZ3QB5CTaROBjLHTyPTr-vPwQA6Z3vr65csxZGOZd3d1Gt3jwDNnarua8DtC5poo3-OmtlRsXgu2')"></div>
+</div>
+<div class="p-6 flex-grow flex flex-col">
+<span class="text-[10px] font-bold uppercase tracking-widest text-secondary-container mb-2">CRM Integration</span>
+<h3 class="font-headline-md text-[20px] text-primary mb-3 leading-tight">Workflow Automation για Real Estate Agency</h3>
+<p class="text-on-surface-variant text-sm mb-6 flex-grow">Αυτοματοποιημένη καταχώρηση leads μέσω CRM Integration &amp; Automated Funnels. Εξοικονόμηση 15 ωρών/εβδομάδα.</p>
+<div class="grid grid-cols-3 gap-2 py-4 border-y border-outline-variant mb-6">
+<div class="text-center"><p class="text-primary font-bold text-sm">15 ώρες</p><p class="text-[10px] text-on-surface-variant uppercase">Κέρδος/Εβδ</p></div>
+<div class="text-center"><p class="text-primary font-bold text-sm">€4,500</p><p class="text-[10px] text-on-surface-variant uppercase">Επένδυση</p></div>
+<div class="text-center"><p class="text-primary font-bold text-sm">1 Μήνας</p><p class="text-[10px] text-on-surface-variant uppercase">Διάρκεια</p></div>
+</div>
+<a class="sliding-link text-sm mt-auto" href="#">Διαβάστε την Μελέτη <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- Section 10: Final CTA Section -->
+<section class="py-section-desktop bg-primary text-on-primary px-margin-container overflow-hidden relative" id="contact">
+<div class="absolute inset-0 opacity-10 pointer-events-none">
+<div class="absolute top-0 right-0 w-96 h-96 bg-secondary-container rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
+</div>
+<div class="max-w-4xl mx-auto text-center relative z-10">
+<h2 class="font-headline-lg text-headline-lg mb-6">Έτοιμος να Λύσεις το Τεχνικό σου Πρόβλημα;</h2>
+<p class="font-body-lg text-white/80 mb-12">Κλείστε μια δωρεάν συμβουλευτική κλήση 30 λεπτών. Χωρίς δεσμεύσεις, μόνο καθαρές απαντήσεις.</p>
+<div class="flex flex-col md:flex-row gap-gutter justify-center items-center">
+<button class="btn-primary-orange h-[60px] px-10 font-label-md rounded-lg shadow-xl">Κλείσε Δωρεάν Κλήση</button>
+<a class="text-white hover:text-secondary-container transition-colors font-body-md border-b border-white/30 pb-1" href="mailto:hello@sidebyside.gr">hello@sidebyside.gr</a>
+</div>
+</div>
+</section>
+<!-- Section 11: Footer -->
+<footer class="w-full py-section-desktop bg-primary text-white px-margin-container border-t border-white/10">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-7xl mx-auto">
+<div class="space-y-6">
+<img alt="Side by Side Web Studio" class="h-10 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABjnDBL0DRymtP7h4ZnT1-uqLySMlcRjXRiDHeqV_yhsB55ut_4ffNgmpsHFYr13kwiZiy4z7IGwiwUr6cvVdScfPqGuQ9IRuVHMs7hTxfW0yj-R8KF8QYdb-W4zWYfsQBp0QidTFh4WhjCVn9PihwOT0C3TU00oRZChKF6D_T8nJ7OlxynZntOuAOvdpAAnttgfnI5ZDhpMtvfTCwu-qHviQWGh2Qgk-5EK49Pntwmtp6RPnkUKY34uH3R5z43Cvryg"/>
+<p class="text-white/70 text-sm leading-relaxed">Στρατηγικός σχεδιασμός και ανάπτυξη λογισμικού για επιχειρήσεις που απαιτούν το καλύτερο.</p>
+</div>
+<div>
+<h5 class="font-label-md mb-6 uppercase tracking-widest text-secondary-container font-bold">Πλοήγηση</h5>
+<ul class="space-y-3">
+<li><a class="text-white/80 hover:text-secondary-container transition-colors text-sm" href="#services">Υπηρεσίες</a></li>
+<li><a class="text-white/80 hover:text-secondary-container transition-colors text-sm" href="#cases">Μελέτες Περιπτώσεων</a></li>
+<li><a class="text-white/80 hover:text-secondary-container transition-colors text-sm" href="#about">Σχετικά με εμάς</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-label-md mb-6 uppercase tracking-widest text-secondary-container font-bold">Social</h5>
+<ul class="space-y-3">
+<li><a class="text-white/80 hover:text-secondary-container transition-colors text-sm" href="#">LinkedIn</a></li>
+<li><a class="text-white/80 hover:text-secondary-container transition-colors text-sm" href="#">Twitter (X)</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-label-md mb-6 uppercase tracking-widest text-secondary-container font-bold">Επικοινωνία</h5>
+<p class="text-white/80 mb-2 text-sm">Αθήνα, Ελλάδα</p>
+<p class="text-white/80 text-sm mb-4">info@sidebyside.gr</p>
+</div>
+</div>
+<div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs text-white/60">
+<p>© 2024 Side by Side Web Studio. All rights reserved.</p>
+<div class="flex gap-6 mt-4 md:mt-0">
+<a class="hover:text-secondary-container" href="#">Πολιτική Απορρήτου</a>
+<a class="hover:text-secondary-container" href="#">Όροι Χρήσης</a>
+</div>
+</div>
+</footer>
+</body></html>

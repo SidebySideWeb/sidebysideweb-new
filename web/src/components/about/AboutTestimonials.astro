@@ -1,0 +1,62 @@
+---
+import {initials} from '../../lib/cms'
+import type {AboutPage, Testimonial} from '../../lib/types'
+
+interface Props {
+  about: AboutPage
+  testimonials: Testimonial[]
+}
+
+const {about, testimonials} = Astro.props
+---
+
+{
+  testimonials.length ? (
+    <section class="scroll-reveal bg-surface py-section-mobile md:py-section-desktop">
+      <div class="mx-auto max-w-7xl px-margin-container">
+        <h2 class="mb-16 text-center text-headline-md text-primary">
+          {about.testimonialsHeadline ?? 'Τι λένε οι πελάτες'}
+        </h2>
+        <div class="grid grid-cols-1 gap-gutter md:grid-cols-3">
+          {
+            testimonials.map((item, index) => (
+              <article
+                class={`scroll-reveal stagger-${index + 1} rounded-xl border border-outline-variant bg-white p-8 shadow-sm`}
+              >
+                <div class="mb-4 flex text-secondary-container">
+                  {
+                    Array.from({length: item.rating ?? 5}).map(() => (
+                      <span
+                        class="material-symbols-outlined"
+                        style="font-variation-settings: 'FILL' 1;"
+                      >
+                        star
+                      </span>
+                    ))
+                  }
+                </div>
+                {item.quote ? (
+                  <p class="mb-6 text-body-md italic text-on-surface-variant">"{item.quote}"</p>
+                ) : null}
+                <div class="flex items-center gap-4">
+                  <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary font-bold text-on-primary">
+                    {initials(item.author)}
+                  </div>
+                  <div>
+                    {item.author ? (
+                      <span class="block text-label-md text-primary">{item.author}</span>
+                    ) : null}
+                    <span class="text-[12px] text-text-muted">
+                      {item.role}
+                      {item.company ? `, ${item.company}` : ''}
+                    </span>
+                  </div>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  ) : null
+}

@@ -1,0 +1,43 @@
+---
+import {DEFAULT_LOCALE, type SiteLocale} from '../lib/i18n'
+import type {ValueProposition} from '../lib/types'
+import {getUiStrings} from '../lib/ui-strings'
+
+interface Props {
+  valueProposition: ValueProposition
+  locale?: SiteLocale
+}
+
+const {valueProposition, locale = DEFAULT_LOCALE} = Astro.props
+const ui = getUiStrings(locale)
+const cards = [...(valueProposition.cards ?? [])].sort(
+  (a, b) => (a.order ?? 0) - (b.order ?? 0),
+)
+---
+
+<section class="mx-auto max-w-7xl px-margin-container py-section-mobile md:py-section-desktop">
+  <div class="scroll-reveal mb-16 text-center">
+    <h2 class="mb-4 text-headline-lg text-primary">{valueProposition.headline}</h2>
+    <p class="mx-auto max-w-2xl text-on-surface-variant">
+      {ui.valuePropositionSubtitle}
+    </p>
+  </div>
+  <div class="grid gap-gutter md:grid-cols-3">
+    {
+      cards.map((card, index) => (
+        <div class={`scroll-reveal card-elevated space-y-4 rounded-xl p-8 stagger-${index + 1}`}>
+          <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-secondary/10 text-secondary">
+            <span
+              class="material-symbols-outlined text-3xl"
+              style="font-variation-settings: 'FILL' 1;"
+            >
+              {card.icon}
+            </span>
+          </div>
+          <h3 class="text-[24px] font-semibold text-primary">{card.title}</h3>
+          <p class="text-on-surface-variant">{card.description}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>

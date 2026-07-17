@@ -1,0 +1,19 @@
+---
+import {CAL_COM_BOOKING_URL} from '../lib/cal-com'
+
+interface Props {
+  label: string
+  class?: string
+}
+
+const {label, class: className = 'btn-primary-orange inline-flex rounded-lg px-8 py-3'} = Astro.props
+---
+
+<a
+  class={className}
+  href={CAL_COM_BOOKING_URL}
+  rel="noopener noreferrer"
+  target="_blank"
+>
+  {label}
+</a>

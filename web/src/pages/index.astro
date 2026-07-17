@@ -1,0 +1,12 @@
+---
+import HomePageView from '../components/pages/HomePageView.astro'
+import {getHomePageData} from '../lib/cms'
+import {resolvePageLocale} from '../lib/i18n'
+
+export const prerender = false
+
+const locale = resolvePageLocale(Astro.currentLocale)
+const data = await getHomePageData(locale)
+---
+
+<HomePageView data={data} locale={locale} />

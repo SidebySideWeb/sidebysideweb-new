@@ -1,0 +1,41 @@
+---
+import {blocksToPlainText} from '../lib/cms'
+import {DEFAULT_LOCALE, type SiteLocale} from '../lib/i18n'
+import type {Faq} from '../lib/types'
+import {getUiStrings} from '../lib/ui-strings'
+
+interface Props {
+  faqs: Faq[]
+  locale?: SiteLocale
+}
+
+const {faqs, locale = DEFAULT_LOCALE} = Astro.props
+const ui = getUiStrings(locale)
+---
+
+<section class="bg-surface-container-low px-margin-container py-section-mobile md:py-section-desktop">
+  <div class="mx-auto max-w-4xl">
+    <h2 class="scroll-reveal mb-12 text-center text-headline-lg text-primary">
+      {ui.faqTitle}
+    </h2>
+    <div class="space-y-4">
+      {
+        faqs.map((faq, index) => (
+          <details
+            class={`scroll-reveal group overflow-hidden rounded-xl bg-white shadow-sm stagger-${(index % 4) + 1}`}
+          >
+            <summary class="flex cursor-pointer list-none items-center justify-between p-6 font-bold text-primary">
+              <span>{faq.question}</span>
+              <span class="material-symbols-outlined transition-transform group-open:rotate-180">
+                expand_more
+              </span>
+            </summary>
+            <div class="border-t border-surface-container p-6 pt-0 text-on-surface-variant">
+              {blocksToPlainText(faq.answer)}
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

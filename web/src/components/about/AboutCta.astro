@@ -1,0 +1,36 @@
+---
+import CalBookingButton from '../CalBookingButton.astro'
+import {isBookingCta} from '../../lib/cal-com'
+import type {AboutPage} from '../../lib/types'
+
+interface Props {
+  about: AboutPage
+}
+
+const {about} = Astro.props
+const ctaLink = about.ctaLink ?? '/#contact'
+const useCalBooking = isBookingCta(ctaLink)
+const ctaClass =
+  'inline-flex rounded-lg bg-secondary-container px-10 py-5 text-[24px] font-semibold text-on-secondary shadow-xl transition-all duration-300 hover:scale-[1.05] active:scale-95'
+---
+
+<section class="scroll-reveal bg-primary py-section-mobile text-on-primary md:py-section-desktop">
+  <div class="mx-auto max-w-[800px] px-margin-container text-center">
+    <h2 class="mb-6 text-headline-xl">{about.ctaHeadline ?? 'Έτοιμος να Δουλέψουμε Μαζί;'}</h2>
+    {about.ctaDescription ? (
+      <p class="mb-10 text-body-lg text-on-primary-container">{about.ctaDescription}</p>
+    ) : null}
+    {
+      useCalBooking ? (
+        <CalBookingButton
+          class={ctaClass}
+          label={about.ctaText ?? 'Ζητήστε Δωρεάν Κλήση'}
+        />
+      ) : (
+        <a class={ctaClass} href={ctaLink}>
+          {about.ctaText ?? 'Ζητήστε Δωρεάν Κλήση'}
+        </a>
+      )
+    }
+  </div>
+</section>

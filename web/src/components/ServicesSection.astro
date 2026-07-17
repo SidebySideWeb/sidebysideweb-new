@@ -1,0 +1,61 @@
+---
+import {DEFAULT_LOCALE, type SiteLocale} from '../lib/i18n'
+import type {Service} from '../lib/types'
+import {getUiStrings} from '../lib/ui-strings'
+
+interface Props {
+  services: Service[]
+  locale?: SiteLocale
+}
+
+const {services, locale = DEFAULT_LOCALE} = Astro.props
+const ui = getUiStrings(locale)
+---
+
+<section
+  class="bg-surface-container-low px-margin-container py-section-mobile md:py-section-desktop"
+  id="services"
+>
+  <div class="mx-auto max-w-7xl">
+    <div class="scroll-reveal mb-16 text-center">
+      <h2 class="mb-4 text-headline-lg text-primary">{ui.servicesTitle}</h2>
+      <p class="mx-auto max-w-2xl text-on-surface-variant">
+        {ui.servicesSubtitle}
+      </p>
+    </div>
+    <div class="grid gap-gutter md:grid-cols-2 lg:grid-cols-3">
+      {
+        services.map((service, index) => (
+          <div
+            class={`scroll-reveal card-elevated flex flex-col justify-between rounded-xl p-8 stagger-${(index % 3) + 1}`}
+          >
+            <div>
+              <span class="material-symbols-outlined mb-4 text-3xl text-secondary">
+                {service.icon}
+              </span>
+              <h3 class="mb-2 text-[24px] font-semibold text-primary">{service.title}</h3>
+              <p class="mb-6 text-sm text-on-surface-variant">{service.description}</p>
+              <div class="mb-6 border-t border-outline-variant pt-4">
+                <div class="mb-1 flex items-center justify-between">
+                  <span class="text-xs uppercase tracking-wider text-on-surface-variant">
+                    {ui.servicesInvestment}
+                  </span>
+                  <span class="font-bold text-secondary">{service.priceLabel}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-xs uppercase tracking-wider text-on-surface-variant">
+                    {service.duration?.toLowerCase().includes('on-demand') ? ui.servicesAvailability : ui.servicesDuration}
+                  </span>
+                  <span class="text-sm">{service.duration}</span>
+                </div>
+              </div>
+            </div>
+            <a class="sliding-link text-sm" href="#contact">
+              {ui.servicesLearnMore}
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

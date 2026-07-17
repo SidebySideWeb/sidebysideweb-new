@@ -1,0 +1,60 @@
+---
+import type {AboutPage} from '../../lib/types'
+
+interface Props {
+  about: AboutPage
+}
+
+const {about} = Astro.props
+const comparisons = about.comparisons ?? []
+---
+
+{
+  comparisons.length ? (
+    <section class="scroll-reveal mx-auto max-w-7xl px-margin-container py-section-mobile md:py-section-desktop">
+      <h2 class="mb-16 text-center text-headline-md text-primary">
+        {about.comparisonHeadline ?? 'Γιατί να Επιλέξετε Εμένα;'}
+      </h2>
+      <div class="space-y-12">
+        {
+          comparisons.map((block, index) => (
+            <div
+              class={`scroll-reveal stagger-${index + 1} grid grid-cols-1 items-center gap-8 rounded-xl border border-outline-variant bg-white p-8 md:grid-cols-2`}
+            >
+              <div class="p-6 opacity-50">
+                <h4 class="mb-4 flex items-center gap-2 text-[20px] font-semibold text-on-surface-variant">
+                  <span class="material-symbols-outlined text-error">close</span>
+                  {block.negativeTitle}
+                </h4>
+                {
+                  block.negativeItems?.length ? (
+                    <ul class="space-y-3 text-body-md">
+                      {block.negativeItems.map((item) => (
+                        <li>{item}</li>
+                      ))}
+                    </ul>
+                  ) : null
+                }
+              </div>
+              <div class="rounded-lg border-l-4 border-secondary bg-primary-container p-6 text-on-primary shadow-lg">
+                <h4 class="mb-4 flex items-center gap-2 text-[20px] font-semibold text-on-primary">
+                  <span class="material-symbols-outlined text-secondary-container">check_circle</span>
+                  {block.positiveTitle}
+                </h4>
+                {
+                  block.positiveItems?.length ? (
+                    <ul class="space-y-3 text-body-md text-on-primary-container">
+                      {block.positiveItems.map((item) => (
+                        <li class="text-white">{item}</li>
+                      ))}
+                    </ul>
+                  ) : null
+                }
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  ) : null
+}

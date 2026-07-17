@@ -1,0 +1,45 @@
+---
+import '../styles/global.css'
+import type {SiteSettings} from '../lib/types'
+import {DEFAULT_LOCALE, localeHtmlLang, localizePath, type SiteLocale} from '../lib/i18n'
+import {SITE_URL} from '../lib/sanity-config'
+
+interface Props {
+  title?: string
+  description?: string
+  siteSettings: SiteSettings
+  locale?: SiteLocale
+}
+
+const {title, description, siteSettings, locale = DEFAULT_LOCALE} = Astro.props
+const pageTitle = title ? `${title} | ${siteSettings.siteName}` : siteSettings.siteName
+const pageDescription = description ?? siteSettings.description ?? ''
+const canonicalPath = Astro.url.pathname.endsWith('/')
+  ? Astro.url.pathname
+  : `${Astro.url.pathname}/`
+const elPath = localizePath(canonicalPath, 'el')
+const enPath = localizePath(canonicalPath, 'en')
+---
+
+<!doctype html>
+<html lang={localeHtmlLang(locale)}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={pageDescription} />
+    <title>{pageTitle}</title>
+    <link rel="alternate" hreflang="el" href={`${SITE_URL}${elPath}`} />
+    <link rel="alternate" hreflang="en" href={`${SITE_URL}${enPath}`} />
+    <link rel="alternate" hreflang="x-default" href={`${SITE_URL}${elPath}`} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="selection:bg-secondary-container selection:text-on-secondary-fixed">
+    <slot />
+    <script src="../scripts/micro-animations.ts"></script>
+  </body>
+</html>

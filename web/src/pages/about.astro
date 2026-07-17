@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro'
+import SiteNav from '../components/SiteNav.astro'
+import SiteFooter from '../components/SiteFooter.astro'
+import AboutHero from '../components/about/AboutHero.astro'
+import AboutPhilosophy from '../components/about/AboutPhilosophy.astro'
+import AboutStory from '../components/about/AboutStory.astro'
+import AboutWorkStyle from '../components/about/AboutWorkStyle.astro'
+import AboutStats from '../components/about/AboutStats.astro'
+import AboutComparison from '../components/about/AboutComparison.astro'
+import AboutTestimonials from '../components/about/AboutTestimonials.astro'
+import AboutCta from '../components/about/AboutCta.astro'
+import {getAboutPageData} from '../lib/cms'
+import {localizePath, resolvePageLocale} from '../lib/i18n'
+
+export const prerender = false
+
+const locale = resolvePageLocale(Astro.currentLocale)
+const {aboutPage, siteSettings} = await getAboutPageData(locale)
+const testimonials = aboutPage.featuredTestimonials ?? []
+const aboutPath = localizePath('/about', locale)
+---
+
+<Layout
+  title={aboutPage.seo?.metaTitle ?? aboutPage.headline}
+  description={aboutPage.seo?.metaDescription ?? aboutPage.intro}
+  siteSettings={siteSettings}
+  locale={locale}
+>
+  <SiteNav
+    siteSettings={siteSettings}
+    activeHref={aboutPath}
+    locale={locale}
+  />
+
+  <main class="bg-background pt-[70px]">
+    <AboutHero about={aboutPage} locale={locale} />
+    <AboutPhilosophy about={aboutPage} />
+    <AboutStory about={aboutPage} />
+    <AboutWorkStyle about={aboutPage} />
+    <AboutStats about={aboutPage} />
+    <AboutComparison about={aboutPage} />
+    <AboutTestimonials about={aboutPage} testimonials={testimonials} />
+    <AboutCta about={aboutPage} />
+  </main>
+
+  <SiteFooter locale={locale} siteSettings={siteSettings} />
+</Layout>

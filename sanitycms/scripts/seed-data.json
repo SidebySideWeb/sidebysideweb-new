@@ -1,0 +1,767 @@
+{
+  "siteSettings": {
+    "_id": "siteSettings",
+    "_type": "siteSettings",
+    "siteName": "Side by Side Web Studio",
+    "description": "Σύμβουλος Τεχνικών Έργων & Λύσεων - Ανάλυση, Σχεδίαση, Υλοποίηση",
+    "primaryColor": "#1A2847",
+    "accentColor": "#FF6B35",
+    "contactEmail": "dgeronikolos@sidebysideweb.gr",
+    "contactPhone": "+30 694 733 3086",
+    "contactAddress": "Αθήνα, Ελλάδα"
+  },
+  
+  "heroSection": {
+    "_id": "heroSection",
+    "_type": "heroSection",
+    "headline": "Συμβουλός Τεχνικών Έργων: Ανάλυση, Σχεδίαση & Υλοποίηση Λύσεων",
+    "subheading": "Βοηθώ ελληνικές επιχειρήσεις να μετατρέψουν σύνθετα τεχνικά προβλήματα σε ανταγωνιστικά πλεονεκτήματα. Από τη στρατηγική ανάλυση μέχρι την παράδοση κώδικα, είμαι ο συνεργάτης που εγγυάται το αποτέλεσμα.",
+    "ctaText": "Ζητήστε Ανάλυση Δωρεάν (30 λεπτά)",
+    "ctaLink": "#contact",
+    "trustSignals": [
+      {
+        "text": "15+ Χρόνια Εμπειρίας",
+        "icon": "check_circle"
+      },
+      {
+        "text": "Πάνω από 100 επιτυχημένα projects",
+        "icon": "check_circle"
+      },
+      {
+        "text": "Εγγυημένο ROI",
+        "icon": "check_circle"
+      }
+    ],
+    "heroImageUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuCmAjd_HTFGnVbptZv59W3VrktQrT9LWnTBPhYtrNXNSUrPx03hIQ1WMckJKmjPcP7xB72lT377AjjqtREkqffwwzJXTx8ERX_1vjH2ch5dtCu30DZt6-bLGo96g1WH1leXqAZUYgLk8n1xa6l3pj6ivPx7b78riDGDkU5MTcN8ZpiCj-NtHvh31DBbxTlKW2-FITYtHT1WkMc-I7uF5Z3rBQAUYzJEQLaqXEnTr0C0Hh7JCJw-TBpv"
+  },
+
+  "services": [
+    {
+      "_id": "service-discovery",
+      "_type": "service",
+      "title": "Technical Discovery & Analysis",
+      "slug": {
+        "current": "technical-discovery"
+      },
+      "description": "Λεπτομερής ανάλυση απαιτήσεων, feasibility study και δημιουργία τεχνικού blueprint.",
+      "icon": "insights",
+      "priceMin": 2500,
+      "priceMax": 4000,
+      "priceLabel": "Από €2.500",
+      "duration": "6-8 εβδομάδες",
+      "whatIncluded": [
+        "Full audit του τρέχοντος τεχνικού στοιχήματος",
+        "Mapping των διαδικασιών & συστημάτων",
+        "Εντοπισμός bottlenecks & απώλειας",
+        "3 επιλογές λύσης με κόστος & timeline",
+        "Λεπτομερής έκθεση + presentation"
+      ],
+      "order": 1
+    },
+    {
+      "_id": "service-design",
+      "_type": "service",
+      "title": "Solution Design & Architecture",
+      "slug": {
+        "current": "solution-design"
+      },
+      "description": "Σχεδιασμός UI/UX flows και αρχιτεκτονική backend συστημάτων για μέγιστη ταχύτητα.",
+      "icon": "design_services",
+      "priceMin": 3500,
+      "priceMax": 7000,
+      "priceLabel": "Από €3.500",
+      "duration": "2-3 εβδομάδες",
+      "whatIncluded": [
+        "Technical Specification Document (20-30 σελίδες)",
+        "Architecture diagrams",
+        "Data flow & integration mappings",
+        "Timeline & resource requirements",
+        "Risk assessment & mitigation plan"
+      ],
+      "order": 2
+    },
+    {
+      "_id": "service-implementation",
+      "_type": "service",
+      "title": "Custom Implementation",
+      "slug": {
+        "current": "custom-implementation"
+      },
+      "description": "Ανάπτυξη custom εφαρμογών και portals με τις πιο σύγχρονες τεχνολογίες (Next.js, Node, Cloud).",
+      "icon": "terminal",
+      "priceMin": 8000,
+      "priceMax": 50000,
+      "priceLabel": "Βάσει Scope",
+      "duration": "Agile Sprints",
+      "whatIncluded": [
+        "Full-stack development",
+        "Testing & Quality Assurance",
+        "Deployment & monitoring setup",
+        "Team training & documentation",
+        "30-60 ημέρες free support"
+      ],
+      "order": 3
+    },
+    {
+      "_id": "service-retainer",
+      "_type": "service",
+      "title": "Strategic Retainer",
+      "slug": {
+        "current": "strategic-retainer"
+      },
+      "description": "Συνεχής τεχνική καθοδήγηση και ανάπτυξη νέων χαρακτηριστικών για την εξέλιξη του προϊόντος σας.",
+      "icon": "history_edu",
+      "priceMin": 1800,
+      "priceMax": 5000,
+      "priceLabel": "Από €1.800/μήνα",
+      "duration": "Min. 6 Μήνες",
+      "whatIncluded": [
+        "Technical architecture guidance",
+        "Technology decisions",
+        "Project oversight & timeline management",
+        "Team leadership & mentoring",
+        "Stakeholder communication"
+      ],
+      "order": 4
+    },
+    {
+      "_id": "service-consulting",
+      "_type": "service",
+      "title": "Technical Consulting",
+      "slug": {
+        "current": "technical-consulting"
+      },
+      "description": "Συμβουλευτική για digital transformation, επιλογή τεχνολογιών και βελτιστοποίηση workflows.",
+      "icon": "psychology",
+      "priceMin": 150,
+      "priceMax": 200,
+      "priceLabel": "€150 / ώρα",
+      "duration": "On-demand",
+      "whatIncluded": [
+        "Architecture questions",
+        "Technology decisions",
+        "Process optimization",
+        "Quick troubleshooting",
+        "Flexible scheduling"
+      ],
+      "order": 5
+    },
+    {
+      "_id": "service-support",
+      "_type": "service",
+      "title": "Post-Implementation Support",
+      "slug": {
+        "current": "post-implementation-support"
+      },
+      "description": "Μηνιαία συντήρηση, monitoring και optimization των deployed systems.",
+      "icon": "support_agent",
+      "priceMin": 300,
+      "priceMax": 600,
+      "priceLabel": "€300-600/μήνα",
+      "duration": "Ongoing",
+      "whatIncluded": [
+        "System monitoring & health checks",
+        "Bug fixes & minor updates",
+        "Performance optimization",
+        "Monthly strategy calls",
+        "Included work: 3-8 ώρες/μήνα"
+      ],
+      "order": 6
+    }
+  ],
+
+  "processSteps": [
+    {
+      "_id": "process-1",
+      "_type": "processStep",
+      "stepNumber": 1,
+      "title": "Κατανοώ το Πρόβλημά σας",
+      "description": "Πρώτα κλήση: 30 λεπτά, δωρεάν, χωρίς κανένα κόστος. Ακούω προσεκτικά το πρόβλημά σας και ρωτώ τις σωστές ερωτήσεις.",
+      "icon": "listening"
+    },
+    {
+      "_id": "process-2",
+      "_type": "processStep",
+      "stepNumber": 2,
+      "title": "Αναλύω τα Δεδομένα",
+      "description": "Κάνω ό,τι χρειάζεται για να κατανοήσω πλήρως. Τι systems έχετε; Πόσο χρόνο χαλάτε; Πόσο χάνετε;",
+      "icon": "analytics"
+    },
+    {
+      "_id": "process-3",
+      "_type": "processStep",
+      "stepNumber": 3,
+      "title": "Σχεδιάζω τη Λύση",
+      "description": "Δεν χτίζω χωρίς σχέδιο. Δημιουργώ Technical Spec, diagrams, timeline και exact cost breakdown.",
+      "icon": "design_services"
+    },
+    {
+      "_id": "process-4",
+      "_type": "processStep",
+      "stepNumber": 4,
+      "title": "Υλοποιώ & Υποστηρίζω",
+      "description": "Χτίζω σε phases: Development, Testing, Staging, Go-Live, Support. Παίρνετε updates κάθε εβδομάδα.",
+      "icon": "rocket_launch"
+    }
+  ],
+
+  "caseStudies": [
+    {
+      "_id": "case-study-1",
+      "_type": "caseStudy",
+      "title": "Λύνοντας Inventory Chaos σε Δυναμικό E-Shop",
+      "slug": {
+        "current": "inventory-chaos-ecommerce"
+      },
+      "summary": "Ένα growing e-shop με 8+ ώρες/ημέρα χειροκίνητη ενημέρωση inventory. Λύσαμε με real-time ERP sync.",
+      "category": "erp-integration",
+      "order": 1,
+      "heroMainResult": "40%",
+      "featuredImageUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuBYnV74UIxW0TXfOPdIuNxDYuDspvtBiQlhDfsQQfEt6QRg-BE7tvnbjmNvO3NK2SRRWgX-Xw88j016xy5ug4KBgWNIUrODnkBVAdwtuuK8RgIucFe-j_U3eVDJqyZK-ni1lKXGh4uNxI_von_SIM9JBE5b5L2dUQWoM_m0XsQtVZ3QB5CTaROBjLHTyPTr-vPwQA6Z3vr65csxZGOZd3d1Gt3jwDNnarua8DtC5poo3-OmtlRsXgu2",
+      "cardStats": [
+        {"value": "40%", "label": "Μείωση Εργασίας"},
+        {"value": "€12.000", "label": "Επένδυση"},
+        {"value": "6 Εβδ.", "label": "Διάρκεια"}
+      ],
+      "problem": {
+        "title": "Χαμηλή ορατότητα inventory",
+        "description": "Ένα growing e-shop με φυσικά καταστήματα + ηλεκτρονικό κατάστημα. Καμία σύνδεση μεταξύ του ERP (διαχείριση αποθήκης) και του WooCommerce.",
+        "impact": "8+ ώρες/ημέρα χειροκίνητη εργασία, 5-10 υπερπωλήσεις/εβδομάδα, €3,000-5,000/μήνα χαμένα έσοδα",
+        "bullets": [
+          "8+ ώρες/ημέρα χειροκίνητη ενημέρωση stock",
+          "5-10 υπερπωλήσεις ανά εβδομάδα",
+          "€3,000-5,000/μήνα χαμένα έσοδα από λάθη inventory"
+        ],
+        "visualizationLabel": "Βασική Γραμμή Απόδοσης"
+      },
+      "solution": {
+        "title": "Real-time ERP ↔ WooCommerce Sync",
+        "description": "Χτίσαμε ένα σύστημα που συγχρονίζει αυτόματα inventory, pricing, και παρεμποδίζει αυτόματα υπερπωλήσεις.",
+        "technologies": [
+          "Make.com for orchestration",
+          "Custom Node.js API",
+          "WooCommerce REST API",
+          "ERP native APIs"
+        ],
+        "phases": [
+          {
+            "title": "Discovery & Mapping",
+            "description": "Ανάλυση ERP και WooCommerce data flows, identification sync points.",
+            "order": 1
+          },
+          {
+            "title": "Integration Build",
+            "description": "Node.js middleware + Make.com orchestration για real-time sync.",
+            "order": 2
+          },
+          {
+            "title": "Testing & Go-Live",
+            "description": "Staging tests, overselling prevention rules, production rollout.",
+            "order": 3
+          }
+        ]
+      },
+      "results": {
+        "summary": "Real-time inventory, 40% μείωση χειροκίνητης εργασίας, zero overselling, €2,500+ αυξημένα έσοδα/μήνα",
+        "metrics": [
+          {
+            "label": "Μείωση χειροκίνητης εργασίας",
+            "value": "40%",
+            "comparison": "8h → 5h/day"
+          },
+          {
+            "label": "Overselling incidents",
+            "value": "0",
+            "comparison": "ήταν 5-10/week"
+          },
+          {
+            "label": "Αυξημένα έσοδα",
+            "value": "€2,500+",
+            "comparison": "ανά μήνα"
+          },
+          {
+            "label": "ROI Payback",
+            "value": "5 μήνες",
+            "comparison": "απόσβεση επένδυσης"
+          }
+        ]
+      },
+      "investment": {
+        "amount": "€12.000",
+        "timeline": "6 εβδομάδες",
+        "breakdown": "Discovery €2,500 + Design €3,500 + Implementation €6,000",
+        "roi": "5 μήνες"
+      },
+      "testimonial": {
+        "quote": "Πριν, ήταν καθημερινό που κάτι γαμνωνόταν με το inventory. Τώρα τρέχει μόνο του. Χρειάστηκε 5 μήνες να πληρώσουμε την επένδυση και τώρα έχουμε €2,500+ κέρδος κάθε μήνα.",
+        "author": "Νίκος Κ.",
+        "role": "E-Commerce Manager",
+        "company": "Retailer με 3 καταστήματα"
+      },
+      "relatedServices": ["service-discovery", "service-design", "service-implementation"],
+      "seo": {
+        "metaTitle": "Inventory Chaos E-Shop | Case Study",
+        "metaDescription": "Real-time ERP ↔ WooCommerce sync που μείωσε τη χειροκίνητη εργασία κατά 40%."
+      },
+      "featured": true
+    },
+    {
+      "_id": "case-study-2",
+      "_type": "caseStudy",
+      "title": "SaaS MVP Launch σε Χρόνο Ρεκόρ",
+      "slug": {
+        "current": "saas-mvp-launch"
+      },
+      "summary": "Pre-seed startup με ιδέα αλλά χωρίς τεχνική ομάδα. Χτίσαμε full MVP σε 16 εβδομάδες.",
+      "category": "saas-mvp",
+      "order": 2,
+      "heroMainResult": "250+",
+      "featuredImageUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuAxhm8CyU_TNtqfmm3qV0qk6aYHQP42VULh0p9V7Fcs3LrDgFkEvndZCpFKnUTEUlPHC55cptum-fARZVx105OT-vfnbG0AxhyVd2qHOzWYghlOzVtTIIDFMYwwAgq4VaoFeAU-Ycg49IgOIL7OQSuJd1KzOfcajitegSSjElDVtJ1mkAR36LTtNhJVMvMKfB3XCooY0Ap5PmTf4t3kytTBHScNgivwmJ9F4aqEmuIG77QbOfnmJRR2",
+      "cardStats": [
+        {"value": "250+", "label": "Beta Users"},
+        {"value": "€38.000", "label": "Επένδυση"},
+        {"value": "16 Εβδ.", "label": "Διάρκεια"}
+      ],
+      "problem": {
+        "title": "Startup χωρίς τεχνική δύναμη",
+        "description": "Pre-seed startup με πολύ καλή ιδέα για SaaS (project management tool). Κανένας developer στην ομάδα.",
+        "impact": "Ανάγκη να αποδείξουν την ιδέα γρήγορα με limited budget (€40k max)",
+        "bullets": [
+          "Καμία εσωτερική τεχνική ομάδα",
+          "Περιορισμένο budget €40k max",
+          "Ανάγκη γρήγορης απόδειξης product-market fit"
+        ],
+        "visualizationLabel": "Time to Market"
+      },
+      "solution": {
+        "title": "Full-stack MVP Build",
+        "description": "1. Discovery & requirements analysis 2. Technical design (Next.js + PostgreSQL) 3. Fast MVP development 4. Beta launch & feedback integration",
+        "technologies": [
+          "Frontend: Next.js + React",
+          "Backend: PostgreSQL + Prisma ORM",
+          "Auth: NextAuth",
+          "Deployment: Vercel",
+          "Payments: Stripe (for future)"
+        ],
+        "phases": [
+          {
+            "title": "Discovery & Design",
+            "description": "Requirements analysis, wireframes, technical architecture (Next.js + PostgreSQL).",
+            "order": 1
+          },
+          {
+            "title": "MVP Development",
+            "description": "Core features, auth, dashboard, weekly sprint deliveries.",
+            "order": 2
+          },
+          {
+            "title": "Beta Launch",
+            "description": "Production deploy, user onboarding, feedback integration.",
+            "order": 3
+          }
+        ]
+      },
+      "results": {
+        "summary": "MVP live σε 16 εβδομάδες, production-ready code, 250+ beta users, 90% retention",
+        "metrics": [
+          {
+            "label": "Beta users",
+            "value": "250+",
+            "comparison": "first month"
+          },
+          {
+            "label": "Retention rate",
+            "value": "90%",
+            "comparison": "month-over-month"
+          },
+          {
+            "label": "Time to market",
+            "value": "16 weeks",
+            "comparison": "on budget"
+          },
+          {
+            "label": "Cost efficiency",
+            "value": "€38k",
+            "comparison": "vs €80-120k typical"
+          }
+        ]
+      },
+      "investment": {
+        "amount": "€38.000",
+        "timeline": "20 εβδομάδες (4.5 μήνες)",
+        "breakdown": "Discovery & Design €8,500 + MVP Development €29,500",
+        "roi": "Funding secured"
+      },
+      "testimonial": {
+        "quote": "Δεν θα ήμασταν εδώ χωρίς τη δουλειά του Dimitris. Το MVP ήταν ακριβώς ό,τι χρειαζόμαστε. Τώρα έχουμε πελάτες και funding.",
+        "author": "Μαρία Π.",
+        "role": "CEO",
+        "company": "FocusFlow"
+      },
+      "relatedServices": ["service-discovery", "service-design", "service-implementation"],
+      "seo": {
+        "metaTitle": "SaaS MVP Launch | Case Study",
+        "metaDescription": "Full-stack MVP σε 16 εβδομάδες με 250+ beta users και 90% retention."
+      },
+      "featured": true
+    },
+    {
+      "_id": "case-study-3",
+      "_type": "caseStudy",
+      "title": "Workflow Automation για Real Estate Agency",
+      "slug": {
+        "current": "workflow-automation-real-estate"
+      },
+      "summary": "Digital agency με 30% του χρόνου σε ημι-χειροκίνητα admin tasks. Αυτοματοποιήσαμε τα πάντα.",
+      "category": "automation-workflows",
+      "order": 3,
+      "heroMainResult": "30%",
+      "featuredImageUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuBqHiyi06DDfwLc2WQeNIOYdoFMHExFBCeQLwZbuMC4V9BW6eWttaYdP_232Jyd6m5__Kl5-hCnelZlf5onmFEhLnqXRY6V48kkVcD4OlrJlE6Thim507p2fKKF1K4TKYdR9mENyxOisXPGYxB3YvbbonmPzVQ4Ie5STyhnklHCVGB-zfHTXBCOC341I18iFkRAMFbdJt3gI5XTQpziVw9gE_dHy-bi-s-eSYeeR3Gkii4p_JCUyN53",
+      "cardStats": [
+        {"value": "30%", "label": "Productivity"},
+        {"value": "€8.000", "label": "Επένδυση"},
+        {"value": "4 Εβδ.", "label": "Διάρκεια"}
+      ],
+      "problem": {
+        "title": "Ημι-χειροκίνητες διαδικασίες",
+        "description": "Digital agency με 15 employees. 30% του χρόνου χαλάει σε ημι-χειροκίνητα admin tasks: onboarding, project setup, reporting, invoice tracking.",
+        "impact": "Χαμηλή παραγωγικότητα, συχνά λάθη, high team stress, δύσκολο να κλιμακώσουν",
+        "bullets": [
+          "30% του χρόνου σε admin tasks",
+          "Συχνά λάθη σε onboarding & reporting",
+          "Δύσκολη κλιμάκωση χωρίς αυτοματοποίηση"
+        ],
+        "visualizationLabel": "Productivity Gain"
+      },
+      "solution": {
+        "title": "Smart Automation Stack",
+        "description": "Workflows για: Client Onboarding (auto-create project, send emails), Project Setup (auto-copy templates, assign tasks), Weekly Reporting (auto-pull data, send reports), Payment Tracking (auto-remind, alert if overdue)",
+        "technologies": [
+          "Make.com orchestration",
+          "Zapier integrations",
+          "Google Sheets automation",
+          "Slack integration",
+          "Email automation"
+        ],
+        "phases": [
+          {
+            "title": "Process Audit",
+            "description": "Mapping όλων των ημι-χειροκίνητων workflows και pain points.",
+            "order": 1
+          },
+          {
+            "title": "Automation Build",
+            "description": "Make.com + Zapier flows για onboarding, reporting, payments.",
+            "order": 2
+          },
+          {
+            "title": "Team Training",
+            "description": "Documentation, handover, monitoring setup.",
+            "order": 3
+          }
+        ]
+      },
+      "results": {
+        "summary": "30% αύξηση παραγωγικότητας, 10 ώρες/εβδομάδα εξοικονόμηση, μηδενικά λάθη, καλύτερο κλίμα στην ομάδα",
+        "metrics": [
+          {
+            "label": "Αύξηση παραγωγικότητας",
+            "value": "30%",
+            "comparison": "συνολική απόδοση ομάδας"
+          },
+          {
+            "label": "Χρόνος που εξοικονομήθηκε",
+            "value": "10 ώρες",
+            "comparison": "ανά εβδομάδα"
+          },
+          {
+            "label": "Ανθρώπινα λάθη",
+            "value": "0",
+            "comparison": "πλήρως αυτοματοποιημένα"
+          },
+          {
+            "label": "Ετήσια εξοικονόμηση",
+            "value": "€26.000",
+            "comparison": "εκτιμώμενη ετήσια"
+          }
+        ]
+      },
+      "investment": {
+        "amount": "€8.000",
+        "timeline": "4 εβδομάδες",
+        "breakdown": "Analysis & Setup €8,000",
+        "roi": "3 μήνες"
+      },
+      "testimonial": {
+        "quote": "Οι άνθρωποί μας λένε ότι νιώθουν σαν να έχουν έναν βοηθό. Όλες οι ημι-χειροκίνητες δουλειές γίνονται αυτόματα. Περισσότερη ώρα για πραγματική δουλειά.",
+        "author": "Κώστας Β.",
+        "role": "Operations Manager",
+        "company": "Digital Agency"
+      },
+      "relatedServices": ["service-discovery", "service-implementation", "service-support"],
+      "seo": {
+        "metaTitle": "Workflow Automation Real Estate | Case Study",
+        "metaDescription": "Smart automation stack που αύξησε την παραγωγικότητα κατά 30% και εξοικονόμησε 10 ώρες/εβδομάδα."
+      },
+      "featured": true
+    }
+  ],
+
+  "testimonials": [
+    {
+      "_id": "testimonial-1",
+      "_type": "testimonial",
+      "quote": "Πριν, ήταν καθημερινό που κάτι γαμνωνόταν με το inventory. Τώρα τρέχει μόνο του. Χρειάστηκε 5 μήνες να πληρώσουμε την επένδυση και τώρα έχουμε €2,500+ κέρδος κάθε μήνα.",
+      "author": "Νίκος Κ.",
+      "role": "E-Commerce Manager",
+      "company": "Retailer",
+      "rating": 5
+    },
+    {
+      "_id": "testimonial-2",
+      "_type": "testimonial",
+      "quote": "Δεν θα ήμασταν εδώ χωρίς τη δουλειά του Dimitris. Το MVP ήταν ακριβώς ό,τι χρειαζόμαστε - όχι λιγότερο, όχι περισσότερο. Τώρα έχουμε πελάτες και funding.",
+      "author": "Μαρία Π.",
+      "role": "CEO",
+      "company": "FocusFlow",
+      "rating": 5
+    },
+    {
+      "_id": "testimonial-3",
+      "_type": "testimonial",
+      "quote": "Οι άνθρωποί μας λένε ότι νιώθουν σαν να έχουν έναν βοηθό. Όλες οι ημι-χειροκίνητες δουλειές γίνονται αυτόματα. Περισσότερη ώρα για πραγματική δουλειά.",
+      "author": "Κώστας Β.",
+      "role": "Operations Manager",
+      "company": "Digital Agency",
+      "rating": 5
+    }
+  ],
+
+  "faqs": [
+    {
+      "_id": "faq-1",
+      "_type": "faq",
+      "question": "Γιατί δεν έχετε σταθερές τιμές;",
+      "answer": "Γιατί κάθε πρόβλημα είναι διαφορετικό. Μια ανάλυση για ένα μικρό e-shop είναι πιο απλή από μια ανάλυση για ένα enterprise system. Αντίθετα, μιλάμε πρώτα. Μετά γνωρίζετε ακριβώς τι θα κοστίσει και γιατί.",
+      "order": 1,
+      "category": "pricing"
+    },
+    {
+      "_id": "faq-2",
+      "_type": "faq",
+      "question": "Πόσο καιρό θα πάρει το έργό μου;",
+      "answer": "Εξαρτάται από το scope: Discovery €2.500 = 6-8 εβδομάδες, Solution Design €5.000 = 2-3 εβδομάδες, Simple Implementation = 4-8 εβδομάδες, Complex Implementation = 8-16 εβδομάδες. Μπορώ να κάνω τα περισσότερα έργα σε 6-12 εβδομάδες.",
+      "order": 2,
+      "category": "process"
+    },
+    {
+      "_id": "faq-3",
+      "_type": "faq",
+      "question": "Τι γίνεται αν δεν μου αρέσει η λύση;",
+      "answer": "Καλή ερώτηση. Αυτό γιατί κάνω Discovery & Analysis πρώτα. Πριν χτίσω κάτι, εγκρίνετε το σχέδιο. Αν κάτι δεν σας αρέσει, αλλάζουμε το σχέδιο πριν ξεκινήσουμε το χτίσιμο.",
+      "order": 3,
+      "category": "process"
+    },
+    {
+      "_id": "faq-4",
+      "_type": "faq",
+      "question": "Χρειάζομαι τεχνικό team ή γνώσεις;",
+      "answer": "Όχι. Δουλεύω με ανθρώπους που δεν έχουν τεχνικό background. Κάνω τη δουλειά να είναι κατανοητή. Θα σας εξηγήσω τι κάνει το σύστημα, γιατί το κάνει έτσι, πώς να το χρησιμοποιήσετε.",
+      "order": 4,
+      "category": "technical"
+    },
+    {
+      "_id": "faq-5",
+      "_type": "faq",
+      "question": "Ποια είναι η διαφορά σας από άλλους developers;",
+      "answer": "Πολλοί developers χτίζουν. Εγώ σκέφτομαι πρώτα. Διαφορές: 1) Ανάλυση πρώτα 2) Δεν εξαφανίζομαι μετά το launch 3) Χτίζω για τα αποτελέσματα σας, όχι τεχνολογία 4) 15+ χρόνια εμπειρίας, 50+ έργα 5) Ευελιξία στην επιλογή tools.",
+      "order": 5,
+      "category": "general"
+    },
+    {
+      "_id": "faq-6",
+      "_type": "faq",
+      "question": "Ποια είναι τα επόμενα βήματα;",
+      "answer": "Απλά: 1) Book κλήση (30 λεπτά, δωρεάν) 2) Μιλάμε για το πρόβλημά σας 3) Σας στέλνω proposal 4) Αν σας ενδιαφέρει, ξεκινάμε. Δεν έχει καμία δέσμευση. Χωρίς πίεση. Απλά μιλάμε.",
+      "order": 6,
+      "category": "general"
+    }
+  ],
+
+  "credentialsSection": {
+    "_id": "credentialsSection",
+    "_type": "credentialsSection",
+    "headline": "Γιατί Επιλέγουν Με Ελληνικές Επιχειρήσεις;",
+    "credentials": [
+      {
+        "stat": "15+",
+        "label": "Έτη Εμπειρίας",
+        "description": "Βαθιά γνώση της αγοράς και των τεχνικών ιδιαιτεροτήτων.",
+        "icon": "history"
+      },
+      {
+        "stat": "98%",
+        "label": "Client Retention",
+        "description": "Μακροχρόνιες συνεργασίες βασισμένες στην εμπιστοσύνη.",
+        "icon": "psychology"
+      },
+      {
+        "stat": "40%",
+        "label": "Μείωση Κόστους",
+        "description": "Βελτιστοποίηση διαδικασιών και αποδοτική χρήση πόρων.",
+        "icon": "trending_up"
+      }
+    ]
+  },
+
+  "valueProposition": {
+    "_id": "valueProposition",
+    "_type": "valueProposition",
+    "headline": "Τι Κάνω Διαφορετικά;",
+    "cards": [
+      {
+        "title": "1. Σαφή Ανάλυση - Όχι Υποθέσεις",
+        "description": "Ξεκινώ με λεπτομερή ανάλυση. Δεν κάνω υποθέσεις ποτέ. Κατανοώ το πρόβλημα σας πλήρως και σας δείχνω ακριβώς τι συμβαίνει.",
+        "icon": "insights",
+        "order": 1
+      },
+      {
+        "title": "2. Υλοποίηση που Δουλεύει",
+        "description": "Χτίζω λύσεις που λειτουργούν σε πραγματικό περιβάλλον. Καθαρός κώδικας, δοκιμασμένο, παραδομένο. Όχι θεωρητικές ιδέες.",
+        "icon": "build",
+        "order": 2
+      },
+      {
+        "title": "3. Συνεχής Υποστήριξη",
+        "description": "Δεν εξαφανίζομαι μετά το launch. Μένω δίπλα σας. Support, maintenance, optimization για μήνες και χρόνια.",
+        "icon": "support_agent",
+        "order": 3
+      }
+    ]
+  },
+
+  "aboutPage": {
+    "_id": "aboutPage",
+    "_type": "aboutPage",
+    "headline": "Dimitris Geronikolos",
+    "subheadline": "Σύμβουλος Τεχνικών Έργων",
+    "intro": "15+ χρόνια εμπειρίας. 50+ επιτυχημένα projects. Ειδικός σε σύνθετα προβλήματα που απαιτούν συνδυασμό στρατηγικής και τεχνικής αρτιότητας.",
+    "heroBadgeValue": "15+",
+    "heroBadgeLabel": "Χρόνια Εμπειρίας",
+    "primaryCtaText": "Δείτε το Portfolio",
+    "primaryCtaLink": "/#cases",
+    "secondaryCtaText": "Βιογραφικό",
+    "secondaryCtaLink": "#",
+    "photoUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuCsGyv9rt7_-77ttDYV6yvFSSpet91FaNhGu8Gf95MThWTu218vR3RJnlMe-kX1W8zfK34_53TijPrWpj1Ozr_M6ljIBB7Uu9TI40Ee6LQvl6yh0LHX02s1enLA0ryYRtuph_UoFkmN3UTbVKTFReRJFztJEdH9mUsz0sDiihdR1td55O9KW-PKxIpg7C4q9mOHKE-wyU4ezeTBriAn1enBWh6xdXx6MtvpPzI9AxpLXjNhppWiXYVz",
+    "philosophyHeadline": "Δεν με ενδιαφέρει να εντυπωσιάσω.",
+    "philosophyHighlight": "Με ενδιαφέρει να βοηθήσω.",
+    "philosophyParagraphs": [
+      "Στον κόσμο της τεχνολογίας, είναι εύκολο να χαθεί κανείς στις εντυπωσιακές ορολογίες και τις τελευταίες τάσεις. Η δική μου προσέγγιση είναι διαφορετική: \"Listen first, code later\". Πριν προτείνω οποιαδήποτε λύση, αφιερώνω χρόνο για να κατανοήσω πλήρως το επιχειρηματικό πρόβλημα, τους περιορισμούς και τους στόχους σας.",
+      "Η επιτυχία ενός τεχνικού έργου δεν μετριέται με τις γραμμές κώδικα, αλλά με την αξία που προσφέρει στην επιχείρηση. Στόχος μου είναι να γεφυρώσω το χάσμα μεταξύ της στρατηγικής υψηλού επιπέδου και της τεχνικής εκτέλεσης, διασφαλίζοντας ότι κάθε επένδυση μετατρέπεται σε βιώσιμο αποτέλεσμα."
+    ],
+    "storySections": [
+      {
+        "title": "Πώς ξεκίνησα",
+        "content": "Το ταξίδι μου ξεκίνησε το 2010 ως Full-Stack Developer. Εκεί έμαθα τις βάσεις: πώς να χτίζω συστήματα που αντέχουν στην πίεση και πώς να γράφω κώδικα που είναι εύκολα συντηρήσιμος. Σύντομα όμως συνειδητοποίησα ότι οι καλύτερες λύσεις δεν προέρχονται από την οθόνη, αλλά από την επικοινωνία με τους ανθρώπους."
+      },
+      {
+        "title": "Η Αλλαγή",
+        "content": "Μετά από 7 χρόνια στην πρώτη γραμμή της ανάπτυξης, πέρασα σε ρόλους Project Management και Technical Lead. Διαχειρίστηκα ομάδες και budgets, αντιμετωπίζοντας τις πραγματικές προκλήσεις των επιχειρήσεων: deadlines, scope creep και την ανάγκη για ROI. Αυτό ήταν το σημείο όπου ο προγραμματιστής \"συνάντησε\" τον σύμβουλο."
+      },
+      {
+        "title": "Σήμερα",
+        "content": "Σήμερα, ως ανεξάρτητος σύμβουλος, βοηθώ εταιρείες και οργανισμούς να πλοηγηθούν στο σύνθετο ψηφιακό τοπίο. Είτε πρόκειται για τον επανασχεδιασμό μιας αρχιτεκτονικής είτε για την επίβλεψη μιας κρίσιμης υλοποίησης, φέρνω μαζί μου την εμπειρία δεκάδων επιτυχημένων έργων και μια αμετακίνητη δέσμευση στην ποιότητα."
+      }
+    ],
+    "timeline": [
+      {
+        "period": "2010 - 2015",
+        "title": "Senior Developer & Lead",
+        "description": "Θεμελίωση τεχνικών γνώσεων σε enterprise περιβάλλοντα.",
+        "order": 1
+      },
+      {
+        "period": "2016 - 2021",
+        "title": "Project Manager & Strategist",
+        "description": "Διαχείριση σύνθετων τεχνικών έργων και ομάδων.",
+        "order": 2
+      },
+      {
+        "period": "2022 - Σήμερα",
+        "title": "Independent Consultant",
+        "description": "Στρατηγική συμβουλευτική και επίβλεψη high-stakes έργων.",
+        "order": 3
+      }
+    ],
+    "workStyleHeadline": "Πώς Δουλεύω",
+    "workStyleSubheadline": "Μια δοκιμασμένη μεθοδολογία που εξασφαλίζει την επιτυχία κάθε project, από τη σύλληψη μέχρι την παράδοση.",
+    "approach": [
+      {
+        "title": "Ανάλυση Πρώτα",
+        "description": "Βαθιά κατάδυση στις ανάγκες σας. Καθορίζουμε το \"γιατί\" πριν αποφασίσουμε το \"πώς\", αποφεύγοντας δαπανηρά λάθη στο μέλλον.",
+        "icon": "search"
+      },
+      {
+        "title": "Υλοποίηση Σωστά",
+        "description": "Χρησιμοποιούμε τις βέλτιστες πρακτικές και τις πιο σύγχρονες τεχνολογίες για να χτίσουμε λύσεις που είναι ασφαλείς και επεκτάσιμες.",
+        "icon": "rocket_launch"
+      },
+      {
+        "title": "Υποστήριξη Μακροχρόνια",
+        "description": "Δεν εξαφανιζόμαστε μετά το launch. Παραμένουμε δίπλα σας για να διασφαλίσουμε την ομαλή λειτουργία και την εξέλιξη του έργου.",
+        "icon": "handshake"
+      }
+    ],
+    "stats": [
+      {"value": "50", "suffix": "+", "label": "Projects"},
+      {"value": "15", "suffix": "+", "label": "Χρόνια Εμπειρίας"},
+      {"value": "2", "suffix": "M+", "label": "Αξία Delivered"},
+      {"value": "100", "suffix": "%", "label": "Παραδόθηκαν"}
+    ],
+    "comparisonHeadline": "Γιατί να Επιλέξετε Εμένα;",
+    "comparisons": [
+      {
+        "negativeTitle": "Τυπικός Developer",
+        "negativeItems": [
+          "Focus μόνο στον κώδικα",
+          "Περιορισμένη κατανόηση του Business",
+          "Δυσκολία στην επικοινωνία με stakeholders",
+          "Αντιδραστική προσέγγιση προβλημάτων"
+        ],
+        "positiveTitle": "Dimitris Geronikolos",
+        "positiveItems": [
+          "Στρατηγική & Business Alignment",
+          "Full-stack τεχνική εποπτεία",
+          "Ξεκάθαρη επικοινωνία σε όλα τα επίπεδα",
+          "Προληπτικός σχεδιασμός & πρόβλεψη κινδύνων"
+        ]
+      },
+      {
+        "negativeTitle": "Μεγάλο Agency",
+        "negativeItems": [
+          "Υψηλό overhead & γραφειοκρατία",
+          "Εναλλαγή προσωπικού στο έργο",
+          "Απρόσωπη επικοινωνία",
+          "\"One-size-fits-all\" λύσεις"
+        ],
+        "positiveTitle": "Solo Practice",
+        "positiveItems": [
+          "Άμεση, προσωπική ευθύνη",
+          "Αφοσιωμένος χρόνος και προσοχή",
+          "Ευέλικτη και γρήγορη λήψη αποφάσεων",
+          "Tailor-made λύσεις στις ανάγκες σας"
+        ]
+      }
+    ],
+    "testimonialsHeadline": "Τι λένε οι πελάτες",
+    "featuredTestimonials": ["testimonial-1", "testimonial-2", "testimonial-3"],
+    "ctaHeadline": "Έτοιμος να Δουλέψουμε Μαζί;",
+    "ctaDescription": "Ας συζητήσουμε τις προκλήσεις του έργου σας σε μια δωρεάν κλήση 30 λεπτών. Χωρίς δεσμεύσεις, μόνο ειλικρινής συμβουλευτική.",
+    "ctaText": "Ζητήστε Δωρεάν Κλήση",
+    "ctaLink": "/#contact",
+    "seo": {
+      "metaTitle": "Σχετικά | Dimitris Geronikolos",
+      "metaDescription": "Σύμβουλος τεχνικών έργων με 15+ χρόνια εμπειρίας. Ανάλυση, σχεδίαση και υλοποίηση λύσεων για ελληνικές επιχειρήσεις."
+    }
+  }
+}

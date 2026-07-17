@@ -1,0 +1,65 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro'
+import {getHomePageData} from '../lib/cms'
+import {localizePath, resolvePageLocale} from '../lib/i18n'
+
+export const prerender = false
+
+const locale = resolvePageLocale(Astro.currentLocale)
+const {siteSettings} = await getHomePageData(locale)
+---
+
+<LegalLayout
+  title="Πολιτική Απορρήτου"
+  description="Πολιτική απορρήτου του sidebysideweb.gr"
+  lastUpdated="13 Ιουλίου 2026"
+  siteSettings={siteSettings}
+  locale={locale}
+>
+  <p>
+    Η Side by Side Web Studio («εμείς», «η εταιρεία») σέβεται την ιδιωτικότητά σας και δεσμεύεται να
+    προστατεύει τα προσωπικά σας δεδομένα σύμφωνα με τον Γενικό Κανονισμό Προστασίας Δεδομένων
+    (GDPR).
+  </p>
+
+  <h2>1. Υπεύθυνος Επεξεργασίας</h2>
+  <p>
+    Υπεύθυνος επεξεργασίας είναι η Side by Side Web Studio. Για οποιοδήποτε θέμα σχετικά με τα
+    προσωπικά σας δεδομένα, επικοινωνήστε στο{' '}
+    <a class="text-secondary hover:underline" href={`mailto:${siteSettings.contactEmail}`}>
+      {siteSettings.contactEmail}
+    </a>.
+  </p>
+
+  <h2>2. Δεδομένα που Συλλέγουμε</h2>
+  <p>Μπορούμε να συλλέξουμε τα εξής δεδομένα όταν επικοινωνείτε μαζί μας:</p>
+  <ul>
+    <li>Ονοματεπώνυμο</li>
+    <li>Διεύθυνση email</li>
+    <li>Αριθμό τηλεφώνου</li>
+    <li>Περιεχόμενο μηνυμάτων που μας στέλνετε</li>
+  </ul>
+
+  <h2>3. Σκοπός Επεξεργασίας</h2>
+  <p>Τα δεδομένα σας χρησιμοποιούνται αποκλειστικά για:</p>
+  <ul>
+    <li>Απάντηση σε αιτήματα επικοινωνίας</li>
+    <li>Παροχή συμβουλευτικών υπηρεσιών</li>
+    <li>Βελτίωση της εμπειρίας χρήσης του ιστότοπου</li>
+  </ul>
+
+  <h2>4. Cookies</h2>
+  <p>
+    Ο ιστότοπος μπορεί να χρησιμοποιεί cookies. Για λεπτομέρειες, δείτε την{' '}
+    <a class="text-secondary hover:underline" href={localizePath('/cookies-policy', locale)}>Πολιτική Cookies</a>.
+  </p>
+
+  <h2>5. Τα Δικαιώματά σας</h2>
+  <p>Έχετε δικαίωμα πρόσβασης, διόρθωσης, διαγραφής, περιορισμού και εναντίωσης στην επεξεργασία.</p>
+
+  <h2>6. Ασφάλεια</h2>
+  <p>
+    Λαμβάνουμε κατάλληλα τεχνικά και οργανωτικά μέτρα για την προστασία των δεδομένων σας από
+    μη εξουσιοδοτημένη πρόσβαση.
+  </p>
+</LegalLayout>

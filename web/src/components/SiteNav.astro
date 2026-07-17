@@ -1,0 +1,104 @@
+---
+import type {SiteSettings} from '../lib/types'
+import {DEFAULT_LOCALE, localizePath, switchLocaleInPath, type SiteLocale} from '../lib/i18n'
+import {SITE_LOGO} from '../lib/stitch-design'
+import {getNavLinks, getUiStrings} from '../lib/ui-strings'
+import CalBookingButton from './CalBookingButton.astro'
+
+interface Props {
+  siteSettings: SiteSettings
+  activeHref?: string
+  variant?: 'dark' | 'light'
+  locale?: SiteLocale
+}
+
+const {
+  siteSettings,
+  activeHref = '/',
+  variant = 'dark',
+  locale = DEFAULT_LOCALE,
+} = Astro.props
+const isLight = variant === 'light'
+const ui = getUiStrings(locale)
+const navLinks = getNavLinks(locale)
+const homePath = localizePath('/', locale)
+const langSwitchHref = switchLocaleInPath(Astro.url.pathname, locale === 'el' ? 'en' : 'el')
+
+function navHref(href: string): string {
+  if (!href.startsWith('#')) return href
+  if (activeHref === homePath || activeHref === '/') return href
+  return `${homePath}${href.slice(1)}`
+}
+
+function isActive(href: string): boolean {
+  if (href.startsWith('#')) return false
+  return href === activeHref
+}
+
+const navClass = isLight
+  ? 'fixed top-0 z-50 h-20 w-full bg-surface-white/90 shadow-sm backdrop-blur-md transition-all duration-300'
+  : 'fixed top-0 z-50 h-[70px] w-full bg-primary shadow-sm'
+
+const linkClass = isLight
+  ? 'text-body-md text-primary transition-colors hover:text-secondary'
+  : 'text-body-md text-white transition-colors hover:text-secondary'
+
+const activeLinkClass = isLight
+  ? 'border-b-2 border-secondary pb-1 text-body-md font-bold text-secondary'
+  : 'border-b-2 border-secondary pb-1 text-body-md font-bold text-secondary'
+
+const ctaClass = isLight
+  ? 'rounded-lg bg-primary px-6 py-2.5 text-label-md text-on-primary transition-all duration-200 hover:scale-[1.05] active:scale-95'
+  : 'cursor-pointer rounded-full bg-white/10 px-3 py-1 text-label-md text-white transition-colors hover:bg-white/20'
+
+const langSwitchClass = isLight
+  ? 'rounded-lg border border-primary/20 px-3 py-2 text-label-md text-primary transition-colors hover:border-secondary hover:text-secondary'
+  : 'rounded-full bg-white/10 px-3 py-1 text-label-md text-white transition-colors hover:bg-white/20'
+
+const menuClass = isLight ? 'text-primary' : 'text-white'
+---
+
+<nav class={navClass} data-nav-variant={variant}>
+  <div class="mx-auto flex h-full max-w-7xl items-center justify-between px-margin-container">
+    <a class="flex items-center gap-4" href={homePath}>
+      <img
+        alt={`${siteSettings.siteName} - ${ui.navAltSuffix}`}
+        class="h-10 w-auto"
+        src={SITE_LOGO}
+      />
+      {isLight ? (
+        <span class="text-headline-md font-bold text-primary">{siteSettings.siteName}</span>
+      ) : null}
+    </a>
+    <div class="hidden items-center gap-8 md:flex">
+      {
+        navLinks.map((link) => {
+          const active = isActive(link.href)
+          const href = navHref(link.href)
+
+          return active ? (
+            <a class={activeLinkClass} href={href}>
+              {link.label}
+            </a>
+          ) : (
+            <a class={linkClass} href={href}>
+              {link.label}
+            </a>
+          )
+        })
+      }
+      {
+        isLight ? (
+          <CalBookingButton class={ctaClass} label={ui.aboutNavContact} />
+        ) : (
+          <a class={langSwitchClass} href={langSwitchHref}>
+            {ui.langSwitchTo}
+          </a>
+        )
+      }
+    </div>
+    <button class={`${menuClass} md:hidden`} aria-label={ui.menuAriaLabel}>
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+  </div>
+</nav>

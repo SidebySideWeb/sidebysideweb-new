@@ -1,0 +1,43 @@
+---
+import {DEFAULT_LOCALE, type SiteLocale} from '../../lib/i18n'
+import type {Service} from '../../lib/types'
+import {getUiStrings} from '../../lib/ui-strings'
+
+interface Props {
+  services: Service[]
+  locale?: SiteLocale
+}
+
+const {services, locale = DEFAULT_LOCALE} = Astro.props
+const ui = getUiStrings(locale)
+---
+
+<section class="bg-surface-bright py-section-mobile md:py-section-desktop">
+  <div class="mx-auto max-w-7xl px-margin-container">
+    <h2 class="scroll-reveal mb-12 text-center text-headline-md text-primary">
+      {ui.relatedServicesTitle}
+    </h2>
+    <div class="grid gap-gutter md:grid-cols-3">
+      {
+        services.map((service, index) => (
+          <a
+            class={`scroll-reveal stagger-${index + 1} group rounded-xl border border-outline-variant/20 bg-white p-8 transition-all hover:border-secondary`}
+            href={`/#services`}
+          >
+            <span class="material-symbols-outlined mb-4 text-4xl text-secondary">
+              {service.icon ?? 'settings_suggest'}
+            </span>
+            <h4 class="mb-4 text-xl font-semibold transition-colors group-hover:text-secondary">
+              {service.title}
+            </h4>
+            <p class="mb-6 text-on-surface-variant">{service.description}</p>
+            <span class="flex items-center gap-2 text-label-md text-primary transition-all group-hover:gap-4">
+              {ui.servicesLearnMore}
+              <span class="material-symbols-outlined">arrow_forward</span>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

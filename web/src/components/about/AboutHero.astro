@@ -1,0 +1,75 @@
+---
+import {DEFAULT_LOCALE, localizePath, type SiteLocale} from '../../lib/i18n'
+import {resolveAboutPhoto} from '../../lib/image'
+import type {AboutPage} from '../../lib/types'
+import {getUiStrings} from '../../lib/ui-strings'
+
+interface Props {
+  about: AboutPage
+  locale?: SiteLocale
+}
+
+const {about, locale = DEFAULT_LOCALE} = Astro.props
+const ui = getUiStrings(locale)
+const homePath = localizePath('/', locale)
+const photoUrl = resolveAboutPhoto(about.photo, about.photoUrl, 800)
+---
+
+<section class="scroll-reveal mx-auto grid max-w-7xl grid-cols-1 items-center gap-gutter px-margin-container py-section-mobile md:grid-cols-12 md:py-section-desktop">
+  <div class="md:col-span-7">
+    <nav class="mb-6 flex items-center gap-2 text-label-md text-text-muted" aria-label="Breadcrumb">
+      <a class="transition-colors hover:text-primary" href={homePath}>{ui.aboutBreadcrumbHome}</a>
+      <span class="material-symbols-outlined text-sm">chevron_right</span>
+      <span class="text-primary">{ui.aboutBreadcrumbAbout}</span>
+    </nav>
+    <h1 class="mb-2 text-headline-xl text-primary">{about.headline}</h1>
+    {about.subheadline ? (
+      <h2 class="mb-6 text-headline-md text-secondary">{about.subheadline}</h2>
+    ) : null}
+    {about.intro ? (
+      <p class="mb-8 max-w-2xl text-body-lg text-on-surface-variant">{about.intro}</p>
+    ) : null}
+    <div class="flex flex-wrap gap-4">
+      {
+        about.primaryCtaText ? (
+          <a
+            class="rounded-lg bg-primary px-8 py-4 text-label-md text-on-primary shadow-md transition-all duration-300 hover:scale-[1.05] active:scale-95"
+            href={about.primaryCtaLink ?? '/#cases'}
+          >
+            {about.primaryCtaText}
+          </a>
+        ) : null
+      }
+      {
+        about.secondaryCtaText ? (
+          <a
+            class="rounded-lg border-2 border-primary px-8 py-4 text-label-md text-primary transition-all duration-300 hover:bg-primary hover:text-on-primary active:scale-95"
+            href={about.secondaryCtaLink ?? '#'}
+          >
+            {about.secondaryCtaText}
+          </a>
+        ) : null
+      }
+    </div>
+  </div>
+  <div class="relative mt-12 md:col-span-5 md:mt-0">
+    <div class="aspect-square w-full rotate-1 overflow-hidden rounded-xl shadow-xl transition-transform duration-500 hover:rotate-0">
+      <div
+        class="h-full w-full bg-cover bg-center"
+        style={`background-image: url('${photoUrl}')`}
+        role="img"
+        aria-label={about.photo?.alt ?? about.headline}
+      />
+    </div>
+    {
+      about.heroBadgeValue ? (
+        <div class="absolute -bottom-6 -left-6 rounded-lg bg-secondary p-6 text-on-primary shadow-lg">
+          <span class="block text-headline-md leading-none">{about.heroBadgeValue}</span>
+          {about.heroBadgeLabel ? (
+            <span class="text-label-md uppercase tracking-wider">{about.heroBadgeLabel}</span>
+          ) : null}
+        </div>
+      ) : null
+    }
+  </div>
+</section>

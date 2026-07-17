@@ -1,0 +1,57 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro'
+import {getHomePageData} from '../lib/cms'
+import {resolvePageLocale} from '../lib/i18n'
+
+export const prerender = false
+
+const locale = resolvePageLocale(Astro.currentLocale)
+const {siteSettings} = await getHomePageData(locale)
+---
+
+<LegalLayout
+  title="Πολιτική Cookies"
+  description="Πολιτική cookies του sidebysideweb.gr"
+  lastUpdated="13 Ιουλίου 2026"
+  siteSettings={siteSettings}
+  locale={locale}
+>
+  <p>
+    Αυτή η πολιτική εξηγεί πώς ο ιστότοπος sidebysideweb.gr χρησιμοποιεί cookies και παρόμοιες
+    τεχνολογίες.
+  </p>
+
+  <h2>1. Τι είναι τα Cookies;</h2>
+  <p>
+    Τα cookies είναι μικρά αρχεία κειμένου που αποθηκεύονται στη συσκευή σας όταν επισκέπτεστε έναν
+    ιστότοπο. Μας βοηθούν να λειτουργεί σωστά ο ιστότοπος και να βελτιώνουμε την εμπειρία σας.
+  </p>
+
+  <h2>2. Τύποι Cookies που Χρησιμοποιούμε</h2>
+
+  <h3>Απαραίτητα Cookies</h3>
+  <p>Απαιτούνται για τη βασική λειτουργία του ιστότοπου. Δεν μπορούν να απενεργοποιηθούν.</p>
+
+  <h3>Cookies Απόδοσης</h3>
+  <p>
+    Μας βοηθούν να κατανοήσουμε πώς οι επισκέπτες χρησιμοποιούν τον ιστότοπο (π.χ. Google Analytics,
+    εφόσον ενεργοποιηθεί).
+  </p>
+
+  <h3>Cookies Λειτουργικότητας</h3>
+  <p>Αποθηκεύουν τις προτιμήσεις σας, όπως γλώσσα ή ρυθμίσεις εμφάνισης.</p>
+
+  <h2>3. Διαχείριση Cookies</h2>
+  <p>
+    Μπορείτε να διαχειριστείτε ή να διαγράψετε cookies μέσω των ρυθμίσεων του browser σας. Η
+    απενεργοποίηση ορισμένων cookies μπορεί να επηρεάσει τη λειτουργικότητα του ιστότοπου.
+  </p>
+
+  <h2>4. Επικοινωνία</h2>
+  <p>
+    Για ερωτήσεις σχετικά με cookies, επικοινωνήστε μαζί μας στο{' '}
+    <a class="text-secondary hover:underline" href={`mailto:${siteSettings.contactEmail}`}>
+      {siteSettings.contactEmail}
+    </a>.
+  </p>
+</LegalLayout>

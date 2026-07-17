@@ -1,0 +1,38 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import SiteNav from '../SiteNav.astro'
+import HeroSection from '../HeroSection.astro'
+import CredentialsSection from '../CredentialsSection.astro'
+import ValueProposition from '../ValueProposition.astro'
+import ServicesSection from '../ServicesSection.astro'
+import ProcessSection from '../ProcessSection.astro'
+import CaseStudiesSection from '../CaseStudiesSection.astro'
+import TestimonialsSection from '../TestimonialsSection.astro'
+import FaqSection from '../FaqSection.astro'
+import ContactCta from '../ContactCta.astro'
+import SiteFooter from '../SiteFooter.astro'
+import type {HomePageData} from '../../lib/types'
+import {localizePath, type SiteLocale} from '../../lib/i18n'
+
+interface Props {
+  data: HomePageData
+  locale: SiteLocale
+}
+
+const {data, locale} = Astro.props
+const activeHref = localizePath('/', locale)
+---
+
+<Layout siteSettings={data.siteSettings} locale={locale}>
+  <SiteNav siteSettings={data.siteSettings} activeHref={activeHref} locale={locale} />
+  <HeroSection hero={data.hero} />
+  <CredentialsSection credentials={data.credentials} />
+  <ValueProposition locale={locale} valueProposition={data.valueProposition} />
+  <ServicesSection locale={locale} services={data.services} />
+  <ProcessSection locale={locale} processSteps={data.processSteps} />
+  <CaseStudiesSection caseStudies={data.caseStudies} locale={locale} />
+  <TestimonialsSection testimonials={data.testimonials} />
+  <FaqSection faqs={data.faqs} locale={locale} />
+  <ContactCta locale={locale} siteSettings={data.siteSettings} />
+  <SiteFooter locale={locale} siteSettings={data.siteSettings} />
+</Layout>

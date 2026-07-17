@@ -1,0 +1,44 @@
+---
+import type {AboutPage} from '../../lib/types'
+
+interface Props {
+  about: AboutPage
+}
+
+const {about} = Astro.props
+const cards = about.approach ?? []
+---
+
+{
+  cards.length ? (
+    <section class="scroll-reveal bg-surface-container-low py-section-mobile md:py-section-desktop">
+      <div class="mx-auto max-w-7xl px-margin-container">
+        <div class="mb-16 text-center">
+          <h2 class="mb-4 text-headline-md text-primary">{about.workStyleHeadline ?? 'Πώς Δουλεύω'}</h2>
+          {about.workStyleSubheadline ? (
+            <p class="mx-auto max-w-xl text-on-surface-variant">{about.workStyleSubheadline}</p>
+          ) : null}
+        </div>
+        <div class="grid grid-cols-1 gap-gutter md:grid-cols-3">
+          {
+            cards.map((card, index) => (
+              <article
+                class={`about-work-card scroll-reveal stagger-${index + 1} group rounded-xl border border-outline-variant bg-white p-10 transition-all duration-300 hover:-translate-y-2 hover:border-primary hover:shadow-xl`}
+              >
+                <div class="mb-8 flex h-16 w-16 items-center justify-center rounded-lg bg-secondary/10 transition-colors duration-300 group-hover:bg-secondary">
+                  <span class="material-symbols-outlined text-[32px] text-secondary transition-colors duration-300 group-hover:text-white">
+                    {card.icon ?? 'lightbulb'}
+                  </span>
+                </div>
+                <h3 class="mb-4 text-[24px] font-semibold text-primary">{card.title}</h3>
+                {card.description ? (
+                  <p class="text-body-md text-text-muted">{card.description}</p>
+                ) : null}
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  ) : null
+}

@@ -1,0 +1,81 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+import SiteNav from '../../../components/SiteNav.astro'
+import SiteFooter from '../../../components/SiteFooter.astro'
+import CaseStudyHeader from '../../../components/case-studies/CaseStudyHeader.astro'
+import ProblemSection from '../../../components/case-studies/ProblemSection.astro'
+import SolutionSection from '../../../components/case-studies/SolutionSection.astro'
+import ResultsSection from '../../../components/case-studies/ResultsSection.astro'
+import TestimonialSection from '../../../components/case-studies/TestimonialSection.astro'
+import InvestmentSection from '../../../components/case-studies/InvestmentSection.astro'
+import CaseStudyNarrative from '../../../components/case-studies/CaseStudyNarrative.astro'
+import RelatedServicesSection from '../../../components/case-studies/RelatedServicesSection.astro'
+import CaseStudyCta from '../../../components/case-studies/CaseStudyCta.astro'
+import RelatedCaseStudiesSection from '../../../components/case-studies/RelatedCaseStudiesSection.astro'
+import {getCaseStudyPageData} from '../../../lib/cms'
+import {localizePath, resolvePageLocale} from '../../../lib/i18n'
+import {getUiStrings} from '../../../lib/ui-strings'
+
+export const prerender = false
+
+const locale = resolvePageLocale(Astro.currentLocale)
+const ui = getUiStrings(locale)
+const {slug} = Astro.params
+if (!slug) {
+  return Astro.redirect(localizePath('/', locale))
+}
+
+const {caseStudy, relatedCaseStudies, services, siteSettings} = await getCaseStudyPageData(
+  slug,
+  locale,
+)
+
+if (!caseStudy) {
+  Astro.response.status = 404
+}
+---
+
+{
+  caseStudy ? (
+    <Layout
+      title={caseStudy.seo?.metaTitle ?? caseStudy.title}
+      description={caseStudy.seo?.metaDescription ?? caseStudy.summary}
+      siteSettings={siteSettings}
+      locale={locale}
+    >
+      <SiteNav siteSettings={siteSettings} locale={locale} />
+      <main>
+        <CaseStudyHeader caseStudy={caseStudy} locale={locale} />
+        <ProblemSection caseStudy={caseStudy} locale={locale} />
+        <SolutionSection caseStudy={caseStudy} locale={locale} />
+        <ResultsSection caseStudy={caseStudy} locale={locale} />
+        <TestimonialSection caseStudy={caseStudy} />
+        <InvestmentSection caseStudy={caseStudy} locale={locale} />
+        <CaseStudyNarrative caseStudy={caseStudy} locale={locale} />
+        <RelatedServicesSection
+          locale={locale}
+          services={caseStudy.relatedServices?.length ? caseStudy.relatedServices : services}
+        />
+        <CaseStudyCta locale={locale} />
+        <RelatedCaseStudiesSection
+          caseStudies={relatedCaseStudies}
+          currentSlug={slug}
+          locale={locale}
+        />
+      </main>
+      <SiteFooter locale={locale} siteSettings={siteSettings} />
+    </Layout>
+  ) : (
+    <Layout title={ui.notFoundTitle} siteSettings={siteSettings} locale={locale}>
+      <SiteNav siteSettings={siteSettings} locale={locale} />
+      <main class="mx-auto max-w-3xl px-margin-container py-40 text-center">
+        <h1 class="mb-4 text-headline-lg text-primary">{ui.notFoundTitle}</h1>
+        <p class="mb-8 text-on-surface-variant">{ui.notFoundBody}</p>
+        <a class="btn-primary-orange rounded-lg px-8 py-3" href={`${localizePath('/', locale)}#cases`}>
+          {ui.notFoundCta}
+        </a>
+      </main>
+      <SiteFooter locale={locale} siteSettings={siteSettings} />
+    </Layout>
+  )
+}

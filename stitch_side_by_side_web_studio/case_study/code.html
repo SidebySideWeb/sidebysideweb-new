@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="el"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Case Study: Attiki Odos Twitter Automation | Side by Side</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#c5c6cf",
+                    "on-secondary-container": "#5d1900",
+                    "error": "#ba1a1a",
+                    "inverse-surface": "#2f3131",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#ffddaf",
+                    "primary": "#041332",
+                    "on-primary-fixed": "#0b1a39",
+                    "surface-dim": "#dadada",
+                    "secondary": "#ab3500",
+                    "primary-container": "#1a2847",
+                    "accent-teal": "#2DD4BF",
+                    "surface-tint": "#505e80",
+                    "secondary-fixed-dim": "#ffb59d",
+                    "surface-container-high": "#e8e8e8",
+                    "inverse-primary": "#b8c6ed",
+                    "on-primary-fixed-variant": "#394667",
+                    "error-container": "#ffdad6",
+                    "surface-white": "#FFFFFF",
+                    "secondary-fixed": "#ffdbd0",
+                    "on-error-container": "#93000a",
+                    "on-primary-container": "#828fb4",
+                    "on-primary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-variant": "#e2e2e2",
+                    "on-tertiary-fixed-variant": "#5b4219",
+                    "tertiary": "#1f1200",
+                    "on-tertiary-fixed": "#281800",
+                    "on-tertiary-container": "#ac8b5b",
+                    "surface-bright": "#f9f9f9",
+                    "surface-container-low": "#f3f3f3",
+                    "on-background": "#1a1c1c",
+                    "surface-container-highest": "#e2e2e2",
+                    "inverse-on-surface": "#f1f1f1",
+                    "outline": "#75777e",
+                    "on-surface": "#1a1c1c",
+                    "tertiary-fixed-dim": "#e6c18c",
+                    "tertiary-container": "#3a2500",
+                    "on-surface-variant": "#45464e",
+                    "surface-container": "#eeeeee",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#390c00",
+                    "background": "#f9f9f9",
+                    "primary-fixed-dim": "#b8c6ed",
+                    "text-muted": "#64748B",
+                    "on-secondary-fixed-variant": "#832600",
+                    "surface": "#f9f9f9",
+                    "primary-fixed": "#d9e2ff",
+                    "secondary-container": "#fe6a34"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-container": "32px",
+                    "section-desktop": "80px",
+                    "base": "8px",
+                    "section-mobile": "40px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-xl-mobile": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-xl-mobile": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-xl": ["56px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-lg": ["44px", {"lineHeight": "1.2", "letterSpacing": "-0.015em", "fontWeight": "700"}],
+                    "body-lg": ["20px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-surface-white/90 backdrop-blur-md shadow-sm h-20 transition-all duration-300">
+<div class="flex justify-between items-center px-margin-container h-full max-w-[1280px] mx-auto">
+<a class="font-headline-md text-headline-md font-bold text-primary" href="#">Side by Side</a>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-label-md text-label-md text-primary dark:text-on-primary hover:text-secondary transition-all duration-300" href="#">Υπηρεσίες</a>
+<a class="font-label-md text-label-md text-secondary border-b-2 border-secondary pb-1 transition-all duration-300" href="#">Μελέτες Περιπτώσεων</a>
+<a class="font-label-md text-label-md text-primary dark:text-on-primary hover:text-secondary transition-all duration-300" href="#">Σχετικά</a>
+<a class="font-label-md text-label-md text-primary dark:text-on-primary hover:text-secondary transition-all duration-300" href="#">Επικοινωνία</a>
+<button class="bg-primary-container text-on-primary px-6 py-2 rounded-xl font-label-md hover:scale-[1.02] active:scale-95 transition-transform">Επικοινωνία</button>
+</div>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="pt-32 pb-section-desktop bg-gradient-to-br from-primary to-primary-container text-on-primary relative overflow-hidden">
+
+<div class="max-w-[1280px] mx-auto px-margin-container relative z-10">
+<!-- Breadcrumb -->
+<nav class="flex gap-2 mb-6 reveal">
+<a class="font-label-md text-on-primary-container hover:text-on-primary transition-colors" href="#">Home</a>
+<span class="text-on-primary-container">/</span>
+<a class="font-label-md text-on-primary-container hover:text-on-primary transition-colors" href="#">Case Studies</a>
+<span class="text-on-primary-container">/</span>
+<span class="font-label-md text-on-primary">Attiki Odos Automation</span>
+</nav>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="reveal">
+<span class="inline-block px-4 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-md mb-6 uppercase tracking-wider">Automation &amp; Workflows</span>
+<h1 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl mb-6 leading-tight">Λύνοντας Workflow Chaos στο Attiki Odos με Twitter Automation</h1>
+<p class="font-body-lg text-body-lg text-on-primary-container mb-10 max-w-xl">Πλήρης αυτοματοποίηση της ενημέρωσης των χρηστών για την κίνηση στους δρόμους, μετατρέποντας μια χειροκίνητη διαδικασία 4 ωρών καθημερινά σε ένα instant real-time σύστημα.</p>
+<!-- Stats Row -->
+<div class="grid grid-cols-3 gap-6 pt-8 border-t border-on-primary-container/20">
+<div>
+<p class="font-label-md text-on-primary-container uppercase text-xs mb-1">Investment</p>
+<p class="font-headline-md text-2xl font-bold">€3,500</p>
+</div>
+<div>
+<p class="font-label-md text-on-primary-container uppercase text-xs mb-1">Timeline</p>
+<p class="font-headline-md text-2xl font-bold">3 εβδομάδες</p>
+</div>
+<div>
+<p class="font-label-md text-on-primary-container uppercase text-xs mb-1">Result</p>
+<p class="font-headline-md text-2xl font-bold">250+ posts/mo</p>
+</div>
+</div>
+</div>
+<div class="reveal delay-150 h-[400px] rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 hover:scale-105" data-alt="A cinematic, high-end professional photography shot of a modern workspace with multiple glowing monitors displaying complex workflow automation diagrams and code. The lighting is moody and technical with deep navy shadows and vibrant orange highlights, reflecting a premium technical consultancy brand. Sharp focus, minimal clutter, and a sense of high-stakes enterprise efficiency." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCD3k0sYGC_16iu9nkejAZGNTU11XiaJpGR5lr_rppl1QiKiHCJ7iD1Wqo2CarWV2PNjW8UAXUYU4pi7sPX_D2vueu_D9g1ASN74Qf0K3J2KJmBsU-OtfduF9-YZTSZBWqXPTvcwA_pOzUS31Nsn9_IWX-BJXciJZUtgi_a6Mv_NouIQaeflNoXS7f3xHy52jZJbJFxQEMMPcdozgk9s-wMMd9QoJdLBJdbTa0-n13zA1FnCPhaqrcb')"></div>
+</div>
+</div>
+</div>
+</header>
+<!-- Section 1: Problem -->
+<section class="py-section-desktop bg-surface-white">
+<div class="max-w-[1280px] mx-auto px-margin-container">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+<div class="reveal">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-2">Το Πρόβλημα</h2>
+<h3 class="font-headline-md text-2xl text-secondary mb-6">Χειροκίνητη Διαχείριση Κοινωνικών Μέσων</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 leading-relaxed">
+                        Η διαχείριση των ενημερώσεων για την κίνηση στην Αττική Οδό απαιτούσε μια ολόκληρη ομάδα που έπρεπε να παρακολουθεί τις κάμερες και να πληκτρολογεί χειροκίνητα κάθε tweet. Αυτό δημιουργούσε καθυστερήσεις 10-15 λεπτών στην ενημέρωση των πολιτών και υψηλό κόστος λειτουργίας.
+                    </p>
+<ul class="space-y-4">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error font-bold">close</span>
+<span class="font-body-md">4 ώρες χαμένου χρόνου ανά ημέρα για copy-paste.</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error font-bold">close</span>
+<span class="font-body-md">15% σφάλματα στα δεδομένα λόγω ανθρώπινου παράγοντα.</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error font-bold">close</span>
+<span class="font-body-md">Καθυστέρηση στην απόκριση σε έκτακτα συμβάντα.</span>
+</li>
+</ul>
+</div>
+<div class="reveal delay-150">
+<div class="p-8 rounded-2xl bg-surface-container-low border border-outline-variant/30 shadow-xl overflow-hidden">
+<div class="flex items-end gap-2 h-64">
+<div class="bg-primary/20 w-full h-[60%] rounded-t-lg transition-all hover:bg-primary/30"></div>
+<div class="bg-primary/40 w-full h-[80%] rounded-t-lg transition-all hover:bg-primary/50"></div>
+<div class="bg-primary/10 w-full h-[40%] rounded-t-lg transition-all hover:bg-primary/20"></div>
+<div class="bg-secondary w-full h-[100%] rounded-t-lg transition-all hover:bg-secondary/80"></div>
+<div class="bg-primary/30 w-full h-[55%] rounded-t-lg transition-all hover:bg-primary/40"></div>
+</div>
+<div class="mt-6 flex justify-between font-label-md text-on-surface-variant">
+<span>Week 1</span>
+<span>Week 2</span>
+<span>Week 3</span>
+<span>Week 4 (Automated)</span>
+<span>Week 5</span>
+</div>
+<p class="mt-6 text-center font-label-md text-primary font-bold uppercase tracking-widest">Efficiency Baseline (Time Lost)</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Solution -->
+<section class="py-section-desktop bg-surface-bright border-y border-outline-variant/10">
+<div class="max-w-[800px] mx-auto px-margin-container text-center reveal">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-6">Η Λύση</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-12">
+                Σχεδιάσαμε και υλοποιήσαμε ένα custom middleware σύστημα που συνδέει τα real-time traffic data με το Twitter API μέσω Make.com, διασφαλίζοντας 100% ακρίβεια και μηδενική ανθρώπινη παρέμβαση.
+            </p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+<div class="p-6 rounded-xl bg-white shadow-sm border border-outline-variant/20 group hover:border-primary transition-all">
+<span class="material-symbols-outlined text-secondary text-4xl mb-4">hub</span>
+<h4 class="font-headline-md text-lg mb-2">Make.com</h4>
+<p class="font-body-md text-sm text-on-surface-variant">Logic orchestrator for complex workflows.</p>
+</div>
+<div class="p-6 rounded-xl bg-white shadow-sm border border-outline-variant/20 group hover:border-primary transition-all">
+<span class="material-symbols-outlined text-secondary text-4xl mb-4">api</span>
+<h4 class="font-headline-md text-lg mb-2">Twitter API</h4>
+<p class="font-body-md text-sm text-on-surface-variant">Real-time content delivery system.</p>
+</div>
+<div class="p-6 rounded-xl bg-white shadow-sm border border-outline-variant/20 group hover:border-primary transition-all">
+<span class="material-symbols-outlined text-secondary text-4xl mb-4">database</span>
+<h4 class="font-headline-md text-lg mb-2">PostgreSQL</h4>
+<p class="font-body-md text-sm text-on-surface-variant">Audit trails &amp; historical logging data.</p>
+</div>
+</div>
+<div class="text-left space-y-6">
+<div class="flex gap-6 items-start">
+<div class="bg-primary text-on-primary w-8 h-8 rounded-full flex items-center justify-center font-bold shrink-0">1</div>
+<div>
+<h5 class="font-headline-md text-xl mb-1">Architecture Design (Week 1)</h5>
+<p class="font-body-md text-on-surface-variant">Mapping traffic sensors to content templates.</p>
+</div>
+</div>
+<div class="flex gap-6 items-start">
+<div class="bg-primary text-on-primary w-8 h-8 rounded-full flex items-center justify-center font-bold shrink-0">2</div>
+<div>
+<h5 class="font-headline-md text-xl mb-1">API Integration &amp; Logic (Week 2)</h5>
+<p class="font-body-md text-on-surface-variant">Developing the core automation logic and data cleaning.</p>
+</div>
+</div>
+<div class="flex gap-6 items-start">
+<div class="bg-primary text-on-primary w-8 h-8 rounded-full flex items-center justify-center font-bold shrink-0">3</div>
+<div>
+<h5 class="font-headline-md text-xl mb-1">Testing &amp; QA (Week 3)</h5>
+<p class="font-body-md text-on-surface-variant">Rigorous stress testing for 24/7 reliability.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Results -->
+<section class="py-section-desktop bg-surface-white">
+<div class="max-w-[1280px] mx-auto px-margin-container">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<div class="reveal p-8 rounded-2xl bg-surface shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center border border-outline-variant/20">
+<p class="font-headline-xl text-primary mb-2">250+</p>
+<p class="font-label-md text-on-surface-variant uppercase">Posts / Month</p>
+</div>
+<div class="reveal delay-100 p-8 rounded-2xl bg-surface shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center border border-outline-variant/20">
+<p class="font-headline-xl text-secondary mb-2">30</p>
+<p class="font-label-md text-on-surface-variant uppercase">Hours Saved / Wk</p>
+</div>
+<div class="reveal delay-200 p-8 rounded-2xl bg-surface shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center border border-outline-variant/20">
+<p class="font-headline-xl text-primary mb-2">+40%</p>
+<p class="font-label-md text-on-surface-variant uppercase">Engagement Up</p>
+</div>
+<div class="reveal delay-300 p-8 rounded-2xl bg-surface shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center border border-outline-variant/20">
+<p class="font-headline-xl text-secondary mb-2">5</p>
+<p class="font-label-md text-on-surface-variant uppercase">Weeks ROI</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: Testimonial -->
+<section class="py-section-desktop bg-primary text-on-primary overflow-hidden relative">
+
+<div class="max-w-[800px] mx-auto px-margin-container text-center relative z-10 reveal">
+<span class="material-symbols-outlined text-secondary text-7xl mb-8" style="font-variation-settings: 'FILL' 1;">format_quote</span>
+<p class="font-headline-md text-2xl md:text-3xl italic mb-10 leading-relaxed">
+                "Πριν, ήταν καθημερινό drama. Κάθε ενημέρωση έπρεπε να περάσει από τρία άτομα. Τώρα, το σύστημα της Side by Side «τρέχει» μόνο του και εμείς ασχολούμαστε μόνο με την στρατηγική. Η επένδυση έβγαλε τα λεφτά της σε έναν μήνα."
+            </p>
+<div>
+<p class="font-headline-md text-xl">Κωνσταντίνος Παπαδόπουλος</p>
+<p class="font-label-md text-on-primary-container uppercase tracking-widest">Operations Director, Logistics Hub</p>
+</div>
+</div>
+</section>
+<!-- Section 5: Investment -->
+<section class="py-section-desktop bg-surface-bright">
+<div class="max-w-[1280px] mx-auto px-margin-container">
+<div class="text-center mb-16 reveal">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-4">Ανάλυση Επένδυσης</h2>
+<p class="font-body-md text-on-surface-variant max-w-xl mx-auto">Διαφανείς χρεώσεις και μετρήσιμα αποτελέσματα που δικαιολογούν κάθε ευρώ.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter reveal">
+<div class="p-10 rounded-2xl bg-white border border-outline-variant/30 flex flex-col items-center">
+<p class="font-label-md text-on-surface-variant uppercase mb-4">Cost</p>
+<p class="font-headline-xl text-primary">€3,500</p>
+<p class="font-body-md text-sm text-center mt-4">One-time setup fee including architecture &amp; training.</p>
+</div>
+<div class="p-10 rounded-2xl bg-white border-2 border-secondary shadow-xl scale-105 flex flex-col items-center relative">
+<div class="absolute -top-4 bg-secondary text-on-primary px-4 py-1 rounded-full font-label-md">Most Effective</div>
+<p class="font-label-md text-on-surface-variant uppercase mb-4">Timeline</p>
+<p class="font-headline-xl text-secondary">3 εβδ.</p>
+<p class="font-body-md text-sm text-center mt-4">From initial audit to fully autonomous deployment.</p>
+</div>
+<div class="p-10 rounded-2xl bg-white border border-outline-variant/30 flex flex-col items-center">
+<p class="font-label-md text-on-surface-variant uppercase mb-4">ROI</p>
+<p class="font-headline-xl text-primary">5 εβδ.</p>
+<p class="font-body-md text-sm text-center mt-4">Time-savings matched against operational expenses.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 6: Narrative -->
+<section class="py-section-desktop bg-surface-white">
+<div class="max-w-[800px] mx-auto px-margin-container reveal">
+<h2 class="font-headline-md text-primary mb-8 border-l-4 border-secondary pl-6">The Journey to Autonomy</h2>
+<div class="space-y-6 text-on-surface-variant leading-relaxed font-body-lg">
+<p>Στον κόσμο των υποδομών, η πληροφορία που φτάνει καθυστερημένη είναι άχρηστη πληροφορία. Η Αττική Οδός αντιμετώπιζε μια κλασική πρόκληση ψηφιακού μετασχηματισμού: είχαν τα δεδομένα, αλλά η γέφυρα μεταξύ των δεδομένων και της δημόσιας επικοινωνίας ήταν ένας "άνθρωπος με πληκτρολόγιο".</p>
+<p>Η προσέγγισή μας δεν ήταν απλώς να φτιάξουμε ένα script. Δημιουργήσαμε ένα "ψηφιακό νευρικό σύστημα". Χρησιμοποιώντας webhooks που ενεργοποιούνται από τα traffic sensors, το middleware μας φιλτράρει τον θόρυβο, κατηγοριοποιεί τη σοβαρότητα του συμβάντος και επιλέγει την κατάλληλη οπτικοποίηση για το Twitter.</p>
+<p>Το αποτέλεσμα; Μια εμπειρία για τον χρήστη που νιώθει "ζωντανή". Για τον οργανισμό, η απελευθέρωση 120 ωρών εργασίας τον μήνα σήμαινε ότι η ομάδα επικοινωνίας μπορούσε επιτέλους να επικεντρωθεί σε στρατηγικές καμπάνιες οδικής ασφάλειας αντί για data entry.</p>
+</div>
+</div>
+</section>
+<!-- Section 7: Related Services -->
+<section class="py-section-desktop bg-surface-bright">
+<div class="max-w-[1280px] mx-auto px-margin-container">
+<h2 class="font-headline-md text-primary mb-12 text-center">Σχετικές Υπηρεσίες</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter reveal">
+<a class="group p-8 rounded-xl bg-white border border-outline-variant/20 hover:border-secondary transition-all" href="#">
+<span class="material-symbols-outlined text-secondary text-4xl mb-4">settings_suggest</span>
+<h4 class="font-headline-md text-xl mb-4 group-hover:text-secondary transition-colors">Business Process Automation</h4>
+<p class="font-body-md text-on-surface-variant mb-6">Σχεδιασμός και υλοποίηση ροών εργασίας που εξοικονομούν χρόνο και πόρους.</p>
+<span class="text-primary font-label-md flex items-center gap-2 group-hover:gap-4 transition-all">Μάθετε περισσότερα <span class="material-symbols-outlined">arrow_forward</span></span>
+</a>
+<a class="group p-8 rounded-xl bg-white border border-outline-variant/20 hover:border-secondary transition-all" href="#">
+<span class="material-symbols-outlined text-secondary text-4xl mb-4">lan</span>
+<h4 class="font-headline-md text-xl mb-4 group-hover:text-secondary transition-colors">Custom API Integrations</h4>
+<p class="font-body-md text-on-surface-variant mb-6">Σύνδεση ασύμβατων συστημάτων για την απρόσκοπτη ροή δεδομένων.</p>
+<span class="text-primary font-label-md flex items-center gap-2 group-hover:gap-4 transition-all">Μάθετε περισσότερα <span class="material-symbols-outlined">arrow_forward</span></span>
+</a>
+<a class="group p-8 rounded-xl bg-white border border-outline-variant/20 hover:border-secondary transition-all" href="#">
+<span class="material-symbols-outlined text-secondary text-4xl mb-4">analytics</span>
+<h4 class="font-headline-md text-xl mb-4 group-hover:text-secondary transition-colors">Digital Strategy</h4>
+<p class="font-body-md text-on-surface-variant mb-6">Συμβουλευτική για την επιλογή των κατάλληλων τεχνολογικών εργαλείων.</p>
+<span class="text-primary font-label-md flex items-center gap-2 group-hover:gap-4 transition-all">Μάθετε περισσότερα <span class="material-symbols-outlined">arrow_forward</span></span>
+</a>
+</div>
+</div>
+</section>
+<!-- Section 8: CTA -->
+<section class="py-section-desktop bg-primary text-on-primary text-center">
+<div class="max-w-[800px] mx-auto px-margin-container reveal">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-6">Έτοιμος για Παρόμοιο Έργο?</h2>
+<p class="font-body-lg text-on-primary-container mb-10">Αφήστε τις επαναλαμβανόμενες εργασίες στην τεχνολογία και επικεντρωθείτε σε αυτό που πραγματικά μετράει.</p>
+<button class="bg-secondary text-on-primary px-10 py-4 rounded-xl font-headline-md hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-secondary/20">Ζητήστε Ανάλυση Δωρεάν</button>
+</div>
+</section>
+<!-- Section 9: Related Case Studies -->
+<section class="py-section-desktop bg-surface-white">
+<div class="max-w-[1280px] mx-auto px-margin-container">
+<h2 class="font-headline-md text-primary mb-12">Άλλα Έργα μας</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter reveal">
+<div class="group rounded-2xl overflow-hidden border border-outline-variant/20 shadow-sm hover:shadow-xl transition-all">
+<div class="h-48 relative overflow-hidden">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="A clean, minimalist high-tech dashboard interface showing real-time logistics and shipping data. The UI is elegant with thin lines, soft shadows, and a professional navy and white color scheme. A sense of global connectivity and data-driven decision making." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCTN58t5muGVIXXGt_SWt6QCC18E3w-rlYSJhikNKmjaj-qXNlDPcAW5btPEKk5ky0xVTTYfpDdyP9cYLuUJxpjQ_Q8jblI9aNnZaZegeNaz77CAtGZ1TweuOuEoI4YgFCRT4qodGK3Rp1MlOS5KCONVNyhYj4E8PdCU1gMVVLW64ywh1YvMyPzv8g5DlWqnQcSNfHWQb0myQ57LQqd0fIT4cU_PnsFutCb_3PkHzRFD9hbMLs3sIMy')"></div>
+</div>
+<div class="p-6">
+<span class="text-xs font-label-md text-secondary uppercase tracking-widest mb-2 block">Enterprise SaaS</span>
+<h4 class="font-headline-md text-xl mb-4">Logistics AI Dashboard</h4>
+<a class="text-primary font-bold hover:text-secondary flex items-center gap-2" href="#">Δείτε το Case <span class="material-symbols-outlined">open_in_new</span></a>
+</div>
+</div>
+<div class="group rounded-2xl overflow-hidden border border-outline-variant/20 shadow-sm hover:shadow-xl transition-all">
+<div class="h-48 relative overflow-hidden">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="A macro shot of a sleek smartphone screen displaying a custom mobile banking or fintech application. The design is modern, with bold typography, vibrant accent colors, and a clean, user-friendly interface. Professional studio lighting with soft bokeh background." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB-K47sYULHmkuFBH41A7hrGezIz5J3rL_tj8FmKZMmBDyeHWUWlpScP8E5fpzTPBYBe1nL4CCrSxZM1bLxlK2973M9rMBT9touilFi2CwMsXuVixLIC0Rm-F5AzkTvzd-1PPeRRkeJMiymZyUXzZxFIml1-fjvVzLAj9JvmsX89jPGtlO-OTRtsdybUle0L0_hu-1H_C80nazx1kswYoX7fuYPH4nerJsK-pvBHRYQuVtQPMwEilvh')"></div>
+</div>
+<div class="p-6">
+<span class="text-xs font-label-md text-secondary uppercase tracking-widest mb-2 block">Fintech</span>
+<h4 class="font-headline-md text-xl mb-4">Neobank Mobile UI/UX</h4>
+<a class="text-primary font-bold hover:text-secondary flex items-center gap-2" href="#">Δείτε το Case <span class="material-symbols-outlined">open_in_new</span></a>
+</div>
+</div>
+<div class="group rounded-2xl overflow-hidden border border-outline-variant/20 shadow-sm hover:shadow-xl transition-all">
+<div class="h-48 relative overflow-hidden">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500" data-alt="A futuristic medical technology laboratory with clean white surfaces and blue glowing diagnostic screens. An abstract representation of DNA sequencing or health data analytics in a high-key, surgical environment. Professional, trustworthy, and innovative mood." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDKIOFojOtvNmGR9YpCwWkFdIuCXZ92Um03-6Hdsezm4SKgrbrN7tWOjcOdC-ah-eqQiIUeao38XcTj9_4fTDPyNiURmBdi9CN1GMk8FJu6C3kyyy2qYJG7lVzuAog0OmHoP_bzSu9NhqonqqtniNCswWt53DRdVbkGJKZWT5UDeFKMr551HCe-65hQTHTVyRpJu_2o_qkvLqyqyVHZOmxWdF8zsye_pewiasI07I1JIzRPKPiU5WPE')"></div>
+</div>
+<div class="p-6">
+<span class="text-xs font-label-md text-secondary uppercase tracking-widest mb-2 block">HealthTech</span>
+<h4 class="font-headline-md text-xl mb-4">Bio-Data Analytics Platform</h4>
+<a class="text-primary font-bold hover:text-secondary flex items-center gap-2" href="#">Δείτε το Case <span class="material-symbols-outlined">open_in_new</span></a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-primary py-section-desktop text-on-primary">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-container max-w-[1280px] mx-auto">
+<div class="md:col-span-1">
+<h3 class="font-headline-md text-headline-md font-bold text-on-primary mb-6">Side by Side</h3>
+<p class="font-body-md text-on-primary/70 mb-8 max-w-xs">Bridging the gap between strategy and high-precision execution.</p>
+</div>
+<div>
+<h4 class="font-label-md text-secondary mb-6 uppercase">Exploration</h4>
+<ul class="space-y-4">
+<li><a class="font-body-md text-on-primary/80 hover:text-secondary-fixed transition-all" href="#">Services</a></li>
+<li><a class="font-body-md text-on-primary/80 hover:text-secondary-fixed transition-all" href="#">Case Studies</a></li>
+<li><a class="font-body-md text-on-primary/80 hover:text-secondary-fixed transition-all" href="#">Team</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-secondary mb-6 uppercase">Connect</h4>
+<ul class="space-y-4">
+<li><a class="font-body-md text-on-primary/80 hover:text-secondary-fixed transition-all" href="#">LinkedIn</a></li>
+<li><a class="font-body-md text-on-primary/80 hover:text-secondary-fixed transition-all" href="#">Twitter</a></li>
+<li><a class="font-body-md text-on-primary/80 hover:text-secondary-fixed transition-all" href="#">Dribbble</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-secondary mb-6 uppercase">Legal</h4>
+<ul class="space-y-4">
+<li><a class="font-body-md text-on-primary/80 hover:text-secondary-fixed transition-all" href="#">Terms of Service</a></li>
+<li><a class="font-body-md text-on-primary/80 hover:text-secondary-fixed transition-all" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-[1280px] mx-auto px-margin-container border-t border-on-primary-container/20 mt-16 pt-8 text-center md:text-left">
+<p class="font-body-md text-on-primary/50 text-sm">© 2024 Side by Side Web Studio. All rights reserved.</p>
+</div>
+</footer>
+<script>
+        // Scroll Reveal Animation
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Initial check
+        reveal();
+
+        // Navbar interaction
+        let lastScroll = 0;
+        window.addEventListener("scroll", () => {
+            const currentScroll = window.pageYOffset;
+            const nav = document.querySelector("nav");
+            if (currentScroll <= 0) {
+                nav.classList.remove("shadow-lg");
+                return;
+            }
+            if (currentScroll > lastScroll) {
+                nav.style.transform = "translateY(-100%)";
+            } else {
+                nav.style.transform = "translateY(0)";
+                nav.classList.add("shadow-lg");
+            }
+            lastScroll = currentScroll;
+        });
+    </script>
+</body></html>

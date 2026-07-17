@@ -1,0 +1,57 @@
+---
+import {getCaseStudyCategoryLabel, getCaseStudyCardStats} from '../lib/case-study-helpers'
+import {DEFAULT_LOCALE, localizePath, type SiteLocale} from '../lib/i18n'
+import {resolveCaseStudyImage} from '../lib/image'
+import type {CaseStudy} from '../lib/types'
+import {getUiStrings} from '../lib/ui-strings'
+
+interface Props {
+  caseStudy: CaseStudy
+  staggerClass?: string
+  locale?: SiteLocale
+}
+
+const {caseStudy, staggerClass = '', locale = DEFAULT_LOCALE} = Astro.props
+const ui = getUiStrings(locale)
+const slug = caseStudy.slug?.current ?? ''
+const category = getCaseStudyCategoryLabel(caseStudy, locale)
+const stats = getCaseStudyCardStats(caseStudy, locale)
+const imageUrl = resolveCaseStudyImage(caseStudy)
+const caseStudyHref = localizePath(`/case-studies/${slug}`, locale)
+---
+
+<article class={`case-card scroll-reveal flex flex-col overflow-hidden rounded-xl bg-white ${staggerClass}`}>
+  <a class="block h-[200px] overflow-hidden" href={caseStudyHref}>
+    <div
+      class="case-image h-full w-full bg-cover bg-center"
+      style={`background-image: url('${imageUrl}')`}
+    />
+  </a>
+  <div class="flex flex-grow flex-col p-6">
+    <span class="mb-2 text-[10px] font-bold uppercase tracking-widest text-secondary-container">
+      {category}
+    </span>
+    <h3 class="mb-3 text-[20px] font-semibold leading-tight text-primary">
+      <a class="hover:text-secondary transition-colors" href={caseStudyHref}>
+        {caseStudy.title}
+      </a>
+    </h3>
+    {caseStudy.summary ? (
+      <p class="mb-6 flex-grow text-sm text-on-surface-variant">{caseStudy.summary}</p>
+    ) : null}
+    <div class="mb-6 grid grid-cols-3 gap-2 border-y border-outline-variant py-4">
+      {
+        stats.map((stat) => (
+          <div class="text-center">
+            <p class="text-sm font-bold text-primary">{stat.value}</p>
+            <p class="text-[10px] uppercase text-on-surface-variant">{stat.label}</p>
+          </div>
+        ))
+      }
+    </div>
+    <a class="sliding-link mt-auto inline-flex items-center gap-1 text-sm" href={caseStudyHref}>
+      {ui.caseStudyReadMore}
+      <span class="material-symbols-outlined text-sm">arrow_forward</span>
+    </a>
+  </div>
+</article>
