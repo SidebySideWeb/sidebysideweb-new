@@ -9,7 +9,6 @@ import AboutWorkStyle from '../../components/about/AboutWorkStyle.astro'
 import AboutStats from '../../components/about/AboutStats.astro'
 import AboutComparison from '../../components/about/AboutComparison.astro'
 import AboutTestimonials from '../../components/about/AboutTestimonials.astro'
-import AboutCta from '../../components/about/AboutCta.astro'
 import {getAboutPageData} from '../../lib/cms'
 import {localizePath, resolvePageLocale} from '../../lib/i18n'
 
@@ -41,7 +40,6 @@ const aboutPath = localizePath('/about', locale)
     <AboutStats about={aboutPage} />
     <AboutComparison about={aboutPage} />
     <AboutTestimonials about={aboutPage} testimonials={testimonials} />
-    <AboutCta about={aboutPage} />
   </main>
 
   <SiteFooter locale={locale} siteSettings={siteSettings} />

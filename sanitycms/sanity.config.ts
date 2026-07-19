@@ -4,7 +4,8 @@ import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
 import {structure} from './structure'
 
-const singletonTypes = ['siteSettings', 'heroSection', 'credentialsSection', 'valueProposition']
+const singletonTypes = ['siteSettings', 'heroSection', 'credentialsSection', 'valueProposition', 'aboutPage']
+const hiddenCreateTypes = [...singletonTypes, 'formSubmission']
 
 export default defineConfig({
   name: 'default',
@@ -18,6 +19,6 @@ export default defineConfig({
   schema: {
     types: schemaTypes,
     templates: (templates) =>
-      templates.filter(({schemaType}) => !singletonTypes.includes(schemaType)),
+      templates.filter(({schemaType}) => !hiddenCreateTypes.includes(schemaType)),
   },
 })

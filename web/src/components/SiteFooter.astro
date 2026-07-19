@@ -1,9 +1,10 @@
 ---
 import type {SiteSettings} from '../lib/types'
-import {DEFAULT_LOCALE, type SiteLocale} from '../lib/i18n'
-import {SITE_LOGO} from '../lib/stitch-design'
+import {DEFAULT_LOCALE, localizePath, type SiteLocale} from '../lib/i18n'
+import {getRecaptchaSiteKey} from '../lib/recaptcha'
 import {getFooterCopy, getUiStrings} from '../lib/ui-strings'
 import CalBookingButton from './CalBookingButton.astro'
+import ContactFormModal from './contact/ContactFormModal'
 
 interface Props {
   siteSettings: SiteSettings
@@ -14,11 +15,35 @@ const {siteSettings, locale = DEFAULT_LOCALE} = Astro.props
 const footer = getFooterCopy(locale)
 const ui = getUiStrings(locale)
 const year = new Date().getFullYear()
+const privacyHref = localizePath('/privacy-policy', locale)
+const recaptchaSiteKey = getRecaptchaSiteKey()
 
 const socialLinks = [
   {label: 'LinkedIn', href: 'https://www.linkedin.com/in/dimitriosgeronikolos/'},
   {label: 'TikTok', href: 'https://www.tiktok.com/@sidebysideweb'},
 ] as const
+
+const contactFormCopy = {
+  openButton: ui.contactFormOpen,
+  modalTitle: ui.contactFormTitle,
+  firstName: ui.contactFormFirstName,
+  lastName: ui.contactFormLastName,
+  companyName: ui.contactFormCompany,
+  email: ui.contactFormEmail,
+  phone: ui.contactFormPhone,
+  message: ui.contactFormMessage,
+  consentPrefix: ui.contactFormConsentPrefix,
+  consentLink: ui.contactFormConsentLink,
+  consentSuffix: ui.contactFormConsentSuffix,
+  submit: ui.contactFormSubmit,
+  submitting: ui.contactFormSubmitting,
+  success: ui.contactFormSuccess,
+  close: ui.contactFormClose,
+  requiredError: ui.contactFormRequiredError,
+  consentError: ui.contactFormConsentError,
+  recaptchaError: ui.contactFormRecaptchaError,
+  genericError: ui.contactFormGenericError,
+}
 ---
 
 <footer class="relative w-full overflow-hidden bg-primary text-white" id="contact">
@@ -29,31 +54,9 @@ const socialLinks = [
   </div>
 
   <div
-    class="relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-12 px-margin-container py-section-mobile md:grid-cols-4 md:gap-gutter md:py-section-desktop"
+    class="relative z-10 mx-auto max-w-7xl px-margin-container py-section-mobile md:py-section-desktop"
   >
-    <!-- Brand column — 1/4 -->
-    <div class="flex flex-col space-y-6 md:col-span-1">
-      <img alt={siteSettings.siteName} class="h-10 w-auto self-start" src={SITE_LOGO} />
-      <p class="text-sm leading-relaxed text-white/70">{footer.tagline}</p>
-      <div class="flex flex-wrap gap-4 pt-2">
-        {
-          socialLinks.map((link) => (
-            <a
-              class="text-sm font-semibold uppercase tracking-wider text-white/80 transition-colors hover:text-secondary"
-              href={link.href}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              {link.label}
-            </a>
-          ))
-        }
-      </div>
-    </div>
-
-    <!-- CTA column — 3/4 -->
-    <div class="scroll-reveal text-center text-on-primary md:col-span-3 md:px-6 lg:px-10">
-      <h2 class="mb-6 text-headline-lg">{ui.contactCtaTitle}</h2>
+    <div class="scroll-reveal mx-auto max-w-4xl text-center text-on-primary">
       <p class="mb-12 text-body-lg text-on-primary-container">{ui.contactCtaBody}</p>
       <div class="flex flex-col items-center gap-8">
         <div class="flex w-full flex-col items-center justify-center gap-gutter md:flex-row">
@@ -61,6 +64,17 @@ const socialLinks = [
             class="btn-primary-orange h-[60px] rounded-lg px-10 shadow-xl"
             label={ui.contactCtaButton}
           />
+          <ContactFormModal
+            client:load
+            copy={contactFormCopy}
+            privacyHref={privacyHref}
+            recaptchaSiteKey={recaptchaSiteKey}
+            locale={locale}
+          />
+        </div>
+        <div
+          class="flex w-full flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap sm:gap-x-8 sm:gap-y-3"
+        >
           <a
             class="border-b border-on-primary-container pb-1 text-body-md text-on-primary transition-colors hover:text-secondary"
             href={`mailto:${siteSettings.contactEmail}`}
@@ -76,6 +90,18 @@ const socialLinks = [
                 {siteSettings.contactPhone}
               </a>
             ) : null
+          }
+          {
+            socialLinks.map((link) => (
+              <a
+                class="text-sm font-semibold uppercase tracking-wider text-white/80 transition-colors hover:text-secondary"
+                href={link.href}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                {link.label}
+              </a>
+            ))
           }
         </div>
         <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 opacity-70">
@@ -96,14 +122,13 @@ const socialLinks = [
     </div>
   </div>
 
-  <!-- Bottom bar -->
   <div
     class="relative z-10 mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 border-t border-white/10 px-margin-container py-8 md:flex-row"
   >
     <p class="text-xs text-white/60">
       © {year} {siteSettings.siteName}. {footer.rights}
     </p>
-    <div class="flex gap-6 text-xs text-white/60">
+    <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-white/60">
       {
         footer.legalLinks.map((link) => (
           <a class="hover:text-secondary" href={link.href}>

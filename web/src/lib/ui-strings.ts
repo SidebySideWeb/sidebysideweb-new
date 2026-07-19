@@ -114,6 +114,25 @@ export const UI_STRINGS: Record<
     contactCtaConfidentiality: string
     contactCtaResponse: string
     contactCtaExpertise: string
+    contactFormOpen: string
+    contactFormTitle: string
+    contactFormFirstName: string
+    contactFormLastName: string
+    contactFormCompany: string
+    contactFormEmail: string
+    contactFormPhone: string
+    contactFormMessage: string
+    contactFormConsentPrefix: string
+    contactFormConsentLink: string
+    contactFormConsentSuffix: string
+    contactFormSubmit: string
+    contactFormSubmitting: string
+    contactFormSuccess: string
+    contactFormClose: string
+    contactFormRequiredError: string
+    contactFormConsentError: string
+    contactFormRecaptchaError: string
+    contactFormGenericError: string
     aboutNavContact: string
     aboutBreadcrumbHome: string
     aboutBreadcrumbAbout: string
@@ -172,6 +191,25 @@ export const UI_STRINGS: Record<
     contactCtaConfidentiality: '100% Εμπιστευτικότητα',
     contactCtaResponse: 'Απάντηση σε 24 ώρες',
     contactCtaExpertise: 'Verified Expertise',
+    contactFormOpen: 'Contact Form',
+    contactFormTitle: 'Φόρμα Επικοινωνίας',
+    contactFormFirstName: 'Όνομα',
+    contactFormLastName: 'Επίθετο',
+    contactFormCompany: 'Όνομα εταιρείας',
+    contactFormEmail: 'Email',
+    contactFormPhone: 'Τηλέφωνο',
+    contactFormMessage: 'Κείμενο',
+    contactFormConsentPrefix: 'Συμφωνώ με την',
+    contactFormConsentLink: 'πολιτική απορρήτου',
+    contactFormConsentSuffix: ' και την επεξεργασία των δεδομένων μου.',
+    contactFormSubmit: 'Αποστολή',
+    contactFormSubmitting: 'Αποστολή…',
+    contactFormSuccess: 'Το μήνυμά σας στάλθηκε. Θα επικοινωνήσουμε μαζί σας σύντομα.',
+    contactFormClose: 'Κλείσιμο',
+    contactFormRequiredError: 'Συμπληρώστε όλα τα υποχρεωτικά πεδία.',
+    contactFormConsentError: 'Πρέπει να αποδεχτείτε την πολιτική απορρήτου.',
+    contactFormRecaptchaError: 'Επιβεβαιώστε ότι δεν είστε ρομπότ.',
+    contactFormGenericError: 'Η αποστολή απέτυχε. Δοκιμάστε ξανά.',
     aboutNavContact: 'Επικοινωνία',
     aboutBreadcrumbHome: 'Αρχική',
     aboutBreadcrumbAbout: 'Σχετικά',
@@ -231,6 +269,25 @@ export const UI_STRINGS: Record<
     contactCtaConfidentiality: '100% Confidential',
     contactCtaResponse: 'Response within 24 hours',
     contactCtaExpertise: 'Verified Expertise',
+    contactFormOpen: 'Contact Form',
+    contactFormTitle: 'Contact Form',
+    contactFormFirstName: 'First name',
+    contactFormLastName: 'Last name',
+    contactFormCompany: 'Company name',
+    contactFormEmail: 'Email',
+    contactFormPhone: 'Phone',
+    contactFormMessage: 'Message',
+    contactFormConsentPrefix: 'I agree to the',
+    contactFormConsentLink: 'privacy policy',
+    contactFormConsentSuffix: ' and the processing of my data.',
+    contactFormSubmit: 'Submit',
+    contactFormSubmitting: 'Sending…',
+    contactFormSuccess: 'Your message was sent. We will get back to you soon.',
+    contactFormClose: 'Close',
+    contactFormRequiredError: 'Please fill in all required fields.',
+    contactFormConsentError: 'You must accept the privacy policy.',
+    contactFormRecaptchaError: 'Please confirm you are not a robot.',
+    contactFormGenericError: 'Submission failed. Please try again.',
     aboutNavContact: 'Contact',
     aboutBreadcrumbHome: 'Home',
     aboutBreadcrumbAbout: 'About',

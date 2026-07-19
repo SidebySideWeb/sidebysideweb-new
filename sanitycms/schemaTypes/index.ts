@@ -18,6 +18,7 @@ import {blogPost} from './documents/blogPost'
 import {credentialsSection} from './documents/credentialsSection'
 import {valueProposition} from './documents/valueProposition'
 import {aboutPage} from './documents/aboutPage'
+import {formSubmission} from './documents/formSubmission'
 
 export const schemaTypes = [
   blockContent,
@@ -42,4 +43,5 @@ export const schemaTypes = [
   credentialsSection,
   valueProposition,
   aboutPage,
+  formSubmission,
 ]

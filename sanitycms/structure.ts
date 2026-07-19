@@ -59,4 +59,14 @@ export const structure: StructureResolver = (S) =>
       S.listItem()
         .title('Blog Posts')
         .child(S.documentTypeList('blogPost').title('Blog Posts')),
+
+      S.divider(),
+
+      S.listItem()
+        .title('Form Submissions')
+        .child(
+          S.documentTypeList('formSubmission')
+            .title('Form Submissions')
+            .defaultOrdering([{field: 'submittedAt', direction: 'desc'}]),
+        ),
     ])
