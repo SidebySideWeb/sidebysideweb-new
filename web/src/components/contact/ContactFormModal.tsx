@@ -1,4 +1,5 @@
 import {useEffect, useId, useState, type FormEvent} from 'react'
+import {createPortal} from 'react-dom'
 import {getRecaptchaResponse, resetRecaptcha} from '../../lib/recaptcha-client'
 import RecaptchaField from './RecaptchaField'
 
@@ -38,6 +39,7 @@ const inputClass =
 
 export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey, locale}: Props) {
   const titleId = useId()
+  const [mounted, setMounted] = useState(false)
   const [open, setOpen] = useState(false)
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -48,6 +50,10 @@ export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey, l
   const [privacyAccepted, setPrivacyAccepted] = useState(false)
   const [status, setStatus] = useState<FormStatus>('idle')
   const [errorMessage, setErrorMessage] = useState('')
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     if (!open) return
@@ -143,6 +149,196 @@ export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey, l
     }
   }
 
+  const popup =
+    open && mounted
+      ? createPortal(
+          <div
+            className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6"
+            role="presentation"
+          >
+            <button
+              type="button"
+              aria-label={copy.close}
+              className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+              onClick={closeModal}
+            />
+
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby={titleId}
+              className="relative z-10 flex h-[80vh] w-[80vw] max-w-[80vw] flex-col overflow-hidden rounded-2xl bg-primary text-white shadow-2xl"
+            >
+              <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-5 py-4 sm:px-8 sm:py-5">
+                <h3 id={titleId} className="text-lg font-semibold sm:text-2xl">
+                  {copy.modalTitle}
+                </h3>
+                <button
+                  type="button"
+                  className="rounded-lg p-2 text-white/70 transition hover:bg-white/10 hover:text-white"
+                  onClick={closeModal}
+                  aria-label={copy.close}
+                >
+                  <span className="material-symbols-outlined text-[22px]">close</span>
+                </button>
+              </div>
+
+              <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5 sm:px-8 sm:py-8">
+                {status === 'success' ? (
+                  <div
+                    className="flex h-full flex-col items-center justify-center space-y-6 text-center"
+                    role="status"
+                  >
+                    <span className="material-symbols-outlined text-5xl text-secondary">
+                      check_circle
+                    </span>
+                    <p className="text-body-md text-on-primary-container">{copy.success}</p>
+                    <button
+                      type="button"
+                      className="btn-primary-orange rounded-lg px-8 py-3"
+                      onClick={closeModal}
+                    >
+                      {copy.close}
+                    </button>
+                  </div>
+                ) : (
+                  <form className="mx-auto grid max-w-4xl gap-5" onSubmit={handleSubmit} noValidate>
+                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                      <label className="block space-y-1.5">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-white/70">
+                          {copy.firstName}
+                        </span>
+                        <input
+                          className={inputClass}
+                          name="firstName"
+                          autoComplete="given-name"
+                          value={firstName}
+                          onChange={(event) => setFirstName(event.target.value)}
+                          required
+                        />
+                      </label>
+                      <label className="block space-y-1.5">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-white/70">
+                          {copy.lastName}
+                        </span>
+                        <input
+                          className={inputClass}
+                          name="lastName"
+                          autoComplete="family-name"
+                          value={lastName}
+                          onChange={(event) => setLastName(event.target.value)}
+                          required
+                        />
+                      </label>
+                    </div>
+
+                    <label className="block space-y-1.5">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-white/70">
+                        {copy.companyName}
+                      </span>
+                      <input
+                        className={inputClass}
+                        name="companyName"
+                        autoComplete="organization"
+                        value={companyName}
+                        onChange={(event) => setCompanyName(event.target.value)}
+                        required
+                      />
+                    </label>
+
+                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                      <label className="block space-y-1.5">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-white/70">
+                          {copy.email}
+                        </span>
+                        <input
+                          className={inputClass}
+                          type="email"
+                          name="email"
+                          autoComplete="email"
+                          value={email}
+                          onChange={(event) => setEmail(event.target.value)}
+                          required
+                        />
+                      </label>
+                      <label className="block space-y-1.5">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-white/70">
+                          {copy.phone}
+                        </span>
+                        <input
+                          className={inputClass}
+                          type="tel"
+                          name="phone"
+                          autoComplete="tel"
+                          value={phone}
+                          onChange={(event) => setPhone(event.target.value)}
+                          required
+                        />
+                      </label>
+                    </div>
+
+                    <label className="block space-y-1.5">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-white/70">
+                        {copy.message}
+                      </span>
+                      <textarea
+                        className={`${inputClass} min-h-[160px] resize-y`}
+                        name="message"
+                        rows={5}
+                        value={message}
+                        onChange={(event) => setMessage(event.target.value)}
+                        required
+                      />
+                    </label>
+
+                    <label className="flex items-start gap-3 text-sm text-white/80">
+                      <input
+                        type="checkbox"
+                        className="mt-1 size-4 rounded border-white/30 bg-white/5 text-secondary focus:ring-secondary"
+                        checked={privacyAccepted}
+                        onChange={(event) => setPrivacyAccepted(event.target.checked)}
+                      />
+                      <span>
+                        {copy.consentPrefix}{' '}
+                        <a
+                          className="underline decoration-white/40 underline-offset-2 transition hover:text-secondary"
+                          href={privacyHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {copy.consentLink}
+                        </a>
+                        {copy.consentSuffix}
+                      </span>
+                    </label>
+
+                    <RecaptchaField siteKey={recaptchaSiteKey} widgetKey="contact" hl={locale} />
+
+                    {errorMessage ? (
+                      <p
+                        className="rounded-lg border border-red-400/30 bg-red-500/10 px-3 py-2 text-sm text-red-200"
+                        role="alert"
+                      >
+                        {errorMessage}
+                      </p>
+                    ) : null}
+
+                    <button
+                      type="submit"
+                      className="btn-primary-orange w-full rounded-lg px-8 py-3.5 sm:w-auto sm:min-w-[240px] disabled:cursor-not-allowed disabled:opacity-60"
+                      disabled={status === 'submitting'}
+                    >
+                      {status === 'submitting' ? copy.submitting : copy.submit}
+                    </button>
+                  </form>
+                )}
+              </div>
+            </div>
+          </div>,
+          document.body,
+        )
+      : null
+
   return (
     <>
       <button
@@ -155,181 +351,7 @@ export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey, l
       >
         {copy.openButton}
       </button>
-
-      {open ? (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
-          <button
-            type="button"
-            aria-label={copy.close}
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-            onClick={closeModal}
-          />
-
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby={titleId}
-            className="relative z-10 flex h-[80vh] w-[80vw] max-w-[80vw] flex-col overflow-hidden rounded-2xl bg-primary text-white shadow-2xl"
-          >
-            <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-5 py-4 sm:px-8 sm:py-5">
-              <h3 id={titleId} className="text-lg font-semibold sm:text-2xl">
-                {copy.modalTitle}
-              </h3>
-              <button
-                type="button"
-                className="rounded-lg p-2 text-white/70 transition hover:bg-white/10 hover:text-white"
-                onClick={closeModal}
-                aria-label={copy.close}
-              >
-                <span className="material-symbols-outlined text-[22px]">close</span>
-              </button>
-            </div>
-
-            <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5 sm:px-8 sm:py-8">
-              {status === 'success' ? (
-                <div className="flex h-full flex-col items-center justify-center space-y-6 text-center" role="status">
-                  <span className="material-symbols-outlined text-5xl text-secondary">check_circle</span>
-                  <p className="text-body-md text-on-primary-container">{copy.success}</p>
-                  <button
-                    type="button"
-                    className="btn-primary-orange rounded-lg px-8 py-3"
-                    onClick={closeModal}
-                  >
-                    {copy.close}
-                  </button>
-                </div>
-              ) : (
-                <form className="mx-auto grid max-w-4xl gap-5" onSubmit={handleSubmit} noValidate>
-                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                    <label className="block space-y-1.5">
-                      <span className="text-xs font-semibold uppercase tracking-wider text-white/70">
-                        {copy.firstName}
-                      </span>
-                      <input
-                        className={inputClass}
-                        name="firstName"
-                        autoComplete="given-name"
-                        value={firstName}
-                        onChange={(event) => setFirstName(event.target.value)}
-                        required
-                      />
-                    </label>
-                    <label className="block space-y-1.5">
-                      <span className="text-xs font-semibold uppercase tracking-wider text-white/70">
-                        {copy.lastName}
-                      </span>
-                      <input
-                        className={inputClass}
-                        name="lastName"
-                        autoComplete="family-name"
-                        value={lastName}
-                        onChange={(event) => setLastName(event.target.value)}
-                        required
-                      />
-                    </label>
-                  </div>
-
-                  <label className="block space-y-1.5">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-white/70">
-                      {copy.companyName}
-                    </span>
-                    <input
-                      className={inputClass}
-                      name="companyName"
-                      autoComplete="organization"
-                      value={companyName}
-                      onChange={(event) => setCompanyName(event.target.value)}
-                      required
-                    />
-                  </label>
-
-                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                    <label className="block space-y-1.5">
-                      <span className="text-xs font-semibold uppercase tracking-wider text-white/70">
-                        {copy.email}
-                      </span>
-                      <input
-                        className={inputClass}
-                        type="email"
-                        name="email"
-                        autoComplete="email"
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)}
-                        required
-                      />
-                    </label>
-                    <label className="block space-y-1.5">
-                      <span className="text-xs font-semibold uppercase tracking-wider text-white/70">
-                        {copy.phone}
-                      </span>
-                      <input
-                        className={inputClass}
-                        type="tel"
-                        name="phone"
-                        autoComplete="tel"
-                        value={phone}
-                        onChange={(event) => setPhone(event.target.value)}
-                        required
-                      />
-                    </label>
-                  </div>
-
-                  <label className="block space-y-1.5">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-white/70">
-                      {copy.message}
-                    </span>
-                    <textarea
-                      className={`${inputClass} min-h-[160px] resize-y`}
-                      name="message"
-                      rows={5}
-                      value={message}
-                      onChange={(event) => setMessage(event.target.value)}
-                      required
-                    />
-                  </label>
-
-                  <label className="flex items-start gap-3 text-sm text-white/80">
-                    <input
-                      type="checkbox"
-                      className="mt-1 size-4 rounded border-white/30 bg-white/5 text-secondary focus:ring-secondary"
-                      checked={privacyAccepted}
-                      onChange={(event) => setPrivacyAccepted(event.target.checked)}
-                    />
-                    <span>
-                      {copy.consentPrefix}{' '}
-                      <a
-                        className="underline decoration-white/40 underline-offset-2 transition hover:text-secondary"
-                        href={privacyHref}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {copy.consentLink}
-                      </a>
-                      {copy.consentSuffix}
-                    </span>
-                  </label>
-
-                  <RecaptchaField siteKey={recaptchaSiteKey} widgetKey="contact" hl={locale} />
-
-                  {errorMessage ? (
-                    <p className="rounded-lg border border-red-400/30 bg-red-500/10 px-3 py-2 text-sm text-red-200" role="alert">
-                      {errorMessage}
-                    </p>
-                  ) : null}
-
-                  <button
-                    type="submit"
-                    className="btn-primary-orange w-full rounded-lg px-8 py-3.5 sm:w-auto sm:min-w-[240px] disabled:cursor-not-allowed disabled:opacity-60"
-                    disabled={status === 'submitting'}
-                  >
-                    {status === 'submitting' ? copy.submitting : copy.submit}
-                  </button>
-                </form>
-              )}
-            </div>
-          </div>
-        </div>
-      ) : null}
+      {popup}
     </>
   )
 }

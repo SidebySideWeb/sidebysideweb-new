@@ -59,65 +59,65 @@ const contactFormCopy = {
     <div class="scroll-reveal mx-auto max-w-4xl text-center text-on-primary">
       <h2 class="mb-6 text-headline-lg">{ui.contactCtaTitle}</h2>
       <p class="mb-12 text-body-lg text-on-primary-container">{ui.contactCtaBody}</p>
-      <div class="flex flex-col items-center gap-8">
-        <div class="flex w-full flex-col items-center justify-center gap-gutter md:flex-row">
-          <CalBookingButton
-            class="btn-primary-orange h-[60px] rounded-lg px-10 shadow-xl"
-            label={ui.contactCtaButton}
-          />
-          <ContactFormModal
-            client:load
-            copy={contactFormCopy}
-            privacyHref={privacyHref}
-            recaptchaSiteKey={recaptchaSiteKey}
-            locale={locale}
-          />
-        </div>
-        <div
-          class="flex w-full flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap sm:gap-x-8 sm:gap-y-3"
+    </div>
+    <div class="relative z-10 mx-auto flex max-w-4xl flex-col items-center gap-8 text-center text-on-primary">
+      <div class="flex w-full flex-col items-center justify-center gap-gutter md:flex-row">
+        <CalBookingButton
+          class="btn-primary-orange h-[60px] rounded-lg px-10 shadow-xl"
+          label={ui.contactCtaButton}
+        />
+        <ContactFormModal
+          client:load
+          copy={contactFormCopy}
+          privacyHref={privacyHref}
+          recaptchaSiteKey={recaptchaSiteKey}
+          locale={locale}
+        />
+      </div>
+      <div
+        class="flex w-full flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap sm:gap-x-8 sm:gap-y-3"
+      >
+        <a
+          class="border-b border-on-primary-container pb-1 text-body-md text-on-primary transition-colors hover:text-secondary"
+          href={`mailto:${siteSettings.contactEmail}`}
         >
-          <a
-            class="border-b border-on-primary-container pb-1 text-body-md text-on-primary transition-colors hover:text-secondary"
-            href={`mailto:${siteSettings.contactEmail}`}
-          >
-            {siteSettings.contactEmail}
-          </a>
-          {
-            siteSettings.contactPhone ? (
-              <a
-                class="border-b border-on-primary-container pb-1 text-body-md text-on-primary transition-colors hover:text-secondary"
-                href={`tel:${siteSettings.contactPhone.replace(/\s/g, '')}`}
-              >
-                {siteSettings.contactPhone}
-              </a>
-            ) : null
-          }
-          {
-            socialLinks.map((link) => (
-              <a
-                class="text-sm font-semibold uppercase tracking-wider text-white/80 transition-colors hover:text-secondary"
-                href={link.href}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                {link.label}
-              </a>
-            ))
-          }
+          {siteSettings.contactEmail}
+        </a>
+        {
+          siteSettings.contactPhone ? (
+            <a
+              class="border-b border-on-primary-container pb-1 text-body-md text-on-primary transition-colors hover:text-secondary"
+              href={`tel:${siteSettings.contactPhone.replace(/\s/g, '')}`}
+            >
+              {siteSettings.contactPhone}
+            </a>
+          ) : null
+        }
+        {
+          socialLinks.map((link) => (
+            <a
+              class="text-sm font-semibold uppercase tracking-wider text-white/80 transition-colors hover:text-secondary"
+              href={link.href}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+      <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 opacity-70">
+        <div class="flex items-center gap-2 text-sm">
+          <span class="material-symbols-outlined text-sm">lock</span>
+          {ui.contactCtaConfidentiality}
         </div>
-        <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 opacity-70">
-          <div class="flex items-center gap-2 text-sm">
-            <span class="material-symbols-outlined text-sm">lock</span>
-            {ui.contactCtaConfidentiality}
-          </div>
-          <div class="flex items-center gap-2 text-sm">
-            <span class="material-symbols-outlined text-sm">schedule</span>
-            {ui.contactCtaResponse}
-          </div>
-          <div class="flex items-center gap-2 text-sm">
-            <span class="material-symbols-outlined text-sm">verified</span>
-            {ui.contactCtaExpertise}
-          </div>
+        <div class="flex items-center gap-2 text-sm">
+          <span class="material-symbols-outlined text-sm">schedule</span>
+          {ui.contactCtaResponse}
+        </div>
+        <div class="flex items-center gap-2 text-sm">
+          <span class="material-symbols-outlined text-sm">verified</span>
+          {ui.contactCtaExpertise}
         </div>
       </div>
     </div>
