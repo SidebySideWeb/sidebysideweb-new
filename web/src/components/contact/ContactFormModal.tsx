@@ -157,7 +157,7 @@ export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey, l
       </button>
 
       {open ? (
-        <div className="fixed inset-0 z-[100] flex items-end justify-center p-0 sm:items-center sm:p-6">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
           <button
             type="button"
             aria-label={copy.close}
@@ -169,10 +169,10 @@ export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey, l
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
-            className="relative z-10 flex max-h-[92vh] w-full max-w-xl flex-col overflow-hidden rounded-t-2xl bg-primary text-white shadow-2xl sm:rounded-2xl"
+            className="relative z-10 flex h-[80vh] w-[80vw] max-w-[80vw] flex-col overflow-hidden rounded-2xl bg-primary text-white shadow-2xl"
           >
-            <div className="flex items-center justify-between border-b border-white/10 px-5 py-4 sm:px-6">
-              <h3 id={titleId} className="text-lg font-semibold sm:text-xl">
+            <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-5 py-4 sm:px-8 sm:py-5">
+              <h3 id={titleId} className="text-lg font-semibold sm:text-2xl">
                 {copy.modalTitle}
               </h3>
               <button
@@ -185,9 +185,9 @@ export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey, l
               </button>
             </div>
 
-            <div className="overflow-y-auto px-5 py-5 sm:px-6 sm:py-6">
+            <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5 sm:px-8 sm:py-8">
               {status === 'success' ? (
-                <div className="space-y-6 py-6 text-center" role="status">
+                <div className="flex h-full flex-col items-center justify-center space-y-6 text-center" role="status">
                   <span className="material-symbols-outlined text-5xl text-secondary">check_circle</span>
                   <p className="text-body-md text-on-primary-container">{copy.success}</p>
                   <button
@@ -199,8 +199,8 @@ export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey, l
                   </button>
                 </div>
               ) : (
-                <form className="space-y-4" onSubmit={handleSubmit} noValidate>
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <form className="mx-auto grid max-w-4xl gap-5" onSubmit={handleSubmit} noValidate>
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                     <label className="block space-y-1.5">
                       <span className="text-xs font-semibold uppercase tracking-wider text-white/70">
                         {copy.firstName}
@@ -243,7 +243,7 @@ export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey, l
                     />
                   </label>
 
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                     <label className="block space-y-1.5">
                       <span className="text-xs font-semibold uppercase tracking-wider text-white/70">
                         {copy.email}
@@ -279,9 +279,9 @@ export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey, l
                       {copy.message}
                     </span>
                     <textarea
-                      className={`${inputClass} min-h-[120px] resize-y`}
+                      className={`${inputClass} min-h-[160px] resize-y`}
                       name="message"
-                      rows={4}
+                      rows={5}
                       value={message}
                       onChange={(event) => setMessage(event.target.value)}
                       required
@@ -319,7 +319,7 @@ export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey, l
 
                   <button
                     type="submit"
-                    className="btn-primary-orange w-full rounded-lg px-8 py-3.5 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="btn-primary-orange w-full rounded-lg px-8 py-3.5 sm:w-auto sm:min-w-[240px] disabled:cursor-not-allowed disabled:opacity-60"
                     disabled={status === 'submitting'}
                   >
                     {status === 'submitting' ? copy.submitting : copy.submit}
