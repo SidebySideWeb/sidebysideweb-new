@@ -141,6 +141,7 @@ function migrateLocaleFields(doc: Record<string, unknown>) {
       break
     case 'valueProposition':
       setLocalized(doc, 'headline')
+      setLocalized(doc, 'description')
       if (Array.isArray(doc.cards)) {
         doc.cards = (doc.cards as Record<string, unknown>[]).map((card) => ({
           ...card,

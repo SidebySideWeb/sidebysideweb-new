@@ -1,7 +1,7 @@
 ---
 import {DEFAULT_LOCALE, type SiteLocale} from '../../lib/i18n'
+import {CONTACT_SECTION_HREF} from '../../lib/cal-com'
 import {getUiStrings} from '../../lib/ui-strings'
-import CalBookingButton from '../CalBookingButton.astro'
 
 interface Props {
   locale?: SiteLocale
@@ -17,9 +17,11 @@ const ui = getUiStrings(locale)
     <p class="mb-10 text-body-lg text-on-primary-container">
       {ui.caseStudyCtaBody}
     </p>
-    <CalBookingButton
+    <a
       class="btn-primary-orange inline-flex rounded-xl px-10 py-4 shadow-lg transition-all hover:scale-105 hover:shadow-secondary/20"
-      label={ui.caseStudyCtaButton}
-    />
+      href={CONTACT_SECTION_HREF}
+    >
+      {ui.caseStudyCtaButton}
+    </a>
   </div>
 </section>

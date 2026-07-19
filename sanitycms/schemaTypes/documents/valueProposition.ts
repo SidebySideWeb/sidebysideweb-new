@@ -12,6 +12,12 @@ export const valueProposition = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'description',
+      title: 'Section Description',
+      type: 'localeText',
+      description: 'Short intro under the headline',
+    }),
+    defineField({
       name: 'cards',
       title: 'Value Proposition Cards',
       type: 'array',

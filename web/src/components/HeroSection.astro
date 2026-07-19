@@ -1,7 +1,7 @@
 ---
 import type {HeroSection} from '../lib/types'
 import {resolveHeroImage} from '../lib/image'
-import {isBookingCta} from '../lib/cal-com'
+import {isBookingCta, resolveContactHref} from '../lib/cal-com'
 import CalBookingButton from './CalBookingButton.astro'
 
 interface Props {
@@ -10,8 +10,8 @@ interface Props {
 
 const {hero} = Astro.props
 const heroImageUrl = resolveHeroImage(hero.heroImage, hero.heroImageUrl)
-const ctaLink = hero.ctaLink ?? '#contact'
-const useCalBooking = isBookingCta(ctaLink)
+const ctaLink = resolveContactHref(hero.ctaLink ?? '#contact')
+const useCalBooking = isBookingCta(hero.ctaLink)
 ---
 
 <header class="hero-gradient flex min-h-screen items-center px-margin-container pt-[70px]">
@@ -44,7 +44,7 @@ const useCalBooking = isBookingCta(ctaLink)
                   <span class="material-symbols-outlined text-lg text-accent-teal">
                     {signal.icon ?? 'check_circle'}
                   </span>
-                  <span>{signal.text}</span>
+                  {signal.text}
                 </div>
               ))}
             </div>
@@ -52,16 +52,16 @@ const useCalBooking = isBookingCta(ctaLink)
         }
       </div>
     </div>
-    <div class="animate-fade-in-up stagger-3 relative hidden h-[500px] w-full md:block">
-      <div class="absolute inset-0 rotate-2 rounded-xl border border-outline-variant bg-primary/5" />
-      <div class="absolute inset-0 overflow-hidden rounded-xl border border-outline-variant bg-white p-4 shadow-2xl">
-        <div
-          class="h-full w-full rounded-lg bg-cover bg-center shadow-inner"
-          style={`background-image: url('${heroImageUrl}')`}
-          role="img"
-          aria-label={hero.heroImage?.alt ?? 'Side by Side Web Studio'}
-        />
-      </div>
-    </div>
+    {
+      heroImageUrl ? (
+        <div class="animate-fade-in-up stagger-2 relative hidden md:block">
+          <img
+            alt=""
+            class="h-auto w-full rounded-2xl object-cover shadow-2xl"
+            src={heroImageUrl}
+          />
+        </div>
+      ) : null
+    }
   </div>
 </header>

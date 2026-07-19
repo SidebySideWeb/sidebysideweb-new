@@ -67,7 +67,7 @@ export const aboutPageFallback: AboutPage = {
   ctaDescription:
     'Ας συζητήσουμε τις προκλήσεις του έργου σας σε μια δωρεάν κλήση 30 λεπτών.',
   ctaText: 'Ζητήστε Δωρεάν Κλήση',
-  ctaLink: '/#contact',
+  ctaLink: '#contact',
 }
 
 export function sortTimeline<T extends {order?: number}>(items: T[] | undefined): T[] {

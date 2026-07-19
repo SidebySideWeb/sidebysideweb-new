@@ -3,7 +3,6 @@ import type {SiteSettings} from '../lib/types'
 import {DEFAULT_LOCALE, localizePath, switchLocaleInPath, type SiteLocale} from '../lib/i18n'
 import {SITE_LOGO} from '../lib/stitch-design'
 import {getNavLinks, getUiStrings} from '../lib/ui-strings'
-import CalBookingButton from './CalBookingButton.astro'
 
 interface Props {
   siteSettings: SiteSettings
@@ -26,8 +25,12 @@ const langSwitchHref = switchLocaleInPath(Astro.url.pathname, locale === 'el' ? 
 
 function navHref(href: string): string {
   if (!href.startsWith('#')) return href
+  // Footer contact CTA exists on every page
+  if (href === '#contact') return '#contact'
   if (activeHref === homePath || activeHref === '/') return href
-  return `${homePath}${href.slice(1)}`
+  // Homepage section anchors from other routes
+  if (homePath === '/') return `/${href}`
+  return `${homePath.replace(/\/$/, '')}${href}`
 }
 
 function isActive(href: string): boolean {
@@ -89,7 +92,9 @@ const menuClass = isLight ? 'text-primary' : 'text-white'
       }
       {
         isLight ? (
-          <CalBookingButton class={ctaClass} label={ui.aboutNavContact} />
+          <a class={ctaClass} href="#contact">
+            {ui.aboutNavContact}
+          </a>
         ) : (
           <a class={langSwitchClass} href={langSwitchHref}>
             {ui.langSwitchTo}

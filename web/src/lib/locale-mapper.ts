@@ -76,6 +76,7 @@ function mapValueProposition(
   if (!raw) return {}
   return {
     headline: pickLocale(raw.headline as never, locale) || undefined,
+    description: pickLocale(raw.description as never, locale) || undefined,
     cards: Array.isArray(raw.cards)
       ? (raw.cards as Record<string, unknown>[]).map((card) => ({
           icon: card.icon as string | undefined,

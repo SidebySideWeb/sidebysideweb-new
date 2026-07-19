@@ -47,6 +47,8 @@ export const homePageFallback: HomePageData = {
   },
   valueProposition: {
     headline: 'Τι Κάνω Διαφορετικά;',
+    description:
+      'Η προσέγγισή μου συνδυάζει την επιχειρηματική λογική με την τεχνική αρτιότητα.',
     cards: [
       {
         title: '1. Σαφή Ανάλυση - Όχι Υποθέσεις',

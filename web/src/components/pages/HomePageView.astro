@@ -9,7 +9,6 @@ import ProcessSection from '../ProcessSection.astro'
 import CaseStudiesSection from '../CaseStudiesSection.astro'
 import TestimonialsSection from '../TestimonialsSection.astro'
 import FaqSection from '../FaqSection.astro'
-import ContactCta from '../ContactCta.astro'
 import SiteFooter from '../SiteFooter.astro'
 import type {HomePageData} from '../../lib/types'
 import {localizePath, type SiteLocale} from '../../lib/i18n'
@@ -33,6 +32,5 @@ const activeHref = localizePath('/', locale)
   <CaseStudiesSection caseStudies={data.caseStudies} locale={locale} />
   <TestimonialsSection testimonials={data.testimonials} />
   <FaqSection faqs={data.faqs} locale={locale} />
-  <ContactCta locale={locale} siteSettings={data.siteSettings} />
   <SiteFooter locale={locale} siteSettings={data.siteSettings} />
 </Layout>

@@ -119,6 +119,7 @@ export const UI_STRINGS: Record<
     aboutBreadcrumbAbout: string
     menuAriaLabel: string
     processTitle: string
+    processSubtitle: string
     valuePropositionSubtitle: string
     servicesTitle: string
     servicesSubtitle: string
@@ -175,11 +176,13 @@ export const UI_STRINGS: Record<
     aboutBreadcrumbHome: 'Αρχική',
     aboutBreadcrumbAbout: 'Σχετικά',
     menuAriaLabel: 'Μενού',
-    processTitle: 'Πώς Δουλεύουμε (Βήμα-Προς-Βήμα)',
+    processTitle: 'Πώς Δουλεύω - Βήμα προς Βήμα',
+    processSubtitle: 'Καμία μαγεία. Μια ξεκάθαρη διαδικασία που έχει δουλέψει σε 50+ έργα.',
     valuePropositionSubtitle:
       'Η προσέγγισή μου συνδυάζει την επιχειρηματική λογική με την τεχνική αρτιότητα.',
     servicesTitle: 'Εξειδικευμένες Υπηρεσίες',
-    servicesSubtitle: 'Καλύπτουμε όλο το φάσμα των τεχνικών σας αναγκών με επαγγελματισμό.',
+    servicesSubtitle:
+      'Κάθε έργο είναι διαφορετικό — η υπηρεσία προσαρμόζεται στο πρόβλημά σας, όχι το αντίθετο.',
     servicesInvestment: 'Επένδυση',
     servicesDuration: 'Διάρκεια',
     servicesAvailability: 'Διαθεσιμότητα',
@@ -232,11 +235,13 @@ export const UI_STRINGS: Record<
     aboutBreadcrumbHome: 'Home',
     aboutBreadcrumbAbout: 'About',
     menuAriaLabel: 'Menu',
-    processTitle: 'How We Work (Step by Step)',
+    processTitle: 'How I Work — Step by Step',
+    processSubtitle: 'No magic. A clear process that has worked across 50+ projects.',
     valuePropositionSubtitle:
       'My approach combines business logic with technical excellence.',
     servicesTitle: 'Specialized Services',
-    servicesSubtitle: 'We cover the full spectrum of your technical needs with professionalism.',
+    servicesSubtitle:
+      'Every project is different — the service adapts to your problem, not the other way around.',
     servicesInvestment: 'Investment',
     servicesDuration: 'Duration',
     servicesAvailability: 'Availability',

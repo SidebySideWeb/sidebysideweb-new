@@ -41,6 +41,5 @@ export const STITCH_NAV_LINKS = [
 
 export const STITCH_SOCIAL_LINKS = [
   {label: 'LinkedIn', href: 'https://www.linkedin.com/in/dimitriosgeronikolos/'},
-  {label: 'Twitter (X)', href: '#'},
-  {label: 'Github', href: '#'},
+  {label: 'TikTok', href: 'https://www.tiktok.com/@sidebysideweb'},
 ] as const

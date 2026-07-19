@@ -168,6 +168,7 @@ export interface ValueCard {
 
 export interface ValueProposition {
   headline?: string
+  description?: string
   cards?: ValueCard[]
 }
 

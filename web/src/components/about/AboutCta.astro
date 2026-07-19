@@ -1,6 +1,6 @@
 ---
 import CalBookingButton from '../CalBookingButton.astro'
-import {isBookingCta} from '../../lib/cal-com'
+import {isBookingCta, resolveContactHref} from '../../lib/cal-com'
 import type {AboutPage} from '../../lib/types'
 
 interface Props {
@@ -8,8 +8,8 @@ interface Props {
 }
 
 const {about} = Astro.props
-const ctaLink = about.ctaLink ?? '/#contact'
-const useCalBooking = isBookingCta(ctaLink)
+const ctaLink = resolveContactHref(about.ctaLink ?? '#contact')
+const useCalBooking = isBookingCta(about.ctaLink)
 const ctaClass =
   'inline-flex rounded-lg bg-secondary-container px-10 py-5 text-[24px] font-semibold text-on-secondary shadow-xl transition-all duration-300 hover:scale-[1.05] active:scale-95'
 ---

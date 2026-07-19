@@ -98,6 +98,7 @@ export const CREDENTIALS_QUERY = `*[_type == "credentialsSection"][0]{
 
 export const VALUE_PROPOSITION_QUERY = `*[_type == "valueProposition"][0]{
   headline,
+  description,
   cards
 }`
 
