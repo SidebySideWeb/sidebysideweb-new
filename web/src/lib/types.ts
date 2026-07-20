@@ -57,73 +57,45 @@ export interface ProcessStep {
   icon?: string
 }
 
-export interface CaseStudyMetric {
-  label?: string
-  value?: string
-  comparison?: string
-}
-
 export interface CardStat {
   value?: string
   label?: string
 }
 
-export interface CaseStudyPhase {
-  title?: string
-  description?: string
-  order?: number
-}
-
-export type CaseStudyCategory =
-  | 'automation-workflows'
-  | 'saas-mvp'
-  | 'erp-integration'
-  | 'crm-integration'
-  | 'technical-project'
+export type CaseStudyLayout = 'automation' | 'strategy'
 
 export interface CaseStudy {
   _id: string
+  layout?: CaseStudyLayout
   title?: string
   slug?: {current?: string}
+  tag?: string
+  client?: string
+  intro?: string
   summary?: string
-  category?: CaseStudyCategory
-  order?: number
+  chips?: string[]
+  chipsLabel?: string
   featured?: boolean
+  order?: number
   heroMainResult?: string
   featuredImage?: SanityImage
   featuredImageUrl?: string
   cardStats?: CardStat[]
-  problem?: {
+  challenges?: {title?: string; body?: string; severity?: string}[]
+  costSection?: {
     title?: string
-    description?: string
-    impact?: string
-    bullets?: string[]
-    visualizationLabel?: string
+    paragraphs?: string[]
+    steps?: string[]
+    closing?: string
   }
-  solution?: {
-    title?: string
-    description?: unknown[]
-    technologies?: string[]
-    phases?: CaseStudyPhase[]
-  }
-  results?: {
-    summary?: string
-    metrics?: CaseStudyMetric[]
-  }
-  investment?: {
-    amount?: string
-    timeline?: string
-    breakdown?: string
-    roi?: string
-  }
-  testimonial?: {
-    quote?: string
-    author?: string
-    role?: string
-    company?: string
-  }
-  fullContent?: unknown[]
-  relatedServices?: Service[]
+  resultStats?: {value?: string; label?: string; animate?: boolean}[]
+  beforeAfter?: {before?: string; after?: string}[]
+  whyItMatters?: {title?: string; paragraphs?: string[]}
+  relatedServiceLabels?: string[]
+  processSteps?: {title?: string; description?: string}[]
+  roleItems?: {title?: string; body?: string}[]
+  outcomes?: {title?: string; body?: string}[]
+  testimonial?: {quote?: string; author?: string; role?: string}
   seo?: {
     metaTitle?: string
     metaDescription?: string

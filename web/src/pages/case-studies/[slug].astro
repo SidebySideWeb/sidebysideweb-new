@@ -2,19 +2,13 @@
 import Layout from '../../layouts/Layout.astro'
 import SiteNav from '../../components/SiteNav.astro'
 import SiteFooter from '../../components/SiteFooter.astro'
-import CaseStudyHeader from '../../components/case-studies/CaseStudyHeader.astro'
-import ProblemSection from '../../components/case-studies/ProblemSection.astro'
-import SolutionSection from '../../components/case-studies/SolutionSection.astro'
-import ResultsSection from '../../components/case-studies/ResultsSection.astro'
-import TestimonialSection from '../../components/case-studies/TestimonialSection.astro'
-import InvestmentSection from '../../components/case-studies/InvestmentSection.astro'
-import CaseStudyNarrative from '../../components/case-studies/CaseStudyNarrative.astro'
-import RelatedServicesSection from '../../components/case-studies/RelatedServicesSection.astro'
-import CaseStudyCta from '../../components/case-studies/CaseStudyCta.astro'
-import RelatedCaseStudiesSection from '../../components/case-studies/RelatedCaseStudiesSection.astro'
+import AttikiCaseStudyView from '../../components/case-studies/AttikiCaseStudyView.astro'
+import MetaixmioCaseStudyView from '../../components/case-studies/MetaixmioCaseStudyView.astro'
 import {getCaseStudyPageData} from '../../lib/cms'
 import {CASE_STUDY_SLUG_REDIRECTS} from '../../lib/case-study-paths'
 import {localizePath, resolvePageLocale} from '../../lib/i18n'
+import {buildArticleJsonLd} from '../../lib/json-ld'
+import {SITE_URL} from '../../lib/sanity-config'
 import {getUiStrings} from '../../lib/ui-strings'
 
 export const prerender = false
@@ -31,43 +25,43 @@ if (redirected) {
   return Astro.redirect(localizePath(redirected, locale), 301)
 }
 
-const {caseStudy, relatedCaseStudies, services, siteSettings} = await getCaseStudyPageData(
-  slug,
-  locale,
-)
+const {caseStudy, siteSettings} = await getCaseStudyPageData(slug, locale)
+const layout = caseStudy?.layout
+const hasValidLayout = layout === 'automation' || layout === 'strategy'
 
-if (!caseStudy) {
+if (!caseStudy || !hasValidLayout) {
   Astro.response.status = 404
 }
+
+const metaTitle = caseStudy?.seo?.metaTitle ?? caseStudy?.title
+const metaDescription = caseStudy?.seo?.metaDescription ?? caseStudy?.summary
+const pageUrl = `${SITE_URL}${localizePath(`/case-studies/${slug}`, locale)}`
+const jsonLd =
+  caseStudy && hasValidLayout
+    ? buildArticleJsonLd({
+        headline: caseStudy.title ?? metaTitle ?? '',
+        description: metaDescription ?? '',
+        url: pageUrl,
+      })
+    : undefined
 ---
 
 {
-  caseStudy ? (
+  caseStudy && hasValidLayout ? (
     <Layout
-      title={caseStudy.seo?.metaTitle ?? caseStudy.title}
-      description={caseStudy.seo?.metaDescription ?? caseStudy.summary}
+      title={metaTitle}
+      description={metaDescription}
+      jsonLd={jsonLd}
       siteSettings={siteSettings}
       locale={locale}
     >
       <SiteNav siteSettings={siteSettings} locale={locale} />
       <main>
-        <CaseStudyHeader caseStudy={caseStudy} locale={locale} />
-        <ProblemSection caseStudy={caseStudy} locale={locale} />
-        <SolutionSection caseStudy={caseStudy} locale={locale} />
-        <ResultsSection caseStudy={caseStudy} locale={locale} />
-        <TestimonialSection caseStudy={caseStudy} />
-        <InvestmentSection caseStudy={caseStudy} locale={locale} />
-        <CaseStudyNarrative caseStudy={caseStudy} locale={locale} />
-        <RelatedServicesSection
-          locale={locale}
-          services={caseStudy.relatedServices?.length ? caseStudy.relatedServices : services}
-        />
-        <CaseStudyCta locale={locale} />
-        <RelatedCaseStudiesSection
-          caseStudies={relatedCaseStudies}
-          currentSlug={slug}
-          locale={locale}
-        />
+        {layout === 'automation' ? (
+          <AttikiCaseStudyView caseStudy={caseStudy} locale={locale} />
+        ) : (
+          <MetaixmioCaseStudyView caseStudy={caseStudy} locale={locale} />
+        )}
       </main>
       <SiteFooter locale={locale} siteSettings={siteSettings} />
     </Layout>

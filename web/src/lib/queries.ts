@@ -12,53 +12,42 @@ const SANITY_IMAGE = `{
 
 const CASE_STUDY_FIELDS = `
   _id,
+  layout,
   title,
   slug,
+  tag,
+  client,
+  intro,
   summary,
-  category,
+  chips,
+  chipsLabel,
   order,
   featured,
   heroMainResult,
   featuredImageUrl,
   featuredImage ${SANITY_IMAGE},
   cardStats[]{value, label},
-  problem{
+  challenges[]{title, body, severity},
+  costSection{
     title,
-    description,
-    impact,
-    bullets,
-    visualizationLabel
+    paragraphs,
+    steps,
+    closing
   },
-  solution{
+  resultStats[]{value, label, animate},
+  beforeAfter[]{before, after},
+  whyItMatters{
     title,
-    description,
-    technologies,
-    phases[]{title, description, order}
+    paragraphs
   },
-  results{
-    summary,
-    metrics[]{label, value, comparison}
-  },
-  investment{
-    amount,
-    timeline,
-    breakdown,
-    roi
-  },
+  relatedServiceLabels,
+  processSteps[]{title, description},
+  roleItems[]{title, body},
+  outcomes[]{title, body},
   testimonial{
     quote,
     author,
-    role,
-    company
-  },
-  fullContent,
-  relatedServices[]->{
-    _id,
-    title,
-    slug,
-    description,
-    icon,
-    order
+    role
   },
   seo{
     metaTitle,

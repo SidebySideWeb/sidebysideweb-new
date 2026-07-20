@@ -3,34 +3,40 @@ import Layout from '../../layouts/Layout.astro'
 import SiteNav from '../../components/SiteNav.astro'
 import SiteFooter from '../../components/SiteFooter.astro'
 import MetaixmioCaseStudyView from '../../components/case-studies/MetaixmioCaseStudyView.astro'
-import {getHomePageData} from '../../lib/cms'
+import {getCaseStudyPageData} from '../../lib/cms'
 import {metaixmioCaseStudy} from '../../lib/content/metaixmio-case-study'
 import {localizePath, resolvePageLocale} from '../../lib/i18n'
 import {buildArticleJsonLd} from '../../lib/json-ld'
 import {SITE_URL} from '../../lib/sanity-config'
+import type {CaseStudy} from '../../lib/types'
 
 export const prerender = false
 
 const locale = resolvePageLocale(Astro.currentLocale)
-const {siteSettings} = await getHomePageData(locale)
+const slug = 'case-study-metaixmio'
+const {caseStudy: fetched, siteSettings} = await getCaseStudyPageData(slug, locale)
+const caseStudy: CaseStudy = fetched ?? {_id: 'metaixmio-fallback'}
+
+const metaTitle = caseStudy.seo?.metaTitle ?? metaixmioCaseStudy.metaTitle
+const metaDescription = caseStudy.seo?.metaDescription ?? metaixmioCaseStudy.metaDescription
 const pageUrl = `${SITE_URL}${localizePath(metaixmioCaseStudy.path, locale)}`
 const jsonLd = buildArticleJsonLd({
-  headline: metaixmioCaseStudy.title,
-  description: metaixmioCaseStudy.metaDescription,
+  headline: caseStudy.title ?? metaixmioCaseStudy.title,
+  description: metaDescription,
   url: pageUrl,
 })
 ---
 
 <Layout
-  documentTitle={metaixmioCaseStudy.metaTitle}
-  description={metaixmioCaseStudy.metaDescription}
+  documentTitle={metaTitle}
+  description={metaDescription}
   jsonLd={jsonLd}
   siteSettings={siteSettings}
   locale={locale}
 >
   <SiteNav siteSettings={siteSettings} locale={locale} />
   <main>
-    <MetaixmioCaseStudyView locale={locale} />
+    <MetaixmioCaseStudyView caseStudy={caseStudy} locale={locale} />
   </main>
   <SiteFooter locale={locale} siteSettings={siteSettings} />
 </Layout>

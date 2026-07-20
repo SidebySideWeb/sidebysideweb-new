@@ -3,34 +3,40 @@ import Layout from '../../layouts/Layout.astro'
 import SiteNav from '../../components/SiteNav.astro'
 import SiteFooter from '../../components/SiteFooter.astro'
 import AttikiCaseStudyView from '../../components/case-studies/AttikiCaseStudyView.astro'
-import {getHomePageData} from '../../lib/cms'
+import {getCaseStudyPageData} from '../../lib/cms'
 import {attikiCaseStudy} from '../../lib/content/attiki-case-study'
 import {localizePath, resolvePageLocale} from '../../lib/i18n'
 import {buildArticleJsonLd} from '../../lib/json-ld'
 import {SITE_URL} from '../../lib/sanity-config'
+import type {CaseStudy} from '../../lib/types'
 
 export const prerender = false
 
 const locale = resolvePageLocale(Astro.currentLocale)
-const {siteSettings} = await getHomePageData(locale)
+const slug = 'automation-nea-attiki-odos-twitter'
+const {caseStudy: fetched, siteSettings} = await getCaseStudyPageData(slug, locale)
+const caseStudy: CaseStudy = fetched ?? {_id: 'attiki-fallback'}
+
+const metaTitle = caseStudy.seo?.metaTitle ?? attikiCaseStudy.metaTitle
+const metaDescription = caseStudy.seo?.metaDescription ?? attikiCaseStudy.metaDescription
 const pageUrl = `${SITE_URL}${localizePath(attikiCaseStudy.path, locale)}`
 const jsonLd = buildArticleJsonLd({
-  headline: attikiCaseStudy.title,
-  description: attikiCaseStudy.metaDescription,
+  headline: caseStudy.title ?? attikiCaseStudy.title,
+  description: metaDescription,
   url: pageUrl,
 })
 ---
 
 <Layout
-  documentTitle={attikiCaseStudy.metaTitle}
-  description={attikiCaseStudy.metaDescription}
+  documentTitle={metaTitle}
+  description={metaDescription}
   jsonLd={jsonLd}
   siteSettings={siteSettings}
   locale={locale}
 >
   <SiteNav siteSettings={siteSettings} locale={locale} />
   <main>
-    <AttikiCaseStudyView locale={locale} />
+    <AttikiCaseStudyView caseStudy={caseStudy} locale={locale} />
   </main>
   <SiteFooter locale={locale} siteSettings={siteSettings} />
 </Layout>

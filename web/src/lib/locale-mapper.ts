@@ -118,7 +118,6 @@ function mapTestimonial(raw: Record<string, unknown>, locale: SiteLocale): Testi
     author: raw.author as string | undefined,
     company: raw.company as string | undefined,
     rating: raw.rating as number | undefined,
-    image: raw.image as Testimonial['image'],
     quote: pickLocale(raw.quote as never, locale) || undefined,
     role: pickLocale(raw.role as never, locale) || undefined,
   }
@@ -143,21 +142,20 @@ function mapSeo(raw: Record<string, unknown> | null | undefined, locale: SiteLoc
 }
 
 function mapCaseStudy(raw: Record<string, unknown>, locale: SiteLocale): CaseStudy {
-  const problem = raw.problem as Record<string, unknown> | undefined
-  const solution = raw.solution as Record<string, unknown> | undefined
-  const results = raw.results as Record<string, unknown> | undefined
-  const investment = raw.investment as Record<string, unknown> | undefined
+  const costSection = raw.costSection as Record<string, unknown> | undefined
+  const whyItMatters = raw.whyItMatters as Record<string, unknown> | undefined
   const testimonialRaw = raw.testimonial as Record<string, unknown> | undefined
   const featuredImage = raw.featuredImage as Record<string, unknown> | undefined
 
   return {
     _id: raw._id as string,
+    layout: raw.layout as CaseStudy['layout'],
     slug: raw.slug as CaseStudy['slug'],
-    category: raw.category as CaseStudy['category'],
     order: raw.order as number | undefined,
     featured: raw.featured as boolean | undefined,
     heroMainResult: raw.heroMainResult as string | undefined,
     featuredImageUrl: raw.featuredImageUrl as string | undefined,
+    chips: Array.isArray(raw.chips) ? (raw.chips as string[]) : undefined,
     featuredImage: featuredImage
       ? {
           ...(featuredImage as CaseStudy['featuredImage']),
@@ -165,67 +163,76 @@ function mapCaseStudy(raw: Record<string, unknown>, locale: SiteLocale): CaseStu
         }
       : undefined,
     title: pickLocale(raw.title as never, locale) || undefined,
+    tag: pickLocale(raw.tag as never, locale) || undefined,
+    client: pickLocale(raw.client as never, locale) || undefined,
+    intro: pickLocale(raw.intro as never, locale) || undefined,
     summary: pickLocale(raw.summary as never, locale) || undefined,
+    chipsLabel: pickLocale(raw.chipsLabel as never, locale) || undefined,
     cardStats: Array.isArray(raw.cardStats)
       ? (raw.cardStats as Record<string, unknown>[]).map((stat) => ({
           value: stat.value as string | undefined,
           label: pickLocale(stat.label as never, locale) || undefined,
         }))
       : undefined,
-    problem: problem
+    challenges: Array.isArray(raw.challenges)
+      ? (raw.challenges as Record<string, unknown>[]).map((item) => ({
+          title: pickLocale(item.title as never, locale) || undefined,
+          body: pickLocale(item.body as never, locale) || undefined,
+          severity: pickLocale(item.severity as never, locale) || undefined,
+        }))
+      : undefined,
+    costSection: costSection
       ? {
-          title: pickLocale(problem.title as never, locale) || undefined,
-          description: pickLocale(problem.description as never, locale) || undefined,
-          impact: pickLocale(problem.impact as never, locale) || undefined,
-          visualizationLabel: pickLocale(problem.visualizationLabel as never, locale) || undefined,
-          bullets: pickLocaleList(problem.bullets, locale),
+          title: pickLocale(costSection.title as never, locale) || undefined,
+          paragraphs: pickLocaleList(costSection.paragraphs, locale),
+          steps: pickLocaleList(costSection.steps, locale),
+          closing: pickLocale(costSection.closing as never, locale) || undefined,
         }
       : undefined,
-    solution: solution
+    resultStats: Array.isArray(raw.resultStats)
+      ? (raw.resultStats as Record<string, unknown>[]).map((stat) => ({
+          value: stat.value as string | undefined,
+          label: pickLocale(stat.label as never, locale) || undefined,
+          animate: stat.animate as boolean | undefined,
+        }))
+      : undefined,
+    beforeAfter: Array.isArray(raw.beforeAfter)
+      ? (raw.beforeAfter as Record<string, unknown>[]).map((row) => ({
+          before: pickLocale(row.before as never, locale) || undefined,
+          after: pickLocale(row.after as never, locale) || undefined,
+        }))
+      : undefined,
+    whyItMatters: whyItMatters
       ? {
-          title: pickLocale(solution.title as never, locale) || undefined,
-          description: pickLocaleBlocks(solution.description as never, locale),
-          technologies: (solution.technologies as string[] | undefined) ?? undefined,
-          phases: Array.isArray(solution.phases)
-            ? (solution.phases as Record<string, unknown>[]).map((phase) => ({
-                order: phase.order as number | undefined,
-                title: pickLocale(phase.title as never, locale) || undefined,
-                description: pickLocale(phase.description as never, locale) || undefined,
-              }))
-            : undefined,
+          title: pickLocale(whyItMatters.title as never, locale) || undefined,
+          paragraphs: pickLocaleList(whyItMatters.paragraphs, locale),
         }
       : undefined,
-    results: results
-      ? {
-          summary: pickLocale(results.summary as never, locale) || undefined,
-          metrics: Array.isArray(results.metrics)
-            ? (results.metrics as Record<string, unknown>[]).map((metric) => ({
-                value: metric.value as string | undefined,
-                label: pickLocale(metric.label as never, locale) || undefined,
-                comparison: pickLocale(metric.comparison as never, locale) || undefined,
-              }))
-            : undefined,
-        }
+    relatedServiceLabels: pickLocaleList(raw.relatedServiceLabels, locale),
+    processSteps: Array.isArray(raw.processSteps)
+      ? (raw.processSteps as Record<string, unknown>[]).map((step) => ({
+          title: pickLocale(step.title as never, locale) || undefined,
+          description: pickLocale(step.description as never, locale) || undefined,
+        }))
       : undefined,
-    investment: investment
-      ? {
-          amount: pickLocale(investment.amount as never, locale) || undefined,
-          timeline: pickLocale(investment.timeline as never, locale) || undefined,
-          breakdown: pickLocale(investment.breakdown as never, locale) || undefined,
-          roi: pickLocale(investment.roi as never, locale) || undefined,
-        }
+    roleItems: Array.isArray(raw.roleItems)
+      ? (raw.roleItems as Record<string, unknown>[]).map((item) => ({
+          title: pickLocale(item.title as never, locale) || undefined,
+          body: pickLocale(item.body as never, locale) || undefined,
+        }))
+      : undefined,
+    outcomes: Array.isArray(raw.outcomes)
+      ? (raw.outcomes as Record<string, unknown>[]).map((item) => ({
+          title: pickLocale(item.title as never, locale) || undefined,
+          body: pickLocale(item.body as never, locale) || undefined,
+        }))
       : undefined,
     testimonial: testimonialRaw
       ? {
           author: testimonialRaw.author as string | undefined,
-          company: testimonialRaw.company as string | undefined,
           quote: pickLocale(testimonialRaw.quote as never, locale) || undefined,
           role: pickLocale(testimonialRaw.role as never, locale) || undefined,
         }
-      : undefined,
-    fullContent: pickLocaleBlocks(raw.fullContent as never, locale),
-    relatedServices: Array.isArray(raw.relatedServices)
-      ? (raw.relatedServices as Record<string, unknown>[]).map((service) => mapService(service, locale))
       : undefined,
     seo: mapSeo(raw.seo as Record<string, unknown> | undefined, locale),
   }

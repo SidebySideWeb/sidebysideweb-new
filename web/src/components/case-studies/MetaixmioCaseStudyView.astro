@@ -1,25 +1,49 @@
 ---
 import CustomCaseHero from './CustomCaseHero.astro'
-import CustomCaseCta from './CustomCaseCta.astro'
 import CustomTestimonial from './CustomTestimonial.astro'
 import StatCounter from '../ui/StatCounter.astro'
-import {metaixmioCaseStudy as c} from '../../lib/content/metaixmio-case-study'
+import {metaixmioCaseStudy as fallback} from '../../lib/content/metaixmio-case-study'
 import type {SiteLocale} from '../../lib/i18n'
+import type {CaseStudy} from '../../lib/types'
 
 interface Props {
+  caseStudy: CaseStudy
   locale?: SiteLocale
 }
 
-const {locale} = Astro.props
+const {caseStudy, locale} = Astro.props
+
+const tag = caseStudy.tag ?? fallback.tag
+const client = caseStudy.client ?? fallback.client
+const title = caseStudy.title ?? fallback.title
+const intro = caseStudy.intro ?? fallback.intro
+const chips = caseStudy.chips?.length ? caseStudy.chips : [...fallback.scope]
+const chipsLabel = caseStudy.chipsLabel ?? 'Εύρος έργου'
+const process = caseStudy.processSteps?.length
+  ? caseStudy.processSteps
+  : [...fallback.process]
+const role = caseStudy.roleItems?.length ? caseStudy.roleItems : [...fallback.role]
+const challenges = caseStudy.challenges?.length
+  ? caseStudy.challenges
+  : [...fallback.challenges]
+const stats = caseStudy.resultStats?.length
+  ? caseStudy.resultStats
+  : [...fallback.stats]
+const outcomes = caseStudy.outcomes?.length ? caseStudy.outcomes : [...fallback.outcomes]
+const testimonial = {
+  quote: caseStudy.testimonial?.quote ?? fallback.testimonial.quote,
+  author: caseStudy.testimonial?.author ?? fallback.testimonial.author,
+  role: caseStudy.testimonial?.role ?? fallback.testimonial.role,
+}
 ---
 
 <CustomCaseHero
-  tag={c.tag}
-  client={c.client}
-  title={c.title}
-  intro={c.intro}
-  chips={c.scope}
-  chipsLabel="Εύρος έργου"
+  tag={tag}
+  client={client}
+  title={title}
+  intro={intro}
+  chips={chips}
+  chipsLabel={chipsLabel}
   locale={locale}
 />
 
@@ -29,7 +53,7 @@ const {locale} = Astro.props
     <h2 class="scroll-reveal mb-12 text-center text-headline-lg text-primary">Η Διαδικασία</h2>
     <div class="grid grid-cols-1 gap-gutter sm:grid-cols-2 lg:grid-cols-4">
       {
-        c.process.map((step, index) => (
+        process.map((step, index) => (
           <div
             class={`scroll-reveal stagger-${index + 1} rounded-xl border border-outline-variant/20 bg-white p-8 text-center shadow-sm`}
           >
@@ -51,7 +75,7 @@ const {locale} = Astro.props
     <h2 class="scroll-reveal mb-12 text-center text-headline-lg text-primary">Ο Ρόλος μου</h2>
     <div class="grid grid-cols-1 gap-gutter md:grid-cols-2 lg:grid-cols-3">
       {
-        c.role.map((item, index) => (
+        role.map((item, index) => (
           <div
             class={`scroll-reveal stagger-${(index % 3) + 1} rounded-xl border border-outline-variant/20 bg-white p-8 shadow-sm`}
           >
@@ -70,15 +94,17 @@ const {locale} = Astro.props
     <h2 class="scroll-reveal mb-12 text-center text-headline-lg text-primary">Βασικές Προκλήσεις</h2>
     <div class="grid grid-cols-1 gap-gutter md:grid-cols-2">
       {
-        c.challenges.map((item, index) => (
+        challenges.map((item, index) => (
           <div
             class={`scroll-reveal stagger-${index + 1} rounded-xl border border-outline-variant/20 bg-white p-8 shadow-sm`}
           >
             <div class="mb-3 flex flex-wrap items-center gap-3">
               <h3 class="text-xl font-semibold text-primary">{item.title}</h3>
-              <span class="rounded-full bg-secondary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-secondary">
-                {item.severity}
-              </span>
+              {item.severity ? (
+                <span class="rounded-full bg-secondary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-secondary">
+                  {item.severity}
+                </span>
+              ) : null}
             </div>
             <p class="text-body-md text-on-surface-variant">{item.body}</p>
           </div>
@@ -94,13 +120,13 @@ const {locale} = Astro.props
     <h2 class="scroll-reveal mb-12 text-center text-headline-lg text-primary">Το Έργο σε Αριθμούς</h2>
     <div class="grid grid-cols-1 gap-gutter sm:grid-cols-2 lg:grid-cols-4">
       {
-        c.stats.map((stat, index) => (
+        stats.map((stat, index) => (
           <div
             class={`scroll-reveal stagger-${index + 1} min-w-0 rounded-2xl border border-outline-variant/20 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl`}
           >
             <div class="flex min-h-[148px] flex-col items-center justify-center px-4 py-8 text-center sm:px-6">
               <p class="mb-3 w-full text-2xl leading-tight font-bold break-words text-primary sm:text-3xl lg:text-[2rem]">
-                <StatCounter value={stat.value} />
+                <StatCounter value={stat.value ?? ''} noAnimate={stat.animate === false} />
               </p>
               <p class="w-full text-[11px] font-semibold uppercase tracking-widest text-on-surface-variant sm:text-label-md">
                 {stat.label}
@@ -119,7 +145,7 @@ const {locale} = Astro.props
     <h2 class="scroll-reveal mb-12 text-center text-headline-lg text-primary">Αποτέλεσμα</h2>
     <div class="grid grid-cols-1 gap-gutter md:grid-cols-2">
       {
-        c.outcomes.map((item, index) => (
+        outcomes.map((item, index) => (
           <div
             class={`scroll-reveal stagger-${index + 1} rounded-xl border border-outline-variant/20 bg-surface-bright p-8`}
           >
@@ -133,9 +159,7 @@ const {locale} = Astro.props
 </section>
 
 <CustomTestimonial
-  headline={c.testimonial.quote}
-  author={c.testimonial.author}
-  role={c.testimonial.role}
+  headline={testimonial.quote}
+  author={testimonial.author}
+  role={testimonial.role}
 />
-
-<CustomCaseCta body={c.cta.body} buttonLabel={c.cta.button} />

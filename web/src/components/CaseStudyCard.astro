@@ -15,8 +15,8 @@ interface Props {
 const {caseStudy, staggerClass = '', locale = DEFAULT_LOCALE} = Astro.props
 const ui = getUiStrings(locale)
 const slug = caseStudy.slug?.current ?? ''
-const category = getCaseStudyCategoryLabel(caseStudy, locale)
-const stats = getCaseStudyCardStats(caseStudy, locale)
+const category = getCaseStudyCategoryLabel(caseStudy)
+const stats = getCaseStudyCardStats(caseStudy)
 const imageUrl = resolveCaseStudyImage(caseStudy)
 const caseStudyLink = caseStudyHref(slug, (path) => localizePath(path, locale))
 ---

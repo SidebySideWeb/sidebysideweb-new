@@ -6,7 +6,14 @@ import {aboutStorySection} from './objects/aboutStorySection'
 import {aboutTimelineItem} from './objects/aboutTimelineItem'
 import {approachPoint} from './objects/approachPoint'
 import {cardStat} from './objects/cardStat'
-import {caseStudyPhase} from './objects/caseStudyPhase'
+import {
+  caseStudyBeforeAfter,
+  caseStudyChallenge,
+  caseStudyOutcome,
+  caseStudyProcessStep,
+  caseStudyRoleItem,
+  caseStudyStat,
+} from './objects/caseStudySections'
 import {siteSettings} from './documents/siteSettings'
 import {heroSection} from './documents/heroSection'
 import {service} from './documents/service'
@@ -31,7 +38,12 @@ export const schemaTypes = [
   aboutComparison,
   approachPoint,
   cardStat,
-  caseStudyPhase,
+  caseStudyChallenge,
+  caseStudyStat,
+  caseStudyBeforeAfter,
+  caseStudyProcessStep,
+  caseStudyRoleItem,
+  caseStudyOutcome,
   siteSettings,
   heroSection,
   service,

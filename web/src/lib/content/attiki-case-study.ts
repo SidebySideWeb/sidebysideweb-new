@@ -64,8 +64,4 @@ export const attikiCaseStudy = {
     'Business Automation & Digital Transformation',
     'Technical Consulting',
   ],
-  cta: {
-    body: 'Έχεις διαδικασίες που εξαρτώνται από τρίτες πλατφόρμες; Ας δούμε πώς μπορούν να γίνουν πιο ανθεκτικές — και φθηνότερες.',
-    button: 'Μίλα μου για την περίπτωσή σου',
-  },
 } as const
