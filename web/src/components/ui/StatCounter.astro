@@ -1,0 +1,33 @@
+---
+import {parseStat, shouldAnimateStat} from '../../lib/parse-stat'
+
+interface Props {
+  value: string
+  class?: string
+  duration?: number
+  /** Force static display (no animation), e.g. intentional "0" downtime. */
+  noAnimate?: boolean
+}
+
+const {value, duration = 1500, noAnimate = false} = Astro.props
+const className = Astro.props.class ?? ''
+const parsed = parseStat(value)
+const animate = !noAnimate && shouldAnimateStat(value) && parsed.target !== null
+---
+
+{
+  animate ? (
+    <span
+      class:list={['counter', 'tabular-nums', className]}
+      data-target={parsed.target}
+      data-prefix={parsed.prefix}
+      data-suffix={parsed.suffix}
+      data-fallback={parsed.display}
+      data-duration={duration}
+    >
+      {parsed.display}
+    </span>
+  ) : (
+    <span class:list={['tabular-nums', className]}>{value}</span>
+  )
+}

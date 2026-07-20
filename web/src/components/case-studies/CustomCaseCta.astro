@@ -1,0 +1,24 @@
+---
+import {CONTACT_SECTION_HREF} from '../../lib/cal-com'
+
+interface Props {
+  body: string
+  buttonLabel: string
+  title?: string
+}
+
+const {body, buttonLabel, title} = Astro.props
+---
+
+<section class="bg-primary py-section-mobile text-center text-on-primary md:py-section-desktop">
+  <div class="scroll-reveal mx-auto max-w-3xl px-margin-container">
+    {title ? <h2 class="mb-6 text-headline-lg">{title}</h2> : null}
+    <p class="mb-10 text-body-lg text-on-primary-container">{body}</p>
+    <a
+      class="btn-primary-orange inline-flex rounded-xl px-10 py-4 shadow-lg transition-all hover:scale-105 hover:shadow-secondary/20"
+      href={CONTACT_SECTION_HREF}
+    >
+      {buttonLabel}
+    </a>
+  </div>
+</section>

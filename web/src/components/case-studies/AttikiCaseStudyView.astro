@@ -1,0 +1,122 @@
+---
+import CustomCaseHero from './CustomCaseHero.astro'
+import CustomCaseCta from './CustomCaseCta.astro'
+import StatCounter from '../ui/StatCounter.astro'
+import {attikiCaseStudy as c} from '../../lib/content/attiki-case-study'
+import type {SiteLocale} from '../../lib/i18n'
+
+interface Props {
+  locale?: SiteLocale
+}
+
+const {locale} = Astro.props
+---
+
+<CustomCaseHero
+  tag={c.tag}
+  client={c.client}
+  title={c.title}
+  intro={c.intro}
+  chips={c.tech}
+  locale={locale}
+/>
+
+<!-- Κύριες Προκλήσεις -->
+<section class="bg-surface-white py-section-mobile md:py-section-desktop">
+  <div class="mx-auto max-w-7xl px-margin-container">
+    <h2 class="scroll-reveal mb-12 text-center text-headline-lg text-primary">Κύριες Προκλήσεις</h2>
+    <div class="grid grid-cols-1 gap-gutter md:grid-cols-2">
+      {
+        c.challenges.map((item, index) => (
+          <div
+            class={`scroll-reveal stagger-${index + 1} rounded-xl border border-outline-variant/20 bg-white p-8 shadow-sm`}
+          >
+            <h3 class="mb-3 text-xl font-semibold text-secondary">{item.title}</h3>
+            <p class="text-body-md text-on-surface-variant">{item.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Το Κόστος -->
+<section class="border-y border-outline-variant/10 bg-surface-bright py-section-mobile md:py-section-desktop">
+  <div class="scroll-reveal mx-auto max-w-3xl px-margin-container">
+    <h2 class="mb-8 text-headline-lg text-primary">{c.cost.title}</h2>
+    {
+      c.cost.paragraphs.map((paragraph) => (
+        <p class="mb-6 text-body-lg leading-relaxed text-on-surface-variant">{paragraph}</p>
+      ))
+    }
+    <ol class="mb-8 list-decimal space-y-4 pl-6 text-body-md text-on-surface-variant">
+      {c.cost.steps.map((step) => <li class="pl-2">{step}</li>)}
+    </ol>
+    <p class="text-body-lg font-semibold leading-relaxed text-primary">{c.cost.closing}</p>
+  </div>
+</section>
+
+<!-- Αποτελέσματα -->
+<section class="bg-surface-white py-section-mobile md:py-section-desktop">
+  <div class="mx-auto max-w-7xl px-margin-container">
+    <h2 class="scroll-reveal mb-12 text-center text-headline-lg text-primary">Αποτελέσματα</h2>
+    <div class="grid grid-cols-1 gap-gutter sm:grid-cols-2 lg:grid-cols-4">
+      {
+        c.results.map((stat, index) => (
+          <div
+            class={`scroll-reveal stagger-${index + 1} min-w-0 rounded-2xl border border-outline-variant/20 bg-surface shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl`}
+          >
+            <div class="flex min-h-[148px] flex-col items-center justify-center px-4 py-8 text-center sm:px-6">
+              <p class="mb-3 w-full text-2xl leading-tight font-bold break-words text-primary sm:text-3xl lg:text-[2rem]">
+                <StatCounter value={stat.value} noAnimate={!stat.animate} />
+              </p>
+              <p class="w-full text-[11px] font-semibold uppercase tracking-widest text-on-surface-variant sm:text-label-md">
+                {stat.label}
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Πριν → Μετά -->
+<section class="bg-surface-bright py-section-mobile md:py-section-desktop">
+  <div class="mx-auto max-w-4xl px-margin-container">
+    <h2 class="scroll-reveal mb-12 text-center text-headline-lg text-primary">Πριν → Μετά</h2>
+    <div class="space-y-4">
+      {
+        c.beforeAfter.map((row, index) => (
+          <div
+            class={`scroll-reveal stagger-${index + 1} grid grid-cols-1 items-center gap-4 rounded-xl border border-outline-variant/20 bg-white p-6 md:grid-cols-[1fr_auto_1fr]`}
+          >
+            <p class="text-center text-body-md text-on-surface-variant md:text-right">{row.before}</p>
+            <span class="material-symbols-outlined mx-auto text-secondary">arrow_forward</span>
+            <p class="text-center text-body-md font-semibold text-primary md:text-left">{row.after}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Γιατί Έχει Σημασία + related -->
+<section class="bg-surface-white py-section-mobile md:py-section-desktop">
+  <div class="scroll-reveal mx-auto max-w-3xl px-margin-container">
+    <h2 class="mb-8 text-headline-lg text-primary">{c.whyItMatters.title}</h2>
+    {
+      c.whyItMatters.paragraphs.map((paragraph) => (
+        <p class="mb-6 text-body-lg leading-relaxed text-on-surface-variant">{paragraph}</p>
+      ))
+    }
+    <div class="mt-10 rounded-xl border border-outline-variant/20 bg-surface-bright p-6">
+      <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-secondary">
+        Σχετικές υπηρεσίες
+      </p>
+      <p class="text-body-md text-primary">{c.relatedServices.join(' · ')}</p>
+    </div>
+  </div>
+</section>
+
+<CustomCaseCta body={c.cta.body} buttonLabel={c.cta.button} />

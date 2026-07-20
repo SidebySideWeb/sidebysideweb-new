@@ -1,5 +1,3 @@
-const EASE = 'cubic-bezier(0.16, 1, 0.3, 1)'
-
 function animateCounter(el: HTMLElement) {
   if (el.dataset.animated === 'true') return
   el.dataset.animated = 'true'
@@ -12,8 +10,12 @@ function animateCounter(el: HTMLElement) {
 
   const prefix = el.dataset.prefix ?? ''
   const suffix = el.dataset.suffix ?? ''
+  const fallback = el.dataset.fallback ?? `${prefix}${target}${suffix}`
   const duration = Number(el.dataset.duration ?? 2000)
   const start = performance.now()
+
+  // Progressive enhancement: SSR already shows the real value; count up from 0 on scroll.
+  el.textContent = `${prefix}0${suffix}`
 
   const tick = (now: number) => {
     const progress = Math.min((now - start) / duration, 1)
@@ -21,7 +23,7 @@ function animateCounter(el: HTMLElement) {
     const value = target % 1 === 0 ? Math.floor(target * eased) : Math.round(target * eased * 10) / 10
     el.textContent = `${prefix}${value}${suffix}`
     if (progress < 1) requestAnimationFrame(tick)
-    else el.textContent = `${prefix}${target}${suffix}`
+    else el.textContent = fallback
   }
 
   requestAnimationFrame(tick)
@@ -38,7 +40,7 @@ function initScrollAnimations() {
       .querySelectorAll('.scroll-reveal, .step-badge, .step-content, .process-timeline-line, .counter')
       .forEach((el) => {
         el.classList.add('visible')
-        if (el.classList.contains('counter')) animateCounter(el as HTMLElement)
+        // Keep SSR values — do not re-animate under reduced motion
       })
     return
   }
@@ -78,4 +80,4 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavScrollState()
 })
 
-export {animateCounter, EASE}
+export {animateCounter}

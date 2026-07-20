@@ -6,6 +6,46 @@
       "has": [{"type": "host", "value": "sidebysideweb.gr"}],
       "destination": "https://www.sidebysideweb.gr/:path*",
       "permanent": true
+    },
+    {
+      "source": "/case-studies/automation-nea-attiki-odos-twitter",
+      "destination": "/automation-nea-attiki-odos-twitter",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/case-study-metaixmio",
+      "destination": "/case-study-metaixmio",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/nea-attiki-odos-tweets-sto-site",
+      "destination": "/automation-nea-attiki-odos-twitter",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/nea-attiki-odos-tweets-sto-site/",
+      "destination": "/automation-nea-attiki-odos-twitter",
+      "permanent": true
+    },
+    {
+      "source": "/en/case-studies/nea-attiki-odos-tweets-sto-site",
+      "destination": "/en/automation-nea-attiki-odos-twitter",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/ekdoseis-metaixmio-digital-strategy-and-requirements-analysis",
+      "destination": "/case-study-metaixmio",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/ekdoseis-metaixmio-digital-strategy-and-requirements-analysis/",
+      "destination": "/case-study-metaixmio",
+      "permanent": true
+    },
+    {
+      "source": "/en/case-studies/ekdoseis-metaixmio-digital-strategy-and-requirements-analysis",
+      "destination": "/en/case-study-metaixmio",
+      "permanent": true
     }
   ],
   "headers": [

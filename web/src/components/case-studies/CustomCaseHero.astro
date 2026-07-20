@@ -1,0 +1,76 @@
+---
+import {DEFAULT_LOCALE, localizePath, type SiteLocale} from '../../lib/i18n'
+import {getUiStrings} from '../../lib/ui-strings'
+
+interface Props {
+  tag: string
+  client: string
+  title: string
+  intro: string
+  chips?: readonly string[]
+  chipsLabel?: string
+  locale?: SiteLocale
+}
+
+const {
+  tag,
+  client,
+  title,
+  intro,
+  chips = [],
+  chipsLabel,
+  locale = DEFAULT_LOCALE,
+} = Astro.props
+const ui = getUiStrings(locale)
+const homePath = localizePath('/', locale)
+const casesPath = `${homePath}#cases`
+---
+
+<header
+  class="relative overflow-hidden bg-gradient-to-br from-primary to-primary-container pt-32 pb-section-mobile text-on-primary md:pb-section-desktop"
+>
+  <div class="relative z-10 mx-auto max-w-7xl px-margin-container">
+    <nav class="scroll-reveal mb-6 flex flex-wrap gap-2 text-sm" aria-label="Breadcrumb">
+      <a class="text-on-primary-container transition-colors hover:text-on-primary" href={homePath}>
+        {ui.caseStudyBreadcrumbHome}
+      </a>
+      <span class="text-on-primary-container">/</span>
+      <a class="text-on-primary-container transition-colors hover:text-on-primary" href={casesPath}>
+        {ui.caseStudyBreadcrumbCases}
+      </a>
+      <span class="text-on-primary-container">/</span>
+      <span class="text-on-primary">{title}</span>
+    </nav>
+
+    <div class="scroll-reveal mx-auto max-w-4xl text-center lg:text-left">
+      <div class="mb-6 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+        <span
+          class="inline-block rounded-full bg-secondary px-4 py-1 text-label-md uppercase tracking-wider text-on-primary"
+        >
+          {tag}
+        </span>
+        <span class="text-sm text-on-primary-container">Πελάτης: {client}</span>
+      </div>
+      <h1 class="mb-6 text-headline-xl leading-tight">{title}</h1>
+      <p class="mb-8 max-w-3xl text-body-lg text-on-primary-container">{intro}</p>
+      {
+        chips.length ? (
+          <div class="space-y-3">
+            {chipsLabel ? (
+              <p class="text-xs font-semibold uppercase tracking-widest text-on-primary-container">
+                {chipsLabel}
+              </p>
+            ) : null}
+            <div class="flex flex-wrap justify-center gap-2 lg:justify-start">
+              {chips.map((chip) => (
+                <span class="rounded-lg border border-white/15 bg-white/5 px-3 py-1.5 text-sm text-on-primary">
+                  {chip}
+                </span>
+              ))}
+            </div>
+          </div>
+        ) : null
+      }
+    </div>
+  </div>
+</header>

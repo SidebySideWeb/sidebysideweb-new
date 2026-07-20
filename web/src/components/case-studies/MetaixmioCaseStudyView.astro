@@ -1,0 +1,141 @@
+---
+import CustomCaseHero from './CustomCaseHero.astro'
+import CustomCaseCta from './CustomCaseCta.astro'
+import CustomTestimonial from './CustomTestimonial.astro'
+import StatCounter from '../ui/StatCounter.astro'
+import {metaixmioCaseStudy as c} from '../../lib/content/metaixmio-case-study'
+import type {SiteLocale} from '../../lib/i18n'
+
+interface Props {
+  locale?: SiteLocale
+}
+
+const {locale} = Astro.props
+---
+
+<CustomCaseHero
+  tag={c.tag}
+  client={c.client}
+  title={c.title}
+  intro={c.intro}
+  chips={c.scope}
+  chipsLabel="Εύρος έργου"
+  locale={locale}
+/>
+
+<!-- Η Διαδικασία -->
+<section class="bg-surface-white py-section-mobile md:py-section-desktop">
+  <div class="mx-auto max-w-7xl px-margin-container">
+    <h2 class="scroll-reveal mb-12 text-center text-headline-lg text-primary">Η Διαδικασία</h2>
+    <div class="grid grid-cols-1 gap-gutter sm:grid-cols-2 lg:grid-cols-4">
+      {
+        c.process.map((step, index) => (
+          <div
+            class={`scroll-reveal stagger-${index + 1} rounded-xl border border-outline-variant/20 bg-white p-8 text-center shadow-sm`}
+          >
+            <div class="mx-auto mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-sm font-bold text-on-primary">
+              {index + 1}
+            </div>
+            <h3 class="mb-2 text-lg font-semibold text-primary">{step.title}</h3>
+            <p class="text-sm text-on-surface-variant">{step.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Ο Ρόλος μου -->
+<section class="border-y border-outline-variant/10 bg-surface-bright py-section-mobile md:py-section-desktop">
+  <div class="mx-auto max-w-7xl px-margin-container">
+    <h2 class="scroll-reveal mb-12 text-center text-headline-lg text-primary">Ο Ρόλος μου</h2>
+    <div class="grid grid-cols-1 gap-gutter md:grid-cols-2 lg:grid-cols-3">
+      {
+        c.role.map((item, index) => (
+          <div
+            class={`scroll-reveal stagger-${(index % 3) + 1} rounded-xl border border-outline-variant/20 bg-white p-8 shadow-sm`}
+          >
+            <h3 class="mb-3 text-lg font-semibold text-secondary">{item.title}</h3>
+            <p class="text-body-md text-on-surface-variant">{item.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Βασικές Προκλήσεις -->
+<section class="bg-surface-white py-section-mobile md:py-section-desktop">
+  <div class="mx-auto max-w-7xl px-margin-container">
+    <h2 class="scroll-reveal mb-12 text-center text-headline-lg text-primary">Βασικές Προκλήσεις</h2>
+    <div class="grid grid-cols-1 gap-gutter md:grid-cols-2">
+      {
+        c.challenges.map((item, index) => (
+          <div
+            class={`scroll-reveal stagger-${index + 1} rounded-xl border border-outline-variant/20 bg-white p-8 shadow-sm`}
+          >
+            <div class="mb-3 flex flex-wrap items-center gap-3">
+              <h3 class="text-xl font-semibold text-primary">{item.title}</h3>
+              <span class="rounded-full bg-secondary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-secondary">
+                {item.severity}
+              </span>
+            </div>
+            <p class="text-body-md text-on-surface-variant">{item.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Το Έργο σε Αριθμούς -->
+<section class="bg-surface-bright py-section-mobile md:py-section-desktop">
+  <div class="mx-auto max-w-7xl px-margin-container">
+    <h2 class="scroll-reveal mb-12 text-center text-headline-lg text-primary">Το Έργο σε Αριθμούς</h2>
+    <div class="grid grid-cols-1 gap-gutter sm:grid-cols-2 lg:grid-cols-4">
+      {
+        c.stats.map((stat, index) => (
+          <div
+            class={`scroll-reveal stagger-${index + 1} min-w-0 rounded-2xl border border-outline-variant/20 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl`}
+          >
+            <div class="flex min-h-[148px] flex-col items-center justify-center px-4 py-8 text-center sm:px-6">
+              <p class="mb-3 w-full text-2xl leading-tight font-bold break-words text-primary sm:text-3xl lg:text-[2rem]">
+                <StatCounter value={stat.value} />
+              </p>
+              <p class="w-full text-[11px] font-semibold uppercase tracking-widest text-on-surface-variant sm:text-label-md">
+                {stat.label}
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Αποτέλεσμα -->
+<section class="bg-surface-white py-section-mobile md:py-section-desktop">
+  <div class="mx-auto max-w-7xl px-margin-container">
+    <h2 class="scroll-reveal mb-12 text-center text-headline-lg text-primary">Αποτέλεσμα</h2>
+    <div class="grid grid-cols-1 gap-gutter md:grid-cols-2">
+      {
+        c.outcomes.map((item, index) => (
+          <div
+            class={`scroll-reveal stagger-${index + 1} rounded-xl border border-outline-variant/20 bg-surface-bright p-8`}
+          >
+            <h3 class="mb-3 text-xl font-semibold text-secondary">{item.title}</h3>
+            <p class="text-body-md text-on-surface-variant">{item.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<CustomTestimonial
+  headline={c.testimonial.quote}
+  author={c.testimonial.author}
+  role={c.testimonial.role}
+/>
+
+<CustomCaseCta body={c.cta.body} buttonLabel={c.cta.button} />

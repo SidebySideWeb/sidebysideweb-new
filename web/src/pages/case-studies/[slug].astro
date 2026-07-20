@@ -13,6 +13,7 @@ import RelatedServicesSection from '../../components/case-studies/RelatedService
 import CaseStudyCta from '../../components/case-studies/CaseStudyCta.astro'
 import RelatedCaseStudiesSection from '../../components/case-studies/RelatedCaseStudiesSection.astro'
 import {getCaseStudyPageData} from '../../lib/cms'
+import {CASE_STUDY_SLUG_REDIRECTS} from '../../lib/case-study-paths'
 import {localizePath, resolvePageLocale} from '../../lib/i18n'
 import {getUiStrings} from '../../lib/ui-strings'
 
@@ -23,6 +24,11 @@ const ui = getUiStrings(locale)
 const {slug} = Astro.params
 if (!slug) {
   return Astro.redirect(localizePath('/', locale))
+}
+
+const redirected = CASE_STUDY_SLUG_REDIRECTS[slug]
+if (redirected) {
+  return Astro.redirect(localizePath(redirected, locale), 301)
 }
 
 const {caseStudy, relatedCaseStudies, services, siteSettings} = await getCaseStudyPageData(

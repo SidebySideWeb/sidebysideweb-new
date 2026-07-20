@@ -7,18 +7,24 @@ import {SITE_URL} from '../lib/sanity-config'
 interface Props {
   title?: string
   description?: string
+  /** When set, used as the full <title> without appending the site name. */
+  documentTitle?: string
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[]
   siteSettings: SiteSettings
   locale?: SiteLocale
 }
 
-const {title, description, siteSettings, locale = DEFAULT_LOCALE} = Astro.props
-const pageTitle = title ? `${title} | ${siteSettings.siteName}` : siteSettings.siteName
+const {title, description, documentTitle, jsonLd, siteSettings, locale = DEFAULT_LOCALE} =
+  Astro.props
+const pageTitle =
+  documentTitle ?? (title ? `${title} | ${siteSettings.siteName}` : siteSettings.siteName)
 const pageDescription = description ?? siteSettings.description ?? ''
 const canonicalPath = Astro.url.pathname.endsWith('/')
   ? Astro.url.pathname
   : `${Astro.url.pathname}/`
 const elPath = localizePath(canonicalPath, 'el')
 const enPath = localizePath(canonicalPath, 'en')
+const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
 ---
 
 <!doctype html>
@@ -28,6 +34,11 @@ const enPath = localizePath(canonicalPath, 'en')
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={pageDescription} />
     <title>{pageTitle}</title>
+    {
+      jsonLdItems.map((item) => (
+        <script type="application/ld+json" set:html={JSON.stringify(item)} />
+      ))
+    }
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon.png" type="image/png" />
     <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />

@@ -1,5 +1,5 @@
 ---
-import {parseStat} from '../../lib/parse-stat'
+import StatCounter from '../ui/StatCounter.astro'
 import {DEFAULT_LOCALE, type SiteLocale} from '../../lib/i18n'
 import type {CaseStudy} from '../../lib/types'
 import {getUiStrings} from '../../lib/ui-strings'
@@ -12,13 +12,6 @@ interface Props {
 const {caseStudy, locale = DEFAULT_LOCALE} = Astro.props
 const ui = getUiStrings(locale)
 const metrics = caseStudy.results?.metrics ?? []
-
-function shouldAnimateCounter(value: string | undefined): boolean {
-  const parsed = parseStat(value)
-  if (parsed.target === null) return false
-  if (parsed.suffix === '%') return true
-  return !parsed.prefix && !parsed.suffix
-}
 ---
 
 <section class="bg-surface-white py-section-mobile md:py-section-desktop">
@@ -31,43 +24,25 @@ function shouldAnimateCounter(value: string | undefined): boolean {
     </div>
     <div class="grid grid-cols-1 gap-gutter sm:grid-cols-2 lg:grid-cols-4">
       {
-        metrics.map((metric, index) => {
-          const parsed = parseStat(metric.value)
-          const animate = shouldAnimateCounter(metric.value)
-
-          return (
-            <div
-              class={`scroll-reveal stagger-${index + 1} min-w-0 rounded-2xl border border-outline-variant/20 bg-surface shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl`}
-            >
-              <div class="flex min-h-[148px] flex-col items-center justify-center px-4 py-8 text-center sm:px-6">
-                <p class="mb-3 w-full text-2xl leading-tight font-bold break-words text-primary sm:text-3xl lg:text-[2rem]">
-                  {animate ? (
-                    <span
-                      class="counter tabular-nums"
-                      data-target={parsed.target}
-                      data-prefix={parsed.prefix}
-                      data-suffix={parsed.suffix}
-                      data-fallback={parsed.display}
-                      data-duration="1500"
-                    >
-                      {parsed.prefix}0{parsed.suffix}
-                    </span>
-                  ) : (
-                    metric.value
-                  )}
+        metrics.map((metric, index) => (
+          <div
+            class={`scroll-reveal stagger-${index + 1} min-w-0 rounded-2xl border border-outline-variant/20 bg-surface shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl`}
+          >
+            <div class="flex min-h-[148px] flex-col items-center justify-center px-4 py-8 text-center sm:px-6">
+              <p class="mb-3 w-full text-2xl leading-tight font-bold break-words text-primary sm:text-3xl lg:text-[2rem]">
+                <StatCounter value={metric.value ?? ''} />
+              </p>
+              {metric.label ? (
+                <p class="w-full text-[11px] font-semibold uppercase tracking-widest text-on-surface-variant sm:text-label-md">
+                  {metric.label}
                 </p>
-                {metric.label ? (
-                  <p class="w-full text-[11px] font-semibold uppercase tracking-widest text-on-surface-variant sm:text-label-md">
-                    {metric.label}
-                  </p>
-                ) : null}
-                {metric.comparison ? (
-                  <p class="mt-2 w-full text-sm leading-snug text-text-muted">{metric.comparison}</p>
-                ) : null}
-              </div>
+              ) : null}
+              {metric.comparison ? (
+                <p class="mt-2 w-full text-sm leading-snug text-text-muted">{metric.comparison}</p>
+              ) : null}
             </div>
-          )
-        })
+          </div>
+        ))
       }
     </div>
   </div>
