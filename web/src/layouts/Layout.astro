@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css'
 import CookieConsent from '../components/CookieConsent.astro'
+import GtmBody from '../components/GtmBody.astro'
+import GtmHead from '../components/GtmHead.astro'
 import type {SiteSettings} from '../lib/types'
 import {DEFAULT_LOCALE, EN_LOCALE_ENABLED, localeHtmlLang, localizePath, type SiteLocale} from '../lib/i18n'
 import {SITE_URL} from '../lib/sanity-config'
@@ -26,6 +28,7 @@ const canonicalPath = Astro.url.pathname.endsWith('/')
 const elPath = localizePath(canonicalPath, 'el')
 const enPath = localizePath(canonicalPath, 'en')
 const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
+const gtmId = (import.meta.env.PUBLIC_GTM_ID ?? 'GTM-T4W88CDJ').trim()
 ---
 
 <!doctype html>
@@ -33,6 +36,7 @@ const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
   <head>
     <meta charset="UTF-8" />
     <CookieConsent />
+    {gtmId ? <GtmHead gtmId={gtmId} /> : null}
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={pageDescription} />
     <title>{pageTitle}</title>
@@ -61,6 +65,7 @@ const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
     />
   </head>
   <body class="selection:bg-secondary-container selection:text-on-secondary-fixed">
+    {gtmId ? <GtmBody gtmId={gtmId} /> : null}
     <slot />
     <script src="../scripts/micro-animations.ts"></script>
   </body>

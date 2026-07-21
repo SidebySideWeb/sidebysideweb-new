@@ -1,0 +1,34 @@
+---
+interface Props {
+  gtmId: string
+}
+
+const {gtmId} = Astro.props
+---
+
+<!-- Google Tag Manager (loads on first user interaction) -->
+<script is:inline define:vars={{gtmId}}>
+  ;(function () {
+    window.dataLayer = window.dataLayer || []
+
+    function loadGtm() {
+      if (window.__sidebysideGtmLoaded) return
+      window.__sidebysideGtmLoaded = true
+      ;(function (w, d, s, l, i) {
+        w[l] = w[l] || []
+        w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'})
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l !== 'dataLayer' ? '&l=' + l : ''
+        j.async = true
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl
+        f.parentNode.insertBefore(j, f)
+      })(window, document, 'script', 'dataLayer', gtmId)
+    }
+
+    ;['pointerdown', 'keydown', 'touchstart', 'scroll'].forEach(function (eventName) {
+      window.addEventListener(eventName, loadGtm, {once: true, passive: true})
+    })
+  })()
+</script>
+<!-- End Google Tag Manager -->
