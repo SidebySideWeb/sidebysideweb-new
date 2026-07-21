@@ -21,7 +21,7 @@ const {about, testimonials} = Astro.props
           {
             testimonials.map((item, index) => (
               <article
-                class={`scroll-reveal stagger-${index + 1} rounded-xl border border-outline-variant bg-white p-8 shadow-sm`}
+                class={`scroll-reveal stagger-${index + 1} flex h-full flex-col rounded-xl border border-outline-variant bg-white p-8 shadow-sm`}
               >
                 <div class="mb-4 flex text-secondary-container">
                   {
@@ -36,10 +36,12 @@ const {about, testimonials} = Astro.props
                   }
                 </div>
                 {item.quote ? (
-                  <p class="mb-6 text-body-md italic text-on-surface-variant">"{item.quote}"</p>
-                ) : null}
-                <div class="flex items-center gap-4">
-                  <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary font-bold text-on-primary">
+                  <p class="mb-6 flex-1 text-body-md italic text-on-surface-variant">"{item.quote}"</p>
+                ) : (
+                  <div class="flex-1" />
+                )}
+                <div class="mt-auto flex items-center gap-4">
+                  <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary font-bold text-on-primary">
                     {initials(item.author)}
                   </div>
                   <div>

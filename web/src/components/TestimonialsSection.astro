@@ -17,11 +17,11 @@ const {testimonials} = Astro.props
     {
       testimonials.map((item, index) => (
         <div
-          class={`scroll-reveal card-elevated rounded-xl p-8 italic text-on-surface-variant stagger-${index + 1}`}
+          class={`scroll-reveal card-elevated flex h-full flex-col rounded-xl p-8 italic text-on-surface-variant stagger-${index + 1}`}
         >
-          <p class="mb-6">"{item.quote}"</p>
-          <div class="flex items-center gap-4 not-italic">
-            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-surface-container font-bold text-primary">
+          <p class="mb-6 flex-1">"{item.quote}"</p>
+          <div class="mt-auto flex items-center gap-4 not-italic">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-surface-container font-bold text-primary">
               {initials(item.author)}
             </div>
             <div>
