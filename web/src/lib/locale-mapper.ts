@@ -257,6 +257,7 @@ function mapAboutPage(raw: Record<string, unknown> | null | undefined, locale: S
     philosophyHeadline: pickLocale(raw.philosophyHeadline as never, locale) || undefined,
     philosophyHighlight: pickLocale(raw.philosophyHighlight as never, locale) || undefined,
     philosophyParagraphs: pickLocaleList(raw.philosophyParagraphs, locale),
+    storyHeadline: pickLocale(raw.storyHeadline as never, locale) || undefined,
     workStyleHeadline: pickLocale(raw.workStyleHeadline as never, locale) || undefined,
     workStyleSubheadline: pickLocale(raw.workStyleSubheadline as never, locale) || undefined,
     comparisonHeadline: pickLocale(raw.comparisonHeadline as never, locale) || undefined,

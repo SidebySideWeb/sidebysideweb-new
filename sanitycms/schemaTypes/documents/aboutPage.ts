@@ -110,6 +110,13 @@ export const aboutPage = defineType({
       of: [{type: 'localeText'}],
     }),
     defineField({
+      name: 'storyHeadline',
+      title: 'Story Section Headline',
+      type: 'localeString',
+      group: 'story',
+      initialValue: {el: 'Η Διαδρομή μου', en: 'My Journey'},
+    }),
+    defineField({
       name: 'storySections',
       title: 'Story Sections',
       type: 'array',

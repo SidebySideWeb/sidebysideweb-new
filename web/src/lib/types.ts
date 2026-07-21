@@ -202,6 +202,7 @@ export interface AboutPage {
   philosophyHeadline?: string
   philosophyHighlight?: string
   philosophyParagraphs?: string[]
+  storyHeadline?: string
   storySections?: AboutStorySection[]
   timeline?: AboutTimelineItem[]
   workStyleHeadline?: string

@@ -7,9 +7,9 @@ export const aboutTimelineItem = defineType({
   fields: [
     defineField({
       name: 'period',
-      title: 'Period',
+      title: 'Period (optional)',
       type: 'localeString',
-      validation: (Rule) => Rule.required(),
+      description: 'Leave empty when showing role labels without dates.',
     }),
     defineField({
       name: 'title',

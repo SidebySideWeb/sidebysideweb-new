@@ -7,49 +7,53 @@ interface Props {
 }
 
 const {about} = Astro.props
+const storyHeadline = about.storyHeadline ?? 'Η Διαδρομή μου'
 const storySections = about.storySections ?? []
 const timeline = sortTimeline(about.timeline)
 ---
 
-<section class="scroll-reveal mx-auto grid max-w-7xl grid-cols-1 gap-gutter px-margin-container py-section-mobile md:grid-cols-12 md:py-section-desktop">
-  <div class="md:col-span-7">
+<section class="scroll-reveal mx-auto max-w-7xl px-margin-container py-section-mobile md:py-section-desktop">
+  <h2 class="mb-10 text-headline-lg text-primary md:mb-12">{storyHeadline}</h2>
+  <div class="grid grid-cols-1 gap-gutter md:grid-cols-12">
+    <div class="md:col-span-7">
+      {
+        storySections.map((section) => (
+          <div class="mb-12 last:mb-0">
+            {section.title ? (
+              <h3 class="mb-4 text-headline-md text-primary">{section.title}</h3>
+            ) : null}
+            {section.content ? (
+              <p class="text-body-md leading-relaxed text-on-surface-variant">{section.content}</p>
+            ) : null}
+          </div>
+        ))
+      }
+    </div>
     {
-      storySections.map((section) => (
-        <div class="mb-12 last:mb-0">
-          {section.title ? (
-            <h3 class="mb-4 text-headline-md text-primary">{section.title}</h3>
-          ) : null}
-          {section.content ? (
-            <p class="text-body-md leading-relaxed text-on-surface-variant">{section.content}</p>
-          ) : null}
+      timeline.length ? (
+        <div class="flex flex-col justify-center md:col-span-5">
+          <div class="relative space-y-12 border-l-2 border-outline-variant py-4 pl-8">
+            {
+              timeline.map((item, index) => (
+                <div class="relative">
+                  <div
+                    class={`absolute top-0 -left-[41px] h-4 w-4 rounded-full ring-4 ring-background ${index % 2 === 0 ? 'bg-secondary' : 'bg-primary'}`}
+                  />
+                  {item.period ? (
+                    <span class="mb-1 block text-label-md text-secondary">{item.period}</span>
+                  ) : null}
+                  {item.title ? (
+                    <h4 class="text-[20px] font-semibold text-primary">{item.title}</h4>
+                  ) : null}
+                  {item.description ? (
+                    <p class="text-body-md text-text-muted">{item.description}</p>
+                  ) : null}
+                </div>
+              ))
+            }
+          </div>
         </div>
-      ))
+      ) : null
     }
   </div>
-  {
-    timeline.length ? (
-      <div class="flex flex-col justify-center md:col-span-5">
-        <div class="relative space-y-12 border-l-2 border-outline-variant py-4 pl-8">
-          {
-            timeline.map((item, index) => (
-              <div class="relative">
-                <div
-                  class={`absolute top-0 -left-[41px] h-4 w-4 rounded-full ring-4 ring-background ${index % 2 === 0 ? 'bg-secondary' : 'bg-primary'}`}
-                />
-                {item.period ? (
-                  <span class="mb-1 block text-label-md text-secondary">{item.period}</span>
-                ) : null}
-                {item.title ? (
-                  <h4 class="text-[20px] font-semibold text-primary">{item.title}</h4>
-                ) : null}
-                {item.description ? (
-                  <p class="text-body-md text-text-muted">{item.description}</p>
-                ) : null}
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    ) : null
-  }
 </section>

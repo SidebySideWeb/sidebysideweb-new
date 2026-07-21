@@ -183,6 +183,7 @@ function migrateLocaleFields(doc: Record<string, unknown>) {
       setLocalized(doc, 'secondaryCtaText')
       setLocalized(doc, 'philosophyHeadline')
       setLocalized(doc, 'philosophyHighlight')
+      setLocalized(doc, 'storyHeadline')
       setLocalized(doc, 'workStyleHeadline')
       setLocalized(doc, 'workStyleSubheadline')
       setLocalized(doc, 'comparisonHeadline')
@@ -201,12 +202,19 @@ function migrateLocaleFields(doc: Record<string, unknown>) {
         }))
       }
       if (Array.isArray(doc.timeline)) {
-        doc.timeline = (doc.timeline as Record<string, unknown>[]).map((item) => ({
-          ...item,
-          period: loc(item.period),
-          title: loc(item.title),
-          description: loc(item.description),
-        }))
+        doc.timeline = (doc.timeline as Record<string, unknown>[]).map((item) => {
+          const next = {
+            ...item,
+            title: loc(item.title),
+            description: loc(item.description),
+          }
+          if (item.period != null && item.period !== '') {
+            next.period = loc(item.period)
+          } else {
+            delete next.period
+          }
+          return next
+        })
       }
       if (Array.isArray(doc.approach)) {
         doc.approach = (doc.approach as Record<string, unknown>[]).map((point) => ({
