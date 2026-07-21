@@ -1,0 +1,12 @@
+/* Side by Side Web Studio brand overrides — load after silktide-consent-manager.css */
+#stcm-wrapper {
+  --boxShadow: -5px 5px 10px 0px #00000012, 0px 0px 50px 0px #0000001a !important;
+  --fontFamily: 'Inter', ui-sans-serif, system-ui, sans-serif !important;
+  --primaryColor: #ff6b35 !important;
+  --backgroundColor: #1a2847 !important;
+  --textColor: #ffffff !important;
+  --backdropBackgroundColor: #00000033 !important;
+  --backdropBackgroundBlur: 0px !important;
+  --iconColor: #ff6b35 !important;
+  --iconBackgroundColor: #1a2847 !important;
+}

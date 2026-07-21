@@ -1,0 +1,91 @@
+---
+// Self-hosted Silktide Consent Manager v2.0.1 (from cookie-banner side.zip)
+---
+
+<link rel="stylesheet" id="silktide-consent-manager-css" href="/vendor/silktide/silktide-consent-manager.css" />
+<link
+  rel="stylesheet"
+  id="silktide-consent-manager-overrides"
+  href="/vendor/silktide/silktide-consent-manager.overrides.css"
+/>
+
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('consent', 'default', {
+    analytics_storage: 'denied',
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    wait_for_update: 500,
+  });
+</script>
+
+<script src="/vendor/silktide/silktide-consent-manager.js" defer></script>
+<script is:inline defer>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (!window.silktideConsentManager) {
+      return;
+    }
+
+    window.silktideConsentManager.init({
+      backdrop: {
+        show: true,
+      },
+      icon: {
+        position: 'bottomLeft',
+      },
+      prompt: {
+        position: 'bottomLeft',
+      },
+      consentTypes: [
+        {
+          id: 'essential',
+          label: 'Απαραίτητα',
+          description:
+            '<p>Αυτά τα cookies είναι απαραίτητα για τη σωστή λειτουργία του ιστότοπου και δεν μπορούν να απενεργοποιηθούν. Χρησιμοποιούνται για την αποθήκευση των προτιμήσεών σας σχετικά με την ιδιωτικότητα.</p>',
+          required: true,
+        },
+        {
+          id: 'analytics',
+          label: 'Στατιστικά',
+          description:
+            '<p>Αυτά τα cookies μας βοηθούν να βελτιώνουμε τον ιστότοπο, καταγράφοντας ποιες σελίδες είναι πιο δημοφιλείς και πώς κινούνται οι επισκέπτες.</p>',
+          defaultValue: false,
+          gtag: 'analytics_storage',
+        },
+        {
+          id: 'marketing',
+          label: 'Διαφημιστικά',
+          description:
+            '<p>Αυτά τα cookies χρησιμοποιούνται για την εμφάνιση σχετικών διαφημίσεων και για τη μέτρηση της απόδοσης καμπανιών.</p>',
+          defaultValue: false,
+          gtag: ['ad_storage', 'ad_user_data', 'ad_personalization'],
+        },
+      ],
+      text: {
+        prompt: {
+          description:
+            '<p>Χρησιμοποιούμε cookies στον ιστότοπό μας για να βελτιώσουμε την εμπειρία σας, να παρέχουμε εξατομικευμένο περιεχόμενο και να αναλύουμε την επισκεψιμότητα. Δείτε την <a href="/cookies-policy/">Πολιτική Cookies</a>.</p>',
+          acceptAllButtonText: 'Αποδοχή όλων',
+          acceptAllButtonAccessibleLabel: 'Αποδοχή όλων των cookies',
+          rejectNonEssentialButtonText: 'Απόρριψη μη απαραίτητων',
+          rejectNonEssentialButtonAccessibleLabel: 'Απόρριψη όλων των μη απαραίτητων cookies',
+          preferencesButtonText: 'Ρυθμίσεις',
+          preferencesButtonAccessibleLabel: 'Άνοιγμα ρυθμίσεων cookies',
+        },
+        preferences: {
+          title: 'Ρυθμίσεις cookies',
+          description:
+            '<p>Σεβόμαστε το δικαίωμά σας στην ιδιωτικότητα. Μπορείτε να επιλέξετε ποιους τύπους cookies επιτρέπετε. Οι προτιμήσεις σας ισχύουν σε όλο τον ιστότοπο.</p>',
+          saveButtonText: 'Αποθήκευση και κλείσιμο',
+          saveButtonAccessibleLabel: 'Αποθήκευση προτιμήσεων cookies',
+          creditLinkText: 'Get this banner for free',
+          creditLinkAccessibleLabel: 'Get this banner for free',
+        },
+      },
+    });
+  });
+</script>

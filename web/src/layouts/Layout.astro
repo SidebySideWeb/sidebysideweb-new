@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css'
+import CookieConsent from '../components/CookieConsent.astro'
 import type {SiteSettings} from '../lib/types'
 import {DEFAULT_LOCALE, EN_LOCALE_ENABLED, localeHtmlLang, localizePath, type SiteLocale} from '../lib/i18n'
 import {SITE_URL} from '../lib/sanity-config'
@@ -31,6 +32,7 @@ const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
 <html lang={localeHtmlLang(locale)}>
   <head>
     <meta charset="UTF-8" />
+    <CookieConsent />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={pageDescription} />
     <title>{pageTitle}</title>

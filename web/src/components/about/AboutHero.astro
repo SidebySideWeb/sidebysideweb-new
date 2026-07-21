@@ -13,6 +13,8 @@ const {about, locale = DEFAULT_LOCALE} = Astro.props
 const ui = getUiStrings(locale)
 const homePath = localizePath('/', locale)
 const photoUrl = resolveAboutPhoto(about.photo, about.photoUrl, 800)
+const cvHref = about.secondaryCtaLink ?? '/files/geronikolos-dimitris-cv.pdf'
+const cvIsPdf = cvHref.endsWith('.pdf')
 ---
 
 <section class="scroll-reveal mx-auto grid max-w-7xl grid-cols-1 items-center gap-gutter px-margin-container py-section-mobile md:grid-cols-12 md:py-section-desktop">
@@ -44,7 +46,9 @@ const photoUrl = resolveAboutPhoto(about.photo, about.photoUrl, 800)
         about.secondaryCtaText ? (
           <a
             class="rounded-lg border-2 border-primary px-8 py-4 text-label-md text-primary transition-all duration-300 hover:bg-primary hover:text-on-primary active:scale-95"
-            href={about.secondaryCtaLink ?? '#'}
+            href={cvHref}
+            target={cvIsPdf ? '_blank' : undefined}
+            rel={cvIsPdf ? 'noopener noreferrer' : undefined}
           >
             {about.secondaryCtaText}
           </a>

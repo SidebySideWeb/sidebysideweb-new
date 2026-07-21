@@ -12,10 +12,14 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-
-# environment variables
+# environment variables / secrets
 .env
+.env.local
 .env.production
+.env.*.local
+
+# Vercel
+.vercel
 
 # macOS-specific files
 .DS_Store

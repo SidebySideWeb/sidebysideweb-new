@@ -5,6 +5,9 @@ export class RecaptchaError extends Error {
   }
 }
 
+const MIN_SCORE = 0.5
+const EXPECTED_ACTION = 'contact'
+
 export function getRecaptchaSiteKey(): string {
   return (import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY ?? '').trim()
 }
@@ -16,7 +19,7 @@ export async function verifyRecaptchaToken(token: string | undefined): Promise<v
   }
 
   if (!token?.trim()) {
-    throw new RecaptchaError('Please confirm you are not a robot.')
+    throw new RecaptchaError('reCAPTCHA verification failed. Please try again.')
   }
 
   const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
@@ -32,8 +35,22 @@ export async function verifyRecaptchaToken(token: string | undefined): Promise<v
     throw new RecaptchaError('reCAPTCHA verification failed. Please try again.')
   }
 
-  const result = (await response.json()) as {success?: boolean}
+  const result = (await response.json()) as {
+    success?: boolean
+    score?: number
+    action?: string
+    'error-codes'?: string[]
+  }
+
   if (!result.success) {
+    throw new RecaptchaError('reCAPTCHA verification failed. Please try again.')
+  }
+
+  if (result.action && result.action !== EXPECTED_ACTION) {
+    throw new RecaptchaError('reCAPTCHA verification failed. Please try again.')
+  }
+
+  if (typeof result.score === 'number' && result.score < MIN_SCORE) {
     throw new RecaptchaError('reCAPTCHA verification failed. Please try again.')
   }
 }

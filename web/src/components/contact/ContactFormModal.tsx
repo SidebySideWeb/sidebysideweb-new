@@ -1,7 +1,6 @@
 import {useEffect, useId, useState, type FormEvent} from 'react'
 import {createPortal} from 'react-dom'
-import {getRecaptchaResponse, resetRecaptcha} from '../../lib/recaptcha-client'
-import RecaptchaField from './RecaptchaField'
+import {executeRecaptcha, loadRecaptchaV3} from '../../lib/recaptcha-client'
 
 export type ContactFormCopy = {
   openButton: string
@@ -37,7 +36,7 @@ type FormStatus = 'idle' | 'submitting' | 'success' | 'error'
 const inputClass =
   'w-full rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none transition focus:border-secondary focus:ring-1 focus:ring-secondary'
 
-export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey, locale}: Props) {
+export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey}: Props) {
   const titleId = useId()
   const [mounted, setMounted] = useState(false)
   const [open, setOpen] = useState(false)
@@ -54,6 +53,11 @@ export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey, l
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  useEffect(() => {
+    if (!open || !recaptchaSiteKey) return
+    void loadRecaptchaV3(recaptchaSiteKey)
+  }, [open, recaptchaSiteKey])
 
   useEffect(() => {
     if (!open) return
@@ -82,7 +86,6 @@ export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey, l
     setPrivacyAccepted(false)
     setStatus('idle')
     setErrorMessage('')
-    resetRecaptcha('contact')
   }
 
   function closeModal() {
@@ -111,15 +114,21 @@ export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey, l
       return
     }
 
-    const recaptchaToken = getRecaptchaResponse('contact')
-    if (recaptchaSiteKey && !recaptchaToken) {
-      setErrorMessage(copy.recaptchaError)
-      return
-    }
-
     setStatus('submitting')
 
     try {
+      let recaptchaToken = ''
+      if (recaptchaSiteKey) {
+        try {
+          recaptchaToken = await executeRecaptcha(recaptchaSiteKey, 'contact')
+        } catch {
+          throw new Error(copy.recaptchaError)
+        }
+        if (!recaptchaToken) {
+          throw new Error(copy.recaptchaError)
+        }
+      }
+
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -141,11 +150,9 @@ export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey, l
       }
 
       setStatus('success')
-      resetRecaptcha('contact')
     } catch (error) {
       setStatus('error')
       setErrorMessage(error instanceof Error ? error.message : copy.genericError)
-      resetRecaptcha('contact')
     }
   }
 
@@ -312,8 +319,6 @@ export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey, l
                       </span>
                     </label>
 
-                    <RecaptchaField siteKey={recaptchaSiteKey} widgetKey="contact" hl={locale} />
-
                     {errorMessage ? (
                       <p
                         className="rounded-lg border border-red-400/30 bg-red-500/10 px-3 py-2 text-sm text-red-200"
@@ -330,6 +335,30 @@ export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey, l
                     >
                       {status === 'submitting' ? copy.submitting : copy.submit}
                     </button>
+
+                    {recaptchaSiteKey ? (
+                      <p className="text-xs text-white/45">
+                        This site is protected by reCAPTCHA and the Google{' '}
+                        <a
+                          className="underline decoration-white/30 hover:text-white/70"
+                          href="https://policies.google.com/privacy"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Privacy Policy
+                        </a>{' '}
+                        and{' '}
+                        <a
+                          className="underline decoration-white/30 hover:text-white/70"
+                          href="https://policies.google.com/terms"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Terms of Service
+                        </a>{' '}
+                        apply.
+                      </p>
+                    ) : null}
                   </form>
                 )}
               </div>

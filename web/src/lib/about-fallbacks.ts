@@ -11,7 +11,7 @@ export const aboutPageFallback: AboutPage = {
   primaryCtaText: 'Δείτε το Portfolio',
   primaryCtaLink: '/#cases',
   secondaryCtaText: 'Βιογραφικό',
-  secondaryCtaLink: '#',
+  secondaryCtaLink: '/files/geronikolos-dimitris-cv.pdf',
   photoUrl: STITCH_ABOUT_PORTRAIT,
   philosophyHeadline: 'Δεν με ενδιαφέρει να εντυπωσιάσω.',
   philosophyHighlight: 'Με ενδιαφέρει να βοηθήσω.',
