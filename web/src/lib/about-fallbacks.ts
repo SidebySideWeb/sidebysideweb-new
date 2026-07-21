@@ -84,7 +84,7 @@ export const aboutPageFallback: AboutPage = {
   ],
   comparisonHeadline: 'Γιατί να Επιλέξετε Εμένα;',
   comparisons: [],
-  testimonialsHeadline: 'Τι λένε οι πελάτες',
+  testimonialsHeadline: 'Τι Λένε Όσοι Συνεργάστηκαν Μαζί μου',
   ctaHeadline: 'Έτοιμος να Δουλέψουμε Μαζί;',
   ctaDescription:
     'Ας συζητήσουμε τις προκλήσεις του έργου σας σε μια δωρεάν κλήση 30 λεπτών.',
