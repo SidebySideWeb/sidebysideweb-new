@@ -1,6 +1,25 @@
+@import '@fontsource-variable/inter/wght.css';
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
-@import 'material-symbols/outlined.css';
+
+/* Material Symbols loaded via deferred Google Fonts link in Layout (not the 4MB npm font). */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'liga';
+}
 
 /* Tokens from stitch_side_by_side_web_studio/DESIGN.md + code.html */
 @theme {
@@ -33,7 +52,7 @@
   --spacing-section-mobile: 40px;
   --spacing-margin-container: 32px;
 
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
 
   --text-headline-xl: 56px;
   --text-headline-xl--line-height: 1.1;
@@ -151,7 +170,7 @@
 
 @layer components {
   .btn-primary-orange {
-    @apply inline-flex items-center justify-center bg-secondary text-on-primary text-label-md uppercase transition-all duration-300 hover:scale-[1.02] hover:shadow-lg;
+    @apply inline-flex items-center justify-center bg-secondary text-primary text-label-md uppercase transition-all duration-300 hover:scale-[1.02] hover:shadow-lg;
   }
 
   .card-elevated {

@@ -22,7 +22,11 @@ const caseStudyLink = caseStudyHref(slug, (path) => localizePath(path, locale))
 ---
 
 <article class={`case-card scroll-reveal flex flex-col overflow-hidden rounded-xl bg-white ${staggerClass}`}>
-  <a class="block h-[200px] overflow-hidden" href={caseStudyLink}>
+  <a
+    class="block h-[200px] overflow-hidden"
+    href={caseStudyLink}
+    aria-label={caseStudy.title ?? ui.caseStudyReadMore}
+  >
     <div
       class="case-image h-full w-full bg-cover bg-center"
       style={`background-image: url('${imageUrl}')`}

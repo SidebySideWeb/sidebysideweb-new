@@ -1,6 +1,6 @@
 /** Design tokens and assets from Google Stitch export (stitch_side_by_side_web_studio/) */
 
-export const SITE_LOGO = '/images/sidebyside-logo.png'
+export const SITE_LOGO = '/images/sidebyside-logo-nav.webp'
 
 export const STITCH_PLACEHOLDER_IMAGE =
   'https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg'

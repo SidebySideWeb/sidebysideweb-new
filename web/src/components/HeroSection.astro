@@ -1,6 +1,6 @@
 ---
 import type {HeroSection} from '../lib/types'
-import {resolveHeroImage} from '../lib/image'
+import {resolveHeroImage, resolveHeroImageSrcSet} from '../lib/image'
 import {isBookingCta, resolveContactHref} from '../lib/cal-com'
 import CalBookingButton from './CalBookingButton.astro'
 
@@ -9,7 +9,9 @@ interface Props {
 }
 
 const {hero} = Astro.props
-const heroImageUrl = resolveHeroImage(hero.heroImage, hero.heroImageUrl)
+const heroImageUrl = resolveHeroImage(hero.heroImage, hero.heroImageUrl, 800)
+const heroImageSrcSet = resolveHeroImageSrcSet(hero.heroImage, [480, 800, 960])
+const heroImageAlt = hero.heroImage?.alt?.trim() || ''
 const ctaLink = resolveContactHref(hero.ctaLink ?? '#contact')
 const useCalBooking = isBookingCta(hero.ctaLink)
 const ctaClass =
@@ -57,9 +59,15 @@ const ctaClass =
       heroImageUrl ? (
         <div class="animate-fade-in-up stagger-2 relative min-w-0 w-full">
           <img
-            alt=""
+            alt={heroImageAlt}
             class="h-auto w-full max-w-full rounded-2xl object-cover shadow-2xl"
             src={heroImageUrl}
+            srcset={heroImageSrcSet}
+            sizes="(max-width: 768px) 100vw, min(50vw, 800px)"
+            width="800"
+            height="503"
+            fetchpriority="high"
+            decoding="async"
           />
         </div>
       ) : null

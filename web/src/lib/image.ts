@@ -47,6 +47,21 @@ export function resolveHeroImage(
   return STITCH_HERO_IMAGE
 }
 
+/** Responsive hero URLs for srcset (Sanity CDN only). */
+export function resolveHeroImageSrcSet(
+  heroImage: SanityImage | undefined,
+  widths: number[] = [480, 800, 960],
+): string | undefined {
+  if (!heroImage?.asset) return undefined
+  return widths
+    .map((width) => {
+      const url = getImageUrl(heroImage, {width, quality: 80})
+      return url ? `${url} ${width}w` : ''
+    })
+    .filter(Boolean)
+    .join(', ')
+}
+
 export function resolveAboutPhoto(
   photo: SanityImage | undefined,
   photoUrl?: string,

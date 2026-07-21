@@ -12,7 +12,7 @@ interface Props {
 const {about, locale = DEFAULT_LOCALE} = Astro.props
 const ui = getUiStrings(locale)
 const homePath = localizePath('/', locale)
-const photoUrl = resolveAboutPhoto(about.photo, about.photoUrl, 800)
+const photoUrl = resolveAboutPhoto(about.photo, about.photoUrl, 640)
 const cvHref = about.secondaryCtaLink ?? '/files/geronikolos-dimitris-cv.pdf'
 const cvIsPdf = cvHref.endsWith('.pdf')
 ---
