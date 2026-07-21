@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css'
 import type {SiteSettings} from '../lib/types'
-import {DEFAULT_LOCALE, localeHtmlLang, localizePath, type SiteLocale} from '../lib/i18n'
+import {DEFAULT_LOCALE, EN_LOCALE_ENABLED, localeHtmlLang, localizePath, type SiteLocale} from '../lib/i18n'
 import {SITE_URL} from '../lib/sanity-config'
 
 interface Props {
@@ -45,7 +45,11 @@ const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
     <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
     <link rel="alternate" hreflang="el" href={`${SITE_URL}${elPath}`} />
-    <link rel="alternate" hreflang="en" href={`${SITE_URL}${enPath}`} />
+    {
+      EN_LOCALE_ENABLED ? (
+        <link rel="alternate" hreflang="en" href={`${SITE_URL}${enPath}`} />
+      ) : null
+    }
     <link rel="alternate" hreflang="x-default" href={`${SITE_URL}${elPath}`} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

@@ -33,7 +33,7 @@ export const STITCH_FOOTER_TAGLINE =
 export const STITCH_NAV_LINKS = [
   {label: 'Αρχική', href: '/', active: false},
   {label: 'Υπηρεσίες', href: '#services'},
-  {label: 'Μελέτες', href: '#cases'},
+  {label: 'Case Studies', href: '#cases'},
   {label: 'Ενημέρωση', href: '#blog'},
   {label: 'Σχετικά', href: '/about'},
   {label: 'Επικοινωνία', href: '#contact'},

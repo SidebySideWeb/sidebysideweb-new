@@ -1,6 +1,6 @@
 ---
 import type {SiteSettings} from '../lib/types'
-import {DEFAULT_LOCALE, localizePath, switchLocaleInPath, type SiteLocale} from '../lib/i18n'
+import {DEFAULT_LOCALE, EN_LOCALE_ENABLED, localizePath, switchLocaleInPath, type SiteLocale} from '../lib/i18n'
 import {SITE_LOGO} from '../lib/stitch-design'
 import {getNavLinks, getUiStrings} from '../lib/ui-strings'
 
@@ -107,11 +107,11 @@ const mobileActiveLinkClass = isLight
           <a class={ctaClass} href="#contact">
             {ui.aboutNavContact}
           </a>
-        ) : (
+        ) : EN_LOCALE_ENABLED ? (
           <a class={langSwitchClass} href={langSwitchHref}>
             {ui.langSwitchTo}
           </a>
-        )
+        ) : null
       }
     </div>
     <button
@@ -159,7 +159,7 @@ const mobileActiveLinkClass = isLight
           <a class={`${ctaClass} mx-margin-container my-3 inline-flex w-fit`} href="#contact" data-nav-link>
             {ui.aboutNavContact}
           </a>
-        ) : (
+        ) : EN_LOCALE_ENABLED ? (
           <a
             class={`${langSwitchClass} mx-margin-container my-3 inline-flex w-fit`}
             href={langSwitchHref}
@@ -167,7 +167,7 @@ const mobileActiveLinkClass = isLight
           >
             {ui.langSwitchTo}
           </a>
-        )
+        ) : null
       }
     </div>
   </div>

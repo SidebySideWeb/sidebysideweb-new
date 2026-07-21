@@ -2,6 +2,21 @@
   "regions": ["fra1"],
   "redirects": [
     {
+      "source": "/en",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/en/",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/en/:path*",
+      "destination": "/:path*",
+      "permanent": false
+    },
+    {
       "source": "/:path*",
       "has": [{"type": "host", "value": "sidebysideweb.gr"}],
       "destination": "https://www.sidebysideweb.gr/:path*",
