@@ -39,8 +39,11 @@ function isActive(href: string): boolean {
 }
 
 const navClass = isLight
-  ? 'fixed top-0 z-50 h-20 w-full bg-surface-white/90 shadow-sm backdrop-blur-md transition-all duration-300'
-  : 'fixed top-0 z-50 h-[70px] w-full bg-primary shadow-sm'
+  ? 'fixed top-0 z-50 w-full bg-surface-white/90 shadow-sm backdrop-blur-md transition-all duration-300'
+  : 'fixed top-0 z-50 w-full bg-primary shadow-sm'
+const barClass = isLight
+  ? 'mx-auto flex h-20 max-w-7xl items-center justify-between px-margin-container'
+  : 'mx-auto flex h-[70px] max-w-7xl items-center justify-between px-margin-container'
 
 const linkClass = isLight
   ? 'text-body-md text-primary transition-colors hover:text-secondary'
@@ -59,10 +62,19 @@ const langSwitchClass = isLight
   : 'rounded-full bg-white/10 px-3 py-1 text-label-md text-white transition-colors hover:bg-white/20'
 
 const menuClass = isLight ? 'text-primary' : 'text-white'
+const mobilePanelClass = isLight
+  ? 'border-t border-primary/10 bg-surface-white/95 backdrop-blur-md'
+  : 'border-t border-white/10 bg-primary'
+const mobileLinkClass = isLight
+  ? 'block px-margin-container py-3 text-body-md text-primary transition-colors hover:text-secondary'
+  : 'block px-margin-container py-3 text-body-md text-white transition-colors hover:text-secondary'
+const mobileActiveLinkClass = isLight
+  ? 'block border-l-2 border-secondary px-margin-container py-3 text-body-md font-bold text-secondary'
+  : 'block border-l-2 border-secondary px-margin-container py-3 text-body-md font-bold text-secondary'
 ---
 
-<nav class={navClass} data-nav-variant={variant}>
-  <div class="mx-auto flex h-full max-w-7xl items-center justify-between px-margin-container">
+<nav class={navClass} data-nav-root data-nav-variant={variant}>
+  <div class={barClass}>
     <a class="flex items-center gap-4" href={homePath}>
       <img
         alt={`${siteSettings.siteName} - ${ui.navAltSuffix}`}
@@ -102,8 +114,100 @@ const menuClass = isLight ? 'text-primary' : 'text-white'
         )
       }
     </div>
-    <button class={`${menuClass} md:hidden`} aria-label={ui.menuAriaLabel}>
-      <span class="material-symbols-outlined">menu</span>
+    <button
+      type="button"
+      class={`${menuClass} inline-flex items-center justify-center md:hidden`}
+      aria-label={ui.menuAriaLabel}
+      aria-expanded="false"
+      aria-controls="site-mobile-nav"
+      data-nav-toggle
+    >
+      <span class="material-symbols-outlined" data-nav-icon aria-hidden="true">menu</span>
     </button>
   </div>
+  <div
+    id="site-mobile-nav"
+    class={`hidden md:hidden ${mobilePanelClass}`}
+    data-nav-panel
+    hidden
+  >
+    <div class="mx-auto flex max-w-7xl flex-col py-2">
+      <div class="flex items-center justify-end px-margin-container pb-1">
+        <button
+          type="button"
+          class={`${menuClass} inline-flex items-center justify-center p-1`}
+          aria-label={ui.menuCloseAriaLabel}
+          data-nav-close
+        >
+          <span class="material-symbols-outlined text-[28px]" aria-hidden="true">close</span>
+        </button>
+      </div>
+      {
+        navLinks.map((link) => {
+          const active = isActive(link.href)
+          const href = navHref(link.href)
+
+          return (
+            <a class={active ? mobileActiveLinkClass : mobileLinkClass} href={href} data-nav-link>
+              {link.label}
+            </a>
+          )
+        })
+      }
+      {
+        isLight ? (
+          <a class={`${ctaClass} mx-margin-container my-3 inline-flex w-fit`} href="#contact" data-nav-link>
+            {ui.aboutNavContact}
+          </a>
+        ) : (
+          <a
+            class={`${langSwitchClass} mx-margin-container my-3 inline-flex w-fit`}
+            href={langSwitchHref}
+            data-nav-link
+          >
+            {ui.langSwitchTo}
+          </a>
+        )
+      }
+    </div>
+  </div>
 </nav>
+
+<script>
+  function initMobileNav(nav: HTMLElement) {
+    const toggle = nav.querySelector<HTMLButtonElement>('[data-nav-toggle]')
+    const panel = nav.querySelector<HTMLElement>('[data-nav-panel]')
+    const icon = nav.querySelector<HTMLElement>('[data-nav-icon]')
+    if (!toggle || !panel || !icon) return
+
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open))
+      panel.hidden = !open
+      panel.classList.toggle('hidden', !open)
+      icon.textContent = open ? 'close' : 'menu'
+      document.body.classList.toggle('overflow-hidden', open)
+    }
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true')
+    })
+
+    panel.querySelectorAll('[data-nav-close]').forEach((btn) => {
+      btn.addEventListener('click', () => setOpen(false))
+    })
+
+    panel.querySelectorAll('[data-nav-link]').forEach((link) => {
+      link.addEventListener('click', () => setOpen(false))
+    })
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setOpen(false)
+    })
+
+    window.addEventListener('resize', () => {
+      if (window.matchMedia('(min-width: 768px)').matches) setOpen(false)
+    })
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-nav-root]').forEach(initMobileNav)
+</script>

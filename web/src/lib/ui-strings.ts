@@ -137,6 +137,7 @@ export const UI_STRINGS: Record<
     aboutBreadcrumbHome: string
     aboutBreadcrumbAbout: string
     menuAriaLabel: string
+    menuCloseAriaLabel: string
     processTitle: string
     processSubtitle: string
     valuePropositionSubtitle: string
@@ -214,6 +215,7 @@ export const UI_STRINGS: Record<
     aboutBreadcrumbHome: 'Αρχική',
     aboutBreadcrumbAbout: 'Σχετικά',
     menuAriaLabel: 'Μενού',
+    menuCloseAriaLabel: 'Κλείσιμο μενού',
     processTitle: 'Πώς Δουλεύω - Βήμα προς Βήμα',
     processSubtitle: 'Καμία μαγεία. Μια ξεκάθαρη διαδικασία που έχει δουλέψει σε 50+ έργα.',
     valuePropositionSubtitle:
@@ -292,6 +294,7 @@ export const UI_STRINGS: Record<
     aboutBreadcrumbHome: 'Home',
     aboutBreadcrumbAbout: 'About',
     menuAriaLabel: 'Menu',
+    menuCloseAriaLabel: 'Close menu',
     processTitle: 'How I Work — Step by Step',
     processSubtitle: 'No magic. A clear process that has worked across 50+ projects.',
     valuePropositionSubtitle:
