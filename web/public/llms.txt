@@ -1,0 +1,25 @@
+# Side by Side Web Studio
+
+> Technical consulting and custom web applications for Greek businesses. Analysis, design, and delivery of digital solutions.
+
+Site: https://www.sidebysideweb.gr/
+Language: Greek (el)
+
+## Main pages
+
+- [Home](https://www.sidebysideweb.gr/): Overview of services, process, case studies, testimonials, and FAQ
+- [About](https://www.sidebysideweb.gr/about/): Background, approach, and credentials of Dimitris Geronikolos
+- [Case studies](https://www.sidebysideweb.gr/#cases): Selected client projects and outcomes
+- [Contact](https://www.sidebysideweb.gr/#contact): Request a free 30-minute analysis call
+- [Privacy policy](https://www.sidebysideweb.gr/privacy-policy/)
+- [Cookies policy](https://www.sidebysideweb.gr/cookies-policy/)
+
+## Discovery
+
+- Sitemap: https://www.sidebysideweb.gr/sitemap-index.xml
+- Robots: https://www.sidebysideweb.gr/robots.txt
+
+## Contact
+
+- Email: dgeronikolos@sidebysideweb.gr
+- Location: Athens, Greece

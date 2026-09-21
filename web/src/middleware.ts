@@ -1,9 +1,21 @@
 import {defineMiddleware} from 'astro:middleware'
 import {EN_LOCALE_ENABLED, stripLocaleFromPath} from './lib/i18n'
+import {buildSecurityHeaders} from './lib/security-headers'
 
-export const onRequest = defineMiddleware((context, next) => {
+const securityHeaders = buildSecurityHeaders()
+
+export const onRequest = defineMiddleware(async (context, next) => {
   if (!EN_LOCALE_ENABLED && context.url.pathname.match(/^\/en(\/|$)/)) {
-    return context.redirect(stripLocaleFromPath(context.url.pathname), 302)
+    const redirect = context.redirect(stripLocaleFromPath(context.url.pathname), 302)
+    for (const [name, value] of Object.entries(securityHeaders)) {
+      redirect.headers.set(name, value)
+    }
+    return redirect
   }
-  return next()
+
+  const response = await next()
+  for (const [name, value] of Object.entries(securityHeaders)) {
+    response.headers.set(name, value)
+  }
+  return response
 })

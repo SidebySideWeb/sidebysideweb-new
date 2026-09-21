@@ -12,6 +12,7 @@ import FaqSection from '../FaqSection.astro'
 import SiteFooter from '../SiteFooter.astro'
 import type {HomePageData} from '../../lib/types'
 import {localizePath, type SiteLocale} from '../../lib/i18n'
+import {buildHomeJsonLd} from '../../lib/json-ld'
 
 interface Props {
   data: HomePageData
@@ -20,9 +21,13 @@ interface Props {
 
 const {data, locale} = Astro.props
 const activeHref = localizePath('/', locale)
+const jsonLd = buildHomeJsonLd({
+  siteSettings: data.siteSettings,
+  faqs: data.faqs,
+})
 ---
 
-<Layout siteSettings={data.siteSettings} locale={locale}>
+<Layout siteSettings={data.siteSettings} locale={locale} jsonLd={jsonLd}>
   <SiteNav siteSettings={data.siteSettings} activeHref={activeHref} locale={locale} />
   <main>
     <HeroSection hero={data.hero} />

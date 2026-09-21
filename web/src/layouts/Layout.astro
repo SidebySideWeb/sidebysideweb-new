@@ -5,7 +5,9 @@ import GtmBody from '../components/GtmBody.astro'
 import GtmHead from '../components/GtmHead.astro'
 import type {SiteSettings} from '../lib/types'
 import {DEFAULT_LOCALE, EN_LOCALE_ENABLED, localeHtmlLang, localizePath, type SiteLocale} from '../lib/i18n'
+import {buildOrganizationJsonLd} from '../lib/json-ld'
 import {SITE_URL} from '../lib/sanity-config'
+import {SITE_LOGO} from '../lib/stitch-design'
 
 interface Props {
   title?: string
@@ -27,8 +29,15 @@ const canonicalPath = Astro.url.pathname.endsWith('/')
   : `${Astro.url.pathname}/`
 const elPath = localizePath(canonicalPath, 'el')
 const enPath = localizePath(canonicalPath, 'en')
-const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
+const canonicalHref = `${SITE_URL}${locale === 'en' ? enPath : elPath}`
+const ogImage = `${SITE_URL}${SITE_LOGO}`
+const jsonLdItems = jsonLd
+  ? Array.isArray(jsonLd)
+    ? jsonLd
+    : [jsonLd]
+  : [buildOrganizationJsonLd(siteSettings)]
 const gtmId = (import.meta.env.PUBLIC_GTM_ID ?? 'GTM-T4W88CDJ').trim()
+const ogLocale = locale === 'en' ? 'en_US' : 'el_GR'
 ---
 
 <!doctype html>
@@ -39,7 +48,20 @@ const gtmId = (import.meta.env.PUBLIC_GTM_ID ?? 'GTM-T4W88CDJ').trim()
     {gtmId ? <GtmHead gtmId={gtmId} /> : null}
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={pageDescription} />
+    <meta name="robots" content="index, follow" />
     <title>{pageTitle}</title>
+    <link rel="canonical" href={canonicalHref} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalHref} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:site_name" content={siteSettings.siteName ?? 'Side by Side Web Studio'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImage} />
     {
       jsonLdItems.map((item) => (
         <script type="application/ld+json" set:html={JSON.stringify(item)} />
