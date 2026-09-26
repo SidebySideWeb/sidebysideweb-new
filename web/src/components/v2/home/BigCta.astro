@@ -1,0 +1,80 @@
+---
+import Button from '../Button.astro'
+import CopyBox from '../CopyBox.astro'
+import Eyebrow from '../Eyebrow.astro'
+import {resolveHref} from '../../../lib/v2/links'
+import type {BigCtaBlock} from '../../../lib/v2/types'
+
+interface Props {
+  cta: BigCtaBlock
+  email?: string
+}
+
+const {cta, email} = Astro.props
+
+const lines = cta.headingLines ?? []
+const ctas = cta.ctas ?? []
+/** The first headline line is the link, as in the prototype. */
+const headingHref = resolveHref(ctas[0]?.href ?? '/epikoinonia')
+
+const partClass = (style?: string) =>
+  style === 'thin' ? 'thin' : style === 'marigold' ? 'm' : undefined
+
+const lineContent = (parts: {text: string; style?: string}[]) =>
+  parts.map((part, index) => ({
+    text: (index > 0 ? ' ' : '') + part.text,
+    className: partClass(part.style),
+  }))
+---
+
+<section class="bigcta" id="contact">
+  <div class="wrap">
+    {cta.eyebrow ? <Eyebrow>{cta.eyebrow}</Eyebrow> : null}
+    {
+      lines.length ? (
+        <h2 style="margin-top:24px">
+          {lines.map((line, index) => (
+            <Fragment>
+              {index > 0 ? <br /> : null}
+              {index === 0 ? (
+                <a href={headingHref}>
+                  {lineContent(line.parts ?? []).map((part) =>
+                    part.className ? <span class={part.className}>{part.text}</span> : part.text,
+                  )}
+                </a>
+              ) : (
+                lineContent(line.parts ?? []).map((part) =>
+                  part.className ? (
+                    <span class={part.className}>{part.text}</span>
+                  ) : (
+                    <span>{part.text}</span>
+                  ),
+                )
+              )}
+            </Fragment>
+          ))}
+        </h2>
+      ) : null
+    }
+    {
+      ctas.length || (cta.showEmail && email) ? (
+        <div class="row2">
+          {ctas.map((item) => {
+            const variant = item.variant ?? 'm'
+            return (
+              <Button
+                href={resolveHref(item.href)}
+                variant={variant}
+                bars={variant === 'm'}
+                magnetic
+              >
+                {item.label}
+              </Button>
+            )
+          })}
+          {cta.showEmail && email ? <CopyBox value={email} /> : null}
+        </div>
+      ) : null
+    }
+  </div>
+</section>

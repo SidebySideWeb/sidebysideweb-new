@@ -1,0 +1,42 @@
+---
+import Eyebrow from '../Eyebrow.astro'
+import Lines from '../Lines.astro'
+import type {HomeFaq} from '../../../lib/v2/types'
+
+interface Props {
+  faq: HomeFaq
+}
+
+const {faq} = Astro.props
+const items = faq.items ?? []
+---
+
+{
+  items.length ? (
+    <section class="sec light">
+      <div class="wrap">
+        <div class="sec-hd">
+          <div>
+            {faq.eyebrow ? <Eyebrow>{faq.eyebrow}</Eyebrow> : null}
+            {faq.heading ? (
+              <h2 class="rv">
+                <Lines text={faq.heading} />
+              </h2>
+            ) : null}
+          </div>
+        </div>
+        <div class="faq">
+          {items.map((item) => (
+            <details>
+              <summary>
+                {item.question}
+                <i aria-hidden="true" />
+              </summary>
+              <div class="ans">{item.answer}</div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  ) : null
+}

@@ -2,12 +2,18 @@
 interface Props {
   href?: string
   class?: string
+  current?: boolean
 }
 
-const {href = '/', class: className} = Astro.props
+const {href = '/', class: className, current = false} = Astro.props
 ---
 
-<a class:list={['logo', className]} href={href} aria-label="Side by Side, αρχική">
+<a
+  class:list={['logo', className]}
+  href={href}
+  aria-label="Side by Side, αρχική"
+  aria-current={current ? 'page' : undefined}
+>
   <svg viewBox="0 0 64 64" aria-hidden="true">
     <rect class="b1" x="10" y="6" width="17" height="44" rx="2.5" fill="#F4F6F3"></rect>
     <rect class="b2" x="37" y="14" width="17" height="44" rx="2.5" fill="#F0B429"></rect>

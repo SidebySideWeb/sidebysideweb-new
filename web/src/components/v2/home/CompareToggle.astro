@@ -1,0 +1,54 @@
+---
+import Eyebrow from '../Eyebrow.astro'
+import Lines from '../Lines.astro'
+import type {HomeCompareSection} from '../../../lib/v2/types'
+
+interface Props {
+  section: HomeCompareSection
+}
+
+const {section} = Astro.props
+const rows = section.rows ?? []
+---
+
+<section class="sec light">
+  <div class="wrap">
+    <div class="sec-hd">
+      <div>
+        {section.eyebrow ? <Eyebrow>{section.eyebrow}</Eyebrow> : null}
+        {
+          section.heading ? (
+            <h2 class="rv">
+              <Lines text={section.heading} />
+            </h2>
+          ) : null
+        }
+      </div>
+      {section.intro ? <p class="rv">{section.intro}</p> : null}
+    </div>
+    <div class="cmp rv" id="cmp">
+      <div class="cmp-hd">
+        <b>{section.rowsTitle}</b>
+        <div class="toggle" role="group" aria-label="Σύγκριση">
+          <span class="pill" id="pill"></span>
+          <button type="button" aria-pressed="false" data-v="agency"
+            >{section.leftLabel ?? 'Τυπική προσέγγιση'}</button
+          >
+          <button type="button" aria-pressed="true" data-v="sbs"
+            >{section.rightLabel ?? 'Side by Side'}</button
+          >
+        </div>
+      </div>
+      {
+        rows.map((row) => (
+          <div class="cmp-row">
+            <span class="q">{row.question}</span>
+            <span class="a" data-agency={row.typicalAnswer} data-sbs={row.ourAnswer}>
+              {row.ourAnswer}
+            </span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

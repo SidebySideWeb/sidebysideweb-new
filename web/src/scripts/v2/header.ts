@@ -56,3 +56,5 @@ function initHeader() {
 
 document.addEventListener('astro:page-load', initHeader)
 document.addEventListener('astro:before-swap', () => cleanup?.())
+
+export {}

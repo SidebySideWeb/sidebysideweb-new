@@ -1,0 +1,33 @@
+---
+interface Props {
+  top?: string[]
+  bottom?: string[]
+}
+
+const {top = [], bottom = []} = Astro.props
+---
+
+{
+  top.length || bottom.length ? (
+    <div class="mqw">
+      {top.length ? (
+        <div class="marquee" aria-hidden="true">
+          <div class="track" data-dup>
+            {top.map((item) => (
+              <span>{item}</span>
+            ))}
+          </div>
+        </div>
+      ) : null}
+      {bottom.length ? (
+        <div class="marquee alt" aria-hidden="true">
+          <div class="track" data-dup>
+            {bottom.map((item) => (
+              <span>{item}</span>
+            ))}
+          </div>
+        </div>
+      ) : null}
+    </div>
+  ) : null
+}

@@ -1,0 +1,65 @@
+---
+import Button from '../Button.astro'
+import Eyebrow from '../Eyebrow.astro'
+import {resolveHref} from '../../../lib/v2/links'
+import type {HomePartnerBand} from '../../../lib/v2/types'
+
+interface Props {
+  band: HomePartnerBand
+}
+
+const {band} = Astro.props
+const bullets = band.bullets ?? []
+const ctas = band.ctas ?? []
+---
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="partner rv">
+      <div>
+        {band.eyebrow ? <Eyebrow>{band.eyebrow}</Eyebrow> : null}
+        {
+          band.heading || band.headingHighlight ? (
+            <h2>
+              {band.heading}
+              {band.heading && band.headingHighlight ? ' ' : null}
+              {band.headingHighlight ? <span>{band.headingHighlight}</span> : null}
+            </h2>
+          ) : null
+        }
+        {band.text ? <p>{band.text}</p> : null}
+        {
+          ctas.length ? (
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px">
+              {ctas.map((cta) => {
+                const variant = cta.variant ?? 'm'
+                return (
+                  <Button
+                    href={resolveHref(cta.href)}
+                    variant={variant}
+                    bars={variant === 'm'}
+                    magnetic={variant === 'm'}
+                  >
+                    {cta.label}
+                  </Button>
+                )
+              })}
+            </div>
+          ) : null
+        }
+      </div>
+      {
+        bullets.length ? (
+          <ul class="plist">
+            {bullets.map((bullet) => (
+              <li>
+                <b>{bullet.title}</b>
+                {bullet.text ? <span>{bullet.text}</span> : null}
+              </li>
+            ))}
+          </ul>
+        ) : null
+      }
+    </div>
+  </div>
+</section>

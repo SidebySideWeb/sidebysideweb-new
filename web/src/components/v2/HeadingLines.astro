@@ -1,0 +1,33 @@
+---
+import type {HeadingLine} from '../../lib/v2/types'
+
+interface Props {
+  lines: HeadingLine[]
+  /** Offset for `--i`, so a headline can continue another one's stagger. */
+  startIndex?: number
+}
+
+const {lines, startIndex = 0} = Astro.props
+
+const partClass = (style?: string) =>
+  style === 'thin' ? 'thin' : style === 'marigold' ? 'm' : undefined
+---
+
+{
+  lines.map((line, index) => (
+    <span class="ln">
+      <span style={`--i:${index + startIndex}`}>
+        {(line.parts ?? []).map((part, partIndex) => (
+          <Fragment>
+            {partIndex > 0 ? ' ' : null}
+            {partClass(part.style) ? (
+              <span class={partClass(part.style)}>{part.text}</span>
+            ) : (
+              part.text
+            )}
+          </Fragment>
+        ))}
+      </span>
+    </span>
+  ))
+}

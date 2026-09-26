@@ -1,0 +1,51 @@
+---
+import Arrow from '../Arrow.astro'
+import Eyebrow from '../Eyebrow.astro'
+import Lines from '../Lines.astro'
+import {servicesHref} from '../../../lib/v2/links'
+import type {HomeServicesSection} from '../../../lib/v2/types'
+
+interface Props {
+  section: HomeServicesSection
+}
+
+const {section} = Astro.props
+const services = section.services ?? []
+---
+
+<section class="sec" id="services">
+  <div class="wrap">
+    <div class="sec-hd">
+      <div>
+        {section.eyebrow ? <Eyebrow>{section.eyebrow}</Eyebrow> : null}
+        {
+          section.heading ? (
+            <h2 class="rv">
+              <Lines text={section.heading} />
+            </h2>
+          ) : null
+        }
+      </div>
+      {section.intro ? <p class="rv">{section.intro}</p> : null}
+    </div>
+    {
+      services.length ? (
+        <div class="rows">
+          {services.map((service, index) => (
+            <a class="row" href={servicesHref(service.slug)}>
+              <span class="n">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <h3>{service.homeRowTitle || service.title}</h3>
+              <p>{service.shortDescription}</p>
+              <span class="pr">{service.homeMetaShort || service.metaLabel}</span>
+              <span class="ar">
+                <Arrow />
+              </span>
+            </a>
+          ))}
+        </div>
+      ) : null
+    }
+  </div>
+</section>

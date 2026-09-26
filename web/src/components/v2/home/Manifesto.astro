@@ -1,0 +1,20 @@
+---
+import Eyebrow from '../Eyebrow.astro'
+import {renderInlineRichText} from '../../../lib/v2/portable-text'
+import type {HomeManifesto} from '../../../lib/v2/types'
+
+interface Props {
+  manifesto: HomeManifesto
+}
+
+const {manifesto} = Astro.props
+const html = renderInlineRichText(manifesto.text)
+---
+
+<section class="sec mari-bg" style="margin-top:-60px;padding-top:clamp(140px,16vw,200px)">
+  <div class="wrap">
+    {manifesto.eyebrow ? <Eyebrow>{manifesto.eyebrow}</Eyebrow> : null}
+    {html ? <p class="manifesto" data-words set:html={html} /> : null}
+    <slot />
+  </div>
+</section>

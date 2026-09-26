@@ -1,0 +1,113 @@
+---
+/**
+ * Generative case art, ported from the `art(k)` function in
+ * `reference/prototype.html`. Animation classes (`flt`, `flow`, `scan`,
+ * `grow`) are defined in `v2-home.css`.
+ */
+import type {CaseArtKey} from '../../../lib/v2/types'
+
+interface Props {
+  artKey?: CaseArtKey | string | null
+}
+
+const {artKey} = Astro.props
+
+const V = 'viewBox="0 0 800 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true"'
+const MONO = 'JetBrains Mono,monospace'
+
+function kollekta() {
+  const cols = [
+    ['#13232E', '#1A2F3C', '#13232E'],
+    ['#1A2F3C', '#13232E', '#1A2F3C'],
+  ]
+  let t = ''
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 2; j++) {
+      t +=
+        `<rect class="flt d${(i + j) % 4}" x="${70 + i * 112}" y="${70 + j * 152}" width="96" height="136" rx="6" fill="${cols[j][i]}"/>` +
+        `<rect x="${82 + i * 112}" y="${82 + j * 152}" width="72" height="84" rx="3" fill="#F4F6F3" opacity=".9"/>`
+    }
+  }
+
+  let s = ''
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 3; j++) {
+      s +=
+        `<rect x="${530 + i * 52}" y="${110 + j * 76}" width="40" height="58" rx="4" fill="#13232E"/>` +
+        `<rect x="${535 + i * 52}" y="${115 + j * 76}" width="30" height="34" rx="2" fill="#F4F6F3"/>`
+    }
+  }
+
+  return `<svg ${V}><rect width="800" height="440" fill="#F0B429"/>${t}<path class="flow" d="M420 220 H505" stroke="#13232E" stroke-width="5" fill="none"/><path d="M496 208 l14 12 -14 12" fill="none" stroke="#13232E" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>${s}<text x="530" y="366" font-family="${MONO}" font-size="15" fill="#13232E">πλήρες μέγεθος → web</text></svg>`
+}
+
+function site() {
+  return `<svg ${V}><rect width="800" height="440" fill="#F4F6F3"/>
+      <g class="flt"><rect x="120" y="60" width="560" height="360" rx="10" fill="#fff" stroke="#D7DEDB" stroke-width="2"/>
+      <rect x="120" y="60" width="560" height="34" rx="10" fill="#D7DEDB"/><circle cx="142" cy="77" r="5" fill="#9AAAB2"/><circle cx="160" cy="77" r="5" fill="#9AAAB2"/>
+      <rect x="150" y="124" width="260" height="30" rx="4" fill="#13232E"/><rect x="150" y="164" width="200" height="30" rx="4" fill="#13232E"/>
+      <rect x="150" y="214" width="230" height="10" rx="3" fill="#9AAAB2"/><rect x="150" y="232" width="190" height="10" rx="3" fill="#9AAAB2"/>
+      <rect x="150" y="266" width="130" height="40" rx="5" fill="#F0B429"/>
+      <rect x="450" y="124" width="200" height="182" rx="6" fill="#13232E"/><rect x="470" y="144" width="30" height="80" rx="3" fill="#F4F6F3"/><rect x="510" y="160" width="30" height="80" rx="3" fill="#F0B429"/>
+      <rect x="150" y="336" width="150" height="56" rx="6" fill="#D7DEDB"/><rect x="325" y="336" width="150" height="56" rx="6" fill="#D7DEDB"/><rect x="500" y="336" width="150" height="56" rx="6" fill="#D7DEDB"/></g></svg>`
+}
+
+function audit() {
+  const labels = ['Ταχύτητα', 'SEO', 'Ασφάλεια', 'Προσβασιμότητα']
+  const bars = [0.92, 0.64, 0.81, 0.45]
+    .map(
+      (v, i) =>
+        `<text x="470" y="${150 + i * 62}" font-family="${MONO}" font-size="14" fill="#9AAAB2">${labels[i]}</text>` +
+        `<rect x="470" y="${160 + i * 62}" width="240" height="12" rx="3" fill="#1A2F3C"/>` +
+        `<rect class="grow" style="animation-delay:${-i * 0.6}s" x="470" y="${160 + i * 62}" width="${240 * v}" height="12" rx="3" fill="${v > 0.6 ? '#F0B429' : '#F4F6F3'}"/>`,
+    )
+    .join('')
+
+  return `<svg ${V}><rect width="800" height="440" fill="#13232E"/>
+      <circle cx="250" cy="230" r="120" fill="none" stroke="#1A2F3C" stroke-width="26"/>
+      <circle cx="250" cy="230" r="120" fill="none" stroke="#F0B429" stroke-width="26" stroke-dasharray="${2 * Math.PI * 120 * 0.78} 999" transform="rotate(-90 250 230)" stroke-linecap="round"/>
+      <text x="250" y="250" text-anchor="middle" font-family="Commissioner,sans-serif" font-weight="800" font-size="72" fill="#F4F6F3">78</text>
+      <text x="250" y="286" text-anchor="middle" font-family="${MONO}" font-size="13" fill="#9AAAB2">/100 · δείγμα</text>${bars}
+      <rect class="scan" x="440" y="110" width="300" height="2" fill="#F0B429" opacity=".6"/></svg>`
+}
+
+function erp() {
+  const erpRows = [0, 1, 2, 3]
+    .map(
+      (i) =>
+        `<rect x="120" y="${195 + i * 24}" width="${150 - i * 20}" height="10" rx="3" fill="#2A3C47"/>`,
+    )
+    .join('')
+  const shopTiles = [0, 1]
+    .map((i) => `<rect x="${520 + i * 84}" y="195" width="70" height="80" rx="4" fill="#D7DEDB"/>`)
+    .join('')
+
+  return `<svg ${V}><rect width="800" height="440" fill="#0B161D"/>
+      <g class="flt"><rect x="90" y="130" width="220" height="180" rx="10" fill="#13232E" stroke="#2A3C47" stroke-width="2"/><text x="120" y="175" font-family="${MONO}" font-size="16" fill="#F0B429">ERP</text>
+      ${erpRows}</g>
+      <g class="flt d2"><rect x="490" y="130" width="220" height="180" rx="10" fill="#F4F6F3"/><text x="520" y="175" font-family="${MONO}" font-size="16" fill="#13232E">e-shop</text>
+      ${shopTiles}</g>
+      <path class="flow" d="M310 200 C 400 200, 400 200, 490 200" stroke="#F0B429" stroke-width="5" fill="none"/>
+      <path class="flow" d="M490 250 C 400 250, 400 250, 310 250" stroke="#F4F6F3" stroke-width="5" fill="none" style="animation-direction:reverse"/>
+      <text x="400" y="380" text-anchor="middle" font-family="${MONO}" font-size="14" fill="#9AAAB2">παραγγελίες · αποθέματα · τιμές</text></svg>`
+}
+
+function b2b() {
+  const cards = [0, 1, 2, 3]
+    .map(
+      (i) =>
+        `<g class="flt d${i}"><rect x="${170 + i * 40}" y="${70 + i * 50}" width="420" height="120" rx="10" fill="${i === 3 ? '#F0B429' : '#13232E'}" stroke="#2A3C47"/>` +
+        `<rect x="${200 + i * 40}" y="${100 + i * 50}" width="140" height="14" rx="3" fill="${i === 3 ? '#13232E' : '#F4F6F3'}"/>` +
+        `<rect x="${200 + i * 40}" y="${126 + i * 50}" width="220" height="10" rx="3" fill="${i === 3 ? '#13232E' : '#52616B'}" opacity=".7"/>` +
+        `<text x="${540 + i * 40}" y="${114 + i * 50}" text-anchor="end" font-family="${MONO}" font-size="14" fill="${i === 3 ? '#13232E' : '#F0B429'}">#${1040 + i}</text></g>`,
+    )
+    .join('')
+
+  return `<svg ${V}><rect width="800" height="440" fill="#1A2F3C"/>${cards}</svg>`
+}
+
+const ART: Record<string, () => string> = {kollekta, site, audit, erp, b2b}
+const html = (ART[artKey ?? ''] ?? b2b)()
+---
+
+<Fragment set:html={html} />

@@ -58,3 +58,5 @@ function initCursor() {
 
 document.addEventListener('astro:page-load', initCursor)
 document.addEventListener('astro:before-swap', () => cleanup?.())
+
+export {}

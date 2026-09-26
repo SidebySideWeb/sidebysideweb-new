@@ -1,0 +1,9 @@
+---
+interface Props {
+  size?: number
+}
+
+const {size = 18} = Astro.props
+---
+
+<svg width={size} height={size} aria-hidden="true"><use href="#arr"></use></svg>

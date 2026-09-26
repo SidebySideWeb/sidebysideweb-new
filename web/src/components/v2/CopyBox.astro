@@ -1,0 +1,13 @@
+---
+interface Props {
+  value: string
+  label?: string
+}
+
+const {value, label = 'Αντιγραφή'} = Astro.props
+---
+
+<span class="copybox">
+  <span>{value}</span>
+  <button type="button" data-copy={value}>{label}</button>
+</span>

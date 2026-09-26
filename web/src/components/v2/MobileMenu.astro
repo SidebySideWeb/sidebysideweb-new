@@ -1,4 +1,6 @@
 ---
+import {isActivePath} from '../../lib/v2/links'
+
 const links = [
   {href: '/', label: 'Αρχική', n: '00'},
   {href: '/ypiresies', label: 'Υπηρεσίες', n: '01'},
@@ -7,12 +9,14 @@ const links = [
   {href: '/poios-eimai', label: 'Ποιος είμαι', n: '04'},
   {href: '/epikoinonia', label: 'Επικοινωνία', n: '05'},
 ] as const
+
+const path = Astro.url.pathname
 ---
 
 <div class="mobile" id="mobile">
   {
     links.map((link) => (
-      <a href={link.href}>
+      <a href={link.href} aria-current={isActivePath(path, link.href) ? 'page' : undefined}>
         <small>{link.n}</small>
         {link.label}
       </a>

@@ -1,0 +1,38 @@
+---
+import Arrow from '../Arrow.astro'
+import Placeholder from '../Placeholder.astro'
+import CaseArt from './CaseArt.astro'
+import {caseHref} from '../../../lib/v2/links'
+import {stripPlaceholders} from '../../../lib/v2/placeholder'
+import type {CaseStudyV2} from '../../../lib/v2/types'
+
+interface Props {
+  study: CaseStudyV2
+  /** Extra grid classes, e.g. `wide` for the first card of a row. */
+  class?: string
+}
+
+const {study, class: className} = Astro.props
+const label = stripPlaceholders(`${study.name}: ${study.headline}`)
+---
+
+<article
+  class:list={['case', className, 'rv']}
+  data-kind={study.kind}
+  id={study.slug ? `card-${study.slug}` : undefined}
+>
+  <a href={caseHref(study.slug)} class="art tilt" aria-label={label}>
+    <CaseArt artKey={study.artKey} />
+    {study.tag ? <span class="tag">{study.tag}</span> : null}
+    <span class="go"><Arrow size={22} /></span>
+  </a>
+  <div class="cap">
+    <h3>{study.headline}</h3>
+    <span>
+      <Placeholder text={study.name} />
+      {study.sector ? ' · ' : null}
+      <Placeholder text={study.sector} />
+    </span>
+  </div>
+  {study.short ? <p class="sub">{study.short}</p> : null}
+</article>

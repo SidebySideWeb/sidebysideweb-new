@@ -1,12 +1,72 @@
 ---
-import HomePageView from '../components/pages/HomePageView.astro'
-import {getHomePageData} from '../lib/cms'
-import {resolvePageLocale} from '../lib/i18n'
+import BigCta from '../components/v2/home/BigCta.astro'
+import CompareToggle from '../components/v2/home/CompareToggle.astro'
+import Faq from '../components/v2/home/Faq.astro'
+import FeaturedCases from '../components/v2/home/FeaturedCases.astro'
+import Hero from '../components/v2/home/Hero.astro'
+import HomeScripts from '../components/v2/home/HomeScripts.astro'
+import Manifesto from '../components/v2/home/Manifesto.astro'
+import Marquee from '../components/v2/home/Marquee.astro'
+import PartnerBand from '../components/v2/home/PartnerBand.astro'
+import ProcessScroller from '../components/v2/home/ProcessScroller.astro'
+import ServiceRows from '../components/v2/home/ServiceRows.astro'
+import Testimonial from '../components/v2/home/Testimonial.astro'
+import ValueCards from '../components/v2/home/ValueCards.astro'
+import Base from '../layouts/Base.astro'
+import {getHomePage} from '../lib/v2/cms'
+import '../styles/v2-home.css'
 
 export const prerender = false
 
-const locale = resolvePageLocale(Astro.currentLocale)
-const data = await getHomePageData(locale)
+const home = await getHomePage()
+
+if (!home) {
+  return new Response('Η αρχική δεν έχει περιεχόμενο στο Sanity.', {status: 404})
+}
+
+const title = home.seo?.title ?? 'Side by Side · Τεχνικός συνεργάτης'
+const description =
+  home.seo?.description ?? 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.'
 ---
 
-<HomePageView data={data} locale={locale} />
+<Base title={title} description={description}>
+  <div data-page="home" class="enter">
+    {home.hero ? <Hero hero={home.hero} /> : null}
+
+    <Marquee top={home.marqueeTop} bottom={home.marqueeBottom} />
+
+    {
+      home.manifesto ? (
+        <Manifesto manifesto={home.manifesto}>
+          <ValueCards values={home.values} />
+        </Manifesto>
+      ) : null
+    }
+
+    {home.servicesSection ? <ServiceRows section={home.servicesSection} /> : null}
+
+    {home.partnerBand ? <PartnerBand band={home.partnerBand} /> : null}
+
+    {
+      home.processSection ? (
+        <ProcessScroller section={home.processSection} steps={home.processSteps} />
+      ) : null
+    }
+
+    {home.compareSection ? <CompareToggle section={home.compareSection} /> : null}
+
+    {
+      home.featuredCasesSection ? (
+        <FeaturedCases section={home.featuredCasesSection} cases={home.featuredCases} />
+      ) : null
+    }
+
+    {home.testimonialSection ? <Testimonial section={home.testimonialSection} /> : null}
+
+    {home.faq ? <Faq faq={home.faq} /> : null}
+
+    {home.bigCta ? <BigCta cta={home.bigCta} email={home.email} /> : null}
+  </div>
+
+  <HomeScripts />
+</Base>

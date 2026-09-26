@@ -1,0 +1,38 @@
+---
+import Eyebrow from '../Eyebrow.astro'
+import Placeholder from '../Placeholder.astro'
+import type {HomeTestimonialSection} from '../../../lib/v2/types'
+
+interface Props {
+  section: HomeTestimonialSection
+}
+
+const {section} = Astro.props
+
+/** Only an approved testimonial goes public. Otherwise the dashed placeholder stays. */
+const approved = section.testimonial?.approved ? section.testimonial : null
+const quote = approved?.quote ?? section.placeholderQuote
+const attribution = approved
+  ? [approved.name, approved.role, approved.company].filter(Boolean).join(' · ')
+  : section.placeholderAttribution
+---
+
+{
+  quote ? (
+    <section class="sec" style="padding-top:0">
+      <div class="wrap">
+        <div class:list={['quote', 'rv', approved && 'real']}>
+          {section.eyebrow ? <Eyebrow>{section.eyebrow}</Eyebrow> : null}
+          <blockquote>
+            «{approved ? quote : <span class="ph">{quote}</span>}»
+          </blockquote>
+          {attribution ? (
+            <span class="who">
+              <Placeholder text={attribution} />
+            </span>
+          ) : null}
+        </div>
+      </div>
+    </section>
+  ) : null
+}

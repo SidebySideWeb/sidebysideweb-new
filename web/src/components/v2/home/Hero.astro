@@ -1,0 +1,96 @@
+---
+import Button from '../Button.astro'
+import Eyebrow from '../Eyebrow.astro'
+import HeadingLines from '../HeadingLines.astro'
+import {resolveHref} from '../../../lib/v2/links'
+import type {Fact, HomeHero} from '../../../lib/v2/types'
+
+interface Props {
+  hero: HomeHero
+}
+
+const {hero} = Astro.props
+
+const lines = hero.headingLines ?? []
+const ctas = hero.ctas ?? []
+const facts = hero.facts ?? []
+const words = hero.swapWords ?? []
+
+/** Only a bare integer can count up from zero. "6–8" stays as written. */
+const countTarget = (fact: Fact) => (/^\d+$/.test(fact.value.trim()) ? fact.value.trim() : null)
+---
+
+<section class="hero">
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="scrollcue" aria-hidden="true"><i><b></b><b></b></i>SCROLL</div>
+  <div class="wrap">
+    {hero.eyebrow ? <Eyebrow class="fade" style="--d:0">{hero.eyebrow}</Eyebrow> : null}
+
+    {
+      lines.length ? (
+        <h1 style="margin-top:28px">
+          <HeadingLines lines={lines} />
+        </h1>
+      ) : null
+    }
+
+    <div class="hero-row">
+      <p class="swapline fade" style="--d:200">
+        {hero.swapPrefix ? `${hero.swapPrefix} ` : null}
+        {
+          words.length ? (
+            <span class="swap" id="swap" data-words={JSON.stringify(words)}>
+              {words[0]}
+            </span>
+          ) : null
+        }
+        {hero.swapSuffix ? ` ${hero.swapSuffix}` : null}
+      </p>
+      {
+        ctas.length ? (
+          <div class="ctas fade" style="--d:350">
+            {ctas.map((cta) => (
+              <Button
+                href={resolveHref(cta.href)}
+                variant={cta.variant ?? 'm'}
+                bars={(cta.variant ?? 'm') === 'm'}
+                magnetic
+              >
+                {cta.label}
+              </Button>
+            ))}
+          </div>
+        ) : null
+      }
+    </div>
+
+    {
+      facts.length ? (
+        <div class="facts fade" style="--d:500">
+          {facts.map((fact) => {
+            const target = countTarget(fact)
+            return (
+              <div>
+                <b data-count={target && !fact.suffix ? target : undefined}>
+                  {target && fact.suffix ? (
+                    <span data-count={target}>{target}</span>
+                  ) : (
+                    fact.value
+                  )}
+                  {fact.suffix ? (
+                    fact.highlightSuffix ? (
+                      <em>{fact.suffix}</em>
+                    ) : (
+                      fact.suffix
+                    )
+                  ) : null}
+                </b>
+                <span>{fact.label}</span>
+              </div>
+            )
+          })}
+        </div>
+      ) : null
+    }
+  </div>
+</section>

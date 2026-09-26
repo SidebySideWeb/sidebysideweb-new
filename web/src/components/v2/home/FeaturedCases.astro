@@ -1,0 +1,51 @@
+---
+import Arrow from '../Arrow.astro'
+import Button from '../Button.astro'
+import Eyebrow from '../Eyebrow.astro'
+import Lines from '../Lines.astro'
+import CaseCard from './CaseCard.astro'
+import type {CaseStudyV2, HomeFeaturedCasesSection} from '../../../lib/v2/types'
+
+interface Props {
+  section: HomeFeaturedCasesSection
+  cases?: CaseStudyV2[]
+}
+
+const {section, cases = []} = Astro.props
+---
+
+<section class="sec" id="work">
+  <div class="wrap">
+    <div class="sec-hd">
+      <div>
+        {section.eyebrow ? <Eyebrow>{section.eyebrow}</Eyebrow> : null}
+        {
+          section.heading ? (
+            <h2 class="rv">
+              <Lines text={section.heading} />
+            </h2>
+          ) : null
+        }
+      </div>
+      {section.intro ? <p class="rv">{section.intro}</p> : null}
+    </div>
+    {
+      cases.length ? (
+        <div class="cases" id="homeCases">
+          {cases.map((study, index) => (
+            <CaseCard study={study} class={index === 0 ? 'wide' : undefined} />
+          ))}
+        </div>
+      ) : null
+    }
+    {
+      section.ctaLabel ? (
+        <div style="margin-top:48px">
+          <Button href="/erga" variant="g" bars={false} magnetic>
+            {section.ctaLabel} <Arrow />
+          </Button>
+        </div>
+      ) : null
+    }
+  </div>
+</section>

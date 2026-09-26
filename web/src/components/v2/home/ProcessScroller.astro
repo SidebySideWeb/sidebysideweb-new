@@ -1,0 +1,69 @@
+---
+import Arrow from '../Arrow.astro'
+import Button from '../Button.astro'
+import Eyebrow from '../Eyebrow.astro'
+import Lines from '../Lines.astro'
+import {resolveHref} from '../../../lib/v2/links'
+import type {HomeProcessSection, ProcessStepV2, StepColour} from '../../../lib/v2/types'
+
+interface Props {
+  section: HomeProcessSection
+  steps?: ProcessStepV2[]
+}
+
+const {section, steps = []} = Astro.props
+
+const COLOUR_CLASS: Record<StepColour, string | undefined> = {
+  ink: undefined,
+  paper: 'step-paper',
+  marigold: 'step-marigold',
+  ink2: 'step-ink2',
+}
+---
+
+<section class="hscroll" id="process">
+  <div class="hs-sticky">
+    <div class="wrap hs-top">
+      <div>
+        {section.eyebrow ? <Eyebrow>{section.eyebrow}</Eyebrow> : null}
+        {
+          section.heading ? (
+            <h2>
+              <Lines text={section.heading} />
+            </h2>
+          ) : null
+        }
+      </div>
+      {
+        section.cta ? (
+          <Button
+            href={resolveHref(section.cta.href)}
+            variant={section.cta.variant ?? 'g'}
+            bars={false}
+          >
+            {section.cta.label} <Arrow />
+          </Button>
+        ) : null
+      }
+    </div>
+    <div class="hs-track" id="hsTrack">
+      {
+        steps.map((step) => (
+          <article class:list={['step', COLOUR_CLASS[step.cardColour ?? 'ink']]}>
+            <div class="num">{step.number}</div>
+            <div>
+              <h3>{step.title}</h3>
+              {step.summary ? <p>{step.summary}</p> : null}
+            </div>
+            <div class="meta">
+              {(step.chips ?? []).map((chip) => (
+                <span class="chip">{chip}</span>
+              ))}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+    <div class="hs-bar"><b id="hsBar"></b></div>
+  </div>
+</section>

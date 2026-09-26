@@ -1,4 +1,5 @@
-type MagEl = HTMLElement & {_mag?: 1}
+/** 3D tilt on `.tilt` surfaces, used by the case card art. */
+type TiltEl = HTMLElement & {_tilt?: 1}
 
 type Cleanup = () => void
 
@@ -12,28 +13,26 @@ function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
-function initMagnetic() {
+function initTilt() {
   cleanup?.()
 
   if (!prefersFinePointer() || prefersReducedMotion()) return
 
-  const handlers: Array<{el: MagEl; move: (e: PointerEvent) => void; leave: () => void}> = []
+  const handlers: Array<{el: TiltEl; move: (e: PointerEvent) => void; leave: () => void}> = []
 
-  document.querySelectorAll<MagEl>('.mag').forEach((el) => {
-    if (el._mag) return
-    el._mag = 1
+  document.querySelectorAll<TiltEl>('.tilt').forEach((el) => {
+    if (el._tilt) return
+    el._tilt = 1
 
     const move = (e: PointerEvent) => {
       const r = el.getBoundingClientRect()
-      el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.25}px,${(e.clientY - r.top - r.height / 2) * 0.35}px)`
+      const x = (e.clientX - r.left) / r.width - 0.5
+      const y = (e.clientY - r.top) / r.height - 0.5
+      el.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 10}deg) scale(1.02)`
     }
 
     const leave = () => {
-      el.style.transition = 'transform .5s var(--ease)'
       el.style.transform = ''
-      window.setTimeout(() => {
-        el.style.transition = ''
-      }, 500)
     }
 
     el.addEventListener('pointermove', move)
@@ -45,15 +44,14 @@ function initMagnetic() {
     handlers.forEach(({el, move, leave}) => {
       el.removeEventListener('pointermove', move)
       el.removeEventListener('pointerleave', leave)
-      delete el._mag
+      delete el._tilt
       el.style.transform = ''
-      el.style.transition = ''
     })
     cleanup = null
   }
 }
 
-document.addEventListener('astro:page-load', initMagnetic)
+document.addEventListener('astro:page-load', initTilt)
 document.addEventListener('astro:before-swap', () => cleanup?.())
 
 export {}

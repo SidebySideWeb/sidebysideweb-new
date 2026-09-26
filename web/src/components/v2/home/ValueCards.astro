@@ -1,0 +1,28 @@
+---
+import type {ValueCard} from '../../../lib/v2/types'
+
+interface Props {
+  values?: ValueCard[]
+}
+
+const {values = []} = Astro.props
+---
+
+{
+  values.length ? (
+    <div class="values">
+      {values.map((value) => (
+        <article class="val rv">
+          {value.kicker ? <span class="k">{value.kicker}</span> : null}
+          <h3>{value.title}</h3>
+          {value.text ? <p>{value.text}</p> : null}
+          {value.bigGlyph ? (
+            <span class="big" aria-hidden="true">
+              {value.bigGlyph}
+            </span>
+          ) : null}
+        </article>
+      ))}
+    </div>
+  ) : null
+}
