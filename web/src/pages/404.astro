@@ -1,0 +1,38 @@
+---
+import Button from '../components/v2/Button.astro'
+import Eyebrow from '../components/v2/Eyebrow.astro'
+import Base from '../layouts/Base.astro'
+import '../styles/v2-pages.css'
+
+/** Static so Vercel can serve it for any unmatched path. */
+export const prerender = true
+---
+
+<Base
+  title="Η σελίδα δεν βρέθηκε · Side by Side"
+  description="Η διεύθυνση που ζήτησες δεν υπάρχει."
+  noIndex
+>
+  <div data-page="notfound" class="enter">
+    <section class="phero">
+      <div class="wrap">
+        <Eyebrow class="fade">Σφάλμα 404</Eyebrow>
+        <h1>
+          <span class="ln"><span style="--i:0">Η σελίδα</span></span>
+          <span class="ln"><span style="--i:1" class="thin">δεν βρέθηκε.</span></span>
+        </h1>
+        <p class="lead fade" style="--d:200">
+          Η διεύθυνση άλλαξε ή δεν υπήρξε ποτέ. Ξεκίνα από την αρχική ή γράψε μου τι έψαχνες και
+          σου στέλνω τον σωστό σύνδεσμο.
+        </p>
+        <div
+          class="fade"
+          style="--d:320;display:flex;gap:14px;flex-wrap:wrap;margin-top:40px"
+        >
+          <Button href="/" variant="m" magnetic>Στην αρχική</Button>
+          <Button href="/epikoinonia" variant="g" magnetic>Επικοινωνία</Button>
+        </div>
+      </div>
+    </section>
+  </div>
+</Base>

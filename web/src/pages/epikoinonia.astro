@@ -4,6 +4,8 @@ import ContactAside from '../components/v2/pages/ContactAside.astro'
 import ContactForm from '../components/v2/pages/ContactForm.astro'
 import Base from '../layouts/Base.astro'
 import {getContactPage} from '../lib/v2/cms'
+import {buildProfessionalServiceJsonLd} from '../lib/v2/json-ld'
+import {resolveSeo} from '../lib/v2/seo'
 import '../styles/v2-pages.css'
 
 export const prerender = false
@@ -14,12 +16,20 @@ if (!page) {
   return new Response('Η σελίδα επικοινωνίας δεν έχει περιεχόμενο στο Sanity.', {status: 404})
 }
 
-const title = page.seo?.title ?? 'Επικοινωνία · Side by Side'
-const description =
-  page.seo?.description ?? 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.'
+const {title, description} = resolveSeo(page.seo, {
+  title: 'Επικοινωνία · Side by Side',
+  description: 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.',
+})
+
+const jsonLd = buildProfessionalServiceJsonLd({email: page.email})
 ---
 
-<Base title={title} description={description}>
+<Base
+  title={title}
+  description={description}
+  canonicalPath="/epikoinonia/"
+  jsonLd={jsonLd}
+>
   <div data-page="contact" class="enter">
     <PageHero hero={page.hero} />
 

@@ -9,6 +9,7 @@
 .phero{padding-block:clamp(150px,18vw,220px) clamp(56px,8vw,96px);position:relative;overflow:hidden}
 .phero h1{font-size:clamp(52px,10vw,168px);line-height:.88;letter-spacing:-.055em;margin-top:22px}
 .phero h1 .m{color:var(--mari)}
+.phero h1 .thin{font-weight:200;letter-spacing:-.04em}
 .phero .lead{font-size:clamp(19px,2vw,24px);color:var(--muted);max-width:40ch;margin-top:32px;line-height:1.45}
 .phero .deco{position:absolute;right:calc(var(--gut) * -1);top:90px;width:min(40vw,520px);opacity:.9;pointer-events:none}
 @media (max-width:860px){.phero .deco{display:none}}
@@ -129,6 +130,8 @@
 .contact-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:48px;align-items:start}
 @media (max-width:900px){.contact-grid{grid-template-columns:1fr}}
 .form{display:grid;gap:22px}
+/* honeypot: out of the grid flow and off screen, still fillable by bots */
+.form .hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
 .f2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 @media (max-width:640px){.f2{grid-template-columns:1fr}}
 .field{display:grid;gap:8px}

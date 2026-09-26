@@ -2,6 +2,47 @@
   "regions": ["fra1"],
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [{"type": "host", "value": "sidebysideweb.gr"}],
+      "destination": "https://www.sidebysideweb.gr/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/en/about",
+      "destination": "/poios-eimai/",
+      "permanent": true
+    },
+    {
+      "source": "/en/about/",
+      "destination": "/poios-eimai/",
+      "permanent": true
+    },
+    {
+      "source": "/en/case-studies/:path*",
+      "destination": "/erga/",
+      "permanent": true
+    },
+    {
+      "source": "/en/automation-nea-attiki-odos-twitter",
+      "destination": "/erga/",
+      "permanent": true
+    },
+    {
+      "source": "/en/automation-nea-attiki-odos-twitter/",
+      "destination": "/erga/",
+      "permanent": true
+    },
+    {
+      "source": "/en/case-study-metaixmio",
+      "destination": "/erga/",
+      "permanent": true
+    },
+    {
+      "source": "/en/case-study-metaixmio/",
+      "destination": "/erga/",
+      "permanent": true
+    },
+    {
       "source": "/en",
       "destination": "/",
       "permanent": false
@@ -17,49 +58,38 @@
       "permanent": false
     },
     {
-      "source": "/:path*",
-      "has": [{"type": "host", "value": "sidebysideweb.gr"}],
-      "destination": "https://www.sidebysideweb.gr/:path*",
+      "source": "/about",
+      "destination": "/poios-eimai/",
       "permanent": true
     },
     {
-      "source": "/case-studies/automation-nea-attiki-odos-twitter",
-      "destination": "/automation-nea-attiki-odos-twitter",
+      "source": "/about/",
+      "destination": "/poios-eimai/",
       "permanent": true
     },
     {
-      "source": "/case-studies/case-study-metaixmio",
-      "destination": "/case-study-metaixmio",
+      "source": "/automation-nea-attiki-odos-twitter",
+      "destination": "/erga/",
       "permanent": true
     },
     {
-      "source": "/case-studies/nea-attiki-odos-tweets-sto-site",
-      "destination": "/automation-nea-attiki-odos-twitter",
+      "source": "/automation-nea-attiki-odos-twitter/",
+      "destination": "/erga/",
       "permanent": true
     },
     {
-      "source": "/case-studies/nea-attiki-odos-tweets-sto-site/",
-      "destination": "/automation-nea-attiki-odos-twitter",
+      "source": "/case-study-metaixmio",
+      "destination": "/erga/",
       "permanent": true
     },
     {
-      "source": "/en/case-studies/nea-attiki-odos-tweets-sto-site",
-      "destination": "/en/automation-nea-attiki-odos-twitter",
+      "source": "/case-study-metaixmio/",
+      "destination": "/erga/",
       "permanent": true
     },
     {
-      "source": "/case-studies/ekdoseis-metaixmio-digital-strategy-and-requirements-analysis",
-      "destination": "/case-study-metaixmio",
-      "permanent": true
-    },
-    {
-      "source": "/case-studies/ekdoseis-metaixmio-digital-strategy-and-requirements-analysis/",
-      "destination": "/case-study-metaixmio",
-      "permanent": true
-    },
-    {
-      "source": "/en/case-studies/ekdoseis-metaixmio-digital-strategy-and-requirements-analysis",
-      "destination": "/en/case-study-metaixmio",
+      "source": "/case-studies/:path*",
+      "destination": "/erga/",
       "permanent": true
     }
   ],

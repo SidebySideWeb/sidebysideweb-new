@@ -2,7 +2,9 @@
 import CaseDetail from '../../components/v2/pages/CaseDetail.astro'
 import Base from '../../layouts/Base.astro'
 import {getCaseStudy} from '../../lib/v2/cms'
+import {buildBreadcrumbJsonLd, buildCaseStudyJsonLd} from '../../lib/v2/json-ld'
 import {stripPlaceholders} from '../../lib/v2/placeholder'
+import {resolveSeo} from '../../lib/v2/seo'
 import '../../styles/v2-pages.css'
 
 export const prerender = false
@@ -14,11 +16,34 @@ if (!study) {
   return new Response('Δεν βρέθηκε αυτό το έργο.', {status: 404})
 }
 
-const title = study.seo?.title ?? `${stripPlaceholders(study.name)} · Side by Side`
-const description = study.seo?.description ?? stripPlaceholders(study.short ?? study.headline)
+const name = stripPlaceholders(study.name)
+const {title, description} = resolveSeo(study.seo, {
+  title: `${name} · Side by Side`,
+  description: stripPlaceholders(study.short ?? study.headline),
+})
+
+const caseSlug = study.slug ?? slug!
+const jsonLd = [
+  buildCaseStudyJsonLd({
+    name: study.name,
+    headline: study.headline,
+    short: study.short,
+    slug: caseSlug,
+  }),
+  buildBreadcrumbJsonLd([
+    {name: 'Αρχική', path: '/'},
+    {name: 'Έργα', path: '/erga'},
+    {name, path: `/erga/${caseSlug}`},
+  ]),
+]
 ---
 
-<Base title={title} description={description}>
+<Base
+  title={title}
+  description={description}
+  canonicalPath={`/erga/${caseSlug}/`}
+  jsonLd={jsonLd}
+>
   <div data-page="case" class="enter">
     <CaseDetail study={study} />
   </div>

@@ -5,6 +5,8 @@ import ProcessSteps from '../components/v2/pages/ProcessSteps.astro'
 import RulesSection from '../components/v2/pages/RulesSection.astro'
 import Base from '../layouts/Base.astro'
 import {getProcessPage} from '../lib/v2/cms'
+import {buildProfessionalServiceJsonLd} from '../lib/v2/json-ld'
+import {resolveSeo} from '../lib/v2/seo'
 import '../styles/v2-pages.css'
 
 export const prerender = false
@@ -15,12 +17,20 @@ if (!page) {
   return new Response('Η σελίδα διαδικασίας δεν έχει περιεχόμενο στο Sanity.', {status: 404})
 }
 
-const title = page.seo?.title ?? 'Πώς δουλεύω · Side by Side'
-const description =
-  page.seo?.description ?? 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.'
+const {title, description} = resolveSeo(page.seo, {
+  title: 'Πώς δουλεύω · Side by Side',
+  description: 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.',
+})
+
+const jsonLd = buildProfessionalServiceJsonLd({email: page.email})
 ---
 
-<Base title={title} description={description}>
+<Base
+  title={title}
+  description={description}
+  canonicalPath="/pos-doulevo/"
+  jsonLd={jsonLd}
+>
   <div data-page="process" class="enter">
     <PageHero hero={page.hero} />
     <ProcessSteps steps={page.steps} />

@@ -2,6 +2,7 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /v2/
 
 # AI crawlers — explicitly allowed (agent-ready policy)
 User-agent: GPTBot

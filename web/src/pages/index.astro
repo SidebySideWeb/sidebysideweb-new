@@ -14,6 +14,12 @@ import Testimonial from '../components/v2/home/Testimonial.astro'
 import ValueCards from '../components/v2/home/ValueCards.astro'
 import Base from '../layouts/Base.astro'
 import {getHomePage} from '../lib/v2/cms'
+import {
+  buildFaqPageJsonLd,
+  buildProfessionalServiceJsonLd,
+  buildWebSiteJsonLd,
+} from '../lib/v2/json-ld'
+import {resolveSeo} from '../lib/v2/seo'
 import '../styles/v2-home.css'
 
 export const prerender = false
@@ -24,12 +30,20 @@ if (!home) {
   return new Response('Η αρχική δεν έχει περιεχόμενο στο Sanity.', {status: 404})
 }
 
-const title = home.seo?.title ?? 'Side by Side · Τεχνικός συνεργάτης'
-const description =
-  home.seo?.description ?? 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.'
+const {title, description} = resolveSeo(home.seo, {
+  title: 'Side by Side · Τεχνικός συνεργάτης',
+  description: 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.',
+})
+
+const faqItems = home.faq?.items ?? []
+const jsonLd = [
+  buildProfessionalServiceJsonLd({email: home.email, tagline: description}),
+  buildWebSiteJsonLd(),
+  ...(faqItems.length ? [buildFaqPageJsonLd(faqItems)] : []),
+]
 ---
 
-<Base title={title} description={description}>
+<Base title={title} description={description} canonicalPath="/" jsonLd={jsonLd}>
   <div data-page="home" class="enter">
     {home.hero ? <Hero hero={home.hero} /> : null}
 

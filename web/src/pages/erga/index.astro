@@ -4,6 +4,8 @@ import CaseCard from '../../components/v2/home/CaseCard.astro'
 import WorkFilters from '../../components/v2/pages/WorkFilters.astro'
 import Base from '../../layouts/Base.astro'
 import {getWorkPage} from '../../lib/v2/cms'
+import {buildProfessionalServiceJsonLd} from '../../lib/v2/json-ld'
+import {resolveSeo} from '../../lib/v2/seo'
 import '../../styles/v2-pages.css'
 
 export const prerender = false
@@ -15,12 +17,15 @@ if (!page) {
 }
 
 const cases = page.cases ?? []
-const title = page.seo?.title ?? 'Έργα · Side by Side'
-const description =
-  page.seo?.description ?? 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.'
+const {title, description} = resolveSeo(page.seo, {
+  title: 'Έργα · Side by Side',
+  description: 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.',
+})
+
+const jsonLd = buildProfessionalServiceJsonLd()
 ---
 
-<Base title={title} description={description}>
+<Base title={title} description={description} canonicalPath="/erga/" jsonLd={jsonLd}>
   <div data-page="work" class="enter">
     <PageHero hero={page.hero} />
 

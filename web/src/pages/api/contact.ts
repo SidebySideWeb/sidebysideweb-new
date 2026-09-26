@@ -6,6 +6,9 @@ import {isValidEmail, isValidPhone} from '../../lib/validation'
 
 export const prerender = false
 
+/** Nobody reads and fills the form in under two seconds. */
+const MIN_FILL_MS = 2000
+
 export const POST: APIRoute = async ({request}) => {
   let body: {
     /** The redesign form has a single name field; v1 sends the two parts. */
@@ -18,6 +21,10 @@ export const POST: APIRoute = async ({request}) => {
     message?: string
     needs?: string[]
     budget?: string
+    /** Honeypot: only a bot fills the hidden `website` field. */
+    website?: string
+    /** How long the form was on screen before it was submitted. */
+    elapsedMs?: number
     recaptchaToken?: string
     privacyAccepted?: boolean
   }
@@ -31,6 +38,16 @@ export const POST: APIRoute = async ({request}) => {
   const clientIp = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
   if (!checkRateLimit(`contact:${clientIp}`, 5, 60_000)) {
     return jsonError('Too many attempts. Please try again shortly.', 429)
+  }
+
+  if (body.website?.trim()) {
+    console.warn('[api/contact] honeypot filled, dropping submission.')
+    return jsonError('Invalid request.', 400)
+  }
+
+  if (typeof body.elapsedMs === 'number' && body.elapsedMs >= 0 && body.elapsedMs < MIN_FILL_MS) {
+    console.warn('[api/contact] submitted too fast, dropping submission.')
+    return jsonError('Invalid request.', 400)
   }
 
   if (isRecaptchaConfigured()) {

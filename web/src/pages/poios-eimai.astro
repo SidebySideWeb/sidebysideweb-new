@@ -5,6 +5,8 @@ import ProductsSection from '../components/v2/pages/ProductsSection.astro'
 import RolesSection from '../components/v2/pages/RolesSection.astro'
 import Base from '../layouts/Base.astro'
 import {getAboutPage} from '../lib/v2/cms'
+import {buildProfessionalServiceJsonLd} from '../lib/v2/json-ld'
+import {resolveSeo} from '../lib/v2/seo'
 import '../styles/v2-pages.css'
 
 export const prerender = false
@@ -15,12 +17,20 @@ if (!page) {
   return new Response('Η σελίδα «Ποιος είμαι» δεν έχει περιεχόμενο στο Sanity.', {status: 404})
 }
 
-const title = page.seo?.title ?? 'Ποιος είμαι · Side by Side'
-const description =
-  page.seo?.description ?? 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.'
+const {title, description} = resolveSeo(page.seo, {
+  title: 'Ποιος είμαι · Side by Side',
+  description: 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.',
+})
+
+const jsonLd = buildProfessionalServiceJsonLd()
 ---
 
-<Base title={title} description={description}>
+<Base
+  title={title}
+  description={description}
+  canonicalPath="/poios-eimai/"
+  jsonLd={jsonLd}
+>
   <div data-page="about" class="enter">
     <PageHero hero={page.hero} />
     <AboutBio page={page} />

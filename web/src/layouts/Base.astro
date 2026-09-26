@@ -7,20 +7,33 @@ import Footer from '../components/v2/Footer.astro'
 import Header from '../components/v2/Header.astro'
 import MobileMenu from '../components/v2/MobileMenu.astro'
 import SvgDefs from '../components/v2/SvgDefs.astro'
+import {absoluteUrl, withTrailingSlash} from '../lib/v2/seo'
 import '../styles/v2-global.css'
 
 interface Props {
   title?: string
   description?: string
   noIndex?: boolean
+  /** Defaults to the current pathname, normalised to a trailing slash. */
+  canonicalPath?: string
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[]
+  /** Absolute URL, or a site-relative path that gets made absolute. */
+  ogImage?: string
 }
 
 const {
   title = 'Side by Side',
   description = 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.',
   noIndex = false,
+  canonicalPath,
+  jsonLd,
+  ogImage,
 } = Astro.props
+
 const gtmId = (import.meta.env.PUBLIC_GTM_ID ?? 'GTM-T4W88CDJ').trim()
+const canonical = absoluteUrl(withTrailingSlash(canonicalPath ?? Astro.url.pathname))
+const ogImageUrl = absoluteUrl(ogImage ?? '/brand/sbs-mark-paper.svg')
+const jsonLdNodes = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
 ---
 
 <!doctype html>
@@ -31,11 +44,42 @@ const gtmId = (import.meta.env.PUBLIC_GTM_ID ?? 'GTM-T4W88CDJ').trim()
     {gtmId ? <GtmHead gtmId={gtmId} /> : null}
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    {noIndex ? <meta name="robots" content="noindex, nofollow" /> : null}
     <title>{title}</title>
+
+    {
+      noIndex ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <Fragment>
+          <meta name="robots" content="index, follow" />
+          <link rel="canonical" href={canonical} />
+
+          <meta property="og:type" content="website" />
+          <meta property="og:site_name" content="Side by Side" />
+          <meta property="og:locale" content="el_GR" />
+          <meta property="og:url" content={canonical} />
+          <meta property="og:title" content={title} />
+          <meta property="og:description" content={description} />
+          <meta property="og:image" content={ogImageUrl} />
+
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={title} />
+          <meta name="twitter:description" content={description} />
+          <meta name="twitter:image" content={ogImageUrl} />
+        </Fragment>
+      )
+    }
+
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+
+    {
+      jsonLdNodes.map((node) => (
+        <script type="application/ld+json" is:inline set:html={JSON.stringify(node)} />
+      ))
+    }
+
     <ClientRouter />
   </head>
   <body>

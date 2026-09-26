@@ -38,6 +38,10 @@ function initContact() {
   const siteKey = form.dataset.recaptchaKey ?? ''
   const timers = new Set<number>()
 
+  // Stamped on load so the API can reject submissions that arrive instantly.
+  const startedAt = form.querySelector<HTMLInputElement>('[data-form-started]')
+  if (startedAt) startedAt.value = String(Date.now())
+
   const flagInvalid = (field: HTMLInputElement | HTMLTextAreaElement) => {
     field.focus()
     field.style.borderColor = '#F08A78'
@@ -90,6 +94,8 @@ function initContact() {
           message: String(data.get('msg') ?? '').trim(),
           needs: checkedLabels(form, 'need'),
           budget: checkedLabels(form, 'budget')[0] ?? '',
+          website: String(data.get('website') ?? ''),
+          elapsedMs: startedAt?.value ? Date.now() - Number(startedAt.value) : undefined,
           recaptchaToken,
           privacyAccepted: true,
         }),
@@ -99,6 +105,7 @@ function initContact() {
 
       report(successMessage, false)
       form.reset()
+      if (startedAt) startedAt.value = String(Date.now())
     } catch (error) {
       console.error('[contact] submit failed:', error)
       report(errorMessage, true)

@@ -6,6 +6,8 @@ import ServiceCards from '../components/v2/pages/ServiceCards.astro'
 import TechStack from '../components/v2/pages/TechStack.astro'
 import Base from '../layouts/Base.astro'
 import {getServicesPage} from '../lib/v2/cms'
+import {buildProfessionalServiceJsonLd, buildServiceJsonLd} from '../lib/v2/json-ld'
+import {resolveSeo} from '../lib/v2/seo'
 import '../styles/v2-pages.css'
 
 export const prerender = false
@@ -16,12 +18,29 @@ if (!page) {
   return new Response('Η σελίδα υπηρεσιών δεν έχει περιεχόμενο στο Sanity.', {status: 404})
 }
 
-const title = page.seo?.title ?? 'Υπηρεσίες · Side by Side'
-const description =
-  page.seo?.description ?? 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.'
+const {title, description} = resolveSeo(page.seo, {
+  title: 'Υπηρεσίες · Side by Side',
+  description: 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.',
+})
+
+const jsonLd = [
+  buildProfessionalServiceJsonLd({email: page.email}),
+  ...(page.services ?? []).map((service) =>
+    buildServiceJsonLd({
+      title: service.title,
+      description: service.shortDescription ?? service.description,
+      slug: service.slug,
+    }),
+  ),
+]
 ---
 
-<Base title={title} description={description}>
+<Base
+  title={title}
+  description={description}
+  canonicalPath="/ypiresies/"
+  jsonLd={jsonLd}
+>
   <div data-page="services" class="enter">
     <PageHero hero={page.hero} />
     <ServiceCards services={page.services} />
