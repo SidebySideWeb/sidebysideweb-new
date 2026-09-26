@@ -12,6 +12,7 @@ export default defineCliConfig({
   },
   deployment: {
     autoUpdates: true,
+    appId: 'ypft12wpkt4ul6svgvd8pt56',
   },
   studioHost: 'sidebysideweb',
 })
