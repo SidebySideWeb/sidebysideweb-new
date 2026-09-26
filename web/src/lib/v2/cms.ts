@@ -7,6 +7,7 @@ import {
   HOME_PAGE_QUERY,
   PROCESS_PAGE_QUERY,
   SERVICES_PAGE_QUERY,
+  SITE_SETTINGS_V2_QUERY,
   WORK_PAGE_QUERY,
 } from './queries'
 import type {
@@ -16,6 +17,7 @@ import type {
   HomePage,
   ProcessPage,
   ServicesPage,
+  SiteSettingsV2,
   WorkPage,
 } from './types'
 
@@ -53,4 +55,8 @@ export async function getAboutPage(): Promise<AboutPage | null> {
 
 export async function getContactPage(): Promise<ContactPage | null> {
   return (await client.fetch<ContactPage | null>(CONTACT_PAGE_QUERY)) ?? null
+}
+
+export async function getSiteSettingsV2(): Promise<SiteSettingsV2 | null> {
+  return (await client.fetch<SiteSettingsV2 | null>(SITE_SETTINGS_V2_QUERY)) ?? null
 }

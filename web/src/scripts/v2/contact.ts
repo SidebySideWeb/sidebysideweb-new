@@ -1,6 +1,6 @@
 /**
  * Contact form: the prototype's inline validation, then a JSON post to
- * `/api/contact`. The `.sent` panel reports both outcomes.
+ * `/api/contact`. The `.sent` panel reports both outcomes inline.
  */
 import {executeRecaptcha} from '../../lib/recaptcha-client'
 
@@ -33,8 +33,8 @@ function initContact() {
   const title = sent.querySelector<HTMLElement>('[data-sent-title]')
   const note = sent.querySelector<HTMLElement>('[data-sent-note]')
   const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]')
-  const successMessage = title?.textContent ?? ''
-  const errorMessage = form.dataset.error ?? ''
+  const successMessage = form.dataset.success ?? title?.textContent ?? 'Το μήνυμα στάλθηκε.'
+  const errorMessage = form.dataset.error ?? 'Κάτι πήγε στραβά. Δοκίμασε ξανά ή στείλε μου email.'
   const siteKey = form.dataset.recaptchaKey ?? ''
   const timers = new Set<number>()
 
@@ -54,13 +54,16 @@ function initContact() {
 
   const report = (message: string, failed: boolean) => {
     sent.hidden = false
+    sent.classList.add('is-visible')
     sent.classList.toggle('error', failed)
     if (title) title.textContent = message
     if (note) note.textContent = ''
+    sent.scrollIntoView({behavior: 'smooth', block: 'nearest'})
   }
 
   const onSubmit = async (e: Event) => {
     e.preventDefault()
+    e.stopPropagation()
 
     const fields = [
       ...form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]'),
@@ -85,7 +88,10 @@ function initContact() {
 
       const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
         body: JSON.stringify({
           firstName,
           lastName,
@@ -101,7 +107,16 @@ function initContact() {
         }),
       })
 
-      if (!response.ok) throw new Error(`Request failed: ${response.status}`)
+      let payload: {success?: boolean; error?: string} = {}
+      try {
+        payload = (await response.json()) as {success?: boolean; error?: string}
+      } catch {
+        payload = {}
+      }
+
+      if (!response.ok || payload.success !== true) {
+        throw new Error(payload.error || `Request failed: ${response.status}`)
+      }
 
       report(successMessage, false)
       form.reset()

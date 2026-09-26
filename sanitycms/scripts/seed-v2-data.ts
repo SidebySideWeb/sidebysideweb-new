@@ -521,8 +521,8 @@ export const siteSettings = {
   brandName: 'Side by Side',
   tagline: 'Δίπλα σου, από την ανάλυση ως τον κώδικα.',
   email: EMAIL,
-  linkedInUrl: 'https://www.linkedin.com/',
-  legalLine: '© 2026 Side by Side · [ΑΦΜ / στοιχεία]',
+  linkedInUrl: 'https://linkedin.com/company/sidebysideweb/',
+  legalLine: '© 2026 Side by Side · 802759510 / ΠΟΛΙΤΙΚΑ ΑΡΙΣΤΟΤΕΛΟΥΣ 0, ΨΑΧΝΑ, 34400',
   primaryNav: [
     {_type: 'linkItem', label: 'Υπηρεσίες', href: '/ypiresies'},
     {_type: 'linkItem', label: 'Πώς δουλεύω', href: '/pos-doulevo'},
@@ -532,7 +532,7 @@ export const siteSettings = {
   ],
   headerCta: {_type: 'cta', label: 'Κλείσε call', href: '/epikoinonia', variant: 'm'},
   footerTagline: 'Δίπλα σου, από την ανάλυση ως τον κώδικα.',
-  footerSub: 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.',
+  footerSub: 'Ο συνεργάτης σας, για digital προκλήσεις',
   footerColumns: [
     {
       _type: 'footerColumn',
@@ -559,7 +559,11 @@ export const siteSettings = {
       title: 'Επαφή',
       links: [
         {_type: 'linkItem', label: EMAIL, href: `mailto:${EMAIL}`},
-        {_type: 'linkItem', label: 'LinkedIn [link]', href: 'https://www.linkedin.com/'},
+        {
+          _type: 'linkItem',
+          label: 'LinkedIn',
+          href: 'https://linkedin.com/company/sidebysideweb/',
+        },
       ],
     },
   ],

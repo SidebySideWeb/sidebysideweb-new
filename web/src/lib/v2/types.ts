@@ -395,3 +395,29 @@ export interface ContactPage {
   seo?: SeoBlock
   email?: string
 }
+
+/* ---------------------------------------------------------- site settings */
+
+export interface LinkItem {
+  label: string
+  href: string
+}
+
+export interface FooterColumn {
+  title: string
+  links?: LinkItem[]
+}
+
+export interface SiteSettingsV2 {
+  brandName?: string
+  tagline?: string
+  email?: string
+  linkedInUrl?: string
+  legalLine?: string
+  primaryNav?: LinkItem[]
+  headerCta?: Cta
+  footerTagline?: string
+  footerSub?: string
+  footerColumns?: FooterColumn[]
+  endorsedProducts?: LinkItem[]
+}

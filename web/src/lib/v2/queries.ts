@@ -211,3 +211,19 @@ export const CONTACT_PAGE_QUERY = `*[_id == "contactPage"][0]{
   seo${SEO},
   ${EMAIL}
 }`
+
+const LINK_ITEM = `{label, href}`
+
+export const SITE_SETTINGS_V2_QUERY = `*[_id == "siteSettingsV2"][0]{
+  brandName,
+  tagline,
+  email,
+  linkedInUrl,
+  legalLine,
+  primaryNav[]${LINK_ITEM},
+  headerCta${CTA},
+  footerTagline,
+  footerSub,
+  footerColumns[]{title, links[]${LINK_ITEM}},
+  endorsedProducts[]${LINK_ITEM}
+}`

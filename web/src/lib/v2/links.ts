@@ -19,6 +19,8 @@ export function resolveHref(href?: string | null): string {
   if (!value) return FALLBACK
 
   if (/^(https?:|mailto:|tel:)/i.test(value)) return value
+  // Bare domains from Studio (e.g. linkedin.com/…)
+  if (/^[a-z0-9.-]+\.[a-z]{2,}([/:].*)?$/i.test(value)) return `https://${value}`
   if (value.startsWith('/')) return value
   if (!value.startsWith('#')) return `/${value}`
 

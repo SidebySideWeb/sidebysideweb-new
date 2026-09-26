@@ -1,12 +1,55 @@
-/* Side by Side Web Studio brand overrides — load after silktide-consent-manager.css */
+/* Side by Side v2 — Silktide Consent Manager brand overrides.
+   Load after silktide-consent-manager.css. Tokens match tokens.css. */
+
 #stcm-wrapper {
-  --boxShadow: -5px 5px 10px 0px #00000012, 0px 0px 50px 0px #0000001a !important;
-  --fontFamily: 'Inter', ui-sans-serif, system-ui, sans-serif !important;
-  --primaryColor: #ff6b35 !important;
-  --backgroundColor: #1a2847 !important;
-  --textColor: #ffffff !important;
-  --backdropBackgroundColor: #00000033 !important;
-  --backdropBackgroundBlur: 0px !important;
-  --iconColor: #ff6b35 !important;
-  --iconBackgroundColor: #1a2847 !important;
+  --boxShadow: 0 12px 40px rgba(11, 22, 29, 0.55) !important;
+  --fontFamily: 'Commissioner', 'Segoe UI', system-ui, sans-serif !important;
+  --primaryColor: #f0b429 !important; /* --mari */
+  --backgroundColor: #13232e !important; /* --ink */
+  --textColor: #f4f6f3 !important; /* --paper */
+  --backdropBackgroundColor: rgba(11, 22, 29, 0.72) !important; /* --night */
+  --backdropBackgroundBlur: 4px !important;
+  /* Floating cookie icon: marigold chip, ink glyph (text on mari is always ink) */
+  --iconColor: #13232e !important;
+  --iconBackgroundColor: #f0b429 !important;
+}
+
+/* Motif-aligned corners and type weight */
+#stcm-wrapper .stcm-button {
+  border-radius: 6px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+#stcm-banner,
+#stcm-modal {
+  border: 1px solid rgba(244, 246, 243, 0.12); /* --line */
+  border-radius: 12px;
+}
+
+#stcm-modal h1 {
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+
+#stcm-banner p,
+#stcm-modal section {
+  color: #d7dedb; /* --mist — secondary body on dark */
+}
+
+#stcm-wrapper a {
+  color: #f0b429;
+  text-underline-offset: 0.18em;
+}
+
+#stcm-wrapper a:hover {
+  color: #f4f6f3;
+}
+
+/* Focus ring: paper outline on ink, matches site :focus-visible */
+#stcm-wrapper a:focus,
+#stcm-wrapper #stcm-banner button:focus,
+#stcm-wrapper #stcm-modal button:focus,
+#stcm-wrapper #stcm-icon:focus {
+  box-shadow: 0 0 0 2px #13232e, 0 0 0 4px #f0b429;
 }

@@ -1,54 +1,102 @@
 ---
-const pages = [
-  {href: '/ypiresies', label: 'Υπηρεσίες'},
-  {href: '/pos-doulevo', label: 'Πώς δουλεύω'},
-  {href: '/erga', label: 'Έργα'},
-  {href: '/poios-eimai', label: 'Ποιος είμαι'},
-  {href: '/epikoinonia', label: 'Επικοινωνία'},
-] as const
+import {getSiteSettingsV2} from '../../lib/v2/cms'
+import {resolveHref} from '../../lib/v2/links'
+import type {FooterColumn, LinkItem} from '../../lib/v2/types'
+import Placeholder from './Placeholder.astro'
 
-const products = [
-  {href: '/erga/kollekta', label: 'kollekta.gr'},
-  {href: '/erga/ftiaxesite', label: 'ftiaxesite.gr'},
-  {href: '/erga/audit', label: 'Audit tool'},
-] as const
+const settings = await getSiteSettingsV2()
+
+const fallbackColumns: FooterColumn[] = [
+  {
+    title: 'Σελίδες',
+    links: [
+      {label: 'Υπηρεσίες', href: '/ypiresies'},
+      {label: 'Πώς δουλεύω', href: '/pos-doulevo'},
+      {label: 'Έργα', href: '/erga'},
+      {label: 'Ποιος είμαι', href: '/poios-eimai'},
+      {label: 'Επικοινωνία', href: '/epikoinonia'},
+    ],
+  },
+  {
+    title: 'Προϊόντα',
+    links: [
+      {label: 'kollekta.gr', href: '/erga/kollekta'},
+      {label: 'ftiaxesite.gr', href: '/erga/ftiaxesite'},
+      {label: 'Audit tool', href: '/erga/audit'},
+    ],
+  },
+]
+
+const tagline = settings?.footerTagline ?? settings?.tagline ?? 'Δίπλα σου, από την ανάλυση ως τον κώδικα.'
+const sub = settings?.footerSub ?? 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.'
+const legal = settings?.legalLine ?? '© 2026 Side by Side'
+const columns =
+  settings?.footerColumns?.filter((col) => col?.title && (col.links?.length ?? 0) > 0) ??
+  fallbackColumns
+
+function formatEmailLabel(label: string): {lines: string[]; href: string} | null {
+  const text = label.trim()
+  if (!text.includes('@')) return null
+  const [user, domain] = text.split('@')
+  if (!user || !domain) return null
+  return {lines: [`${user}@`, domain], href: `mailto:${text}`}
+}
+
+function linkHref(link: LinkItem): string {
+  return resolveHref(link.href)
+}
 ---
 
 <footer class="ftr">
   <div class="wrap">
     <div class="ftr-grid">
       <div>
-        <p class="tagline">Δίπλα σου, από την ανάλυση ως τον κώδικα.</p>
-        <p style="color:var(--muted);font-size:15px;margin-top:12px"
-          >Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.</p
-        >
+        <p class="tagline">{tagline}</p>
+        {sub ? <p style="color:var(--muted);font-size:15px;margin-top:12px">{sub}</p> : null}
       </div>
-      <div>
-        <h4>Σελίδες</h4>
-        <ul>
-          {pages.map((p) => <li><a href={p.href}>{p.label}</a></li>)}
-        </ul>
-      </div>
-      <div>
-        <h4>Προϊόντα</h4>
-        <ul>
-          {products.map((p) => <li><a href={p.href}>{p.label}</a></li>)}
-        </ul>
-      </div>
-      <div>
-        <h4>Επαφή</h4>
-        <ul>
-          <li>dgeronikolos@<br />sidebysideweb.gr</li>
-          <li>LinkedIn <span class="ph">[link]</span></li>
-        </ul>
-      </div>
+      {
+        columns.map((col) => (
+          <div>
+            <h4>{col.title}</h4>
+            <ul>
+              {(col.links ?? []).map((link) => {
+                const email = formatEmailLabel(link.label)
+                if (email) {
+                  return (
+                    <li>
+                      <a href={email.href}>
+                        {email.lines[0]}
+                        <br />
+                        {email.lines[1]}
+                      </a>
+                    </li>
+                  )
+                }
+                const href = linkHref(link)
+                const external = /^https?:/i.test(href)
+                return (
+                  <li>
+                    <a
+                      href={href}
+                      target={external ? '_blank' : undefined}
+                      rel={external ? 'noopener' : undefined}
+                    >
+                      <Placeholder text={link.label} />
+                    </a>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        ))
+      }
     </div>
     <div class="giant" aria-hidden="true"
       ><span>side</span><span class="gb"><b></b><b></b></span><span>side</span></div
     >
     <div class="legal">
-      <span>© 2026 Side by Side · <span class="ph">[ΑΦΜ / στοιχεία]</span></span>
-      <span>Prototype v1 · σχεδιασμός &amp; ανάπτυξη in-house</span>
+      <span><Placeholder text={legal} /></span>
+      <span>σχεδιασμός &amp; ανάπτυξη in-house</span>
     </div>
   </div>
 </footer>
