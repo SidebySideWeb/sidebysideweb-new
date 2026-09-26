@@ -1,0 +1,36 @@
+---
+import Button from './Button.astro'
+import Logo from './Logo.astro'
+
+const nav = [
+  {href: '/ypiresies', label: 'Υπηρεσίες'},
+  {href: '/pos-doulevo', label: 'Πώς δουλεύω'},
+  {href: '/erga', label: 'Έργα'},
+  {href: '/poios-eimai', label: 'Ποιος είμαι'},
+  {href: '/epikoinonia', label: 'Επικοινωνία'},
+] as const
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/'
+---
+
+<header class="hdr" id="hdr">
+  <div class="wrap">
+    <Logo href="/" />
+    <nav class="nav" aria-label="Κύριο μενού">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            aria-current={path === item.href || path.startsWith(`${item.href}/`) ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+    <Button href="/epikoinonia" variant="m" size="sm" magnetic>Κλείσε call</Button>
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Άνοιγμα μενού" aria-expanded="false"
+      ><b></b><b></b></button
+    >
+  </div>
+</header>

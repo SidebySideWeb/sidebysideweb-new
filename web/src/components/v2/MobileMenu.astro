@@ -1,0 +1,21 @@
+---
+const links = [
+  {href: '/', label: 'Αρχική', n: '00'},
+  {href: '/ypiresies', label: 'Υπηρεσίες', n: '01'},
+  {href: '/pos-doulevo', label: 'Πώς δουλεύω', n: '02'},
+  {href: '/erga', label: 'Έργα', n: '03'},
+  {href: '/poios-eimai', label: 'Ποιος είμαι', n: '04'},
+  {href: '/epikoinonia', label: 'Επικοινωνία', n: '05'},
+] as const
+---
+
+<div class="mobile" id="mobile">
+  {
+    links.map((link) => (
+      <a href={link.href}>
+        <small>{link.n}</small>
+        {link.label}
+      </a>
+    ))
+  }
+</div>

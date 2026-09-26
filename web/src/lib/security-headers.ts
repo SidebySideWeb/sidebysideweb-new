@@ -2,6 +2,8 @@
  * Security headers for sidebysideweb.gr.
  *
  * CSP allows GTM/GA4, Sanity CDN, Cal.com, reCAPTCHA, and Google Fonts (Material Symbols).
+ * fonts.googleapis.com / fonts.gstatic.com stay for legacy Layout pages (Material Symbols).
+ * v2 chrome self-hosts Commissioner + JetBrains Mono via Fontsource; drop Google Fonts CSP when old Layout is retired.
  * Trusted Types omitted — GTM/Silktide/reCAPTCHA need a default policy we do not ship yet.
  */
 function buildContentSecurityPolicy(): string {

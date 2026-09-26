@@ -1,0 +1,16 @@
+---
+interface Props {
+  href?: string
+  class?: string
+}
+
+const {href = '/', class: className} = Astro.props
+---
+
+<a class:list={['logo', className]} href={href} aria-label="Side by Side, αρχική">
+  <svg viewBox="0 0 64 64" aria-hidden="true">
+    <rect class="b1" x="10" y="6" width="17" height="44" rx="2.5" fill="#F4F6F3"></rect>
+    <rect class="b2" x="37" y="14" width="17" height="44" rx="2.5" fill="#F0B429"></rect>
+  </svg>
+  Side <span>by</span> Side
+</a>

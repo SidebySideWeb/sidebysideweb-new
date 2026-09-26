@@ -1,0 +1,20 @@
+---
+import Eyebrow from '../../components/v2/Eyebrow.astro'
+import Base from '../../layouts/Base.astro'
+---
+
+<Base title="Side by Side · v2 preview" description="Redesign chrome preview.">
+  <section
+    class="wrap enter"
+    style="min-height:70svh;display:grid;place-content:center;padding-block:140px 96px;text-align:center"
+  >
+    <Eyebrow>Redesign · Phase 1</Eyebrow>
+    <h1 style="font-size:clamp(40px,8vw,96px);letter-spacing:-.05em;margin-top:20px">
+      <span class="ln" style="--i:0"><span>Side by Side</span></span>
+      <span class="ln" style="--i:1"><span style="font-weight:200">chrome</span></span>
+    </h1>
+    <p class="fade" style="--d:200;color:var(--muted);max-width:36ch;margin:24px auto 0;font-size:18px">
+      Header, footer, progress, cursor και motion. Το περιεχόμενο έρχεται στις επόμενες φάσεις.
+    </p>
+  </section>
+</Base>

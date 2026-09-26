@@ -1,0 +1,58 @@
+---
+const pages = [
+  {href: '/ypiresies', label: 'Υπηρεσίες'},
+  {href: '/pos-doulevo', label: 'Πώς δουλεύω'},
+  {href: '/erga', label: 'Έργα'},
+  {href: '/poios-eimai', label: 'Ποιος είμαι'},
+  {href: '/epikoinonia', label: 'Επικοινωνία'},
+] as const
+
+const products = [
+  {href: '/erga/kollekta', label: 'kollekta.gr'},
+  {href: '/erga/ftiaxesite', label: 'ftiaxesite.gr'},
+  {href: '/erga/audit', label: 'Audit tool'},
+] as const
+---
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-grid">
+      <div>
+        <p class="tagline">Δίπλα σου, από την ανάλυση ως τον κώδικα.</p>
+        <p style="color:var(--muted);font-size:15px;margin-top:12px"
+          >Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.</p
+        >
+      </div>
+      <div>
+        <h4>Σελίδες</h4>
+        <ul>
+          {pages.map((p) => <li><a href={p.href}>{p.label}</a></li>)}
+        </ul>
+      </div>
+      <div>
+        <h4>Προϊόντα</h4>
+        <ul>
+          {products.map((p) => <li><a href={p.href}>{p.label}</a></li>)}
+        </ul>
+      </div>
+      <div>
+        <h4>Επαφή</h4>
+        <ul>
+          <li>dgeronikolos@<br />sidebysideweb.gr</li>
+          <li>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener"
+              >LinkedIn <span class="ph">[link]</span></a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="giant" aria-hidden="true"
+      ><span>side</span><span class="gb"><b></b><b></b></span><span>side</span></div
+    >
+    <div class="legal">
+      <span>© 2026 Side by Side · <span class="ph">[ΑΦΜ / στοιχεία]</span></span>
+      <span>Prototype v1 · σχεδιασμός &amp; ανάπτυξη in-house</span>
+    </div>
+  </div>
+</footer>

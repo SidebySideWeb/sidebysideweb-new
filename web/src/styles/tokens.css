@@ -1,0 +1,18 @@
+:root {
+  color-scheme: dark;
+  --night: #0b161d;
+  --ink: #13232e;
+  --ink2: #1a2f3c;
+  --paper: #f4f6f3;
+  --mist: #d7dedb;
+  --slate: #52616b;
+  --muted: #9aaab2;
+  --mari: #f0b429;
+  --mari-d: #8a5e08;
+  --line: rgba(244, 246, 243, 0.12);
+  --line-l: rgba(19, 35, 46, 0.14);
+  --sans: 'Commissioner', 'Segoe UI', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  --gut: clamp(16px, 4vw, 48px);
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}

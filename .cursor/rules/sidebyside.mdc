@@ -1,0 +1,37 @@
+---
+description: Side by Side brand, design and copy rules for sidebysideweb.gr
+globs: ["src/**", "sanity/**"]
+alwaysApply: true
+---
+
+# Side by Side brand rules
+
+Design reference: `reference/prototype.html` (approved). When in doubt, copy it.
+
+## Colours (tokens in src/styles/tokens.css)
+- --night #0B161D (page ground), --ink #13232E (surfaces, primary), --ink2 #1A2F3C
+- --paper #F4F6F3 (text on dark, light sections), --mist #D7DEDB, --slate #52616B, --muted #9AAAB2
+- --mari #F0B429 (the one accent), --mari-d #8A5E08 (accent text on light)
+- Marigold is never body text on light grounds. Text on marigold is always ink.
+- Site is dark-first with light (paper) and marigold sections for rhythm. No gradients except the subtle ones already in the prototype.
+
+## Type
+- Commissioner (variable, Greek subset) for everything readable. Display weight 800, tight tracking (-0.035em to -0.055em). Weight 200 for "thin" words in headlines.
+- JetBrains Mono for eyebrows, labels, chips, metadata: uppercase, letter-spacing .1–.14em.
+
+## Logo and motif
+- Mark: two vertical bars, lead bar paper/ink, second bar marigold offset one step lower. Never level the bars, never swap colours.
+- The offset bar pair is the motif: eyebrow marker, button icon, menu button, footer "side ∥ side".
+- Logo SVGs in reference/*.svg.
+
+## Copy
+- Greek, monotonic, first person singular («εγώ»), addressing the client in singular («σου»).
+- Clear, calm, direct. Short sentences. Numbers over adjectives.
+- Never mention "junior". Never speak badly of agencies (they are clients too).
+- Never show prices on the site. Use durations or billing model ("6–8 εβδομάδες", "ανά έργο", "μηνιαία", "με την ώρα").
+- No em dashes in running text, no emoji, no exclamation marks.
+
+## Motion
+- Every animation from the prototype is part of the brand. Keep easing cubic-bezier(.2,.8,.2,1).
+- Respect prefers-reduced-motion everywhere. Scroll-driven CSS behind @supports ((animation-timeline: view()) and (animation-range: entry)).
+- Content must be readable without JS.

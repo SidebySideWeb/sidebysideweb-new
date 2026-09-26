@@ -1,0 +1,1245 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body>
+<title>Side by Side Website</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Commissioner:wght@200..900&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  color-scheme:dark;
+  --night:#0B161D; --ink:#13232E; --ink2:#1A2F3C; --paper:#F4F6F3; --mist:#D7DEDB;
+  --slate:#52616B; --muted:#9AAAB2; --mari:#F0B429; --mari-d:#8A5E08;
+  --line:rgba(244,246,243,.12); --line-l:rgba(19,35,46,.14);
+  --sans:"Commissioner","Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --gut:clamp(16px,4vw,48px);
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:auto}
+body{margin:0;background:var(--night);color:var(--paper);font-family:var(--sans);font-size:17px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+h1,h2,h3,h4{margin:0;line-height:1.02;text-wrap:balance;font-weight:800;letter-spacing:-.035em}
+p{margin:0}
+:focus-visible{outline:2px solid var(--mari);outline-offset:3px;border-radius:2px}
+.wrap{max-width:1360px;margin-inline:auto;padding-inline:var(--gut)}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:inline-flex;align-items:center;gap:10px}
+.eyebrow i{display:inline-flex;gap:3px}
+.eyebrow i b{width:4px;height:12px;background:var(--paper);border-radius:1px;display:block}
+.eyebrow i b+b{background:var(--mari);transform:translateY(3px)}
+.ph{background:rgba(240,180,41,.16);color:var(--mari);border-radius:3px;padding:0 .25em;font-family:var(--mono);font-size:.82em;font-weight:500;letter-spacing:0}
+.light .ph{background:rgba(138,94,8,.12);color:var(--mari-d)}
+
+/* ---------- progress + cursor ---------- */
+#progress{position:fixed;left:0;top:0;height:3px;width:100%;background:var(--mari);transform-origin:0 50%;transform:scaleX(0);z-index:60}
+.cur,.cur-ring{position:fixed;left:0;top:0;pointer-events:none;z-index:70;border-radius:50%;display:none}
+@media (pointer:fine) and (prefers-reduced-motion:no-preference){
+  .cur,.cur-ring{display:block}
+  .cur{width:6px;height:6px;margin:-3px 0 0 -3px;background:var(--mari)}
+  .cur-ring{width:36px;height:36px;margin:-18px 0 0 -18px;border:1.5px solid rgba(240,180,41,.6);transition:width .25s var(--ease),height .25s var(--ease),margin .25s var(--ease),background .25s,border-color .25s}
+  .cur-ring.big{width:72px;height:72px;margin:-36px 0 0 -36px;background:rgba(240,180,41,.12);border-color:var(--mari)}
+}
+
+/* ---------- header ---------- */
+.hdr{position:fixed;left:0;right:0;top:0;z-index:50;padding-top:env(safe-area-inset-top,0px);transition:transform .45s var(--ease),background .3s}
+.hdr.hide{transform:translateY(-110%)}
+.hdr.solid{background:rgba(11,22,29,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.hdr .wrap{display:flex;align-items:center;justify-content:space-between;height:76px;gap:24px}
+.logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:19px;letter-spacing:-.02em}
+.logo svg{width:30px;height:30px;overflow:visible}
+.logo svg rect{transition:transform .5s var(--ease)}
+.logo:hover svg .b2{transform:translateY(6px)}
+.logo:hover svg .b1{transform:translateY(-3px)}
+.logo span{font-weight:300;color:var(--muted)}
+.nav{display:flex;gap:4px;align-items:center}
+.nav a{font-size:15px;padding:8px 14px;border-radius:6px;color:var(--muted);transition:color .2s,background .2s;position:relative}
+.nav a:hover{color:var(--paper)}
+.nav a[aria-current="page"]{color:var(--paper)}
+.nav a[aria-current="page"]::after{content:"";position:absolute;left:14px;right:14px;bottom:2px;height:2px;background:var(--mari);border-radius:1px}
+.btn{display:inline-flex;align-items:center;gap:12px;font-weight:700;font-size:16px;padding:15px 24px;border-radius:6px;border:1.5px solid transparent;transition:background .25s,color .25s,border-color .25s;white-space:nowrap;position:relative}
+.btn .bars{display:inline-flex;gap:3px;align-items:flex-start;height:16px}
+.btn .bars b{width:5px;height:13px;border-radius:1px;background:currentColor;display:block;transition:transform .35s var(--ease)}
+.btn .bars b+b{background:var(--mari);transform:translateY(3px)}
+.btn:hover .bars b:first-child{transform:translateY(3px)}
+.btn:hover .bars b+b{transform:translateY(-1px)}
+.btn-m{background:var(--mari);color:var(--ink)}
+.btn-m .bars b+b{background:var(--ink)}
+.btn-m:hover{background:#FFC845}
+.btn-p{background:var(--paper);color:var(--ink)}
+.btn-g{border-color:rgba(244,246,243,.35);color:var(--paper)}
+.btn-g:hover{border-color:var(--paper);background:rgba(244,246,243,.06)}
+.btn-i{background:var(--ink);color:var(--paper)}
+.btn-sm{padding:10px 16px;font-size:14.5px}
+.menu-btn{display:none;width:44px;height:44px;border-radius:6px;border:1px solid var(--line);align-items:center;justify-content:center;gap:4px}
+.menu-btn b{width:5px;height:18px;background:var(--paper);border-radius:1px;display:block;transition:transform .35s var(--ease)}
+.menu-btn b+b{background:var(--mari);transform:translateY(4px)}
+body.menu-open .menu-btn b:first-child{transform:rotate(45deg) translate(3px,3px)}
+body.menu-open .menu-btn b+b{transform:rotate(-45deg) translate(3px,-3px)}
+.mobile{position:fixed;inset:0;z-index:45;background:var(--ink);padding:calc(96px + env(safe-area-inset-top,0px)) var(--gut) 32px;display:flex;flex-direction:column;gap:6px;clip-path:inset(0 0 100% 0);transition:clip-path .6s var(--ease);visibility:hidden}
+body.menu-open .mobile{clip-path:inset(0 0 0 0);visibility:visible}
+.mobile a{font-size:clamp(36px,10vw,56px);font-weight:800;letter-spacing:-.04em;line-height:1.1;display:flex;align-items:baseline;gap:14px}
+.mobile a small{font-family:var(--mono);font-size:12px;color:var(--mari);font-weight:400;letter-spacing:0}
+@media (max-width:980px){.nav,.hdr .btn{display:none}.menu-btn{display:inline-flex}}
+
+/* ---------- pages + transitions ---------- */
+[data-page]{min-height:100vh}
+main:focus{outline:none}
+@media (prefers-reduced-motion:no-preference){
+  ::view-transition-old(root){animation:vt-out .45s var(--ease) both}
+  ::view-transition-new(root){animation:vt-in .6s var(--ease) both}
+  @keyframes vt-out{to{opacity:0;transform:translateY(-40px) scale(.98)}}
+  @keyframes vt-in{from{opacity:0;transform:translateY(60px)}}
+}
+@media (prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
+
+/* line-by-line headline entrance */
+.ln{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
+.ln>span{display:inline-block}
+@media (prefers-reduced-motion:no-preference){
+  .enter .ln>span{animation:up 1s var(--ease) both;animation-delay:calc(var(--i,0) * 90ms + 120ms)}
+  .enter .fade{animation:fade 1s var(--ease) both;animation-delay:calc(var(--d,0) * 1ms + 500ms)}
+  @keyframes up{from{transform:translateY(105%) rotate(2deg)}}
+  @keyframes fade{from{opacity:0;transform:translateY(16px)}}
+}
+
+/* scroll reveals (progressive enhancement, content visible without support) */
+@media (prefers-reduced-motion:no-preference){
+  @supports ((animation-timeline: view()) and (animation-range: entry)){
+    .rv{animation:rv auto linear backwards;animation-timeline:view();animation-range:entry 0% entry 55%}
+    @keyframes rv{from{opacity:0;transform:translateY(60px)}}
+    .rv-x{animation:rvx auto linear backwards;animation-timeline:view();animation-range:entry 0% cover 35%}
+    @keyframes rvx{from{opacity:0;transform:translateX(-80px)}}
+    .zoom{animation:zoom auto linear both;animation-timeline:view();animation-range:entry 0% cover 50%}
+    @keyframes zoom{from{transform:scale(.86);border-radius:40px}}
+  }
+}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;min-height:max(720px,100svh);display:flex;flex-direction:column;justify-content:flex-end;padding-block:140px 0;overflow:hidden;isolation:isolate}
+#field{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
+.hero::after{content:"";position:absolute;inset:auto 0 0 0;height:40%;background:linear-gradient(to top,var(--night),transparent);z-index:-1;pointer-events:none}
+.hero h1{font-size:clamp(46px,9.2vw,150px);line-height:.9;letter-spacing:-.05em;font-weight:800}
+.hero h1 .m{color:var(--mari)}
+.hero h1 .thin{font-weight:200;letter-spacing:-.04em}
+.hero-row{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;align-items:end;margin-top:48px}
+.swapline{font-size:clamp(20px,2.2vw,28px);font-weight:600;letter-spacing:-.02em;line-height:1.3;max-width:26ch}
+.swap{display:inline-block;color:var(--night);background:var(--mari);padding:0 .22em;border-radius:4px;font-family:var(--mono);font-weight:500;font-size:.9em;min-width:4ch;text-align:center}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-top:72px}
+.facts>div{padding:26px 24px 34px 0;display:grid;gap:4px}
+.facts>div+div{padding-left:24px;border-left:1px solid var(--line)}
+.facts b{font-size:clamp(30px,3.6vw,52px);font-weight:800;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.facts b em{font-style:normal;color:var(--mari)}
+.facts>div>span{font-size:14px;color:var(--muted)}
+@media (max-width:860px){.hero-row{grid-template-columns:1fr}.hero .ctas{justify-content:flex-start}.facts{grid-template-columns:1fr 1fr}.facts>div:nth-child(3){padding-left:0;border-left:0}.facts>div:nth-child(n+3){border-top:1px solid var(--line)}}
+.scrollcue{position:absolute;right:var(--gut);top:130px;display:flex;flex-direction:column;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--muted);writing-mode:vertical-rl}
+.scrollcue i{display:flex;gap:3px;writing-mode:horizontal-tb}
+.scrollcue i b{width:4px;height:26px;background:var(--paper);border-radius:1px;display:block}
+.scrollcue i b+b{background:var(--mari)}
+@media (prefers-reduced-motion:no-preference){.scrollcue i b+b{animation:bob 1.8s var(--ease) infinite}@keyframes bob{50%{transform:translateY(10px)}}}
+@media (max-width:860px){.scrollcue{display:none}}
+
+/* ---------- marquee ---------- */
+.mqw{overflow:hidden;padding-block:40px 30px;position:relative;z-index:3;margin-bottom:-30px}
+.marquee{background:var(--mari);color:var(--ink);transform:rotate(-2deg);margin-inline:-40px;padding-block:18px;overflow:hidden;position:relative;z-index:2}
+.marquee.alt{background:var(--ink);color:var(--paper);transform:rotate(1.2deg);margin-top:-28px;z-index:1}
+.track{display:flex;width:max-content;gap:0}
+.track span{font-size:clamp(28px,4vw,54px);font-weight:800;letter-spacing:-.03em;white-space:nowrap;padding-inline:28px;display:inline-flex;align-items:center;gap:56px}
+.track span::after{content:"";width:14px;height:.72em;background:currentColor;border-radius:2px;box-shadow:20px .12em 0 var(--night)}
+.marquee.alt .track span{-webkit-text-stroke:1.5px var(--paper);color:transparent}
+.marquee.alt .track span::after{background:var(--paper);box-shadow:20px .12em 0 var(--mari)}
+@media (prefers-reduced-motion:no-preference){.track{animation:mq 38s linear infinite}.marquee.alt .track{animation-direction:reverse;animation-duration:46s}@keyframes mq{to{transform:translateX(-50%)}}}
+.marquee:hover .track{animation-play-state:paused}
+
+/* ---------- generic sections ---------- */
+.sec{padding-block:clamp(88px,12vw,160px);position:relative}
+.sec-hd{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr);gap:40px;align-items:end;margin-bottom:clamp(40px,6vw,72px)}
+.sec-hd h2{font-size:clamp(40px,6.4vw,96px);line-height:.94;letter-spacing:-.045em;margin-top:18px}
+.sec-hd p{color:var(--muted);max-width:44ch;font-size:18px}
+@media (max-width:860px){.sec-hd{grid-template-columns:1fr;gap:20px}}
+.light{background:var(--paper);color:var(--ink)}
+.light .eyebrow{color:var(--slate)}
+.light .eyebrow i b{background:var(--ink)}
+.light .sec-hd p{color:var(--slate)}
+.mari-bg{background:var(--mari);color:var(--ink)}
+.mari-bg .eyebrow{color:var(--ink)}
+.mari-bg .eyebrow i b{background:var(--ink)}
+.mari-bg .eyebrow i b+b{background:var(--paper)}
+
+/* manifesto */
+.manifesto{font-size:clamp(34px,5.6vw,84px);font-weight:800;line-height:1.02;letter-spacing:-.045em;margin-top:32px}
+.manifesto .w{display:inline}
+@media (prefers-reduced-motion:no-preference){
+  @supports ((animation-timeline: view()) and (animation-range: entry)){
+    .manifesto .w{animation:ink auto linear both;animation-timeline:view();animation-range:cover 10% cover 38%}
+    @keyframes ink{from{color:rgba(19,35,46,.18)}}
+  }
+}
+.manifesto .x{text-decoration:line-through;text-decoration-thickness:.09em;text-decoration-color:var(--ink)}
+.values{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:clamp(56px,8vw,96px)}
+.val{background:var(--ink);color:var(--paper);border-radius:10px;padding:32px 28px 30px;display:grid;gap:14px;align-content:start;position:relative;overflow:hidden;transition:transform .5s var(--ease)}
+.val:hover{transform:translateY(-8px) rotate(-.6deg)}
+.val .k{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mari)}
+.val h3{font-size:clamp(26px,2.6vw,36px);letter-spacing:-.03em}
+.val p{color:var(--muted);font-size:16px}
+.val .big{position:absolute;right:-10px;bottom:-40px;font-size:180px;font-weight:900;letter-spacing:-.06em;color:rgba(244,246,243,.04);line-height:1;pointer-events:none;transition:color .5s,transform .6s var(--ease)}
+.val:hover .big{color:rgba(240,180,41,.14);transform:translateY(-14px)}
+@media (max-width:860px){.values{grid-template-columns:1fr}}
+
+/* service rows */
+.rows{border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:70px minmax(0,1.4fr) minmax(0,1fr) 150px 48px;gap:20px;align-items:center;padding:30px 0;border-bottom:1px solid var(--line);position:relative;isolation:isolate;transition:color .35s var(--ease),padding .45s var(--ease)}
+.row::before{content:"";position:absolute;inset:0 calc(var(--gut) * -1);background:var(--mari);transform:scaleY(0);transform-origin:50% 100%;transition:transform .45s var(--ease);z-index:-1}
+.row:hover{color:var(--ink);padding-inline:16px}
+.row:hover::before{transform:scaleY(1)}
+.row .n{font-family:var(--mono);font-size:13px;color:var(--muted);transition:color .3s}
+.row h3{font-size:clamp(24px,3vw,40px);letter-spacing:-.035em}
+.row p{font-size:15.5px;color:var(--muted);transition:color .3s}
+.row .pr{font-family:var(--mono);font-size:14px;text-align:right;font-variant-numeric:tabular-nums}
+.row .ar{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;transition:transform .45s var(--ease),background .3s,border-color .3s}
+.row:hover .n,.row:hover p{color:var(--ink)}
+.row:hover .ar{transform:rotate(-45deg);background:var(--ink);border-color:var(--ink);color:var(--mari)}
+@media (max-width:860px){.row{grid-template-columns:44px 1fr 44px;row-gap:6px}.row p{grid-column:2/3}.row .pr{grid-column:2/3;text-align:left}.row .ar{grid-row:1;grid-column:3;width:40px;height:40px}}
+
+/* horizontal process */
+.hscroll{position:relative}
+.hs-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:36px}
+.hs-track{display:flex;gap:20px;padding-inline:var(--gut);will-change:transform}
+.step{flex:0 0 min(78vw,560px);min-height:440px;border-radius:12px;padding:36px;display:flex;flex-direction:column;justify-content:space-between;gap:24px;background:var(--ink);border:1px solid var(--line);position:relative;overflow:hidden}
+.step:nth-child(2){background:var(--paper);color:var(--ink)}
+.step:nth-child(3){background:var(--mari);color:var(--ink)}
+.step:nth-child(4){background:var(--ink2)}
+.step .num{font-size:clamp(90px,12vw,170px);font-weight:900;letter-spacing:-.07em;line-height:.8}
+.step h3{font-size:clamp(28px,3vw,40px);letter-spacing:-.03em}
+.step p{opacity:.78;font-size:16px;max-width:40ch}
+.step .meta{display:flex;gap:10px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-size:12px;padding:6px 10px;border-radius:4px;border:1px solid currentColor;opacity:.85;white-space:nowrap}
+.hs-bar{height:3px;background:var(--line);margin-inline:var(--gut);border-radius:2px;overflow:hidden}
+.hs-bar b{display:block;height:100%;width:100%;background:var(--mari);transform-origin:0 50%;transform:scaleX(0)}
+.hs-top{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
+.hs-top h2{font-size:clamp(40px,6vw,88px);letter-spacing:-.045em;line-height:.94;margin-top:14px}
+@media (max-width:860px){.hs-sticky{position:static;height:auto;padding-block:88px}.hs-track{flex-direction:column;transform:none!important}.step{flex:auto;min-height:0}.hs-bar{display:none}}
+
+/* compare */
+.cmp{display:grid;gap:0;border-radius:12px;overflow:hidden;border:1px solid var(--line-l)}
+.cmp-hd{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 26px;background:var(--ink);color:var(--paper);flex-wrap:wrap}
+.toggle{display:inline-flex;background:var(--night);border-radius:40px;padding:5px;position:relative;border:1px solid var(--line)}
+.toggle button{position:relative;z-index:1;padding:10px 18px;border-radius:40px;font-size:14.5px;font-weight:600;color:var(--muted);transition:color .3s}
+.toggle button[aria-pressed="true"]{color:var(--ink)}
+.toggle .pill{position:absolute;top:5px;bottom:5px;left:5px;border-radius:40px;background:var(--mari);transition:transform .5s var(--ease),width .5s var(--ease)}
+.cmp-row{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);gap:24px;padding:24px 26px;border-top:1px solid var(--line-l);align-items:baseline;background:#fff}
+.cmp-row .q{font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--slate)}
+.cmp-row .a{font-size:clamp(19px,2vw,24px);font-weight:700;letter-spacing:-.02em;transition:opacity .3s,transform .4s var(--ease)}
+.cmp.agency .cmp-row .a{color:var(--slate);font-weight:500}
+.cmp-row .a.swap-out{opacity:0;transform:translateY(10px)}
+@media (max-width:640px){.cmp-row{grid-template-columns:1fr;gap:6px}}
+
+/* case cards */
+.cases{display:grid;grid-template-columns:repeat(12,1fr);gap:20px}
+.case{grid-column:span 6;display:grid;gap:18px;align-content:start;perspective:1200px}
+.case.wide{grid-column:span 12}
+.case.third{grid-column:span 4}
+@media (max-width:860px){.case,.case.wide,.case.third{grid-column:span 12}}
+.case .art{aspect-ratio:16/11;border-radius:12px;overflow:hidden;position:relative;transform-style:preserve-3d;transition:transform .5s var(--ease),box-shadow .5s;will-change:transform}
+.case.wide .art{aspect-ratio:21/9}
+.case:hover .art{box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
+.case .art svg{position:absolute;inset:0;width:100%;height:100%}
+.case .art .tag{position:absolute;left:18px;top:16px;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:4px;background:rgba(11,22,29,.8);color:var(--paper);transform:translateZ(40px)}
+.case .art .go{position:absolute;right:18px;bottom:18px;width:64px;height:64px;border-radius:50%;background:var(--paper);color:var(--ink);display:grid;place-items:center;transform:translateZ(60px) scale(0);transition:transform .45s var(--ease)}
+.case:hover .art .go{transform:translateZ(60px) scale(1)}
+.case .cap{display:flex;justify-content:space-between;gap:16px;align-items:baseline;flex-wrap:wrap}
+.case h3{font-size:clamp(24px,2.6vw,34px);letter-spacing:-.03em;max-width:22ch}
+.case .cap span{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.light .case .cap span{color:var(--slate)}
+.case .sub{color:var(--muted);font-size:15.5px;margin-top:-8px}
+
+/* quote placeholder */
+.quote{border:1.5px dashed rgba(240,180,41,.5);border-radius:12px;padding:clamp(28px,5vw,56px);display:grid;gap:20px}
+.quote blockquote{margin:0;font-size:clamp(26px,3.6vw,48px);font-weight:700;letter-spacing:-.03em;line-height:1.12}
+.quote .who{font-family:var(--mono);font-size:13px;color:var(--muted)}
+
+/* faq */
+.faq{border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:24px;align-items:center;padding:26px 0;font-size:clamp(19px,2.2vw,26px);font-weight:700;letter-spacing:-.02em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary i{flex:none;width:36px;height:36px;border-radius:50%;border:1.5px solid var(--line);position:relative;transition:transform .45s var(--ease),background .3s}
+.faq summary i::before,.faq summary i::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:2px;background:currentColor;margin:-1px 0 0 -6px}
+.faq summary i::after{transform:rotate(90deg);transition:transform .45s var(--ease)}
+.faq details[open] summary i{transform:rotate(180deg);background:var(--mari);color:var(--ink);border-color:var(--mari)}
+.faq details[open] summary i::after{transform:rotate(0)}
+.faq .ans{padding:0 0 28px;color:var(--muted);max-width:68ch}
+.light .faq,.light .faq details{border-color:var(--line-l)}
+.light .faq .ans{color:var(--slate)}
+
+/* big cta */
+.bigcta{padding-block:clamp(100px,14vw,200px);text-align:left;position:relative;overflow:hidden}
+.bigcta h2{font-size:clamp(56px,13vw,220px);line-height:.86;letter-spacing:-.06em}
+.bigcta h2 a{display:inline-block;position:relative}
+.bigcta h2 a::after{content:"";position:absolute;left:0;right:0;bottom:.04em;height:.1em;background:var(--mari);transform:scaleX(.18);transform-origin:0 50%;transition:transform .7s var(--ease)}
+.bigcta h2 a:hover::after{transform:scaleX(1)}
+.bigcta .row2{display:flex;gap:24px;align-items:center;flex-wrap:wrap;margin-top:40px}
+.copybox{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:6px;padding:8px 8px 8px 14px;font-family:var(--mono);font-size:14px;user-select:all;max-width:100%;flex-wrap:wrap}
+.copybox button{font-family:var(--sans);font-size:13px;font-weight:600;background:var(--ink2);padding:6px 12px;border-radius:4px;user-select:none}
+
+/* footer */
+.ftr{border-top:1px solid var(--line);padding-block:64px 32px;overflow:hidden}
+.ftr-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:32px}
+.ftr h4{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:14px}
+.ftr ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ftr a:hover{color:var(--mari)}
+.ftr .tagline{font-size:22px;font-weight:700;letter-spacing:-.02em;max-width:18ch}
+@media (max-width:860px){.ftr-grid{grid-template-columns:1fr 1fr}.ftr-grid>div:first-child{grid-column:1/-1}}
+.giant{display:flex;align-items:center;justify-content:space-between;font-size:clamp(64px,19vw,300px);font-weight:900;letter-spacing:-.07em;line-height:.8;margin-top:72px;user-select:none}
+.giant .gb{display:flex;gap:.07em;height:.72em;align-items:flex-start;padding-inline:.04em}
+.giant .gb b{width:.16em;height:100%;background:var(--paper);border-radius:.02em;display:block}
+.giant .gb b+b{background:var(--mari);transform:translateY(.12em)}
+@media (prefers-reduced-motion:no-preference){
+  @supports ((animation-timeline: view()) and (animation-range: entry)){
+    .giant .gb b+b{animation:drop auto linear both;animation-timeline:view();animation-range:entry 20% cover 60%}
+    @keyframes drop{from{transform:translateY(-.3em)}}
+  }
+}
+.legal{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:40px}
+
+/* page heroes (inner pages) */
+.phero{padding-block:clamp(150px,18vw,220px) clamp(56px,8vw,96px);position:relative;overflow:hidden}
+.phero h1{font-size:clamp(52px,10vw,168px);line-height:.88;letter-spacing:-.055em;margin-top:22px}
+.phero h1 .m{color:var(--mari)}
+.phero .lead{font-size:clamp(19px,2vw,24px);color:var(--muted);max-width:40ch;margin-top:32px;line-height:1.45}
+.phero .deco{position:absolute;right:calc(var(--gut) * -1);top:90px;width:min(40vw,520px);opacity:.9;pointer-events:none}
+@media (max-width:860px){.phero .deco{display:none}}
+
+/* services page */
+.svc{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.svc-card{border:1px solid var(--line);border-radius:12px;padding:32px;display:grid;gap:18px;align-content:start;position:relative;overflow:hidden;background:var(--ink);transition:border-color .3s,transform .5s var(--ease)}
+.svc-card:hover{border-color:rgba(240,180,41,.6);transform:translateY(-4px)}
+.svc-card::before{content:"";position:absolute;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(240,180,41,.22),transparent 65%);left:var(--mx,-400px);top:var(--my,-400px);transform:translate(-50%,-50%);pointer-events:none;transition:opacity .3s;opacity:0}
+.svc-card:hover::before{opacity:1}
+.svc-card .top{display:flex;justify-content:space-between;align-items:start;gap:16px}
+.svc-card .idx{font-family:var(--mono);font-size:13px;color:var(--mari)}
+.svc-card h3{font-size:clamp(26px,2.8vw,38px);letter-spacing:-.03em}
+.svc-card p{color:var(--muted)}
+.svc-card ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:15.5px}
+.svc-card li{display:flex;gap:10px}
+.svc-card li::before{content:"";flex:none;width:5px;height:12px;margin-top:6px;background:var(--mari);border-radius:1px}
+.price{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:18px;gap:12px;flex-wrap:wrap}
+.price b{font-size:28px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.price span{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.svc-card.feat{background:var(--mari);color:var(--ink);border-color:var(--mari)}
+.svc-card.feat p,.svc-card.feat .price span{color:rgba(19,35,46,.75)}
+.svc-card.feat .idx{color:var(--ink)}
+.svc-card.feat li::before{background:var(--ink)}
+.svc-card.feat .price{border-color:rgba(19,35,46,.2)}
+.svc-card.feat::before{background:radial-gradient(circle,rgba(255,255,255,.35),transparent 65%)}
+@media (max-width:860px){.svc{grid-template-columns:1fr}}
+.stack{display:flex;flex-wrap:wrap;gap:10px}
+.stack span{font-family:var(--mono);font-size:14px;padding:10px 16px;border:1px solid var(--line);border-radius:40px;transition:background .3s,color .3s,transform .4s var(--ease)}
+.stack span:hover{background:var(--mari);color:var(--ink);transform:translateY(-4px) rotate(-3deg)}
+
+/* process page timeline */
+.tl{position:relative;display:grid;gap:0}
+.tl::before{content:"";position:absolute;left:23px;top:0;bottom:0;width:2px;background:var(--line-l)}
+.tl-item{display:grid;grid-template-columns:48px minmax(0,1fr) minmax(0,1fr);gap:32px;padding-block:44px;position:relative}
+.tl-item .dot{width:48px;height:48px;border-radius:50%;background:var(--ink);color:var(--mari);display:grid;place-items:center;font-family:var(--mono);font-size:14px;position:relative;z-index:1}
+.tl-item h3{font-size:clamp(28px,3.4vw,48px);letter-spacing:-.035em}
+.tl-item .dur{font-family:var(--mono);font-size:13px;color:var(--mari-d);margin-top:10px;display:block}
+.tl-item p{color:var(--slate)}
+.tl-item .gets{display:grid;gap:10px;margin-top:4px}
+.tl-item .gets div{display:flex;gap:12px;align-items:baseline;padding:12px 16px;background:#fff;border:1px solid var(--line-l);border-radius:8px;font-weight:600;font-size:15.5px}
+.tl-item .gets div::before{content:"✓";font-family:var(--mono);color:var(--mari-d)}
+@media (max-width:860px){.tl-item{grid-template-columns:48px 1fr;gap:20px}.tl-item>div:last-child{grid-column:2}}
+
+/* work page filters */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:40px}
+.filters button{padding:10px 18px;border-radius:40px;border:1px solid var(--line);font-size:15px;font-weight:600;color:var(--muted);transition:all .3s}
+.filters button[aria-pressed="true"]{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.case[hidden]{display:none}
+
+/* case detail */
+.cd-hero{padding-block:clamp(140px,16vw,200px) 0;position:relative}
+.cd-hero .back{font-family:var(--mono);font-size:13px;color:var(--muted);display:inline-flex;gap:8px;align-items:center;margin-bottom:28px}
+.cd-hero .back:hover{color:var(--mari)}
+.cd-hero h1{font-size:clamp(44px,7.6vw,124px);line-height:.92;letter-spacing:-.05em;max-width:16ch}
+.cd-meta{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:56px}
+.cd-meta>div{padding:22px 20px 22px 0;display:grid;gap:4px}
+.cd-meta>div+div{padding-left:20px;border-left:1px solid var(--line)}
+.cd-meta span{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.cd-meta b{font-size:16px;font-weight:600}
+@media (max-width:760px){.cd-meta{grid-template-columns:1fr 1fr}.cd-meta>div:nth-child(3){padding-left:0;border-left:0}.cd-meta>div:nth-child(n+3){border-top:1px solid var(--line)}}
+.cd-art{margin-top:56px;aspect-ratio:21/9;border-radius:14px;overflow:hidden;position:relative}
+.cd-art svg{position:absolute;inset:0;width:100%;height:100%}
+@media (max-width:640px){.cd-art{aspect-ratio:4/3}}
+.cd-body{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:48px;padding-block:32px}
+.cd-body h2{font-size:clamp(28px,3.4vw,44px);letter-spacing:-.035em;position:sticky;top:100px;align-self:start}
+.cd-body p{font-size:clamp(18px,1.7vw,21px);line-height:1.6;color:var(--slate);max-width:60ch}
+.cd-block{border-top:1px solid var(--line-l);padding-block:48px}
+@media (max-width:760px){.cd-body{grid-template-columns:1fr;gap:16px}.cd-body h2{position:static}}
+.results{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.res{background:var(--ink);color:var(--paper);border-radius:12px;padding:30px;display:grid;gap:10px}
+.res b{font-size:clamp(44px,5.6vw,80px);font-weight:900;letter-spacing:-.05em;line-height:.9;color:var(--mari)}
+.res span{color:var(--muted)}
+@media (max-width:760px){.results{grid-template-columns:1fr}}
+.note{display:flex;gap:12px;align-items:flex-start;background:rgba(240,180,41,.12);border:1px solid rgba(240,180,41,.4);color:var(--paper);padding:14px 18px;border-radius:8px;font-size:14.5px;margin-top:28px;max-width:760px}
+.light .note{color:var(--ink);background:rgba(240,180,41,.2)}
+.note b{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--mari);text-transform:uppercase;flex:none;padding-top:2px}
+.light .note b{color:var(--mari-d)}
+.nextcase{display:flex;justify-content:space-between;align-items:center;gap:24px;padding-block:72px;border-top:1px solid var(--line);flex-wrap:wrap}
+.nextcase span{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.nextcase a{font-size:clamp(34px,6vw,84px);font-weight:800;letter-spacing:-.045em;line-height:1;display:inline-flex;gap:.3em;align-items:center;transition:color .3s}
+.nextcase a:hover{color:var(--mari)}
+.nextcase a i{font-style:normal;display:inline-block;transition:transform .5s var(--ease)}
+.nextcase a:hover i{transform:translateX(16px)}
+
+/* about */
+.about-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:56px;align-items:start}
+.portrait{aspect-ratio:4/5;border-radius:14px;background:var(--ink2);border:1.5px dashed rgba(240,180,41,.45);display:grid;place-items:center;text-align:center;padding:24px;position:relative;overflow:hidden;color:var(--muted);font-family:var(--mono);font-size:13px}
+.portrait svg{position:absolute;width:70%;opacity:.12}
+.about-grid .txt{display:grid;gap:22px}
+.about-grid .txt p{font-size:clamp(19px,1.8vw,22px);line-height:1.55;color:var(--muted)}
+.about-grid .txt p strong{color:var(--paper);font-weight:600}
+@media (max-width:860px){.about-grid{grid-template-columns:1fr}}
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.skill{border-top:2px solid var(--ink);padding-top:18px;display:grid;gap:8px}
+.skill h3{font-size:22px;letter-spacing:-.02em}
+.skill p{color:var(--slate);font-size:15.5px}
+
+/* contact */
+.contact-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:48px;align-items:start}
+@media (max-width:900px){.contact-grid{grid-template-columns:1fr}}
+.form{display:grid;gap:22px}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media (max-width:640px){.f2{grid-template-columns:1fr}}
+.field{display:grid;gap:8px}
+.field label,.field legend{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.field input,.field textarea{font:inherit;font-size:18px;color:var(--paper);background:transparent;border:0;border-bottom:1.5px solid var(--line);padding:12px 0;border-radius:0;transition:border-color .3s;width:100%}
+.field textarea{min-height:120px;resize:vertical}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--mari)}
+.field input::placeholder,.field textarea::placeholder{color:rgba(154,170,178,.55)}
+fieldset.field{border:0;padding:0;margin:0}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts input{position:absolute;opacity:0;pointer-events:none}
+.opts label{font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:15px;color:var(--paper);padding:10px 16px;border:1px solid var(--line);border-radius:40px;cursor:pointer;transition:all .25s}
+.opts input:checked+label{background:var(--mari);color:var(--ink);border-color:var(--mari)}
+.opts input:focus-visible+label{outline:2px solid var(--mari);outline-offset:2px}
+.sent{border:1px solid rgba(240,180,41,.5);border-radius:10px;padding:22px;display:grid;gap:6px;background:rgba(240,180,41,.08)}
+.side-card{background:var(--ink);border-radius:12px;padding:30px;display:grid;gap:22px;position:sticky;top:100px}
+.side-card h3{font-size:26px;letter-spacing:-.025em}
+.side-card ol{margin:0;padding:0;list-style:none;display:grid;gap:16px;counter-reset:s}
+.side-card li{display:grid;grid-template-columns:34px 1fr;gap:12px;counter-increment:s;color:var(--muted);font-size:15.5px}
+.side-card li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:12px;color:var(--mari);padding-top:3px}
+.side-card li b{color:var(--paper);display:block;font-size:16.5px}
+/* agency partner */
+.partner{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:48px;align-items:center;background:var(--ink);border:1px solid var(--line);border-radius:14px;padding:clamp(28px,5vw,64px);position:relative;overflow:hidden}
+.partner::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(240,180,41,.25),transparent 70%);pointer-events:none}
+.partner h2{font-size:clamp(34px,4.6vw,64px);letter-spacing:-.045em;line-height:.98;margin-top:18px}
+.partner h2 span{color:var(--mari)}
+.partner p{color:var(--muted);margin-top:20px;max-width:46ch;font-size:18px}
+.plist{list-style:none;margin:0;padding:0;display:grid;gap:0;border-top:1px solid var(--line)}
+.plist li{display:grid;gap:4px;padding:18px 0 18px 22px;border-bottom:1px solid var(--line);position:relative;transition:padding .4s var(--ease)}
+.plist li::before{content:"";position:absolute;left:0;top:24px;width:6px;height:14px;background:var(--mari);border-radius:1px}
+.plist li:hover{padding-left:30px}
+.plist b{font-size:18px}
+.plist span{color:var(--muted);font-size:15px}
+@media (max-width:860px){.partner{grid-template-columns:1fr;gap:28px}}
+.svc-card.wide{grid-column:1/-1;border-color:rgba(240,180,41,.45)}
+.wide-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start}
+@media (max-width:860px){.wide-in{grid-template-columns:1fr;gap:24px}}
+/* document cards */
+.docs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.doc{display:grid;gap:12px;align-content:start}
+.doc .sheet{aspect-ratio:4/3;background:#fff;border:1px solid var(--line-l);border-radius:10px;padding:26px 28px;display:flex;flex-direction:column;gap:12px;position:relative;box-shadow:10px 10px 0 -1px var(--mist),10px 10px 0 0 var(--line-l);transition:transform .5s var(--ease),box-shadow .5s var(--ease);margin-bottom:14px}
+.doc:hover .sheet{transform:translate(-6px,-6px) rotate(-1deg);box-shadow:18px 18px 0 -1px var(--mari),18px 18px 0 0 var(--mari)}
+.doc .sheet i{display:block;height:9px;width:100%;border-radius:3px;background:var(--mist)}
+.doc .sheet .dt{font-size:clamp(40px,4.4vw,60px);font-weight:900;letter-spacing:-.05em;line-height:1;color:var(--ink);margin-bottom:8px}
+.doc .sheet .dt::after{content:"";display:inline-block;width:.18em;height:.5em;background:var(--mari);margin-left:.12em;border-radius:2px}
+.doc h3{font-size:24px;letter-spacing:-.025em}
+.doc p{color:var(--slate);font-size:16px}
+.doc .for{font-family:var(--mono);font-size:12px;color:var(--mari-d);letter-spacing:.04em}
+@media (max-width:860px){.docs{grid-template-columns:1fr}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="arr" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</defs></svg>
+
+<div id="progress"></div>
+<div class="cur" aria-hidden="true"></div><div class="cur-ring" aria-hidden="true"></div>
+
+<header class="hdr" id="hdr">
+  <div class="wrap">
+    <a class="logo" href="#home" aria-label="Side by Side, αρχική">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect class="b1" x="10" y="6" width="17" height="44" rx="2.5" fill="#F4F6F3"/><rect class="b2" x="37" y="14" width="17" height="44" rx="2.5" fill="#F0B429"/></svg>
+      Side <span>by</span> Side
+    </a>
+    <nav class="nav" aria-label="Κύριο μενού">
+      <a href="#services">Υπηρεσίες</a>
+      <a href="#process">Πώς δουλεύω</a>
+      <a href="#work">Έργα</a>
+      <a href="#about">Ποιος είμαι</a>
+      <a href="#contact">Επικοινωνία</a>
+    </nav>
+    <a class="btn btn-m btn-sm mag" href="#contact">Κλείσε call <span class="bars"><b></b><b></b></span></a>
+    <button class="menu-btn" id="menuBtn" aria-label="Άνοιγμα μενού" aria-expanded="false"><b></b><b></b></button>
+  </div>
+</header>
+<div class="mobile" id="mobile">
+  <a href="#home"><small>00</small>Αρχική</a>
+  <a href="#services"><small>01</small>Υπηρεσίες</a>
+  <a href="#process"><small>02</small>Πώς δουλεύω</a>
+  <a href="#work"><small>03</small>Έργα</a>
+  <a href="#about"><small>04</small>Ποιος είμαι</a>
+  <a href="#contact"><small>05</small>Επικοινωνία</a>
+</div>
+
+<main id="main" tabindex="-1">
+
+<!-- ================= HOME ================= -->
+<div data-page="home">
+  <section class="hero">
+    <canvas id="field" aria-hidden="true"></canvas>
+    <div class="scrollcue" aria-hidden="true"><i><b></b><b></b></i>SCROLL</div>
+    <div class="wrap">
+      <span class="eyebrow fade" style="--d:0"><i><b></b><b></b></i>Τεχνικός συνεργάτης για επιχειρήσεις</span>
+      <h1 style="margin-top:28px">
+        <span class="ln"><span style="--i:0">Λύνω τα τεχνικά</span></span>
+        <span class="ln"><span style="--i:1">προβλήματα <span class="thin">που οι</span></span></span>
+        <span class="ln"><span style="--i:2"><span class="thin">άλλοι αφήνουν</span></span></span>
+        <span class="ln"><span style="--i:3" class="m">στη μέση.</span></span>
+      </h1>
+      <div class="hero-row">
+        <p class="swapline fade" style="--d:200">Το <span class="swap" id="swap">ERP</span> σου δεν μιλάει με τίποτα άλλο; Εκεί ξεκινάω. Ανάλυση, αρχιτεκτονική και κώδικας από τον ίδιο άνθρωπο.</p>
+        <div class="ctas fade" style="--d:350">
+          <a class="btn btn-m mag" href="#contact">Κλείσε discovery call <span class="bars"><b></b><b></b></span></a>
+          <a class="btn btn-g mag" href="#work">Δες τα έργα</a>
+        </div>
+      </div>
+      <div class="facts fade" style="--d:500">
+        <div><b data-count="1">1</b><span>υπεύθυνος, από την αρχή ως το τέλος</span></div>
+        <div><b><span data-count="6">6</span>–<span data-count="8">8</span></b><span>εβδομάδες Discovery με γραπτό πλάνο</span></div>
+        <div><b><span data-count="100">100</span><em>%</em></b><span>γραπτό scope πριν ξεκινήσουμε</span></div>
+        <div><b data-count="4">4</b><span>φάσεις, η καθεμία με γραπτό παραδοτέο</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="mqw">
+  <div class="marquee" aria-hidden="true"><div class="track" data-dup>
+    <span>Excel με 40 καρτέλες</span><span>Διπλοπληκτρολόγηση παραγγελιών</span><span>ERP που δεν συγχρονίζει</span><span>Προμηθευτής που εξαφανίστηκε</span><span>Legacy σύστημα που φοβάσαι να αγγίξεις</span>
+  </div></div>
+  <div class="marquee alt" aria-hidden="true"><div class="track" data-dup>
+    <span>ERP integrations</span><span>Next.js</span><span>Node</span><span>Astro</span><span>Custom e-shop</span><span>Αυτοματισμοί</span><span>Cloud</span>
+  </div></div>
+  </div>
+
+  <section class="sec mari-bg" style="margin-top:-60px;padding-top:clamp(140px,16vw,200px)">
+    <div class="wrap">
+      <span class="eyebrow"><i><b></b><b></b></i>Γιατί δουλεύω αλλιώς</span>
+      <p class="manifesto" data-words>Δεν πουλάω <span class="x">πακέτα.</span> Δεν εξαφανίζομαι μόλις υπογράψεις. Δεν γράφω ούτε μια γραμμή κώδικα πριν καταλάβω τι πρέπει να λύσει. Κάθομαι δίπλα σου, λέω τα πράγματα με το όνομά τους και μένω μέχρι να δουλέψει.</p>
+      <div class="values">
+        <article class="val rv"><span class="k">Trust</span><h3>Ένας υπεύθυνος. Όλα γραπτά.</h3><p>Scope, κόστος και χρονοδιάγραμμα τα έχεις στο χαρτί πριν ξεκινήσουμε. Αυτός που αναλύει είναι αυτός που χτίζει.</p><span class="big" aria-hidden="true">01</span></article>
+        <article class="val rv"><span class="k">Helpful</span><h3>Εξηγώ, δεν εντυπωσιάζω.</h3><p>Καταλαβαίνεις κάθε απόφαση και γιατί την παίρνουμε. Χωρίς ορολογία για να φανεί ότι κάτι είναι δύσκολο.</p><span class="big" aria-hidden="true">02</span></article>
+        <article class="val rv"><span class="k">Renegade</span><h3>Σπάω το template.</h3><p>Αν το έτοιμο εργαλείο σε περιορίζει, το λέω. Αν δεν χρειάζεσαι custom λύση, το λέω κι αυτό.</p><span class="big" aria-hidden="true">03</span></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-hd">
+        <div><span class="eyebrow"><i><b></b><b></b></i>Υπηρεσίες</span><h2 class="rv">Από την πρώτη ερώτηση ως το τελευταίο deploy.</h2></div>
+        <p class="rv">Ξεκινάς από όπου βρίσκεσαι. Με ένα Discovery, με μια αρχιτεκτονική που χρειάζεται δεύτερη ματιά, ή με ένα έργο που κόλλησε.</p>
+      </div>
+      <div class="rows">
+        <a class="row" href="#services"><span class="n">01</span><h3>Technical Discovery</h3><p>Χαρτογράφηση διαδικασιών και συστημάτων, γραπτό πλάνο.</p><span class="pr">6–8 εβδ.</span><span class="ar"><svg width="18" height="18"><use href="#arr"/></svg></span></a>
+        <a class="row" href="#services"><span class="n">02</span><h3>Αρχιτεκτονική λύσης</h3><p>Σχέδιο συστήματος πριν γραφτεί κώδικας.</p><span class="pr">2–3 εβδ.</span><span class="ar"><svg width="18" height="18"><use href="#arr"/></svg></span></a>
+        <a class="row" href="#services"><span class="n">03</span><h3>Custom υλοποίηση</h3><p>Next.js, Node, Astro, ERP integrations, custom e-shops.</p><span class="pr">ανά scope</span><span class="ar"><svg width="18" height="18"><use href="#arr"/></svg></span></a>
+        <a class="row" href="#services"><span class="n">04</span><h3>Fractional CTO</h3><p>Στρατηγικός τεχνικός συνεργάτης σε μηνιαία βάση.</p><span class="pr">μηνιαία</span><span class="ar"><svg width="18" height="18"><use href="#arr"/></svg></span></a>
+        <a class="row" href="#services"><span class="n">05</span><h3>Υποστήριξη</h3><p>Συντήρηση και βελτιώσεις μετά το launch.</p><span class="pr">μηνιαία</span><span class="ar"><svg width="18" height="18"><use href="#arr"/></svg></span></a>
+        <a class="row" href="#services"><span class="n">06</span><h3>Ανάλυση &amp; τεκμηρίωση</h3><p>Ανάλυση απαιτήσεων, BRD, FSD και RFP.</p><span class="pr">ανά έργο</span><span class="ar"><svg width="18" height="18"><use href="#arr"/></svg></span></a>
+        <a class="row" href="#services"><span class="n">07</span><h3>Project &amp; product management</h3><p>Διαχείριση έργου ή προϊόντος, από το πλάνο ως την παράδοση.</p><span class="pr">ανά έργο ή μήνα</span><span class="ar"><svg width="18" height="18"><use href="#arr"/></svg></span></a>
+        <a class="row" href="#services"><span class="n">08</span><h3>Για agencies</h3><p>Τεχνικός συνεργάτης για web, marketing και διαφημιστικά γραφεία.</p><span class="pr">ανά έργο</span><span class="ar"><svg width="18" height="18"><use href="#arr"/></svg></span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="partner rv">
+        <div>
+          <span class="eyebrow"><i><b></b><b></b></i>Για agencies</span>
+          <h2>Έχεις τον πελάτη και την ιδέα. <span>Εγώ τη χτίζω.</span></h2>
+          <p>Συνεργάζομαι ανά έργο με web, marketing και διαφημιστικά γραφεία. Μπαίνω στην ομάδα σου όταν το έργο χρειάζεται senior τεχνική δουλειά και φεύγω όταν παραδοθεί.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px"><a class="btn btn-m mag" href="#services">Πώς συνεργαζόμαστε <span class="bars"><b></b><b></b></span></a><a class="btn btn-g" href="#contact">Έχω έργο</a></div>
+        </div>
+        <ul class="plist">
+          <li><b>Εκτίμηση πριν την προσφορά</b><span>Scope και κόστος, για να δώσεις τιμή με σιγουριά.</span></li>
+          <li><b>Υλοποίηση</b><span>Sites, landing pages, campaign microsites, custom εφαρμογές.</span></li>
+          <li><b>Ανάλυση και διαχείριση</b><span>BRD, FSD και project management για έργα πελατών σου.</span></li>
+          <li><b>Τεχνικό setup καμπανιών</b><span>Integrations, φόρμες, tracking, συνδέσεις με CRM.</span></li>
+          <li><b>Με τους δικούς σου όρους</b><span>White-label ή co-branded, όπως συμφωνήσουμε.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="hscroll" id="hs">
+    <div class="hs-sticky">
+      <div class="wrap hs-top">
+        <div><span class="eyebrow"><i><b></b><b></b></i>Πώς δουλεύω</span><h2>Τέσσερα βήματα.<br>Κανένα άλμα στο κενό.</h2></div>
+        <a class="btn btn-g" href="#process">Όλη η διαδικασία <svg width="18" height="18"><use href="#arr"/></svg></a>
+      </div>
+      <div class="hs-track" id="hsTrack">
+        <article class="step"><div class="num">01</div><div><h3>Discovery</h3><p>Καθόμαστε μαζί και χαρτογραφούμε τι γίνεται σήμερα: διαδικασίες, συστήματα, άνθρωποι, πού χάνεται χρόνος.</p></div><div class="meta"><span class="chip">6–8 εβδομάδες</span></div></article>
+        <article class="step"><div class="num">02</div><div><h3>Αρχιτεκτονική</h3><p>Σχεδιάζω τη λύση και την περνάμε γραμμή γραμμή. Ξέρεις τι θα χτιστεί, με ποια σειρά και πόσο κοστίζει.</p></div><div class="meta"><span class="chip">2–3 εβδομάδες</span></div></article>
+        <article class="step"><div class="num">03</div><div><h3>Υλοποίηση</h3><p>Χτίζω σε μικρά, ορατά κομμάτια. Βλέπεις πρόοδο κάθε εβδομάδα, όχι ένα μεγάλο «ta-da» στο τέλος.</p></div><div class="meta"><span class="chip">ανά scope</span><span class="chip">εβδομαδιαία demos</span></div></article>
+        <article class="step"><div class="num">04</div><div><h3>Υποστήριξη</h3><p>Μένω μετά το launch. Διορθώσεις, βελτιώσεις και τεχνικές αποφάσεις με κάποιον που ξέρει το σύστημα απ' έξω.</p></div><div class="meta"><span class="chip">μηνιαία</span><span class="chip">ή retainer</span></div></article>
+      </div>
+      <div class="hs-bar"><b id="hsBar"></b></div>
+    </div>
+  </section>
+
+  <section class="sec light">
+    <div class="wrap">
+      <div class="sec-hd">
+        <div><span class="eyebrow"><i><b></b><b></b></i>Η διαφορά</span><h2 class="rv">Πακέτο ή κάποιος δίπλα σου;</h2></div>
+        <p class="rv">Πάτα τον διακόπτη. Οι ερωτήσεις είναι ίδιες, οι απαντήσεις όχι.</p>
+      </div>
+      <div class="cmp rv" id="cmp">
+        <div class="cmp-hd"><b>Ποιον θα έχεις απέναντι</b>
+          <div class="toggle" role="group" aria-label="Σύγκριση"><span class="pill" id="pill"></span><button type="button" aria-pressed="false" data-v="agency">Τυπική προσέγγιση</button><button type="button" aria-pressed="true" data-v="sbs">Side by Side</button></div>
+        </div>
+        <div class="cmp-row"><span class="q">Ποιος σου μιλάει</span><span class="a" data-agency="Ένας ενδιάμεσος που μεταφέρει μηνύματα" data-sbs="Αυτός που θα γράψει τον κώδικα">Αυτός που θα γράψει τον κώδικα</span></div>
+        <div class="cmp-row"><span class="q">Το πρώτο βήμα</span><span class="a" data-agency="Μια προσφορά σε δύο μέρες" data-sbs="Discovery με γραπτό πλάνο">Discovery με γραπτό πλάνο</span></div>
+        <div class="cmp-row"><span class="q">Η τιμή</span><span class="a" data-agency="Πακέτο «Basic, Pro, Premium»" data-sbs="Ανά scope, γραμμένη πριν ξεκινήσουμε">Ανά scope, γραμμένη πριν ξεκινήσουμε</span></div>
+        <div class="cmp-row"><span class="q">Μετά το launch</span><span class="a" data-agency="Νέα προσφορά για κάθε αλλαγή" data-sbs="Υποστήριξη ή retainer με τον ίδιο άνθρωπο">Υποστήριξη ή retainer με τον ίδιο άνθρωπο</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-hd">
+        <div><span class="eyebrow"><i><b></b><b></b></i>Επιλεγμένα έργα</span><h2 class="rv">Πράγματα που έχτισα και τρέχουν.</h2></div>
+        <p class="rv">Τα δικά μου προϊόντα είναι η καλύτερη απόδειξη: τα σχεδίασα, τα έχτισα και τα συντηρώ.</p>
+      </div>
+      <div class="cases" id="homeCases"></div>
+      <div style="margin-top:48px"><a class="btn btn-g mag" href="#work">Όλα τα έργα <svg width="18" height="18"><use href="#arr"/></svg></a></div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="quote rv">
+        <span class="eyebrow"><i><b></b><b></b></i>Τι λένε οι πελάτες</span>
+        <blockquote>«<span class="ph">Εδώ μπαίνει πραγματική κριτική πελάτη, με άδειά του. Μία πρόταση για το πρόβλημα, μία για το αποτέλεσμα.</span>»</blockquote>
+        <span class="who">[Όνομα] · [Ρόλος] · [Εταιρεία]</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec light">
+    <div class="wrap">
+      <div class="sec-hd"><div><span class="eyebrow"><i><b></b><b></b></i>Συχνές ερωτήσεις</span><h2 class="rv">Πριν μου στείλεις.</h2></div></div>
+      <div class="faq">
+        <details><summary>Γιατί να πληρώσω Discovery πριν την υλοποίηση;<i></i></summary><div class="ans">Γιατί τα περισσότερα έργα που αποτυγχάνουν δεν αποτυγχάνουν στον κώδικα, αλλά στο τι αποφασίστηκε να χτιστεί. Στο Discovery φεύγεις με γραπτό πλάνο, κόστος και χρονοδιάγραμμα. Είναι δικό σου, ακόμα κι αν δεν συνεχίσουμε μαζί.</div></details>
+        <details><summary>Δουλεύεις μόνος σου;<i></i></summary><div class="ans">Ναι, και αυτό είναι το πλεονέκτημα. Αν ένα έργο χρειαστεί επιπλέον ανθρώπους, το ξέρεις από την αρχή και η ευθύνη μένει σε μένα.</div></details>
+        <details><summary>Φτιάχνεις και απλά websites;<i></i></summary><div class="ans">Για απλά sites μικρών επιχειρήσεων υπάρχει το ftiaxesite.gr. Εδώ αναλαμβάνω έργα όπου το site είναι μέρος ενός μεγαλύτερου συστήματος: ERP, αποθήκη, B2B παραγγελίες, αυτοματισμοί.</div></details>
+        <details><summary>Τι είναι BRD, FSD και RFP και ποιο χρειάζομαι;<i></i></summary><div class="ans">Το BRD περιγράφει τι χρειάζεται η επιχείρηση και γιατί. Το FSD περιγράφει πώς θα δουλεύει το σύστημα, ώστε ο developer να ξέρει ακριβώς τι χτίζει. Το RFP είναι το έγγραφο που στέλνεις σε προμηθευτές για να πάρεις προσφορές που συγκρίνονται μεταξύ τους. Αν δεν ξέρεις ποιο χρειάζεσαι, το βρίσκουμε μαζί σε ένα call.</div></details>
+        <details><summary>Συνεργάζεσαι με agencies;<i></i></summary><div class="ans">Ναι. Με web, marketing και διαφημιστικά γραφεία, ανά έργο. Εσείς έχετε τον πελάτη και τη δημιουργική ιδέα, εγώ αναλαμβάνω το τεχνικό κομμάτι, από την εκτίμηση πριν την προσφορά μέχρι την παράδοση.</div></details>
+        <details><summary>Τι γίνεται αν έχω ήδη έργο που κόλλησε;<i></i></summary><div class="ans">Ξεκινάμε με τεχνική συμβουλευτική με την ώρα. Κοιτάω τι υπάρχει, σου λέω ειλικρινά αν σώζεται και τι θα κοστίσει.</div></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="bigcta">
+    <div class="wrap">
+      <span class="eyebrow"><i><b></b><b></b></i>Επόμενο βήμα</span>
+      <h2 style="margin-top:24px"><a href="#contact" class="mag-soft">Ας το λύσουμε</a><br><span style="color:var(--mari)">μαζί.</span></h2>
+      <div class="row2">
+        <a class="btn btn-m mag" href="#contact">Κλείσε discovery call <span class="bars"><b></b><b></b></span></a>
+        <span class="copybox"><span>dgeronikolos@sidebysideweb.gr</span><button type="button" data-copy="dgeronikolos@sidebysideweb.gr">Αντιγραφή</button></span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= SERVICES ================= -->
+<div data-page="services" hidden>
+  <section class="phero">
+    <div class="wrap">
+      <span class="eyebrow fade"><i><b></b><b></b></i>Υπηρεσίες</span>
+      <h1><span class="ln"><span style="--i:0">Ό,τι χρειάζεται</span></span><span class="ln"><span style="--i:1">για να <span class="m">δουλέψει.</span></span></span></h1>
+      <p class="lead fade" style="--d:200">Πολλοί τρόποι να δουλέψουμε μαζί. Όλοι ξεκινούν από το ίδιο σημείο: να καταλάβω πρώτα το πρόβλημα.</p>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="svc">
+        <article class="svc-card feat rv"><div class="top"><span class="idx">01 · Εδώ ξεκινούν οι περισσότεροι</span></div><h3>Technical Discovery &amp; Ανάλυση</h3><p>Χαρτογραφούμε μαζί διαδικασίες, συστήματα και ανθρώπους. Βρίσκουμε πού χάνεται χρόνος και χρήμα.</p><ul><li>Συνεντεύξεις με την ομάδα σου</li><li>Χάρτης συστημάτων και ροών δεδομένων</li><li>Γραπτό πλάνο με προτεραιότητες, κόστος, χρονοδιάγραμμα</li></ul><div class="price"><b>6–8 εβδομάδες</b><span>σταθερό scope, γραπτή προσφορά</span></div></article>
+        <article class="svc-card rv"><div class="top"><span class="idx">02</span></div><h3>Solution Design &amp; Αρχιτεκτονική</h3><p>Σχεδιάζω το σύστημα πριν γραφτεί κώδικας, ώστε να μη χτίσουμε δύο φορές.</p><ul><li>Αρχιτεκτονική και επιλογή τεχνολογιών</li><li>Integrations με ERP, CRM, αποθήκη</li><li>Τεχνικό έγγραφο που μπορεί να υλοποιήσει οποιοσδήποτε</li></ul><div class="price"><b>2–3 εβδομάδες</b><span>γραπτή προσφορά μετά το πρώτο call</span></div></article>
+        <article class="svc-card rv"><div class="top"><span class="idx">03</span></div><h3>Custom υλοποίηση</h3><p>Χτίζω αυτό που σχεδιάσαμε, σε μικρά κομμάτια που βλέπεις να δουλεύουν κάθε εβδομάδα.</p><ul><li>Web εφαρμογές και custom e-shops</li><li>ERP integrations και αυτοματισμοί</li><li>Next.js, Node, Astro, Cloud</li></ul><div class="price"><b>ανά scope</b><span>τιμή γραπτή πριν ξεκινήσουμε</span></div></article>
+        <article class="svc-card rv"><div class="top"><span class="idx">04</span></div><h3>Strategic Retainer / Fractional CTO</h3><p>Ένας senior τεχνικός δίπλα στη διοίκηση, χωρίς το κόστος πλήρους απασχόλησης.</p><ul><li>Τεχνικές αποφάσεις και roadmap</li><li>Αξιολόγηση προμηθευτών και προσφορών</li><li>Επίβλεψη ομάδων και έργων</li></ul><div class="price"><b>μηνιαία συνεργασία</b><span>ελάχιστο 6 μήνες</span></div></article>
+        <article class="svc-card rv"><div class="top"><span class="idx">05</span></div><h3>Τεχνική συμβουλευτική</h3><p>Μια δεύτερη γνώμη όταν τη χρειάζεσαι: σε προσφορά, σε έργο που κόλλησε, σε απόφαση.</p><ul><li>Code και architecture review</li><li>Έλεγχος προσφορών τρίτων</li><li>Χωρίς δέσμευση</li></ul><div class="price"><b>με την ώρα</b><span>κατά παραγγελία</span></div></article>
+        <article class="svc-card rv"><div class="top"><span class="idx">06</span></div><h3>Υποστήριξη μετά την υλοποίηση</h3><p>Το σύστημά σου μένει ζωντανό, ασφαλές και βελτιώνεται με τον χρόνο.</p><ul><li>Updates, monitoring, backups</li><li>Μικρές βελτιώσεις κάθε μήνα</li><li>Άμεση επικοινωνία με αυτόν που το έχτισε</li></ul><div class="price"><b>μηνιαία</b><span>ανάλογα με το σύστημα</span></div></article>
+        <article class="svc-card rv"><div class="top"><span class="idx">07</span></div><h3>Ανάλυση απαιτήσεων &amp; τεκμηρίωση</h3><p>Γράφω αυτό που πρέπει να χτιστεί, με τρόπο που καταλαβαίνουν και η διοίκηση και οι developers.</p><ul><li>Ανάλυση απαιτήσεων με όλους τους εμπλεκόμενους</li><li>BRD (Business Requirements Document)</li><li>FSD (Functional Specification Document)</li><li>RFP για να πάρεις συγκρίσιμες προσφορές από προμηθευτές</li></ul><div class="price"><b>ανά έργο</b><span>τιμή γραπτή πριν ξεκινήσουμε</span></div></article>
+        <article class="svc-card rv"><div class="top"><span class="idx">08</span></div><h3>Project &amp; product management</h3><p>Κρατάω το έργο ή το προϊόν σε τροχιά: πλάνο, προτεραιότητες, ομάδες και προμηθευτές.</p><ul><li>Project management από το kick-off ως την παράδοση</li><li>Product management, roadmap και backlog</li><li>Συντονισμός developers, designers και τρίτων</li><li>Αναφορές προόδου που διαβάζονται σε δύο λεπτά</li></ul><div class="price"><b>ανά έργο ή μήνα</b><span>ανάλογα με τη διάρκεια</span></div></article>
+        <article class="svc-card wide rv"><div class="wide-in"><div style="display:grid;gap:18px;align-content:start"><div class="top"><span class="idx">09 · Για agencies</span></div><h3>Τεχνικός συνεργάτης για agencies</h3><p>Για web, marketing και διαφημιστικά γραφεία που έχουν τον πελάτη και τη δημιουργική ιδέα, και χρειάζονται κάποιον να τη χτίσει σωστά. Συνεργασία ανά έργο, χωρίς μόνιμη δέσμευση.</p><div class="price"><b>ανά έργο</b><span>τιμή γραπτή πριν ξεκινήσουμε</span></div></div><ul><li>Τεχνική εκτίμηση και scope πριν δώσεις προσφορά στον πελάτη σου</li><li>Ανάπτυξη sites, landing pages και campaign microsites</li><li>Integrations, φόρμες, tracking και συνδέσεις με CRM</li><li>Custom εφαρμογές και εργαλεία για πελάτες σου</li><li>Ανάλυση απαιτήσεων, BRD και FSD για έργα πελατών σου</li><li>Project ή product management στο τεχνικό κομμάτι</li><li>White-label ή co-branded, όπως συμφωνήσουμε</li><li>Ένα σημείο επαφής για όλο το τεχνικό κομμάτι</li></ul></div></article>
+      </div>
+    </div>
+  </section>
+  <section class="sec light">
+    <div class="wrap">
+      <div class="sec-hd"><div><span class="eyebrow"><i><b></b><b></b></i>Έγγραφα που γράφω</span><h2 class="rv">Πριν από τον κώδικα, το χαρτί.</h2></div><p class="rv">Τα περισσότερα έργα κολλάνε επειδή κανείς δεν έγραψε καθαρά τι πρέπει να γίνει. Αυτά τα τρία έγγραφα το λύνουν.</p></div>
+      <div class="docs">
+        <article class="doc rv"><div class="sheet"><span class="dt">BRD</span><i></i><i></i><i style="width:60%"></i><i></i><i style="width:75%"></i></div><h3>Business Requirements</h3><p>Τι χρειάζεται η επιχείρηση και γιατί. Στόχοι, διαδικασίες, χρήστες και πώς θα μετρήσουμε αν πέτυχε.</p><span class="for">Για: διοίκηση, stakeholders</span></article>
+        <article class="doc rv"><div class="sheet"><span class="dt">FSD</span><i></i><i style="width:70%"></i><i></i><i style="width:50%"></i><i></i></div><h3>Functional Specification</h3><p>Πώς θα δουλεύει το σύστημα. Λειτουργίες, ροές, κανόνες, οθόνες και integrations, ώστε κάθε developer να ξέρει τι χτίζει.</p><span class="for">Για: developers, agencies</span></article>
+        <article class="doc rv"><div class="sheet"><span class="dt">RFP</span><i></i><i></i><i style="width:80%"></i><i style="width:55%"></i><i></i></div><h3>Request for Proposal</h3><p>Το έγγραφο που στέλνεις σε προμηθευτές. Scope, απαιτήσεις και κριτήρια αξιολόγησης, για προσφορές που συγκρίνονται μεταξύ τους.</p><span class="for">Για: εταιρείες που ψάχνουν προμηθευτή</span></article>
+      </div>
+    </div>
+  </section>
+  <section class="sec light" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-hd"><div><span class="eyebrow"><i><b></b><b></b></i>Τεχνολογίες</span><h2 class="rv">Εργαλεία που διαλέγω για τον σκοπό, όχι από συνήθεια.</h2></div></div>
+      <div class="stack" style="--line:var(--line-l)">
+        <span>Next.js</span><span>React</span><span>Node.js</span><span>Astro</span><span>TypeScript</span><span>REST &amp; GraphQL APIs</span><span>ERP integrations</span><span>Headless CMS</span><span>Cloud hosting</span><span>Αυτοματισμοί ροών</span><span>Custom e-shops</span><span class="ph">[+ δικά σου]</span>
+      </div>
+    </div>
+  </section>
+  <section class="bigcta"><div class="wrap"><h2><a href="#contact">Δεν ξέρεις</a><br><span style="color:var(--mari)">από πού να ξεκινήσεις;</span></h2><div class="row2"><a class="btn btn-m mag" href="#contact">Πες μου το πρόβλημα <span class="bars"><b></b><b></b></span></a></div></div></section>
+</div>
+
+<!-- ================= PROCESS ================= -->
+<div data-page="process" hidden>
+  <section class="phero">
+    <div class="wrap">
+      <span class="eyebrow fade"><i><b></b><b></b></i>Πώς δουλεύω</span>
+      <h1><span class="ln"><span style="--i:0">Πρώτα καταλαβαίνω.</span></span><span class="ln"><span style="--i:1" class="m">Μετά χτίζω.</span></span></h1>
+      <p class="lead fade" style="--d:200">Μια διαδικασία σε τέσσερις φάσεις, όπου σε κάθε βήμα ξέρεις τι παίρνεις, πόσο κοστίζει και τι ακολουθεί.</p>
+    </div>
+  </section>
+  <section class="sec light">
+    <div class="wrap">
+      <div class="tl">
+        <div class="tl-item rv"><span class="dot">01</span><div><h3>Discovery</h3><span class="dur">6–8 εβδομάδες</span></div><div><p>Μιλάω με τους ανθρώπους που κάνουν τη δουλειά κάθε μέρα, όχι μόνο με τη διοίκηση. Χαρτογραφώ τα συστήματα, τα δεδομένα και τα σημεία όπου κάτι γίνεται με το χέρι.</p><div class="gets" style="margin-top:18px"><div>Χάρτης διαδικασιών και συστημάτων</div><div>Λίστα προβλημάτων με προτεραιότητα</div><div>Γραπτό πλάνο, κόστος, χρονοδιάγραμμα</div></div></div></div>
+        <div class="tl-item rv"><span class="dot">02</span><div><h3>Αρχιτεκτονική</h3><span class="dur">2–3 εβδομάδες</span></div><div><p>Σχεδιάζω τη λύση: τι χτίζουμε, τι αγοράζουμε έτοιμο, πώς μιλάνε τα συστήματα μεταξύ τους. Το περνάμε μαζί μέχρι να είναι ξεκάθαρο.</p><div class="gets" style="margin-top:18px"><div>Αρχιτεκτονικό διάγραμμα</div><div>Επιλογή τεχνολογιών με αιτιολόγηση</div><div>Πλάνο υλοποίησης σε φάσεις</div></div></div></div>
+        <div class="tl-item rv"><span class="dot">03</span><div><h3>Υλοποίηση</h3><span class="dur">ανά scope</span></div><div><p>Χτίζω σε σύντομους κύκλους. Κάθε εβδομάδα βλέπεις κάτι που δουλεύει και μπορείς να αλλάξεις κατεύθυνση νωρίς, όταν κοστίζει λίγο.</p><div class="gets" style="margin-top:18px"><div>Εβδομαδιαίο demo</div><div>Staging environment για δοκιμές</div><div>Τεκμηρίωση και παράδοση</div></div></div></div>
+        <div class="tl-item rv"><span class="dot">04</span><div><h3>Υποστήριξη</h3><span class="dur">μηνιαία ή retainer</span></div><div><p>Μετά το launch δεν εξαφανίζομαι. Παρακολουθώ, διορθώνω και βελτιώνω, και είμαι εκεί όταν πρέπει να πάρεις την επόμενη τεχνική απόφαση.</p><div class="gets" style="margin-top:18px"><div>Monitoring και backups</div><div>Μηνιαίες βελτιώσεις</div><div>Απευθείας επικοινωνία</div></div></div></div>
+      </div>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-hd"><div><span class="eyebrow"><i><b></b><b></b></i>Κανόνες</span><h2 class="rv">Τρία πράγματα που δεν κάνω ποτέ.</h2></div></div>
+      <div class="values" style="margin-top:0">
+        <article class="val rv" style="background:var(--ink2)"><span class="k">Κανόνας 1</span><h3>Δεν ξεκινάω χωρίς γραπτό scope.</h3><p>Αν δεν μπορούμε να το γράψουμε, δεν μπορούμε να το κοστολογήσουμε σωστά.</p><span class="big" aria-hidden="true">✕</span></article>
+        <article class="val rv" style="background:var(--ink2)"><span class="k">Κανόνας 2</span><h3>Δεν κρύβω κακά νέα.</h3><p>Αν κάτι καθυστερεί ή κοστίζει περισσότερο, το μαθαίνεις την ίδια μέρα που το μαθαίνω.</p><span class="big" aria-hidden="true">✕</span></article>
+        <article class="val rv" style="background:var(--ink2)"><span class="k">Κανόνας 3</span><h3>Δεν πουλάω ό,τι δεν χρειάζεσαι.</h3><p>Αν ένα έτοιμο εργαλείο κάνει τη δουλειά, θα το ακούσεις από μένα πρώτα.</p><span class="big" aria-hidden="true">✕</span></article>
+      </div>
+    </div>
+  </section>
+  <section class="bigcta"><div class="wrap"><h2><a href="#contact">Ξεκίνα με</a><br><span style="color:var(--mari)">ένα call.</span></h2><div class="row2"><a class="btn btn-m mag" href="#contact">Κλείσε discovery call <span class="bars"><b></b><b></b></span></a></div></div></section>
+</div>
+
+<!-- ================= WORK ================= -->
+<div data-page="work" hidden>
+  <section class="phero">
+    <div class="wrap">
+      <span class="eyebrow fade"><i><b></b><b></b></i>Έργα</span>
+      <h1><span class="ln"><span style="--i:0">Όχι mockups.</span></span><span class="ln"><span style="--i:1" class="m">Συστήματα που τρέχουν.</span></span></h1>
+      <p class="lead fade" style="--d:200">Δικά μου προϊόντα και έργα πελατών. Για το καθένα: το πρόβλημα, τι αποφασίσαμε και τι άλλαξε.</p>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="filters" role="group" aria-label="Φίλτρο έργων">
+        <button type="button" aria-pressed="true" data-f="all">Όλα</button>
+        <button type="button" aria-pressed="false" data-f="product">Δικά μου προϊόντα</button>
+        <button type="button" aria-pressed="false" data-f="client">Έργα πελατών</button>
+      </div>
+      <div class="cases" id="workCases"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= CASE DETAIL ================= -->
+<div data-page="case" hidden><div id="caseMount"></div></div>
+
+<!-- ================= ABOUT ================= -->
+<div data-page="about" hidden>
+  <section class="phero">
+    <div class="wrap">
+      <span class="eyebrow fade"><i><b></b><b></b></i>Ποιος είμαι</span>
+      <h1><span class="ln"><span style="--i:0">Ένας άνθρωπος.</span></span><span class="ln"><span style="--i:1" class="m">Ξεκάθαρη ευθύνη.</span></span></h1>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="wrap about-grid">
+      <div class="portrait rv"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="6" width="17" height="44" rx="2.5" fill="#F4F6F3"/><rect x="37" y="14" width="17" height="44" rx="2.5" fill="#F0B429"/></svg><span>[Φωτογραφία σου εδώ]<br>4:5, φυσικό φως, όχι stock</span></div>
+      <div class="txt">
+        <p class="rv"><strong>Είμαι ο <span class="ph">[Όνομα Επώνυμο]</span>.</strong> Δουλεύω με επιχειρήσεις που έχουν ξεπεράσει τα έτοιμα εργαλεία και χρειάζονται κάποιον να δει την εικόνα ολόκληρη: τις διαδικασίες, τα συστήματα και τον κώδικα.</p>
+        <p class="rv">Ξεκινάω πάντα από την ανάλυση. Έχω δουλέψει ως <strong>business analyst, project και product manager</strong> και ως developer, οπότε μπορώ να μιλήσω με τη διοίκηση το πρωί και να γράψω τον κώδικα το απόγευμα.</p>
+        <p class="rv">Το Side by Side το έστησα για να δουλεύω όπως θα ήθελα να δουλεύουν μαζί μου: δίπλα στον πελάτη, με γραπτές δεσμεύσεις και χωρίς μεσάζοντες. <span class="ph">[1–2 προτάσεις για την πορεία σου, χρόνια εμπειρίας, κλάδους]</span></p>
+        <div class="rv" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px"><a class="btn btn-m mag" href="#contact">Ας γνωριστούμε <span class="bars"><b></b><b></b></span></a><a class="btn btn-g" href="#work">Δες τι έχω χτίσει</a></div>
+      </div>
+    </div>
+  </section>
+  <section class="sec light">
+    <div class="wrap">
+      <div class="sec-hd"><div><span class="eyebrow"><i><b></b><b></b></i>Τι φέρνω στο τραπέζι</span><h2 class="rv">Τέσσερις ρόλοι, ένας άνθρωπος.</h2></div><p class="rv">Συνήθως είναι τέσσερις διαφορετικοί άνθρωποι. Εδώ είναι ένας, οπότε τίποτα δεν χάνεται στη μετάφραση.</p></div>
+      <div class="skills">
+        <div class="skill rv"><h3>Business analysis</h3><p>Καταλαβαίνω πώς δουλεύει η επιχείρησή σου και πού πονάει.</p></div>
+        <div class="skill rv"><h3>Requirements</h3><p>Γράφω τι πρέπει να χτιστεί, ώστε να μην υπάρχουν παρεξηγήσεις.</p></div>
+        <div class="skill rv"><h3>Project &amp; product management</h3><p>Κρατάω το έργο σε χρόνο και budget, και το προϊόν στον σωστό δρόμο.</p></div>
+        <div class="skill rv"><h3>Development</h3><p>Χτίζω και συντηρώ τη λύση, από το front-end ως τα integrations.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-hd"><div><span class="eyebrow"><i><b></b><b></b></i>Δικά μου προϊόντα</span><h2 class="rv">Δεν συμβουλεύω μόνο. Χτίζω και τρέχω τα δικά μου.</h2></div></div>
+      <div class="rows">
+        <a class="row" href="#case-kollekta"><span class="n">01</span><h3>kollekta.gr</h3><p>Πλατφόρμα για εταιρείες μόδας που μοιράζονται φωτογραφίες προϊόντων.</p><span class="pr">SaaS</span><span class="ar"><svg width="18" height="18"><use href="#arr"/></svg></span></a>
+        <a class="row" href="#case-ftiaxesite"><span class="n">02</span><h3>ftiaxesite.gr</h3><p>Websites για μικρές επιχειρήσεις.</p><span class="pr">Υπηρεσία</span><span class="ar"><svg width="18" height="18"><use href="#arr"/></svg></span></a>
+        <a class="row" href="#case-audit"><span class="n">03</span><h3>Audit tool</h3><p>Δωρεάν τεχνικός έλεγχος site.</p><span class="pr">Εργαλείο</span><span class="ar"><svg width="18" height="18"><use href="#arr"/></svg></span></a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= CONTACT ================= -->
+<div data-page="contact" hidden>
+  <section class="phero">
+    <div class="wrap">
+      <span class="eyebrow fade"><i><b></b><b></b></i>Επικοινωνία</span>
+      <h1><span class="ln"><span style="--i:0">Πες μου τι</span></span><span class="ln"><span style="--i:1" class="m">σε δυσκολεύει.</span></span></h1>
+      <p class="lead fade" style="--d:200">Όχι brief, όχι RFP. Γράψε με δικά σου λόγια τι δεν δουλεύει. Απαντάω μέσα σε <span class="ph">[Χ]</span> εργάσιμες.</p>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="wrap contact-grid">
+      <form class="form" id="form" novalidate>
+        <div class="f2">
+          <div class="field"><label for="f-name">Όνομα</label><input id="f-name" name="name" autocomplete="name" placeholder="Μαρία Παπαδοπούλου" required></div>
+          <div class="field"><label for="f-mail">Email</label><input id="f-mail" name="email" type="email" autocomplete="email" placeholder="maria@etairia.gr" required></div>
+        </div>
+        <div class="field"><label for="f-co">Εταιρεία</label><input id="f-co" name="company" autocomplete="organization" placeholder="Όνομα εταιρείας και τι κάνει"></div>
+        <fieldset class="field"><legend>Τι χρειάζεσαι</legend>
+          <div class="opts" style="margin-top:10px">
+            <input type="checkbox" id="o1" name="need" value="discovery"><label for="o1">Discovery</label>
+            <input type="checkbox" id="o2" name="need" value="arch"><label for="o2">Αρχιτεκτονική</label>
+            <input type="checkbox" id="o3" name="need" value="build"><label for="o3">Υλοποίηση</label>
+            <input type="checkbox" id="o4" name="need" value="cto"><label for="o4">Fractional CTO</label>
+            <input type="checkbox" id="o5" name="need" value="rescue"><label for="o5">Έργο που κόλλησε</label>
+            <input type="checkbox" id="o8" name="need" value="docs"><label for="o8">BRD / FSD / RFP</label>
+            <input type="checkbox" id="o9" name="need" value="pm"><label for="o9">Project / product management</label>
+            <input type="checkbox" id="o7" name="need" value="agency"><label for="o7">Συνεργασία ως agency</label>
+            <input type="checkbox" id="o6" name="need" value="unsure"><label for="o6">Δεν ξέρω ακόμα</label>
+          </div>
+        </fieldset>
+        <fieldset class="field"><legend>Ενδεικτικό budget</legend>
+          <div class="opts" style="margin-top:10px">
+            <input type="radio" id="b1" name="budget" value="1"><label for="b1">έως €5.000</label>
+            <input type="radio" id="b2" name="budget" value="2"><label for="b2">€5–15.000</label>
+            <input type="radio" id="b3" name="budget" value="3"><label for="b3">€15–40.000</label>
+            <input type="radio" id="b4" name="budget" value="4"><label for="b4">€40.000+</label>
+          </div>
+        </fieldset>
+        <div class="field"><label for="f-msg">Τι δεν δουλεύει σήμερα;</label><textarea id="f-msg" name="msg" placeholder="Π.χ. οι παραγγελίες από το e-shop περνάνε με το χέρι στο ERP και χάνουμε 2 ώρες τη μέρα." required></textarea></div>
+        <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><button class="btn btn-m mag" type="submit">Στείλε μήνυμα <span class="bars"><b></b><b></b></span></button><span style="font-size:13.5px;color:var(--muted)">Χωρίς newsletter. Χωρίς follow-up spam.</span></div>
+        <div class="sent" id="sent" hidden><b>Το μήνυμα είναι έτοιμο.</b><span style="color:var(--muted);font-size:15px">Αυτό είναι prototype, οπότε η φόρμα δεν στέλνει ακόμα. Στο live site θα συνδεθεί με email ή CRM.</span></div>
+      </form>
+      <aside class="side-card">
+        <h3>Τι γίνεται μετά</h3>
+        <ol>
+          <li><div><b>Διαβάζω το μήνυμά σου</b>Προσωπικά, όχι bot.</div></li>
+          <li><div><b>Call 30 λεπτών</b>Χωρίς κόστος. Καταλαβαίνω το πρόβλημα και σου λέω αν μπορώ να βοηθήσω.</div></li>
+          <li><div><b>Γραπτή πρόταση</b>Συνήθως για Discovery, με σαφές scope και τιμή.</div></li>
+        </ol>
+        <div style="border-top:1px solid var(--line);padding-top:20px;display:grid;gap:10px">
+          <span class="eyebrow">Ή κατευθείαν</span>
+          <span class="copybox"><span>dgeronikolos@sidebysideweb.gr</span><button type="button" data-copy="dgeronikolos@sidebysideweb.gr">Αντιγραφή</button></span>
+        </div>
+      </aside>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-grid">
+      <div><p class="tagline">Δίπλα σου, από την ανάλυση ως τον κώδικα.</p><p style="color:var(--muted);font-size:15px;margin-top:12px">Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.</p></div>
+      <div><h4>Σελίδες</h4><ul><li><a href="#services">Υπηρεσίες</a></li><li><a href="#process">Πώς δουλεύω</a></li><li><a href="#work">Έργα</a></li><li><a href="#about">Ποιος είμαι</a></li><li><a href="#contact">Επικοινωνία</a></li></ul></div>
+      <div><h4>Προϊόντα</h4><ul><li><a href="#case-kollekta">kollekta.gr</a></li><li><a href="#case-ftiaxesite">ftiaxesite.gr</a></li><li><a href="#case-audit">Audit tool</a></li></ul></div>
+      <div><h4>Επαφή</h4><ul><li>dgeronikolos@<br>sidebysideweb.gr</li><li><a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn <span class="ph">[link]</span></a></li></ul></div>
+    </div>
+    <div class="giant" aria-hidden="true"><span>side</span><span class="gb"><b></b><b></b></span><span>side</span></div>
+    <div class="legal"><span>© 2026 Side by Side · <span class="ph">[ΑΦΜ / στοιχεία]</span></span><span>Prototype v1 · σχεδιασμός &amp; ανάπτυξη in-house</span></div>
+  </div>
+</footer>
+
+<style>
+@media (prefers-reduced-motion:no-preference){
+  .flt{animation:flt 6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+  .flt.d1{animation-delay:-1.5s}.flt.d2{animation-delay:-3s}.flt.d3{animation-delay:-4.5s}
+  @keyframes flt{50%{transform:translateY(-10px)}}
+  .flow{stroke-dasharray:10 12;animation:flow 1.2s linear infinite}
+  @keyframes flow{to{stroke-dashoffset:-22}}
+  .scan{animation:scan 3.5s var(--ease) infinite}
+  @keyframes scan{0%{transform:translateY(0)}50%{transform:translateY(220px)}100%{transform:translateY(0)}}
+  .grow{animation:grow 2.4s var(--ease) infinite alternate;transform-box:fill-box;transform-origin:left center}
+  @keyframes grow{from{transform:scaleX(.3)}}
+}
+</style>
+<script>
+(() => {
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FINE = matchMedia('(pointer: fine)').matches;
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const ARR = '<svg width="22" height="22"><use href="#arr"/></svg>';
+
+const ph = s => s.replace(/\[([^\]]+)\]/g, '<span class="ph">[$1]</span>');
+/* ---------- case data ---------- */
+const CASES = [
+  { id:'kollekta', kind:'product', name:'kollekta.gr', tag:'Δικό μου SaaS', sector:'Fashion B2B', art:'kollekta',
+    headline:'Οι φωτογραφίες προϊόντων φτάνουν στον πελάτη έτοιμες για web.',
+    short:'Πλατφόρμα όπου οι εταιρείες μόδας μοιράζονται συλλογές με τους πελάτες τους.',
+    role:'Product, UX, full-stack', duration:'[διάρκεια]', stack:'[stack]',
+    problem:'Κάθε σεζόν οι εταιρείες μόδας στέλνουν εκατοντάδες φωτογραφίες προϊόντων σε καταστήματα και συνεργάτες. Συνήθως με links σε Drive ή WeTransfer, σε πλήρη ανάλυση και χωρίς οργάνωση ανά συλλογή. Ο παραλήπτης κατεβάζει gigabytes και μετά ψάχνει ποιος θα τις μικρύνει για το e-shop του.',
+    approach:'Ξεκίνησα από τη ροή μιας πραγματικής εταιρείας μόδας, που έγινε και ο πρώτος test user. Κατέγραψα πώς ανεβαίνουν οι φωτογραφίες, πώς οργανώνονται σε συλλογές και τι ακριβώς χρειάζεται ο παραλήπτης στο τέλος.',
+    solution:'Μια πλατφόρμα όπου η εταιρεία ανεβάζει τις συλλογές της και τις μοιράζεται με τους πελάτες της. Η μετατροπή σε web μέγεθος γίνεται αυτόματα, οπότε ο πελάτης παίρνει αρχεία έτοιμα για το e-shop του.',
+    results:[['[Χ]','εταιρείες μόδας στην πλατφόρμα'],['[Χ]%','μικρότερα αρχεία για web'],['[Χ] ώρες','λιγότερη χειροκίνητη δουλειά τον μήνα']] },
+  { id:'ftiaxesite', kind:'product', name:'ftiaxesite.gr', tag:'Δικό μου προϊόν', sector:'Μικρές επιχειρήσεις', art:'site',
+    headline:'Επαγγελματικό site για μικρές επιχειρήσεις, χωρίς ατελείωτα meetings.',
+    short:'Τυποποιημένη διαδικασία για γρήγορα, καθαρά websites μικρών επιχειρήσεων.',
+    role:'Ιδιοκτήτης, διαδικασία, ανάπτυξη', duration:'[από πότε τρέχει]', stack:'[stack]',
+    problem:'Πολλές μικρές επιχειρήσεις χρειάζονται ένα καθαρό, γρήγορο site αλλά δεν έχουν budget για custom έργο ούτε χρόνο για μήνες συναντήσεων.',
+    approach:'Τυποποίησα τη δουλειά: συγκεκριμένα βήματα, συγκεκριμένο περιεχόμενο που ζητάω από την αρχή και σταθερή τεχνική βάση που δεν ξαναχτίζεται κάθε φορά.',
+    solution:'Μια γραμμή παραγωγής για sites μικρών επιχειρήσεων που κρατά χαμηλό το κόστος χωρίς να ρίχνει την ποιότητα. Είναι και η πρώτη επαφή για πελάτες που αργότερα χρειάζονται κάτι πιο σύνθετο.',
+    results:[['[Χ]','sites σε λειτουργία'],['[Χ] μέρες','μέσος χρόνος παράδοσης'],['[Χ]','Lighthouse score']] },
+  { id:'audit', kind:'product', name:'Audit tool', tag:'Δικό μου εργαλείο', sector:'Web performance', art:'audit',
+    headline:'Δωρεάν τεχνικός έλεγχος site σε λίγα λεπτά, σε απλά ελληνικά.',
+    short:'Ελέγχει ταχύτητα, SEO και βασικά τεχνικά σημεία ενός site.',
+    role:'Product, ανάπτυξη', duration:'[διάρκεια]', stack:'[stack]',
+    problem:'Οι περισσότεροι ιδιοκτήτες δεν ξέρουν αν το site τους είναι αργό, αν έχει προβλήματα SEO ή τεχνικά κενά, μέχρι να αρχίσουν να χάνουν πελάτες.',
+    approach:'Ήθελα ένα εργαλείο που δίνει αποτέλεσμα αμέσως, χωρίς εγγραφή και χωρίς ορολογία. Κάθε εύρημα έχει εξήγηση για το τι σημαίνει για την επιχείρηση.',
+    solution:'Ένα εργαλείο που τρέχει έλεγχο και δίνει αναφορά με προτεραιότητες. Για πολλούς είναι η αρχή της κουβέντας για ένα Discovery.',
+    results:[['[Χ]','έλεγχοι που έχουν τρέξει'],['[Χ]%','μετατροπή σε call'],['[Χ] λεπτά','μέσος χρόνος αναφοράς']] },
+  { id:'erp', kind:'client', name:'[Πελάτης Α]', tag:'Placeholder έργου', sector:'[Χονδρεμπόριο]', art:'erp', placeholder:true,
+    headline:'ERP και e-shop που επιτέλους μιλάνε μεταξύ τους.',
+    short:'Παράδειγμα δομής: αντικατέστησε με πραγματικό έργο integration.',
+    role:'Discovery, αρχιτεκτονική, υλοποίηση', duration:'[διάρκεια]', stack:'[stack]',
+    problem:'[Περιέγραψε το πρόβλημα με τα λόγια του πελάτη. Π.χ. οι παραγγελίες του e-shop περνούσαν με το χέρι στο ERP, με λάθη στα αποθέματα.]',
+    approach:'[Τι έκανες στο Discovery, τι ανακάλυψες που δεν ήταν προφανές.]',
+    solution:'[Τι χτίστηκε, πώς συνδέθηκαν τα συστήματα, τι άλλαξε στην καθημερινότητα της ομάδας.]',
+    results:[['[Χ] ώρες','λιγότερη πληκτρολόγηση την εβδομάδα'],['[Χ]%','λιγότερα λάθη αποθέματος'],['[Χ]','παραγγελίες τη μέρα αυτόματα']] },
+  { id:'b2b', kind:'client', name:'[Πελάτης Β]', tag:'Placeholder έργου', sector:'[Κλάδος]', art:'b2b', placeholder:true,
+    headline:'B2B παραγγελίες χωρίς τηλέφωνα και Excel.',
+    short:'Παράδειγμα δομής: αντικατέστησε με πραγματικό έργο αυτοματοποίησης.',
+    role:'Αρχιτεκτονική, υλοποίηση, υποστήριξη', duration:'[διάρκεια]', stack:'[stack]',
+    problem:'[Το πρόβλημα όπως το ζούσε ο πελάτης.]',
+    approach:'[Πώς το προσέγγισες και γιατί.]',
+    solution:'[Η λύση και πώς τη χρησιμοποιεί σήμερα η ομάδα.]',
+    results:[['[Χ]','πελάτες παραγγέλνουν online'],['[Χ]%','λιγότερα τηλέφωνα'],['[Χ] €','μηνιαία εξοικονόμηση']] },
+];
+
+/* ---------- generative case art ---------- */
+function art(k) {
+  const V = 'viewBox="0 0 800 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true"';
+  if (k === 'kollekta') {
+    let t = '';
+    const cols = [['#13232E','#1A2F3C','#13232E'],['#1A2F3C','#13232E','#1A2F3C']];
+    for (let i = 0; i < 3; i++) for (let j = 0; j < 2; j++)
+      t += `<rect class="flt d${(i+j)%4}" x="${70+i*112}" y="${70+j*152}" width="96" height="136" rx="6" fill="${cols[j][i]}"/><rect x="${82+i*112}" y="${82+j*152}" width="72" height="84" rx="3" fill="#F4F6F3" opacity=".9"/>`;
+    let s = '';
+    for (let i = 0; i < 4; i++) for (let j = 0; j < 3; j++)
+      s += `<rect x="${530+i*52}" y="${110+j*76}" width="40" height="58" rx="4" fill="#13232E"/><rect x="${535+i*52}" y="${115+j*76}" width="30" height="34" rx="2" fill="#F4F6F3"/>`;
+    return `<svg ${V}><rect width="800" height="440" fill="#F0B429"/>${t}<path class="flow" d="M420 220 H505" stroke="#13232E" stroke-width="5" fill="none"/><path d="M496 208 l14 12 -14 12" fill="none" stroke="#13232E" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>${s}<text x="530" y="366" font-family="JetBrains Mono,monospace" font-size="15" fill="#13232E">πλήρες μέγεθος → web</text></svg>`;
+  }
+  if (k === 'site') {
+    return `<svg ${V}><rect width="800" height="440" fill="#F4F6F3"/>
+      <g class="flt"><rect x="120" y="60" width="560" height="360" rx="10" fill="#fff" stroke="#D7DEDB" stroke-width="2"/>
+      <rect x="120" y="60" width="560" height="34" rx="10" fill="#D7DEDB"/><circle cx="142" cy="77" r="5" fill="#9AAAB2"/><circle cx="160" cy="77" r="5" fill="#9AAAB2"/>
+      <rect x="150" y="124" width="260" height="30" rx="4" fill="#13232E"/><rect x="150" y="164" width="200" height="30" rx="4" fill="#13232E"/>
+      <rect x="150" y="214" width="230" height="10" rx="3" fill="#9AAAB2"/><rect x="150" y="232" width="190" height="10" rx="3" fill="#9AAAB2"/>
+      <rect x="150" y="266" width="130" height="40" rx="5" fill="#F0B429"/>
+      <rect x="450" y="124" width="200" height="182" rx="6" fill="#13232E"/><rect x="470" y="144" width="30" height="80" rx="3" fill="#F4F6F3"/><rect x="510" y="160" width="30" height="80" rx="3" fill="#F0B429"/>
+      <rect x="150" y="336" width="150" height="56" rx="6" fill="#D7DEDB"/><rect x="325" y="336" width="150" height="56" rx="6" fill="#D7DEDB"/><rect x="500" y="336" width="150" height="56" rx="6" fill="#D7DEDB"/></g></svg>`;
+  }
+  if (k === 'audit') {
+    const bars = [0.92,0.64,0.81,0.45].map((v,i)=>`<text x="470" y="${150+i*62}" font-family="JetBrains Mono,monospace" font-size="14" fill="#9AAAB2">${['Ταχύτητα','SEO','Ασφάλεια','Προσβασιμότητα'][i]}</text><rect x="470" y="${160+i*62}" width="240" height="12" rx="3" fill="#1A2F3C"/><rect class="grow" style="animation-delay:${-i*.6}s" x="470" y="${160+i*62}" width="${240*v}" height="12" rx="3" fill="${v>.6?'#F0B429':'#F4F6F3'}"/>`).join('');
+    return `<svg ${V}><rect width="800" height="440" fill="#13232E"/>
+      <circle cx="250" cy="230" r="120" fill="none" stroke="#1A2F3C" stroke-width="26"/>
+      <circle cx="250" cy="230" r="120" fill="none" stroke="#F0B429" stroke-width="26" stroke-dasharray="${2*Math.PI*120*0.78} 999" transform="rotate(-90 250 230)" stroke-linecap="round"/>
+      <text x="250" y="250" text-anchor="middle" font-family="Commissioner,sans-serif" font-weight="800" font-size="72" fill="#F4F6F3">78</text>
+      <text x="250" y="286" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#9AAAB2">/100 · δείγμα</text>${bars}
+      <rect class="scan" x="440" y="110" width="300" height="2" fill="#F0B429" opacity=".6"/></svg>`;
+  }
+  if (k === 'erp') {
+    return `<svg ${V}><rect width="800" height="440" fill="#0B161D"/>
+      <g class="flt"><rect x="90" y="130" width="220" height="180" rx="10" fill="#13232E" stroke="#2A3C47" stroke-width="2"/><text x="120" y="175" font-family="JetBrains Mono,monospace" font-size="16" fill="#F0B429">ERP</text>
+      ${[0,1,2,3].map(i=>`<rect x="120" y="${195+i*24}" width="${150-i*20}" height="10" rx="3" fill="#2A3C47"/>`).join('')}</g>
+      <g class="flt d2"><rect x="490" y="130" width="220" height="180" rx="10" fill="#F4F6F3"/><text x="520" y="175" font-family="JetBrains Mono,monospace" font-size="16" fill="#13232E">e-shop</text>
+      ${[0,1].map(i=>`<rect x="${520+i*84}" y="195" width="70" height="80" rx="4" fill="#D7DEDB"/>`).join('')}</g>
+      <path class="flow" d="M310 200 C 400 200, 400 200, 490 200" stroke="#F0B429" stroke-width="5" fill="none"/>
+      <path class="flow" d="M490 250 C 400 250, 400 250, 310 250" stroke="#F4F6F3" stroke-width="5" fill="none" style="animation-direction:reverse"/>
+      <text x="400" y="380" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#9AAAB2">παραγγελίες · αποθέματα · τιμές</text></svg>`;
+  }
+  // b2b
+  return `<svg ${V}><rect width="800" height="440" fill="#1A2F3C"/>
+    ${[0,1,2,3].map(i=>`<g class="flt d${i}"><rect x="${170+i*40}" y="${70+i*50}" width="420" height="120" rx="10" fill="${i===3?'#F0B429':'#13232E'}" stroke="#2A3C47"/><rect x="${200+i*40}" y="${100+i*50}" width="140" height="14" rx="3" fill="${i===3?'#13232E':'#F4F6F3'}"/><rect x="${200+i*40}" y="${126+i*50}" width="220" height="10" rx="3" fill="${i===3?'#13232E':'#52616B'}" opacity=".7"/><text x="${540+i*40}" y="${114+i*50}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="14" fill="${i===3?'#13232E':'#F0B429'}">#${1040+i}</text></g>`).join('')}</svg>`;
+}
+
+function card(c, cls) {
+  return `<article class="case ${cls}" data-kind="${c.kind}" id="card-${c.id}">
+    <a href="#case-${c.id}" class="art tilt" aria-label="${(c.name+': '+c.headline).replace(/[\[\]]/g,'')}">${art(c.art)}<span class="tag">${c.tag}</span><span class="go">${ARR}</span></a>
+    <div class="cap"><h3>${c.headline}</h3><span>${ph(c.name)} · ${ph(c.sector)}</span></div>
+    <p class="sub">${c.short}</p></article>`;
+}
+
+$('#homeCases').innerHTML = card(CASES[0],'wide rv') + card(CASES[1],'rv') + card(CASES[2],'rv');
+$('#workCases').innerHTML = CASES.map((c,i)=>card(c, (i===0?'wide':'') + ' rv')).join('');
+
+function renderCase(id) {
+  const i = CASES.findIndex(c => c.id === id);
+  const c = CASES[i] || CASES[0];
+  const n = CASES[(i + 1) % CASES.length];
+  $('#caseMount').innerHTML = `
+  <section class="cd-hero"><div class="wrap">
+    <a class="back" href="#work">← Όλα τα έργα</a>
+    <span class="eyebrow fade" style="display:flex"><i><b></b><b></b></i>${ph(c.name)} · ${c.tag}</span>
+    <h1 style="margin-top:22px"><span class="ln"><span style="--i:0">${c.headline}</span></span></h1>
+    ${c.placeholder ? '<div class="note"><b>Placeholder</b><span>Η δομή είναι έτοιμη. Αντικατέστησε τα κείμενα σε [αγκύλες] με πραγματικό έργο και αριθμούς, με την άδεια του πελάτη.</span></div>' : '<div class="note"><b>Προς έλεγχο</b><span>Τα κείμενα είναι πρώτο draft από όσα ξέρω για το προϊόν. Τα [Χ] είναι θέσεις για πραγματικούς αριθμούς.</span></div>'}
+    <div class="cd-meta fade" style="--d:150"><div><span>Κλάδος</span><b>${ph(c.sector)}</b></div><div><span>Ρόλος</span><b>${c.role}</b></div><div><span>Διάρκεια</span><b>${ph(c.duration)}</b></div><div><span>Stack</span><b>${ph(c.stack)}</b></div></div>
+    <div class="cd-art zoom">${art(c.art)}</div>
+  </div></section>
+  <section class="sec light" style="margin-top:-120px;padding-top:200px"><div class="wrap">
+    <div class="cd-block cd-body"><h2>Το πρόβλημα</h2><p class="rv">${ph(c.problem)}</p></div>
+    <div class="cd-block cd-body"><h2>Η προσέγγιση</h2><p class="rv">${ph(c.approach)}</p></div>
+    <div class="cd-block cd-body"><h2>Η λύση</h2><p class="rv">${ph(c.solution)}</p></div>
+    <div class="cd-block"><h2 style="font-size:clamp(28px,3.4vw,44px);margin-bottom:28px">Τι άλλαξε</h2>
+      <div class="results">${c.results.map(r=>`<div class="res rv"><b>${ph(r[0])}</b><span>${r[1]}</span></div>`).join('')}</div></div>
+  </div></section>
+  <section><div class="wrap nextcase"><div><span>Επόμενο έργο</span></div><a href="#case-${n.id}">${ph(n.name)} <i>→</i></a></div></section>
+  <section class="bigcta" style="padding-top:40px"><div class="wrap"><h2><a href="#contact">Έχεις κάτι</a><br><span style="color:var(--mari)">παρόμοιο;</span></h2><div class="row2"><a class="btn btn-m mag" href="#contact">Πες μου <span class="bars"><b></b><b></b></span></a></div></div></section>`;
+  document.title = c.name.replace(/[\[\]]/g,'') + ' · Side by Side';
+}
+
+/* ---------- router ---------- */
+const TITLES = { home:'Side by Side · Τεχνικός συνεργάτης', services:'Υπηρεσίες · Side by Side', process:'Πώς δουλεύω · Side by Side', work:'Έργα · Side by Side', about:'Ποιος είμαι · Side by Side', contact:'Επικοινωνία · Side by Side' };
+let current = null;
+function parse() {
+  const h = (location.hash || '#home').slice(1);
+  if (h.startsWith('case-')) return { page:'case', id:h.slice(5) };
+  return { page: TITLES[h] ? h : 'home' };
+}
+function apply(r) {
+  $$('[data-page]').forEach(p => p.hidden = p.dataset.page !== r.page);
+  if (r.page === 'case') renderCase(r.id); else document.title = TITLES[r.page];
+  const navKey = r.page === 'case' ? 'work' : r.page;
+  $$('.nav a, .mobile a').forEach(a => a.getAttribute('href') === '#' + navKey ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current'));
+  window.scrollTo(0, 0);
+  const pg = $(`[data-page="${r.page}"]`);
+  pg.classList.remove('enter'); void pg.offsetWidth; pg.classList.add('enter');
+  document.body.classList.remove('menu-open'); $('#menuBtn').setAttribute('aria-expanded','false');
+  current = r.page;
+  bindDynamic(pg);
+  onScroll();
+  hsMeasure();
+}
+function go() {
+  const r = parse();
+  if (!document.startViewTransition || RM) { apply(r); $('#main').focus({preventScroll:true}); return; }
+  const t = document.startViewTransition(() => apply(r));
+  t.finished.finally(() => $('#main').focus({preventScroll:true}));
+}
+addEventListener('hashchange', go);
+
+/* ---------- hero field (canvas) ---------- */
+const cv = $('#field'), ctx = cv.getContext('2d');
+let W, H, DPR, cells = [], mx = -999, my = -999, tmx = -999, tmy = -999, raf, heroVisible = true;
+function sizeField() {
+  DPR = Math.min(devicePixelRatio || 1, 2);
+  const r = cv.getBoundingClientRect(); W = r.width; H = r.height;
+  cv.width = W * DPR; cv.height = H * DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
+  const g = W < 700 ? 34 : 42; cells = [];
+  for (let y = g/2; y < H; y += g) for (let x = g/2; x < W; x += g) cells.push({ x, y, a: 0 });
+  if (RM) drawField(0);
+}
+function drawField(t) {
+  ctx.clearRect(0,0,W,H);
+  mx += (tmx - mx) * .08; my += (tmy - my) * .08;
+  for (const c of cells) {
+    const dx = mx - c.x, dy = my - c.y, d = Math.hypot(dx, dy);
+    const inf = Math.max(0, 1 - d / 260);
+    const wave = RM ? 0 : Math.sin(t * .0008 + c.x * .012 + c.y * .01) * .25;
+    const target = inf > 0 ? Math.atan2(dy, dx) + Math.PI/2 : wave;
+    c.a += (target - c.a) * .12;
+    const s = 1 + inf * .9;
+    ctx.save(); ctx.translate(c.x, c.y); ctx.rotate(inf > 0 ? c.a * inf : c.a);
+    ctx.globalAlpha = .07 + inf * .55;
+    ctx.fillStyle = '#F4F6F3'; ctx.fillRect(-4*s, -7*s, 3*s, 11*s);
+    ctx.globalAlpha = .1 + inf * .9;
+    ctx.fillStyle = '#F0B429'; ctx.fillRect(1*s, -5*s, 3*s, 11*s);
+    ctx.restore();
+  }
+}
+function loop(t) { if (heroVisible && current === 'home' && !document.hidden) drawField(t); raf = requestAnimationFrame(loop); }
+const hero = $('.hero');
+hero.addEventListener('pointermove', e => { const r = cv.getBoundingClientRect(); tmx = e.clientX - r.left; tmy = e.clientY - r.top; });
+hero.addEventListener('pointerleave', () => { tmx = -999; tmy = -999; });
+new IntersectionObserver(es => heroVisible = es[0].isIntersecting).observe(hero);
+addEventListener('resize', () => { sizeField(); hsMeasure(); });
+
+/* ---------- swapping word with scramble ---------- */
+const WORDS = ['ERP','CRM','e-shop','Excel','WMS','λογισμικό'];
+const GLYPH = 'ΑΒΓΔΕΖΘΛΞΠΣΦΨΩ#%&/∥01';
+let wi = 0; const sw = $('#swap');
+function scramble(el, to) {
+  if (RM) { el.textContent = to; return; }
+  let f = 0; const from = el.textContent, len = Math.max(from.length, to.length);
+  const id = setInterval(() => {
+    let out = '';
+    for (let i = 0; i < len; i++) out += i < f / 2 ? (to[i] || '') : (i < to.length ? GLYPH[Math.random()*GLYPH.length|0] : '');
+    el.textContent = out; if (++f > len * 2 + 2) { clearInterval(id); el.textContent = to; }
+  }, 40);
+}
+setInterval(() => { if (current === 'home') { wi = (wi + 1) % WORDS.length; scramble(sw, WORDS[wi]); } }, 2600);
+
+/* ---------- marquee duplication ---------- */
+$$('[data-dup]').forEach(t => t.innerHTML += t.innerHTML);
+
+/* ---------- manifesto word split ---------- */
+$$('[data-words]').forEach(p => {
+  const walk = n => [...n.childNodes].forEach(ch => {
+    if (ch.nodeType === 3) {
+      const f = document.createDocumentFragment();
+      ch.textContent.split(/(\s+)/).forEach(w => { if (!w.trim()) f.append(w); else { const s = document.createElement('span'); s.className = 'w'; s.textContent = w; f.append(s); } });
+      ch.replaceWith(f);
+    } else walk(ch);
+  });
+  walk(p);
+});
+
+/* ---------- counters ---------- */
+const cio = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return; cio.unobserve(e.target);
+  const el = e.target, end = +el.dataset.count; if (RM || end === 0) return;
+  const t0 = performance.now(), dur = 1400;
+  const step = t => { const p = Math.min(1, (t - t0) / dur), v = Math.round(end * (1 - Math.pow(1 - p, 3))); el.textContent = v; if (p < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}), { threshold: .6 });
+$$('[data-count]').forEach(el => cio.observe(el));
+
+/* ---------- horizontal process scroll ---------- */
+const hs = $('#hs'), track = $('#hsTrack'), bar = $('#hsBar');
+let hsDist = 0;
+function hsMeasure() {
+  if (innerWidth <= 860) { hs.style.height = ''; hsDist = 0; return; }
+  hsDist = Math.max(0, track.scrollWidth - innerWidth);
+  hs.style.height = (innerHeight + hsDist) + 'px';
+}
+function hsUpdate() {
+  if (current !== 'home' || !hsDist) return;
+  const r = hs.getBoundingClientRect();
+  const p = Math.min(1, Math.max(0, -r.top / hsDist));
+  track.style.transform = `translate3d(${-p * hsDist}px,0,0)`;
+  bar.style.transform = `scaleX(${p})`;
+}
+
+/* ---------- header + progress ---------- */
+let lastY = 0; const hdr = $('#hdr'), prog = $('#progress');
+function onScroll() {
+  const y = scrollY, max = document.documentElement.scrollHeight - innerHeight;
+  prog.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+  hdr.classList.toggle('solid', y > 40);
+  hdr.classList.toggle('hide', y > 400 && y > lastY && !document.body.classList.contains('menu-open'));
+  lastY = y;
+  hsUpdate();
+}
+addEventListener('scroll', onScroll, { passive: true });
+
+/* ---------- compare toggle ---------- */
+const cmp = $('#cmp'), pill = $('#pill');
+function setPill(btn) { pill.style.width = btn.offsetWidth + 'px'; pill.style.transform = `translateX(${btn.offsetLeft - 5}px)`; }
+$$('.toggle button').forEach(b => b.addEventListener('click', () => {
+  const v = b.dataset.v;
+  $$('.toggle button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  setPill(b); cmp.classList.toggle('agency', v === 'agency');
+  $$('.cmp-row .a', cmp).forEach((a, i) => {
+    a.classList.add('swap-out');
+    setTimeout(() => { a.textContent = a.dataset[v]; a.classList.remove('swap-out'); }, 180 + i * 60);
+  });
+}));
+requestAnimationFrame(() => setPill($('.toggle button[aria-pressed="true"]')));
+document.fonts && document.fonts.ready.then(() => setPill($('.toggle button[aria-pressed="true"]')));
+
+/* ---------- work filters ---------- */
+$$('.filters button').forEach(b => b.addEventListener('click', () => {
+  const f = b.dataset.f;
+  const upd = () => { $$('.filters button').forEach(x => x.setAttribute('aria-pressed', x === b)); $$('#workCases .case').forEach(c => c.hidden = f !== 'all' && c.dataset.kind !== f); };
+  const cards = $$('#workCases .case');
+  if (!document.startViewTransition || RM) return upd();
+  cards.forEach((c, i) => c.style.viewTransitionName = 'wc' + i);
+  document.startViewTransition(upd).finished.finally(() => cards.forEach(c => c.style.viewTransitionName = ''));
+}));
+
+/* ---------- menu ---------- */
+$('#menuBtn').addEventListener('click', () => {
+  const o = document.body.classList.toggle('menu-open');
+  $('#menuBtn').setAttribute('aria-expanded', o);
+});
+
+/* ---------- copy ---------- */
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-copy]'); if (!b) return;
+  const done = () => { const t = b.textContent; b.textContent = 'Αντιγράφηκε'; setTimeout(() => b.textContent = t, 1600); };
+  const sel = () => { const r = document.createRange(); r.selectNodeContents(b.previousElementSibling); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+  try { navigator.clipboard.writeText(b.dataset.copy).then(done, sel); } catch { sel(); }
+});
+
+/* ---------- form ---------- */
+$('#form').addEventListener('submit', e => {
+  e.preventDefault();
+  const f = e.target, bad = $$('[required]', f).find(i => !i.value.trim() || (i.type === 'email' && !/.+@.+\..+/.test(i.value)));
+  if (bad) { bad.focus(); bad.style.borderColor = '#F08A78'; setTimeout(() => bad.style.borderColor = '', 1800); return; }
+  $('#sent').hidden = false;
+});
+
+/* ---------- pointer effects (bound per page) ---------- */
+const ring = $('.cur-ring'), dot = $('.cur');
+let cx = -100, cy = -100, rx = -100, ry = -100;
+if (FINE && !RM) {
+  addEventListener('pointermove', e => { cx = e.clientX; cy = e.clientY; dot.style.transform = `translate(${cx}px,${cy}px)`; });
+  (function cur() { rx += (cx - rx) * .18; ry += (cy - ry) * .18; ring.style.transform = `translate(${rx}px,${ry}px)`; requestAnimationFrame(cur); })();
+  document.addEventListener('pointerover', e => ring.classList.toggle('big', !!e.target.closest('a,button,label,summary')));
+}
+function bindDynamic(root) {
+  if (!FINE || RM) return;
+  $$('.mag').forEach(el => {
+    if (el._mag) return; el._mag = 1;
+    el.addEventListener('pointermove', e => { const r = el.getBoundingClientRect(); el.style.transform = `translate(${(e.clientX - r.left - r.width/2) * .25}px,${(e.clientY - r.top - r.height/2) * .35}px)`; });
+    el.addEventListener('pointerleave', () => { el.style.transition = 'transform .5s var(--ease)'; el.style.transform = ''; setTimeout(() => el.style.transition = '', 500); });
+  });
+  $$('.tilt').forEach(el => {
+    if (el._tilt) return; el._tilt = 1;
+    el.addEventListener('pointermove', e => { const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; el.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 10}deg) scale(1.02)`; });
+    el.addEventListener('pointerleave', () => el.style.transform = '');
+  });
+  $$('.svc-card').forEach(el => {
+    if (el._glow) return; el._glow = 1;
+    el.addEventListener('pointermove', e => { const r = el.getBoundingClientRect(); el.style.setProperty('--mx', (e.clientX - r.left) + 'px'); el.style.setProperty('--my', (e.clientY - r.top) + 'px'); });
+  });
+}
+
+/* ---------- boot ---------- */
+sizeField();
+apply(parse());
+if (!RM) raf = requestAnimationFrame(loop);
+})();
+</script>
+</body></html>

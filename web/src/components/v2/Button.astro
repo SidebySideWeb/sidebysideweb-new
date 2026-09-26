@@ -1,0 +1,34 @@
+---
+interface Props {
+  href: string
+  variant?: 'm' | 'g' | 'p' | 'i'
+  size?: 'sm'
+  class?: string
+  magnetic?: boolean
+  bars?: boolean
+}
+
+const {
+  href,
+  variant = 'm',
+  size,
+  class: className,
+  magnetic = false,
+  bars = true,
+} = Astro.props
+---
+
+<a
+  class:list={['btn', `btn-${variant}`, size === 'sm' && 'btn-sm', magnetic && 'mag', className]}
+  href={href}
+>
+  <slot />
+  {
+    bars ? (
+      <span class="bars">
+        <b></b>
+        <b></b>
+      </span>
+    ) : null
+  }
+</a>
