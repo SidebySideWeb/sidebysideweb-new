@@ -1,59 +1,34 @@
 # Redesign v2 notes
 
-## Branch
-`redesign/v2` — do not merge to `main` until Release (§12).
+Released to `main`. Single Sanity dataset: **`production`**.
 
-## Phase 6 QA notes
-- Horizontal process scroll uses `#hs` (must match `process-scroll.ts`).
-- Contact form posts without JS → `/api/contact` → `?sent=1` (reCAPTCHA skipped on native posts; honeypot + rate limit still apply).
-- Budget chips are scope labels, not euro amounts.
-- `npm run build` warns on unfinished `[…]` strings in the active dataset.
-- `npm run check:redirects -- <preview-url>` curls the Phase 5 legacy map.
+## Phase 7 release (done)
 
-## Phase 7 release
+- Backed up production to local `backups/production-*.tar.gz` (gitignored)
+- Copied 26 v2 docs from temporary `redesign` → `production` via `scripts/migrate-v2-to-production.ts`
+- Merged `redesign/v2` → `main`
+- `redesign` dataset removed after consolidation
 
-**Migration choice:** copy v2 documents from `redesign` → `production` (keeps Studio edits; leaves legacy v1 docs untouched). Do **not** point production at the `redesign` dataset.
+## Sanity
 
-```powershell
-# 1. Backup production first
-cd sanitycms
-npx sanity dataset export production ../backups/production-$(Get-Date -Format yyyyMMdd).tar.gz
-
-# 2. Copy v2 docs
-npx sanity exec scripts/migrate-v2-to-production.ts --with-user-token -- --confirm production
-```
-
-Local backup path: `backups/production-*.tar.gz` (gitignored).
-
-**Rollback**
-1. Vercel → previous production deployment → Promote to Production.
-2. Dataset: `npx sanity dataset import ../backups/production-YYYYMMDD.tar.gz production --replace` (destructive; only if content is wrong).
-
-**Post-merge env:** production Vercel must keep `PUBLIC_SANITY_DATASET=production`.
-
-## Sanity dataset
 - Project: `y6aoacvp`
-- Live CMS: `production` (Studio at https://sidebysideweb.sanity.studio)
-- Branch/preview CMS: `redesign` (copy of production via export/import — plan has no `dataset copy`)
+- Dataset: `production` only
+- Studio: https://sidebysideweb.sanity.studio
 
-Local and Vercel preview for this branch should set:
 ```
-PUBLIC_SANITY_DATASET=redesign
+PUBLIC_SANITY_DATASET=production
 ```
 
-Production Vercel stays on `production` until release.
+Studio / CLI default to `production` (`sanity.config.ts`, `sanity.cli.ts`).
 
-The Studio and the Sanity CLI now default to `redesign`:
-`sanity.config.ts` and `sanity.cli.ts` both read `process.env.SANITY_STUDIO_DATASET ?? 'redesign'`.
-**The production Studio deploy must set `SANITY_STUDIO_DATASET=production`.**
+## Rollback
 
-## Preview chrome
-Phase 1 QA page: `/v2/` (noindex).
+1. Vercel → previous production deployment → Promote to Production
+2. Dataset (only if needed): `npx sanity dataset import ../backups/production-YYYYMMDD.tar.gz production --replace`
 
-## Phase 2: v2 content model
+## v2 content model
 
-Old v1 types stay registered and are reachable in the Studio under the **Legacy (v1)** group.
-Nothing was deleted. New types that would have collided carry a `V2` suffix.
+Old v1 types stay registered under **Legacy (v1)** in the Studio.
 
 ### Documents
 | Type | Fixed seed IDs |
@@ -65,34 +40,12 @@ Nothing was deleted. New types that would have collided carry a `V2` suffix.
 
 ### Singletons
 `siteSettingsV2`, `homePage`, `servicesPage`, `processPage`, `workPage`, `aboutPageV2`, `contactPage`
-(document `_id` equals the type name).
-
-### Objects
-`seo`, `cta`, `headingLine` + `headingLinePart`, `fact`, `faqItem`, `valueCard`, `compareRow`,
-`resultStat`, `docCard`, `bulletItem`, `linkItem`, `pageHero`, `bigCta`, `richTextV2`.
-
-`richTextV2` decorators: `strong`, `em`, `highlight` (marigold), `strike` (manifesto), `thin` (weight 200).
-
-All v2 strings are plain Greek (`string` / `text` / Portable Text). No `localeString` wrappers.
-`serviceV2` has **no price fields**.
 
 ## Seeding
 
-The seed is idempotent: existing documents are skipped unless `--force` is passed, and the
-script refuses to write to `production` unless `--dataset production` is given explicitly.
-
 ```powershell
 cd sanitycms
-$env:SANITY_STUDIO_DATASET="redesign"   # windows
-npm run seed:v2
+npx sanity exec scripts/seed-v2.ts --with-user-token -- --force --dataset production
 ```
 
-Overwrite everything (replaces the 26 documents in place):
-
-```powershell
-npx sanity exec scripts/seed-v2.ts --with-user-token -- --force --dataset redesign
-```
-
-Seed content lives in `sanitycms/scripts/seed-v2-data.ts`, copied verbatim from
-`reference/prototype.html`. Placeholders are kept as `[...]` so the build-time
-placeholder warning can list them.
+Seed content: `sanitycms/scripts/seed-v2-data.ts`.

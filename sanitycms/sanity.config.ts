@@ -24,11 +24,8 @@ const singletonTypes = [
 ]
 const hiddenCreateTypes = [...singletonTypes, 'formSubmission']
 
-/**
- * Local Studio defaults to the `redesign` dataset for v2 work.
- * The production Studio deploy must set SANITY_STUDIO_DATASET=production.
- */
-const dataset = process.env.SANITY_STUDIO_DATASET ?? 'redesign'
+/** Single live dataset. Override with SANITY_STUDIO_DATASET only for rare ops. */
+const dataset = process.env.SANITY_STUDIO_DATASET ?? 'production'
 
 export default defineConfig({
   name: 'default',

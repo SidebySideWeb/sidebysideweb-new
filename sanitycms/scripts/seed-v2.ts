@@ -1,8 +1,7 @@
 /**
  * Seeds the v2 redesign content.
  *
- *   npx sanity exec scripts/seed-v2.ts --with-user-token -- --dataset redesign
- *   npx sanity exec scripts/seed-v2.ts --with-user-token -- --force --dataset redesign
+ *   npx sanity exec scripts/seed-v2.ts --with-user-token -- --force --dataset production
  *
  * Idempotent: existing documents are skipped unless --force is passed, in which
  * case they are replaced. Refuses to touch `production` unless the dataset is
@@ -22,7 +21,7 @@ const force = argv.includes('--force')
 
 const datasetFlagIndex = argv.indexOf('--dataset')
 const datasetFromFlag = datasetFlagIndex === -1 ? undefined : argv[datasetFlagIndex + 1]
-const dataset = datasetFromFlag ?? process.env.SANITY_STUDIO_DATASET ?? 'redesign'
+const dataset = datasetFromFlag ?? process.env.SANITY_STUDIO_DATASET ?? 'production'
 
 if (dataset === 'production' && datasetFromFlag !== 'production') {
   console.error(
