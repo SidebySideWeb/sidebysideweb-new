@@ -22,6 +22,8 @@ const {title, description} = resolveSeo(page.seo, {
 })
 
 const jsonLd = buildProfessionalServiceJsonLd({email: page.email})
+const sent = Astro.url.searchParams.get('sent') === '1'
+const error = Astro.url.searchParams.get('error') ?? undefined
 ---
 
 <Base
@@ -35,7 +37,7 @@ const jsonLd = buildProfessionalServiceJsonLd({email: page.email})
 
     <section class="sec" style="padding-top:0">
       <div class="wrap contact-grid">
-        <ContactForm page={page} />
+        <ContactForm page={page} sent={sent} error={error} />
         <ContactAside page={page} />
       </div>
     </section>

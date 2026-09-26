@@ -3,6 +3,13 @@
 ## Branch
 `redesign/v2` — do not merge to `main` until Release (§12).
 
+## Phase 6 QA notes
+- Horizontal process scroll uses `#hs` (must match `process-scroll.ts`).
+- Contact form posts without JS → `/api/contact` → `?sent=1` (reCAPTCHA skipped on native posts; honeypot + rate limit still apply).
+- Budget chips are scope labels, not euro amounts.
+- `npm run build` warns on unfinished `[…]` strings in the active dataset.
+- `npm run check:redirects -- <preview-url>` curls the Phase 5 legacy map.
+
 ## Sanity dataset
 - Project: `y6aoacvp`
 - Live CMS: `production` (Studio at https://sidebysideweb.sanity.studio)

@@ -5,6 +5,7 @@ import vercel from '@astrojs/vercel'
 import tailwindcss from '@tailwindcss/vite'
 import sitemap from '@astrojs/sitemap'
 import sanity from '@sanity/astro'
+import {placeholderWarn} from './src/integrations/placeholder-warn.ts'
 import {SANITY_DATASET, SANITY_PROJECT_ID, SITE_URL} from './src/lib/sanity-config.ts'
 import {EN_LOCALE_ENABLED} from './src/lib/i18n.ts'
 
@@ -35,6 +36,11 @@ const LEGACY_REDIRECTS = {
   '/case-study-metaixmio': '/erga/',
   '/case-studies': '/erga/',
   '/case-studies/[slug]': '/erga/',
+  '/en/about': '/poios-eimai/',
+  '/en/automation-nea-attiki-odos-twitter': '/erga/',
+  '/en/case-study-metaixmio': '/erga/',
+  '/en/case-studies': '/erga/',
+  '/en/case-studies/[slug]': '/erga/',
 }
 
 export default defineConfig({
@@ -62,6 +68,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   integrations: [
+    placeholderWarn(),
     react(),
     sitemap({
       customPages: SITEMAP_PAGES,

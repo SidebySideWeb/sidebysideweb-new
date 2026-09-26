@@ -9,48 +9,53 @@ export const prerender = false
 /** Nobody reads and fills the form in under two seconds. */
 const MIN_FILL_MS = 2000
 
-export const POST: APIRoute = async ({request}) => {
-  let body: {
-    /** The redesign form has a single name field; v1 sends the two parts. */
-    name?: string
-    firstName?: string
-    lastName?: string
-    companyName?: string
-    email?: string
-    phone?: string
-    message?: string
-    needs?: string[]
-    budget?: string
-    /** Honeypot: only a bot fills the hidden `website` field. */
-    website?: string
-    /** How long the form was on screen before it was submitted. */
-    elapsedMs?: number
-    recaptchaToken?: string
-    privacyAccepted?: boolean
-  }
+type ContactBody = {
+  /** The redesign form has a single name field; v1 sends the two parts. */
+  name?: string
+  firstName?: string
+  lastName?: string
+  companyName?: string
+  email?: string
+  phone?: string
+  message?: string
+  needs?: string[]
+  budget?: string
+  /** Honeypot: only a bot fills the hidden `website` field. */
+  website?: string
+  /** How long the form was on screen before it was submitted. */
+  elapsedMs?: number
+  formStartedAt?: string
+  recaptchaToken?: string
+  privacyAccepted?: boolean
+}
 
-  try {
-    body = await request.json()
-  } catch {
-    return jsonError('Invalid request.', 400)
+export const POST: APIRoute = async ({request}) => {
+  const wantsJson = prefersJson(request)
+  const body = await parseBody(request)
+
+  if (!body) {
+    return respond(wantsJson, {ok: false, error: 'Invalid request.'}, 400)
   }
 
   const clientIp = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
   if (!checkRateLimit(`contact:${clientIp}`, 5, 60_000)) {
-    return jsonError('Too many attempts. Please try again shortly.', 429)
+    return respond(wantsJson, {ok: false, error: 'Too many attempts. Please try again shortly.'}, 429)
   }
 
   if (body.website?.trim()) {
     console.warn('[api/contact] honeypot filled, dropping submission.')
-    return jsonError('Invalid request.', 400)
+    return respond(wantsJson, {ok: false, error: 'Invalid request.'}, 400)
   }
 
-  if (typeof body.elapsedMs === 'number' && body.elapsedMs >= 0 && body.elapsedMs < MIN_FILL_MS) {
+  const elapsedMs = resolveElapsedMs(body)
+  if (typeof elapsedMs === 'number' && elapsedMs >= 0 && elapsedMs < MIN_FILL_MS) {
     console.warn('[api/contact] submitted too fast, dropping submission.')
-    return jsonError('Invalid request.', 400)
+    return respond(wantsJson, {ok: false, error: 'Invalid request.'}, 400)
   }
 
-  if (isRecaptchaConfigured()) {
+  // Native (no-JS) posts have no recaptcha token; honeypot + rate limit cover them.
+  const isNativeForm = !wantsJson
+  if (!isNativeForm && isRecaptchaConfigured()) {
     try {
       await verifyRecaptchaToken(body.recaptchaToken)
     } catch (error) {
@@ -61,9 +66,9 @@ export const POST: APIRoute = async ({request}) => {
             ? error.message
             : 'reCAPTCHA verification failed.'
       const status = error instanceof RecaptchaError ? 400 : 500
-      return jsonError(messageText, status)
+      return respond(wantsJson, {ok: false, error: messageText}, status)
     }
-  } else {
+  } else if (!isRecaptchaConfigured()) {
     console.warn('[api/contact] reCAPTCHA keys are not configured, skipping verification.')
   }
 
@@ -74,19 +79,19 @@ export const POST: APIRoute = async ({request}) => {
   const message = body.message?.trim()
 
   if (!firstName || !email || !message) {
-    return jsonError('Please fill in all required fields.', 400)
+    return respond(wantsJson, {ok: false, error: 'Please fill in all required fields.'}, 400)
   }
 
   if (!isValidEmail(email)) {
-    return jsonError('Invalid email address.', 400)
+    return respond(wantsJson, {ok: false, error: 'Invalid email address.'}, 400)
   }
 
   if (phone && !isValidPhone(phone)) {
-    return jsonError('Invalid phone number.', 400)
+    return respond(wantsJson, {ok: false, error: 'Invalid phone number.'}, 400)
   }
 
   if (body.privacyAccepted !== true) {
-    return jsonError('You must accept the privacy policy.', 400)
+    return respond(wantsJson, {ok: false, error: 'You must accept the privacy policy.'}, 400)
   }
 
   try {
@@ -101,13 +106,57 @@ export const POST: APIRoute = async ({request}) => {
     })
   } catch (error) {
     console.error('[api/contact] saveContactSubmission failed:', error)
-    return jsonError('Submission failed. Please try again.', 500)
+    return respond(wantsJson, {ok: false, error: 'Submission failed. Please try again.'}, 500)
   }
 
-  return new Response(JSON.stringify({success: true}), {
-    status: 200,
-    headers: {'Content-Type': 'application/json'},
-  })
+  return respond(wantsJson, {ok: true}, 200)
+}
+
+function prefersJson(request: Request): boolean {
+  const accept = request.headers.get('accept') ?? ''
+  const contentType = request.headers.get('content-type') ?? ''
+  return contentType.includes('application/json') || accept.includes('application/json')
+}
+
+async function parseBody(request: Request): Promise<ContactBody | null> {
+  const contentType = request.headers.get('content-type') ?? ''
+
+  if (contentType.includes('application/json')) {
+    try {
+      return (await request.json()) as ContactBody
+    } catch {
+      return null
+    }
+  }
+
+  try {
+    const form = await request.formData()
+    const needs = form
+      .getAll('need')
+      .map((value) => String(value).trim())
+      .filter(Boolean)
+    const privacyRaw = String(form.get('privacyAccepted') ?? '')
+    return {
+      name: String(form.get('name') ?? ''),
+      companyName: String(form.get('company') ?? ''),
+      email: String(form.get('email') ?? ''),
+      message: String(form.get('msg') ?? form.get('message') ?? ''),
+      needs,
+      budget: String(form.get('budget') ?? ''),
+      website: String(form.get('website') ?? ''),
+      formStartedAt: String(form.get('formStartedAt') ?? ''),
+      privacyAccepted: privacyRaw === '1' || privacyRaw === 'true',
+    }
+  } catch {
+    return null
+  }
+}
+
+function resolveElapsedMs(body: ContactBody): number | undefined {
+  if (typeof body.elapsedMs === 'number') return body.elapsedMs
+  const started = Number(body.formStartedAt)
+  if (!Number.isFinite(started) || started <= 0) return undefined
+  return Date.now() - started
 }
 
 /** The redesign form has one name input, so split it into the stored parts. */
@@ -127,13 +176,27 @@ function withFormContext(message: string, needs?: string[], budget?: string): st
   const lines = [message]
   const wanted = needs?.filter(Boolean) ?? []
   if (wanted.length) lines.push(`Τι χρειάζεται: ${wanted.join(', ')}`)
-  if (budget?.trim()) lines.push(`Ενδεικτικό budget: ${budget.trim()}`)
+  if (budget?.trim()) lines.push(`Κλίμακα: ${budget.trim()}`)
   return lines.join('\n\n')
 }
 
-function jsonError(error: string, status: number) {
-  return new Response(JSON.stringify({success: false, error}), {
-    status,
-    headers: {'Content-Type': 'application/json'},
+function respond(
+  wantsJson: boolean,
+  result: {ok: boolean; error?: string},
+  status: number,
+): Response {
+  if (wantsJson) {
+    return new Response(JSON.stringify({success: result.ok, error: result.error}), {
+      status,
+      headers: {'Content-Type': 'application/json'},
+    })
+  }
+
+  const dest = result.ok
+    ? '/epikoinonia/?sent=1'
+    : `/epikoinonia/?error=${encodeURIComponent(result.error ?? 'error')}`
+  return new Response(null, {
+    status: 303,
+    headers: {Location: dest},
   })
 }
