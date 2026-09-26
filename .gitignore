@@ -8,6 +8,10 @@ dist/
 .vercel/
 web/.vercel/
 
+# Dataset backups (local only)
+backups/
+*.tar.gz
+
 # Environment secrets (never commit)
 .env
 .env.*

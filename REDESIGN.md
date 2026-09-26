@@ -10,6 +10,27 @@
 - `npm run build` warns on unfinished `[…]` strings in the active dataset.
 - `npm run check:redirects -- <preview-url>` curls the Phase 5 legacy map.
 
+## Phase 7 release
+
+**Migration choice:** copy v2 documents from `redesign` → `production` (keeps Studio edits; leaves legacy v1 docs untouched). Do **not** point production at the `redesign` dataset.
+
+```powershell
+# 1. Backup production first
+cd sanitycms
+npx sanity dataset export production ../backups/production-$(Get-Date -Format yyyyMMdd).tar.gz
+
+# 2. Copy v2 docs
+npx sanity exec scripts/migrate-v2-to-production.ts --with-user-token -- --confirm production
+```
+
+Local backup path: `backups/production-*.tar.gz` (gitignored).
+
+**Rollback**
+1. Vercel → previous production deployment → Promote to Production.
+2. Dataset: `npx sanity dataset import ../backups/production-YYYYMMDD.tar.gz production --replace` (destructive; only if content is wrong).
+
+**Post-merge env:** production Vercel must keep `PUBLIC_SANITY_DATASET=production`.
+
 ## Sanity dataset
 - Project: `y6aoacvp`
 - Live CMS: `production` (Studio at https://sidebysideweb.sanity.studio)
