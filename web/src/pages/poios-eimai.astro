@@ -1,0 +1,30 @@
+---
+import PageHero from '../components/v2/PageHero.astro'
+import AboutBio from '../components/v2/pages/AboutBio.astro'
+import ProductsSection from '../components/v2/pages/ProductsSection.astro'
+import RolesSection from '../components/v2/pages/RolesSection.astro'
+import Base from '../layouts/Base.astro'
+import {getAboutPage} from '../lib/v2/cms'
+import '../styles/v2-pages.css'
+
+export const prerender = false
+
+const page = await getAboutPage()
+
+if (!page) {
+  return new Response('Η σελίδα «Ποιος είμαι» δεν έχει περιεχόμενο στο Sanity.', {status: 404})
+}
+
+const title = page.seo?.title ?? 'Ποιος είμαι · Side by Side'
+const description =
+  page.seo?.description ?? 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.'
+---
+
+<Base title={title} description={description}>
+  <div data-page="about" class="enter">
+    <PageHero hero={page.hero} />
+    <AboutBio page={page} />
+    <RolesSection section={page.rolesSection} />
+    <ProductsSection section={page.productsSection} />
+  </div>
+</Base>

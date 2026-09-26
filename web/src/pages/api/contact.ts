@@ -1,6 +1,6 @@
 import type {APIRoute} from 'astro'
 import {saveContactSubmission} from '../../lib/form-submission'
-import {RecaptchaError, verifyRecaptchaToken} from '../../lib/recaptcha'
+import {isRecaptchaConfigured, RecaptchaError, verifyRecaptchaToken} from '../../lib/recaptcha'
 import {checkRateLimit} from '../../lib/rate-limit'
 import {isValidEmail, isValidPhone} from '../../lib/validation'
 
@@ -8,12 +8,16 @@ export const prerender = false
 
 export const POST: APIRoute = async ({request}) => {
   let body: {
+    /** The redesign form has a single name field; v1 sends the two parts. */
+    name?: string
     firstName?: string
     lastName?: string
     companyName?: string
     email?: string
     phone?: string
     message?: string
+    needs?: string[]
+    budget?: string
     recaptchaToken?: string
     privacyAccepted?: boolean
   }
@@ -29,27 +33,30 @@ export const POST: APIRoute = async ({request}) => {
     return jsonError('Too many attempts. Please try again shortly.', 429)
   }
 
-  try {
-    await verifyRecaptchaToken(body.recaptchaToken)
-  } catch (error) {
-    const messageText =
-      error instanceof RecaptchaError
-        ? error.message
-        : error instanceof Error
+  if (isRecaptchaConfigured()) {
+    try {
+      await verifyRecaptchaToken(body.recaptchaToken)
+    } catch (error) {
+      const messageText =
+        error instanceof RecaptchaError
           ? error.message
-          : 'reCAPTCHA verification failed.'
-    const status = error instanceof RecaptchaError ? 400 : 500
-    return jsonError(messageText, status)
+          : error instanceof Error
+            ? error.message
+            : 'reCAPTCHA verification failed.'
+      const status = error instanceof RecaptchaError ? 400 : 500
+      return jsonError(messageText, status)
+    }
+  } else {
+    console.warn('[api/contact] reCAPTCHA keys are not configured, skipping verification.')
   }
 
-  const firstName = body.firstName?.trim()
-  const lastName = body.lastName?.trim()
+  const {firstName, lastName} = resolveName(body)
   const companyName = body.companyName?.trim()
   const email = body.email?.trim()
   const phone = body.phone?.trim()
   const message = body.message?.trim()
 
-  if (!firstName || !lastName || !companyName || !email || !phone || !message) {
+  if (!firstName || !email || !message) {
     return jsonError('Please fill in all required fields.', 400)
   }
 
@@ -57,7 +64,7 @@ export const POST: APIRoute = async ({request}) => {
     return jsonError('Invalid email address.', 400)
   }
 
-  if (!isValidPhone(phone)) {
+  if (phone && !isValidPhone(phone)) {
     return jsonError('Invalid phone number.', 400)
   }
 
@@ -69,10 +76,10 @@ export const POST: APIRoute = async ({request}) => {
     await saveContactSubmission({
       firstName,
       lastName,
-      companyName,
+      companyName: companyName || '-',
       email,
       phone,
-      message,
+      message: withFormContext(message, body.needs, body.budget),
       privacyAccepted: true,
     })
   } catch (error) {
@@ -84,6 +91,27 @@ export const POST: APIRoute = async ({request}) => {
     status: 200,
     headers: {'Content-Type': 'application/json'},
   })
+}
+
+/** The redesign form has one name input, so split it into the stored parts. */
+function resolveName(body: {name?: string; firstName?: string; lastName?: string}) {
+  const firstName = body.firstName?.trim()
+  const lastName = body.lastName?.trim()
+  if (firstName) return {firstName, lastName: lastName || '-'}
+
+  const parts = body.name?.trim().split(/\s+/).filter(Boolean) ?? []
+  if (!parts.length) return {firstName: '', lastName: '-'}
+  if (parts.length === 1) return {firstName: parts[0], lastName: '-'}
+  return {firstName: parts[0], lastName: parts.slice(1).join(' ')}
+}
+
+/** `formSubmission` has no fields for these, so they ride along in the message. */
+function withFormContext(message: string, needs?: string[], budget?: string): string {
+  const lines = [message]
+  const wanted = needs?.filter(Boolean) ?? []
+  if (wanted.length) lines.push(`Τι χρειάζεται: ${wanted.join(', ')}`)
+  if (budget?.trim()) lines.push(`Ενδεικτικό budget: ${budget.trim()}`)
+  return lines.join('\n\n')
 }
 
 function jsonError(error: string, status: number) {

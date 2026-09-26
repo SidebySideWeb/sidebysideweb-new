@@ -1,0 +1,64 @@
+---
+/** Portrait plus bio on the about page. */
+import Button from '../Button.astro'
+import Lines from '../Lines.astro'
+import {resolveHref} from '../../../lib/v2/links'
+import {renderInlineRichText} from '../../../lib/v2/portable-text'
+import type {AboutPage} from '../../../lib/v2/types'
+
+interface Props {
+  page: AboutPage
+}
+
+const {page} = Astro.props
+
+const paragraphs = (page.bio ?? [])
+  .filter((block) => block._type === 'block')
+  .map((block) => renderInlineRichText([block]))
+  .filter(Boolean)
+
+const ctas = page.ctas ?? []
+const photo = page.portrait?.url
+---
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap about-grid">
+    <div class:list={['portrait', 'rv', photo && 'has-photo']}>
+      {
+        photo ? (
+          <img src={photo} alt={page.portrait?.alt ?? ''} loading="lazy" decoding="async" />
+        ) : (
+          <Fragment>
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <rect x="10" y="6" width="17" height="44" rx="2.5" fill="#F4F6F3"></rect>
+              <rect x="37" y="14" width="17" height="44" rx="2.5" fill="#F0B429"></rect>
+            </svg>
+            <span><Lines text={page.portraitPlaceholder} /></span>
+          </Fragment>
+        )
+      }
+    </div>
+    <div class="txt">
+      {paragraphs.map((html) => <p class="rv" set:html={html} />)}
+      {
+        ctas.length ? (
+          <div class="rv" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
+            {ctas.map((cta) => {
+              const variant = cta.variant ?? 'm'
+              return (
+                <Button
+                  href={resolveHref(cta.href)}
+                  variant={variant}
+                  bars={variant === 'm'}
+                  magnetic={variant === 'm'}
+                >
+                  {cta.label}
+                </Button>
+              )
+            })}
+          </div>
+        ) : null
+      }
+    </div>
+  </div>
+</section>

@@ -5,7 +5,8 @@ export type ContactPayload = {
   lastName: string
   companyName: string
   email: string
-  phone: string
+  /** Optional since the redesign form does not ask for a phone number. */
+  phone?: string
   message: string
   privacyAccepted: boolean
 }
@@ -25,7 +26,7 @@ export async function saveContactSubmission(payload: ContactPayload) {
     fullName,
     companyName: payload.companyName,
     email: payload.email,
-    phone: payload.phone,
+    phone: payload.phone ?? '',
     message: payload.message,
     privacyAccepted: payload.privacyAccepted,
     submittedAt: new Date().toISOString(),

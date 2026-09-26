@@ -1,0 +1,43 @@
+---
+import PageHero from '../../components/v2/PageHero.astro'
+import CaseCard from '../../components/v2/home/CaseCard.astro'
+import WorkFilters from '../../components/v2/pages/WorkFilters.astro'
+import Base from '../../layouts/Base.astro'
+import {getWorkPage} from '../../lib/v2/cms'
+import '../../styles/v2-pages.css'
+
+export const prerender = false
+
+const page = await getWorkPage()
+
+if (!page) {
+  return new Response('Η σελίδα έργων δεν έχει περιεχόμενο στο Sanity.', {status: 404})
+}
+
+const cases = page.cases ?? []
+const title = page.seo?.title ?? 'Έργα · Side by Side'
+const description =
+  page.seo?.description ?? 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.'
+---
+
+<Base title={title} description={description}>
+  <div data-page="work" class="enter">
+    <PageHero hero={page.hero} />
+
+    <section class="sec" style="padding-top:0">
+      <div class="wrap">
+        <WorkFilters labels={page.filterLabels} />
+        <div class="cases" id="workCases">
+          {
+            cases.map((study, index) => (
+              <CaseCard study={study} class={index === 0 ? 'wide' : undefined} />
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="../../scripts/v2/work-filter.ts"></script>
+  <script src="../../scripts/v2/tilt.ts"></script>
+</Base>

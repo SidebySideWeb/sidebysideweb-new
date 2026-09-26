@@ -1,0 +1,50 @@
+---
+/**
+ * The vertical timeline on the process page. The home page shows the same
+ * steps in the horizontal scroller instead.
+ */
+import Placeholder from '../Placeholder.astro'
+import type {ProcessStepV2} from '../../../lib/v2/types'
+
+interface Props {
+  steps?: ProcessStepV2[]
+}
+
+const {steps = []} = Astro.props
+---
+
+{
+  steps.length ? (
+    <section class="sec light">
+      <div class="wrap">
+        <div class="tl">
+          {steps.map((step) => (
+            <div class="tl-item rv">
+              <span class="dot">{step.number}</span>
+              <div>
+                <h3>{step.title}</h3>
+                {step.durationLabel ? <span class="dur">{step.durationLabel}</span> : null}
+              </div>
+              <div>
+                {step.description || step.summary ? (
+                  <p>
+                    <Placeholder text={step.description || step.summary} />
+                  </p>
+                ) : null}
+                {step.deliverables?.length ? (
+                  <div class="gets" style="margin-top:18px">
+                    {step.deliverables.map((item) => (
+                      <div>
+                        <Placeholder text={item} />
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ) : null
+}

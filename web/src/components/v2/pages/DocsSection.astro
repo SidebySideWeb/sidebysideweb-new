@@ -1,0 +1,55 @@
+---
+/** The BRD / FSD / RFP sheets on the services page. */
+import Eyebrow from '../Eyebrow.astro'
+import Lines from '../Lines.astro'
+import type {ServicesDocsSection} from '../../../lib/v2/types'
+
+interface Props {
+  section?: ServicesDocsSection
+}
+
+const {section} = Astro.props
+const cards = section?.docCards ?? []
+
+/** Ruled lines on each sheet, uneven as in the prototype. */
+const SHEET_LINES = [
+  [null, null, '60%', null, '75%'],
+  [null, '70%', null, '50%', null],
+  [null, null, '80%', '55%', null],
+]
+---
+
+{
+  cards.length ? (
+    <section class="sec light">
+      <div class="wrap">
+        <div class="sec-hd">
+          <div>
+            {section?.eyebrow ? <Eyebrow>{section.eyebrow}</Eyebrow> : null}
+            {section?.heading ? (
+              <h2 class="rv">
+                <Lines text={section.heading} />
+              </h2>
+            ) : null}
+          </div>
+          {section?.intro ? <p class="rv">{section.intro}</p> : null}
+        </div>
+        <div class="docs">
+          {cards.map((card, index) => (
+            <article class="doc rv">
+              <div class="sheet">
+                <span class="dt">{card.code}</span>
+                {SHEET_LINES[index % SHEET_LINES.length].map((width) => (
+                  <i style={width ? `width:${width}` : undefined} />
+                ))}
+              </div>
+              <h3>{card.title}</h3>
+              {card.text ? <p>{card.text}</p> : null}
+              {card.audience ? <span class="for">{card.audience}</span> : null}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  ) : null
+}

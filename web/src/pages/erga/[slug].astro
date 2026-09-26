@@ -1,0 +1,27 @@
+---
+import CaseDetail from '../../components/v2/pages/CaseDetail.astro'
+import Base from '../../layouts/Base.astro'
+import {getCaseStudy} from '../../lib/v2/cms'
+import {stripPlaceholders} from '../../lib/v2/placeholder'
+import '../../styles/v2-pages.css'
+
+export const prerender = false
+
+const {slug} = Astro.params
+const study = slug ? await getCaseStudy(slug) : null
+
+if (!study) {
+  return new Response('Δεν βρέθηκε αυτό το έργο.', {status: 404})
+}
+
+const title = study.seo?.title ?? `${stripPlaceholders(study.name)} · Side by Side`
+const description = study.seo?.description ?? stripPlaceholders(study.short ?? study.headline)
+---
+
+<Base title={title} description={description}>
+  <div data-page="case" class="enter">
+    <CaseDetail study={study} />
+  </div>
+
+  <script src="../../scripts/v2/copy.ts"></script>
+</Base>

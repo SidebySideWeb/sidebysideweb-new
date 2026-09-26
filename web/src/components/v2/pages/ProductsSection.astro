@@ -1,0 +1,50 @@
+---
+/** "My own products" rows on the about page. */
+import Arrow from '../Arrow.astro'
+import Eyebrow from '../Eyebrow.astro'
+import Lines from '../Lines.astro'
+import Placeholder from '../Placeholder.astro'
+import {caseHref} from '../../../lib/v2/links'
+import type {AboutProductsSection} from '../../../lib/v2/types'
+
+interface Props {
+  section?: AboutProductsSection
+}
+
+const {section} = Astro.props
+const cases = section?.cases ?? []
+---
+
+{
+  cases.length ? (
+    <section class="sec">
+      <div class="wrap">
+        <div class="sec-hd">
+          <div>
+            {section?.eyebrow ? <Eyebrow>{section.eyebrow}</Eyebrow> : null}
+            {section?.heading ? (
+              <h2 class="rv">
+                <Lines text={section.heading} />
+              </h2>
+            ) : null}
+          </div>
+        </div>
+        <div class="rows">
+          {cases.map((study, index) => (
+            <a class="row" href={caseHref(study.slug)}>
+              <span class="n">{String(index + 1).padStart(2, '0')}</span>
+              <h3>
+                <Placeholder text={study.name} />
+              </h3>
+              {study.short ? <p>{study.short}</p> : <p />}
+              <span class="pr">{study.tag}</span>
+              <span class="ar">
+                <Arrow />
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  ) : null
+}

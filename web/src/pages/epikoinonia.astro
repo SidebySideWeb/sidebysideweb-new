@@ -1,0 +1,36 @@
+---
+import PageHero from '../components/v2/PageHero.astro'
+import ContactAside from '../components/v2/pages/ContactAside.astro'
+import ContactForm from '../components/v2/pages/ContactForm.astro'
+import Base from '../layouts/Base.astro'
+import {getContactPage} from '../lib/v2/cms'
+import '../styles/v2-pages.css'
+
+export const prerender = false
+
+const page = await getContactPage()
+
+if (!page) {
+  return new Response('Η σελίδα επικοινωνίας δεν έχει περιεχόμενο στο Sanity.', {status: 404})
+}
+
+const title = page.seo?.title ?? 'Επικοινωνία · Side by Side'
+const description =
+  page.seo?.description ?? 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.'
+---
+
+<Base title={title} description={description}>
+  <div data-page="contact" class="enter">
+    <PageHero hero={page.hero} />
+
+    <section class="sec" style="padding-top:0">
+      <div class="wrap contact-grid">
+        <ContactForm page={page} />
+        <ContactAside page={page} />
+      </div>
+    </section>
+  </div>
+
+  <script src="../scripts/v2/contact.ts"></script>
+  <script src="../scripts/v2/copy.ts"></script>
+</Base>

@@ -1,0 +1,88 @@
+---
+/** The services grid: `featured`, `wide` and default `svc-card` variants. */
+import Placeholder from '../Placeholder.astro'
+import type {ServiceV2} from '../../../lib/v2/types'
+
+interface Props {
+  services?: ServiceV2[]
+}
+
+const {services = []} = Astro.props
+
+const indexLabel = (service: ServiceV2, index: number) =>
+  service.indexLabel || String(index + 1).padStart(2, '0')
+---
+
+{
+  services.length ? (
+    <section class="sec" style="padding-top:0">
+      <div class="wrap">
+        <div class="svc">
+          {services.map((service, index) => {
+            const idx = service.badge
+              ? `${indexLabel(service, index)} · ${service.badge}`
+              : indexLabel(service, index)
+            const bullets = service.bullets ?? []
+            const top = (
+              <div class="top">
+                <span class="idx">{idx}</span>
+              </div>
+            )
+            const meta = service.metaLabel ? (
+              <div class="price">
+                <b>{service.metaLabel}</b>
+                {service.metaNote ? <span>{service.metaNote}</span> : null}
+              </div>
+            ) : null
+            const list = bullets.length ? (
+              <ul>
+                {bullets.map((bullet) => (
+                  <li>
+                    <Placeholder text={bullet} />
+                  </li>
+                ))}
+              </ul>
+            ) : null
+
+            if (service.variant === 'wide') {
+              return (
+                <article class="svc-card wide rv" id={service.slug}>
+                  <div class="wide-in">
+                    <div style="display:grid;gap:18px;align-content:start">
+                      {top}
+                      <h3>{service.title}</h3>
+                      {service.description ? (
+                        <p>
+                          <Placeholder text={service.description} />
+                        </p>
+                      ) : null}
+                      {meta}
+                    </div>
+                    {list}
+                  </div>
+                </article>
+              )
+            }
+
+            return (
+              <article
+                class:list={['svc-card', service.variant === 'featured' && 'feat', 'rv']}
+                id={service.slug}
+              >
+                {top}
+                <h3>{service.title}</h3>
+                {service.description ? (
+                  <p>
+                    <Placeholder text={service.description} />
+                  </p>
+                ) : null}
+                {list}
+                {meta}
+              </article>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  ) : null
+}

@@ -1,0 +1,46 @@
+---
+/** The "three things I never do" cards on the process page. */
+import Eyebrow from '../Eyebrow.astro'
+import Lines from '../Lines.astro'
+import type {ProcessRulesSection} from '../../../lib/v2/types'
+
+interface Props {
+  section?: ProcessRulesSection
+}
+
+const {section} = Astro.props
+const rules = section?.rules ?? []
+---
+
+{
+  rules.length ? (
+    <section class="sec">
+      <div class="wrap">
+        <div class="sec-hd">
+          <div>
+            {section?.eyebrow ? <Eyebrow>{section.eyebrow}</Eyebrow> : null}
+            {section?.heading ? (
+              <h2 class="rv">
+                <Lines text={section.heading} />
+              </h2>
+            ) : null}
+          </div>
+        </div>
+        <div class="values" style="margin-top:0">
+          {rules.map((rule) => (
+            <article class="val rv" style="background:var(--ink2)">
+              {rule.kicker ? <span class="k">{rule.kicker}</span> : null}
+              <h3>{rule.title}</h3>
+              {rule.text ? <p>{rule.text}</p> : null}
+              {rule.bigGlyph ? (
+                <span class="big" aria-hidden="true">
+                  {rule.bigGlyph}
+                </span>
+              ) : null}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  ) : null
+}

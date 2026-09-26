@@ -1,0 +1,108 @@
+---
+/**
+ * Contact form, markup from the prototype. `contact.ts` validates it and
+ * posts JSON to `/api/contact`; without JS the email in the aside is the
+ * way through.
+ */
+import {getRecaptchaSiteKey} from '../../../lib/recaptcha'
+import type {ContactPage} from '../../../lib/v2/types'
+
+interface Props {
+  page: ContactPage
+}
+
+const {page} = Astro.props
+const form = page.form ?? {}
+const needs = page.needOptions ?? []
+const budgets = page.budgetOptions ?? []
+const siteKey = getRecaptchaSiteKey()
+
+const ERROR_MESSAGE = 'Κάτι πήγε στραβά. Δοκίμασε ξανά ή στείλε μου email.'
+---
+
+<form
+  class="form"
+  id="form"
+  novalidate
+  data-recaptcha-key={siteKey}
+  data-error={ERROR_MESSAGE}
+>
+  <div class="f2">
+    <div class="field">
+      <label for="f-name">{form.nameLabel ?? 'Όνομα'}</label>
+      <input
+        id="f-name"
+        name="name"
+        autocomplete="name"
+        placeholder={form.namePlaceholder}
+        required
+      />
+    </div>
+    <div class="field">
+      <label for="f-mail">{form.emailLabel ?? 'Email'}</label>
+      <input
+        id="f-mail"
+        name="email"
+        type="email"
+        autocomplete="email"
+        placeholder={form.emailPlaceholder}
+        required
+      />
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="f-co">{form.companyLabel ?? 'Εταιρεία'}</label>
+    <input id="f-co" name="company" autocomplete="organization" placeholder={form.companyPlaceholder} />
+  </div>
+
+  {
+    needs.length ? (
+      <fieldset class="field">
+        <legend>{form.needLegend ?? 'Τι χρειάζεσαι'}</legend>
+        <div class="opts" style="margin-top:10px">
+          {needs.map((option) => (
+            <Fragment>
+              <input type="checkbox" id={`need-${option.value}`} name="need" value={option.value} />
+              <label for={`need-${option.value}`}>{option.label}</label>
+            </Fragment>
+          ))}
+        </div>
+      </fieldset>
+    ) : null
+  }
+
+  {
+    budgets.length ? (
+      <fieldset class="field">
+        <legend>{form.budgetLegend ?? 'Ενδεικτικό budget'}</legend>
+        <div class="opts" style="margin-top:10px">
+          {budgets.map((option) => (
+            <Fragment>
+              <input type="radio" id={`budget-${option.value}`} name="budget" value={option.value} />
+              <label for={`budget-${option.value}`}>{option.label}</label>
+            </Fragment>
+          ))}
+        </div>
+      </fieldset>
+    ) : null
+  }
+
+  <div class="field">
+    <label for="f-msg">{form.messageLabel ?? 'Τι δεν δουλεύει σήμερα;'}</label>
+    <textarea id="f-msg" name="msg" placeholder={form.messagePlaceholder} required></textarea>
+  </div>
+
+  <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+    <button class="btn btn-m mag" type="submit">
+      {form.submitLabel ?? 'Στείλε μήνυμα'}
+      <span class="bars"><b></b><b></b></span>
+    </button>
+    {page.privacyNote ? <span style="font-size:13.5px;color:var(--muted)">{page.privacyNote}</span> : null}
+  </div>
+
+  <div class="sent" id="sent" hidden>
+    <b data-sent-title>{page.successMessage ?? 'Το μήνυμα στάλθηκε.'}</b>
+    <span data-sent-note style="color:var(--muted);font-size:15px"></span>
+  </div>
+</form>

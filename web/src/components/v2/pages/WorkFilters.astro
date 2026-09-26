@@ -1,0 +1,26 @@
+---
+/** Product / client filter for the work grid. Wired by `work-filter.ts`. */
+import type {WorkFilterLabels} from '../../../lib/v2/types'
+
+interface Props {
+  labels?: WorkFilterLabels
+}
+
+const {labels} = Astro.props
+
+const filters = [
+  {key: 'all', label: labels?.all ?? 'Όλα'},
+  {key: 'product', label: labels?.product ?? 'Δικά μου προϊόντα'},
+  {key: 'client', label: labels?.client ?? 'Έργα πελατών'},
+] as const
+---
+
+<div class="filters" role="group" aria-label="Φίλτρο έργων">
+  {
+    filters.map((filter) => (
+      <button type="button" aria-pressed={filter.key === 'all' ? 'true' : 'false'} data-f={filter.key}>
+        {filter.label}
+      </button>
+    ))
+  }
+</div>

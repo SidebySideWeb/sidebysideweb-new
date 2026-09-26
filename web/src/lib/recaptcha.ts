@@ -12,8 +12,20 @@ export function getRecaptchaSiteKey(): string {
   return (import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY ?? '').trim()
 }
 
+export function getRecaptchaSecretKey(): string {
+  return (import.meta.env.RECAPTCHA_SECRET_KEY ?? '').trim()
+}
+
+/**
+ * Whether reCAPTCHA can run at all. Previews without the keys skip
+ * verification rather than reject every submission.
+ */
+export function isRecaptchaConfigured(): boolean {
+  return Boolean(getRecaptchaSiteKey() && getRecaptchaSecretKey())
+}
+
 export async function verifyRecaptchaToken(token: string | undefined): Promise<void> {
-  const secret = (import.meta.env.RECAPTCHA_SECRET_KEY ?? '').trim()
+  const secret = getRecaptchaSecretKey()
   if (!secret) {
     throw new Error('RECAPTCHA_SECRET_KEY is not configured.')
   }

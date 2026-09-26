@@ -66,6 +66,24 @@ export interface SeoBlock {
   description?: string
 }
 
+export interface PageHeroBlock {
+  eyebrow?: string
+  headingLines?: HeadingLine[]
+  lead?: string
+}
+
+export interface DocCard {
+  code: string
+  title: string
+  text?: string
+  audience?: string
+}
+
+export interface FormOption {
+  value: string
+  label: string
+}
+
 /* ---------------------------------------------------------------- rich text */
 
 export interface PortableTextSpan {
@@ -250,6 +268,130 @@ export interface HomePage {
   testimonialSection?: HomeTestimonialSection
   faq?: HomeFaq
   bigCta?: BigCtaBlock
+  seo?: SeoBlock
+  email?: string
+}
+
+/* --------------------------------------------------------- services page */
+
+export interface ServicesDocsSection {
+  eyebrow?: string
+  heading?: string
+  intro?: string
+  docCards?: DocCard[]
+}
+
+export interface ServicesTechStack {
+  eyebrow?: string
+  heading?: string
+  items?: string[]
+}
+
+export interface ServicesPage {
+  hero?: PageHeroBlock
+  services?: ServiceV2[]
+  docsSection?: ServicesDocsSection
+  techStack?: ServicesTechStack
+  bigCta?: BigCtaBlock
+  seo?: SeoBlock
+  email?: string
+}
+
+/* ---------------------------------------------------------- process page */
+
+export interface ProcessRulesSection {
+  eyebrow?: string
+  heading?: string
+  rules?: ValueCard[]
+}
+
+export interface ProcessPage {
+  hero?: PageHeroBlock
+  steps?: ProcessStepV2[]
+  rulesSection?: ProcessRulesSection
+  bigCta?: BigCtaBlock
+  seo?: SeoBlock
+  email?: string
+}
+
+/* ------------------------------------------------------------- work page */
+
+export interface WorkFilterLabels {
+  all?: string
+  product?: string
+  client?: string
+}
+
+export interface WorkPage {
+  hero?: PageHeroBlock
+  filterLabels?: WorkFilterLabels
+  cases?: CaseStudyV2[]
+  seo?: SeoBlock
+}
+
+/** A case study with the neighbour the detail page links on to. */
+export interface CaseStudyPage extends CaseStudyV2 {
+  seo?: SeoBlock
+  nextCase?: Pick<CaseStudyV2, 'name' | 'slug'> | null
+}
+
+/* ------------------------------------------------------------ about page */
+
+export interface AboutPortrait {
+  url?: string
+  alt?: string
+}
+
+export interface AboutRolesSection {
+  eyebrow?: string
+  heading?: string
+  intro?: string
+  roles?: BulletItem[]
+}
+
+export interface AboutProductsSection {
+  eyebrow?: string
+  heading?: string
+  cases?: CaseStudyV2[]
+}
+
+export interface AboutPage {
+  hero?: PageHeroBlock
+  portrait?: AboutPortrait | null
+  portraitPlaceholder?: string
+  bio?: RichText
+  ctas?: Cta[]
+  rolesSection?: AboutRolesSection
+  productsSection?: AboutProductsSection
+  seo?: SeoBlock
+}
+
+/* ---------------------------------------------------------- contact page */
+
+export interface ContactFormLabels {
+  nameLabel?: string
+  namePlaceholder?: string
+  emailLabel?: string
+  emailPlaceholder?: string
+  companyLabel?: string
+  companyPlaceholder?: string
+  needLegend?: string
+  budgetLegend?: string
+  messageLabel?: string
+  messagePlaceholder?: string
+  submitLabel?: string
+}
+
+export interface ContactPage {
+  hero?: PageHeroBlock
+  form?: ContactFormLabels
+  needOptions?: FormOption[]
+  budgetOptions?: FormOption[]
+  privacyNote?: string
+  successMessage?: string
+  nextStepsTitle?: string
+  nextSteps?: BulletItem[]
+  directLabel?: string
   seo?: SeoBlock
   email?: string
 }

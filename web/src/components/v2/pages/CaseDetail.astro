@@ -1,0 +1,130 @@
+---
+/** Full case study template, ported from `renderCase()` in the prototype. */
+import Button from '../Button.astro'
+import Eyebrow from '../Eyebrow.astro'
+import Placeholder from '../Placeholder.astro'
+import CaseArt from '../home/CaseArt.astro'
+import {caseHref} from '../../../lib/v2/links'
+import type {CaseStudyPage} from '../../../lib/v2/types'
+
+interface Props {
+  study: CaseStudyPage
+}
+
+const {study} = Astro.props
+
+const PLACEHOLDER_NOTE =
+  'Η δομή είναι έτοιμη. Αντικατέστησε τα κείμενα σε [αγκύλες] με πραγματικό έργο και αριθμούς, με την άδεια του πελάτη.'
+const REVIEW_NOTE =
+  'Τα κείμενα είναι πρώτο draft από όσα ξέρω για το προϊόν. Τα [Χ] είναι θέσεις για πραγματικούς αριθμούς.'
+
+const note = study.isPlaceholder
+  ? {label: 'Placeholder', text: PLACEHOLDER_NOTE}
+  : {label: 'Προς έλεγχο', text: study.reviewNote || REVIEW_NOTE}
+
+const meta = [
+  {label: 'Κλάδος', value: study.sector},
+  {label: 'Ρόλος', value: study.role},
+  {label: 'Διάρκεια', value: study.duration},
+  {label: 'Stack', value: study.stack?.join(' · ')},
+].filter((item) => Boolean(item.value))
+
+const body = [
+  {heading: 'Το πρόβλημα', text: study.problem},
+  {heading: 'Η προσέγγιση', text: study.approach},
+  {heading: 'Η λύση', text: study.solution},
+].filter((block) => Boolean(block.text))
+
+const results = study.results ?? []
+const next = study.nextCase
+---
+
+<section class="cd-hero">
+  <div class="wrap">
+    <a class="back" href="/erga">← Όλα τα έργα</a>
+    <Eyebrow class="fade" style="display:flex">
+      <Placeholder text={study.name} />
+      {study.tag ? ` · ${study.tag}` : null}
+    </Eyebrow>
+    <h1 style="margin-top:22px">
+      <span class="ln"><span style="--i:0">{study.headline}</span></span>
+    </h1>
+    <div class="note">
+      <b>{note.label}</b>
+      <span>{note.text}</span>
+    </div>
+    {
+      meta.length ? (
+        <div class="cd-meta fade" style="--d:150">
+          {meta.map((item) => (
+            <div>
+              <span>{item.label}</span>
+              <b>
+                <Placeholder text={item.value} />
+              </b>
+            </div>
+          ))}
+        </div>
+      ) : null
+    }
+    <div class="cd-art zoom"><CaseArt artKey={study.artKey} /></div>
+  </div>
+</section>
+
+<section class="sec light" style="margin-top:-120px;padding-top:200px">
+  <div class="wrap">
+    {
+      body.map((block) => (
+        <div class="cd-block cd-body">
+          <h2>{block.heading}</h2>
+          <p class="rv">
+            <Placeholder text={block.text} />
+          </p>
+        </div>
+      ))
+    }
+    {
+      results.length ? (
+        <div class="cd-block">
+          <h2 style="font-size:clamp(28px,3.4vw,44px);margin-bottom:28px">Τι άλλαξε</h2>
+          <div class="results">
+            {results.map((result) => (
+              <div class="res rv">
+                <b>
+                  <Placeholder text={result.value} />
+                </b>
+                <span>{result.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null
+    }
+  </div>
+</section>
+
+{
+  next?.slug ? (
+    <section>
+      <div class="wrap nextcase">
+        <div>
+          <span>Επόμενο έργο</span>
+        </div>
+        <a href={caseHref(next.slug)}>
+          <Placeholder text={next.name} /> <i>→</i>
+        </a>
+      </div>
+    </section>
+  ) : null
+}
+
+<section class="bigcta" style="padding-top:40px">
+  <div class="wrap">
+    <h2>
+      <a href="/epikoinonia">Έχεις κάτι</a><br /><span style="color:var(--mari)">παρόμοιο;</span>
+    </h2>
+    <div class="row2">
+      <Button href="/epikoinonia" variant="m" magnetic>Πες μου</Button>
+    </div>
+  </div>
+</section>

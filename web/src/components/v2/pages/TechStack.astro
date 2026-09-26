@@ -1,0 +1,40 @@
+---
+/** The pill list of tools on the services page. */
+import Eyebrow from '../Eyebrow.astro'
+import Lines from '../Lines.astro'
+import type {ServicesTechStack} from '../../../lib/v2/types'
+
+interface Props {
+  section?: ServicesTechStack
+}
+
+const {section} = Astro.props
+const items = section?.items ?? []
+
+/** A whole item in brackets is a placeholder pill, as in the prototype. */
+const isPlaceholder = (item: string) => /^\[[^\]]+\]$/.test(item.trim())
+---
+
+{
+  items.length ? (
+    <section class="sec light" style="padding-top:0">
+      <div class="wrap">
+        <div class="sec-hd">
+          <div>
+            {section?.eyebrow ? <Eyebrow>{section.eyebrow}</Eyebrow> : null}
+            {section?.heading ? (
+              <h2 class="rv">
+                <Lines text={section.heading} />
+              </h2>
+            ) : null}
+          </div>
+        </div>
+        <div class="stack" style="--line:var(--line-l)">
+          {items.map((item) => (
+            <span class:list={[isPlaceholder(item) && 'ph']}>{item}</span>
+          ))}
+        </div>
+      </div>
+    </section>
+  ) : null
+}

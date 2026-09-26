@@ -1,0 +1,35 @@
+---
+import PageHero from '../components/v2/PageHero.astro'
+import BigCta from '../components/v2/home/BigCta.astro'
+import DocsSection from '../components/v2/pages/DocsSection.astro'
+import ServiceCards from '../components/v2/pages/ServiceCards.astro'
+import TechStack from '../components/v2/pages/TechStack.astro'
+import Base from '../layouts/Base.astro'
+import {getServicesPage} from '../lib/v2/cms'
+import '../styles/v2-pages.css'
+
+export const prerender = false
+
+const page = await getServicesPage()
+
+if (!page) {
+  return new Response('Η σελίδα υπηρεσιών δεν έχει περιεχόμενο στο Sanity.', {status: 404})
+}
+
+const title = page.seo?.title ?? 'Υπηρεσίες · Side by Side'
+const description =
+  page.seo?.description ?? 'Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.'
+---
+
+<Base title={title} description={description}>
+  <div data-page="services" class="enter">
+    <PageHero hero={page.hero} />
+    <ServiceCards services={page.services} />
+    <DocsSection section={page.docsSection} />
+    <TechStack section={page.techStack} />
+    {page.bigCta ? <BigCta cta={page.bigCta} email={page.email} /> : null}
+  </div>
+
+  <script src="../scripts/v2/glow.ts"></script>
+  <script src="../scripts/v2/copy.ts"></script>
+</Base>

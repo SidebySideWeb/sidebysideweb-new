@@ -1,0 +1,34 @@
+---
+/** The `.phero` hero every inner page opens with. */
+import Eyebrow from './Eyebrow.astro'
+import HeadingLines from './HeadingLines.astro'
+import Placeholder from './Placeholder.astro'
+import type {PageHeroBlock} from '../../lib/v2/types'
+
+interface Props {
+  hero?: PageHeroBlock
+}
+
+const {hero} = Astro.props
+const lines = hero?.headingLines ?? []
+---
+
+{
+  hero ? (
+    <section class="phero">
+      <div class="wrap">
+        {hero.eyebrow ? <Eyebrow class="fade">{hero.eyebrow}</Eyebrow> : null}
+        {lines.length ? (
+          <h1>
+            <HeadingLines lines={lines} />
+          </h1>
+        ) : null}
+        {hero.lead ? (
+          <p class="lead fade" style="--d:200">
+            <Placeholder text={hero.lead} />
+          </p>
+        ) : null}
+      </div>
+    </section>
+  ) : null
+}

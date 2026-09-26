@@ -1,0 +1,41 @@
+---
+/** "Four roles, one person" on the about page. */
+import Eyebrow from '../Eyebrow.astro'
+import Lines from '../Lines.astro'
+import type {AboutRolesSection} from '../../../lib/v2/types'
+
+interface Props {
+  section?: AboutRolesSection
+}
+
+const {section} = Astro.props
+const roles = section?.roles ?? []
+---
+
+{
+  roles.length ? (
+    <section class="sec light">
+      <div class="wrap">
+        <div class="sec-hd">
+          <div>
+            {section?.eyebrow ? <Eyebrow>{section.eyebrow}</Eyebrow> : null}
+            {section?.heading ? (
+              <h2 class="rv">
+                <Lines text={section.heading} />
+              </h2>
+            ) : null}
+          </div>
+          {section?.intro ? <p class="rv">{section.intro}</p> : null}
+        </div>
+        <div class="skills">
+          {roles.map((role) => (
+            <div class="skill rv">
+              <h3>{role.title}</h3>
+              {role.text ? <p>{role.text}</p> : null}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ) : null
+}
