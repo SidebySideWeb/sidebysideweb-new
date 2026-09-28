@@ -19,11 +19,11 @@ const SITEMAP_PAGES = [
   '/epikoinonia/',
   '/privacy-policy/',
   '/cookies-policy/',
+  '/erga/nea-attiki-odos/',
+  '/erga/metaixmio/',
   '/erga/kollekta/',
   '/erga/ftiaxesite/',
-  '/erga/audit/',
-  '/erga/erp/',
-  '/erga/b2b/',
+  '/erga/audit-tool/',
 ].map((path) => new URL(path, SITE_URL).href)
 
 /**

@@ -40,3 +40,6 @@ Allow: /
 
 Sitemap: https://www.sidebysideweb.gr/sitemap-index.xml
 Sitemap: https://www.sidebysideweb.gr/sitemap.xml
+
+# Optional index for AI assistants
+# https://www.sidebysideweb.gr/llms.txt

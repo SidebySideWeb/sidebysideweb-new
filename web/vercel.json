@@ -24,22 +24,22 @@
     },
     {
       "source": "/en/automation-nea-attiki-odos-twitter",
-      "destination": "/erga/",
+      "destination": "/erga/nea-attiki-odos/",
       "permanent": true
     },
     {
       "source": "/en/automation-nea-attiki-odos-twitter/",
-      "destination": "/erga/",
+      "destination": "/erga/nea-attiki-odos/",
       "permanent": true
     },
     {
       "source": "/en/case-study-metaixmio",
-      "destination": "/erga/",
+      "destination": "/erga/metaixmio/",
       "permanent": true
     },
     {
       "source": "/en/case-study-metaixmio/",
-      "destination": "/erga/",
+      "destination": "/erga/metaixmio/",
       "permanent": true
     },
     {
@@ -69,27 +69,37 @@
     },
     {
       "source": "/automation-nea-attiki-odos-twitter",
-      "destination": "/erga/",
+      "destination": "/erga/nea-attiki-odos/",
       "permanent": true
     },
     {
       "source": "/automation-nea-attiki-odos-twitter/",
-      "destination": "/erga/",
+      "destination": "/erga/nea-attiki-odos/",
       "permanent": true
     },
     {
       "source": "/case-study-metaixmio",
-      "destination": "/erga/",
+      "destination": "/erga/metaixmio/",
       "permanent": true
     },
     {
       "source": "/case-study-metaixmio/",
-      "destination": "/erga/",
+      "destination": "/erga/metaixmio/",
       "permanent": true
     },
     {
       "source": "/case-studies/:path*",
       "destination": "/erga/",
+      "permanent": true
+    },
+    {
+      "source": "/erga/audit",
+      "destination": "/erga/audit-tool/",
+      "permanent": true
+    },
+    {
+      "source": "/erga/audit/",
+      "destination": "/erga/audit-tool/",
       "permanent": true
     }
   ],

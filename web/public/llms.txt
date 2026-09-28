@@ -1,25 +1,30 @@
-# Side by Side Web Studio
+# Side by Side
 
-> Technical consulting and custom web applications for Greek businesses. Analysis, design, and delivery of digital solutions.
+> Τεχνικός συνεργάτης για επιχειρήσεις και agencies στην Ελλάδα. Ανάλυση, αρχιτεκτονική, BRD/FSD, integrations και custom ανάπτυξη από έναν υπεύθυνο.
 
 Site: https://www.sidebysideweb.gr/
-Language: Greek (el)
+Language: el-GR
+Contact: https://www.sidebysideweb.gr/epikoinonia/
 
-## Main pages
+## Pages
 
-- [Home](https://www.sidebysideweb.gr/): Overview of services, process, case studies, testimonials, and FAQ
-- [About](https://www.sidebysideweb.gr/about/): Background, approach, and credentials of Dimitris Geronikolos
-- [Case studies](https://www.sidebysideweb.gr/#cases): Selected client projects and outcomes
-- [Contact](https://www.sidebysideweb.gr/#contact): Request a free 30-minute analysis call
-- [Privacy policy](https://www.sidebysideweb.gr/privacy-policy/)
-- [Cookies policy](https://www.sidebysideweb.gr/cookies-policy/)
+- [Αρχική](https://www.sidebysideweb.gr/): τι λύνω, πώς δουλεύω, FAQ
+- [Υπηρεσίες](https://www.sidebysideweb.gr/ypiresies/): Discovery, αρχιτεκτονική, υλοποίηση, Fractional CTO, BRD/FSD/RFP, agencies
+- [Πώς δουλεύω](https://www.sidebysideweb.gr/pos-doulevo/): Discovery → αρχιτεκτονική → υλοποίηση → υποστήριξη
+- [Έργα](https://www.sidebysideweb.gr/erga/): case studies πελατών και προϊόντων
+- [Ποιος είμαι](https://www.sidebysideweb.gr/poios-eimai/): βιογραφικό, ρόλοι, διαδρομή
+- [Επικοινωνία](https://www.sidebysideweb.gr/epikoinonia/): φόρμα και επόμενα βήματα
 
-## Discovery
+## Case studies
 
-- Sitemap: https://www.sidebysideweb.gr/sitemap-index.xml
-- Robots: https://www.sidebysideweb.gr/robots.txt
+- [Νέα Αττική Οδός](https://www.sidebysideweb.gr/erga/nea-attiki-odos/)
+- [Εκδόσεις Μεταίχμιο](https://www.sidebysideweb.gr/erga/metaixmio/)
+- [kollekta.gr](https://www.sidebysideweb.gr/erga/kollekta/)
+- [ftiaxesite.gr](https://www.sidebysideweb.gr/erga/ftiaxesite/)
+- [Audit tool](https://www.sidebysideweb.gr/erga/audit-tool/)
 
-## Contact
+## Notes for crawlers
 
-- Email: dgeronikolos@sidebysideweb.gr
-- Location: Athens, Greece
+All public pages are server-rendered HTML. Content is available without JavaScript.
+Cookie consent does not hide page content from bots.
+Sitemap: https://www.sidebysideweb.gr/sitemap-index.xml
