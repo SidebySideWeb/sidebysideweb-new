@@ -35,13 +35,35 @@
 .mqw{overflow:hidden;padding-block:40px 30px;position:relative;z-index:3;margin-bottom:-30px}
 .marquee{background:var(--mari);color:var(--ink);transform:rotate(-2deg);margin-inline:-40px;padding-block:18px;overflow:hidden;position:relative;z-index:2}
 .marquee.alt{background:var(--ink);color:var(--paper);transform:rotate(1.2deg);margin-top:-28px;z-index:1}
-.track{display:flex;width:max-content;gap:0}
+.track{display:flex;width:max-content;gap:0;will-change:transform}
 .track span{font-size:clamp(28px,4vw,54px);font-weight:800;letter-spacing:-.03em;white-space:nowrap;padding-inline:28px;display:inline-flex;align-items:center;gap:56px}
-.track span::after{content:"";width:14px;height:.72em;background:currentColor;border-radius:2px;box-shadow:20px .12em 0 var(--night)}
-.marquee.alt .track span{-webkit-text-stroke:1.5px var(--paper);color:transparent}
+.track span::after{content:"";width:14px;height:.72em;background:currentColor;border-radius:2px;box-shadow:20px .12em 0 var(--night);flex:none}
+.marquee.alt .track span{
+  color:var(--paper);
+  -webkit-text-fill-color:transparent;
+  -webkit-text-stroke:1.5px var(--paper);
+  paint-order:stroke fill;
+}
 .marquee.alt .track span::after{background:var(--paper);box-shadow:20px .12em 0 var(--mari)}
-@media (prefers-reduced-motion:no-preference){.track{animation:mq 38s linear infinite}.marquee.alt .track{animation-direction:reverse;animation-duration:46s}@keyframes mq{to{transform:translateX(-50%)}}}
-.marquee:hover .track{animation-play-state:paused}
+@media (prefers-reduced-motion:no-preference){
+  .track{animation:mq 38s linear infinite}
+  .marquee.alt .track{animation-direction:reverse;animation-duration:46s}
+  @keyframes mq{to{transform:translateX(-50%)}}
+}
+/* Pause only for real hover (mouse). Touch :hover sticks and freezes the strip. */
+@media (hover:hover) and (pointer:fine){
+  .marquee:hover .track{animation-play-state:paused}
+}
+@media (max-width:860px){
+  .mqw{padding-block:28px 18px;margin-bottom:-18px}
+  .marquee{margin-inline:-20px;padding-block:14px;transform:rotate(-1.5deg)}
+  .marquee.alt{margin-top:-22px;transform:rotate(1deg)}
+  .track span{font-size:clamp(22px,6.5vw,34px);padding-inline:18px;gap:36px}
+  .track span::after{width:10px;box-shadow:14px .12em 0 var(--night)}
+  .marquee.alt .track span{-webkit-text-stroke:1.25px var(--paper)}
+  .marquee.alt .track span::after{box-shadow:14px .12em 0 var(--mari)}
+}
+
 
 /* manifesto */
 .manifesto{font-size:clamp(34px,5.6vw,84px);font-weight:800;line-height:1.02;letter-spacing:-.045em;margin-top:32px}
