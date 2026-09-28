@@ -666,7 +666,7 @@
 
 - `eyebrow`: Διαδρομή
 - `heading`: 17 χρόνια, με τη σειρά.
-- **2025 –  Side by Side & ftiaxesite.gr**: Founder & Τεχνικός Σύμβουλος. Discovery, αρχιτεκτονική, υλοποίηση και Fractional CTO για επιχειρήσεις και agencies. 50+ έργα, 98% διατήρηση πελατών.
+- **2025 –  Side by Side, Adnko & ftiaxesite.gr**: Founder & Τεχνικός Σύμβουλος. Discovery, αρχιτεκτονική, υλοποίηση και Fractional CTO για επιχειρήσεις και agencies. 50+ έργα, 98% διατήρηση πελατών.
 - **2021 – 2025  Sleed**: Technology & Innovation Manager, Head of PMO. Ανάλυση και κατεύθυνση λύσεων για e-commerce πλατφόρμες μεγάλων retail και εκδοτικών brands. Ευθύνη P&L του τμήματος e-commerce.
 - **2018 – 2021  Wedia**: Delivery Lead, Technical Project Manager. Πλατφόρμες για τράπεζες, ασφαλιστικές και εταιρικούς πελάτες, με ενσωμάτωση legacy συστημάτων.
 - **2018  Generation Y**: Digital Account & Project Manager. Redesign και booking πλατφόρμες.
