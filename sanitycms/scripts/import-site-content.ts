@@ -645,7 +645,7 @@ function buildDocuments(data: Record<string, any>, existingSettings: Record<stri
     bio: bioBlocks,
     ctas: (about.ctas ?? []).map(ctaFromTuple),
     numbers: (about.numbers ?? []).map(([value, label]: [string, string]) => ({
-      _type: 'aboutNumber',
+      _type: 'aboutNumberV2',
       value,
       label,
     })),
@@ -677,7 +677,7 @@ function buildDocuments(data: Record<string, any>, existingSettings: Record<stri
       heading: about.timeline?.heading,
       items: (about.timeline?.items ?? []).map(
         ([period, title, text]: [string, string, string]) => ({
-          _type: 'aboutTimelineItem',
+          _type: 'aboutCareerItem',
           period,
           title,
           text,
@@ -685,7 +685,7 @@ function buildDocuments(data: Record<string, any>, existingSettings: Record<stri
       ),
     },
     education: (about.education ?? []).map(([label, text]: [string, string]) => ({
-      _type: 'aboutEducationItem',
+      _type: 'aboutEduItem',
       label,
       text,
     })),

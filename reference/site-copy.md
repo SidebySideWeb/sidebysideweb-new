@@ -654,6 +654,13 @@
   - Minoan Lines
   - Zenith
   - Νέα Αττική Οδός
+  - Regina Paper
+  - Blue Point Shops
+  - Kallitechnia
+  - Gaseuniki
+  - Baroque Le Bistrot
+  - Viar Travel
+  - Moutaki
 
 ### Διαδρομή
 

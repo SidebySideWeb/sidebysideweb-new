@@ -42,6 +42,12 @@ import {linkItem} from './objects/v2/linkItem'
 import {pageHero} from './objects/v2/pageHero'
 import {bigCta} from './objects/v2/bigCta'
 import {richTextV2} from './objects/v2/richTextV2'
+import {
+  aboutCareerItem,
+  aboutEduItem,
+  aboutNumberV2,
+  aboutPillar,
+} from './objects/v2/aboutBits'
 import {serviceV2} from './documents/v2/serviceV2'
 import {processStepV2} from './documents/v2/processStepV2'
 import {caseStudyV2} from './documents/v2/caseStudyV2'
@@ -100,6 +106,10 @@ export const schemaTypes = [
   pageHero,
   bigCta,
   richTextV2,
+  aboutNumberV2,
+  aboutPillar,
+  aboutCareerItem,
+  aboutEduItem,
   serviceV2,
   processStepV2,
   caseStudyV2,
