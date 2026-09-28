@@ -12,19 +12,23 @@ const {top = [], bottom = []} = Astro.props
     <div class="mqw">
       {top.length ? (
         <div class="marquee" aria-hidden="true">
-          <div class="track" data-dup>
-            {top.map((item) => (
-              <span>{item}</span>
-            ))}
+          <div class="marquee-clip">
+            <div class="mq-track" data-dup>
+              {top.map((item) => (
+                <span>{item}</span>
+              ))}
+            </div>
           </div>
         </div>
       ) : null}
       {bottom.length ? (
         <div class="marquee alt" aria-hidden="true">
-          <div class="track" data-dup>
-            {bottom.map((item) => (
-              <span>{item}</span>
-            ))}
+          <div class="marquee-clip">
+            <div class="mq-track" data-dup>
+              {bottom.map((item) => (
+                <span>{item}</span>
+              ))}
+            </div>
           </div>
         </div>
       ) : null}
