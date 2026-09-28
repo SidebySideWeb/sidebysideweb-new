@@ -10,7 +10,10 @@ export const formSubmission = defineType({
       title: 'Form Type',
       type: 'string',
       options: {
-        list: [{title: 'Contact', value: 'contact'}],
+        list: [
+          {title: 'Contact', value: 'contact'},
+          {title: 'Audit', value: 'audit'},
+        ],
       },
       readOnly: true,
     }),
@@ -45,12 +48,14 @@ export const formSubmission = defineType({
       fullName: 'fullName',
       companyName: 'companyName',
       read: 'read',
+      formType: 'formType',
     },
-    prepare({firstName, lastName, fullName, companyName, read}) {
+    prepare({firstName, lastName, fullName, companyName, read, formType}) {
       const title = fullName || [firstName, lastName].filter(Boolean).join(' ') || 'Submission'
+      const kind = formType === 'audit' ? 'Audit' : 'Contact form'
       return {
         title: read ? title : `🔵 ${title}`,
-        subtitle: companyName || 'Contact form',
+        subtitle: companyName ? `${kind} · ${companyName}` : kind,
       }
     },
   },

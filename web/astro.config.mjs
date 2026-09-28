@@ -24,6 +24,7 @@ const SITEMAP_PAGES = [
   '/erga/kollekta/',
   '/erga/ftiaxesite/',
   '/erga/audit-tool/',
+  '/audit/',
 ].map((path) => new URL(path, SITE_URL).href)
 
 /**

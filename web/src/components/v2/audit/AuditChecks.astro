@@ -1,0 +1,42 @@
+---
+import Eyebrow from '../Eyebrow.astro'
+import AuditIcon from './AuditIcon.astro'
+import Highlight from './Highlight.astro'
+import type {AuditPage} from '../../../lib/v2/types'
+
+interface Props {
+  checks: NonNullable<AuditPage['checks']>
+}
+
+const {checks} = Astro.props
+const items = checks.items ?? []
+---
+
+{
+  items.length ? (
+    <section class="sec light au-checks">
+      <div class="wrap">
+        <div class="sec-hd">
+          <div>
+            {checks.eyebrow ? <Eyebrow>{checks.eyebrow}</Eyebrow> : null}
+            {checks.heading ? (
+              <h2 class="rv">
+                <Highlight text={checks.heading} />
+              </h2>
+            ) : null}
+          </div>
+        </div>
+        <div class="au-grid">
+          {items.map((item, index) => (
+            <article class:list={['au-card', 'rv', {hot: item.highlight}]}>
+              <AuditIcon name={item.icon} />
+              <span class="k">{String(index + 1).padStart(2, '0')}</span>
+              {item.title ? <h3>{item.title}</h3> : null}
+              {item.text ? <p>{item.text}</p> : null}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  ) : null
+}

@@ -1,0 +1,18 @@
+---
+import {splitHighlights} from '../../../lib/v2/highlight'
+
+interface Props {
+  text?: string | null
+  /** Extra class on highlight spans (default `m`). */
+  markClass?: string
+}
+
+const {text, markClass = 'm'} = Astro.props
+const parts = splitHighlights(text)
+---
+
+{
+  parts.map((part) =>
+    part.highlight ? <span class={markClass}>{part.text}</span> : part.text,
+  )
+}

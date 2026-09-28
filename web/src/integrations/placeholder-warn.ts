@@ -21,6 +21,7 @@ const QUERY = `{
   "cases": *[_type == "caseStudyV2"]{title, client, summary, duration, stack, results[]{value,label}, problem, solution},
   "about": *[_type == "aboutPageV2"][0]{seo{title,description}, hero{heading[]{parts[]{text}}, subhead}},
   "contact": *[_type == "contactPage"][0]{seo{title,description}, hero{heading[]{parts[]{text}}, subhead}, budgetOptions[]{label}, privacyNote, successMessage},
+  "audit": *[_type == "auditPage"][0]{seo{title,description}, hero{headingLines[]{parts[]{text}}, subhead}, why{statement}, checks{heading}, cta{heading,body}},
   "settings": *[_type == "siteSettingsV2"][0]{siteName, email, linkedInUrl, legalLine, footerTagline}
 }`
 

@@ -1,0 +1,12 @@
+---
+import Faq from '../home/Faq.astro'
+import type {HomeFaq} from '../../../lib/v2/types'
+
+interface Props {
+  faq: HomeFaq
+}
+
+const {faq} = Astro.props
+---
+
+<Faq faq={faq} />

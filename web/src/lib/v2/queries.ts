@@ -221,6 +221,61 @@ export const CONTACT_PAGE_QUERY = `*[_id == "contactPage"][0]{
   ${EMAIL}
 }`
 
+export const AUDIT_PAGE_QUERY = `*[_id == "auditPage"][0]{
+  seo${SEO},
+  hero{
+    eyebrow,
+    ${HEADING_LINES},
+    subhead,
+    cta,
+    readers
+  },
+  why{eyebrow, statement, paragraphs},
+  checks{
+    eyebrow,
+    heading,
+    items[]{icon, title, text, highlight}
+  },
+  how{
+    eyebrow,
+    heading,
+    paragraphs,
+    visual{pages, pagesLabel, templates, templatesLabel, checks, checksLabel}
+  },
+  deliverable{
+    eyebrow,
+    heading,
+    paragraphs,
+    sample{
+      title,
+      tag,
+      summaryLabel,
+      summary,
+      rows[]{severity, finding, category, priority},
+      note
+    }
+  },
+  cta{
+    eyebrow,
+    heading,
+    body,
+    button,
+    form{
+      urlLabel,
+      urlPlaceholder,
+      nameLabel,
+      namePlaceholder,
+      emailLabel,
+      emailPlaceholder,
+      noteLabel,
+      notePlaceholder,
+      hint,
+      success
+    }
+  },
+  faq{eyebrow, heading, items[]{question, answer}}
+}`
+
 const LINK_ITEM = `{label, href}`
 
 export const SITE_SETTINGS_V2_QUERY = `*[_id == "siteSettingsV2"][0]{

@@ -6,6 +6,8 @@ interface Props {
   class?: string
   magnetic?: boolean
   bars?: boolean
+  /** Smooth-scroll target id (audit CTA → form). */
+  dataJump?: string
 }
 
 const {
@@ -15,12 +17,14 @@ const {
   class: className,
   magnetic = false,
   bars = true,
+  dataJump,
 } = Astro.props
 ---
 
 <a
   class:list={['btn', `btn-${variant}`, size === 'sm' && 'btn-sm', magnetic && 'mag', className]}
   href={href}
+  data-jump={dataJump}
 >
   <slot />
   {

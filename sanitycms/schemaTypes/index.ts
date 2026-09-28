@@ -58,6 +58,7 @@ import {servicesPage} from './documents/v2/servicesPage'
 import {processPage} from './documents/v2/processPage'
 import {workPage} from './documents/v2/workPage'
 import {aboutPageV2} from './documents/v2/aboutPageV2'
+import {auditPage} from './documents/v2/auditPage'
 import {contactPage} from './documents/v2/contactPage'
 
 export const schemaTypes = [
@@ -120,5 +121,6 @@ export const schemaTypes = [
   processPage,
   workPage,
   aboutPageV2,
+  auditPage,
   contactPage,
 ]

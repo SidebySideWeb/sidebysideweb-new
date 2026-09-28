@@ -37,6 +37,9 @@ const body = [
 
 const results = study.results ?? []
 const next = study.nextCase
+const isAuditTool = study.slug === 'audit-tool'
+const ctaHref = isAuditTool ? '/audit' : '/epikoinonia'
+const ctaLabel = isAuditTool ? 'Ζήτησε τον έλεγχό σου' : 'Πες μου'
 ---
 
 <section class="cd-hero">
@@ -120,11 +123,23 @@ const next = study.nextCase
 
 <section class="bigcta" style="padding-top:40px">
   <div class="wrap">
-    <h2>
-      <a href="/epikoinonia">Έχεις κάτι</a><br /><span style="color:var(--mari)">παρόμοιο;</span>
-    </h2>
+    {
+      isAuditTool ? (
+        <h2>
+          Θέλεις τον <span style="color:var(--mari)">έλεγχο;</span>
+        </h2>
+      ) : (
+        <h2>
+          <a href="/epikoinonia">Έχεις κάτι</a>
+          <br />
+          <span style="color:var(--mari)">παρόμοιο;</span>
+        </h2>
+      )
+    }
     <div class="row2">
-      <Button href="/epikoinonia" variant="m" magnetic>Πες μου</Button>
+      <Button href={ctaHref} variant="m" magnetic>
+        {ctaLabel}
+      </Button>
     </div>
   </div>
 </section>

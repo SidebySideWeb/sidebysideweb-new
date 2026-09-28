@@ -76,15 +76,21 @@ export function buildWebSiteJsonLd(): JsonLd {
 export function buildServiceJsonLd(service: {
   title: string
   description?: string
+  /** Full path under the site, e.g. `/audit/` or `/ypiresies/#slug`. */
+  path?: string
   slug?: string
 }): JsonLd {
+  const url = service.path
+    ? absoluteUrl(withTrailingSlash(service.path))
+    : service.slug
+      ? absoluteUrl(`/ypiresies/#${service.slug}`)
+      : absoluteUrl('/ypiresies/')
+
   const node: JsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Service',
     name: stripPlaceholders(service.title),
-    url: service.slug
-      ? absoluteUrl(`/ypiresies/#${service.slug}`)
-      : absoluteUrl('/ypiresies/'),
+    url,
     provider: {'@id': BUSINESS_ID},
     areaServed: {'@type': 'Country', name: 'Greece'},
     inLanguage: 'el-GR',

@@ -447,6 +447,90 @@ export interface ContactPage {
   email?: string
 }
 
+/* ---------------------------------------------------------- audit page */
+
+export interface AuditCheckItem {
+  icon?: string
+  title?: string
+  text?: string
+  highlight?: boolean
+}
+
+export interface AuditSampleRow {
+  severity?: string
+  finding?: string
+  category?: string
+  priority?: string
+}
+
+export interface AuditFormLabels {
+  urlLabel?: string
+  urlPlaceholder?: string
+  nameLabel?: string
+  namePlaceholder?: string
+  emailLabel?: string
+  emailPlaceholder?: string
+  noteLabel?: string
+  notePlaceholder?: string
+  hint?: string
+  success?: string
+}
+
+export interface AuditPage {
+  seo?: SeoBlock
+  hero?: {
+    eyebrow?: string
+    headingLines?: HeadingLine[]
+    subhead?: string
+    cta?: string
+    readers?: string[]
+  }
+  why?: {
+    eyebrow?: string
+    statement?: string
+    paragraphs?: string[]
+  }
+  checks?: {
+    eyebrow?: string
+    heading?: string
+    items?: AuditCheckItem[]
+  }
+  how?: {
+    eyebrow?: string
+    heading?: string
+    paragraphs?: string[]
+    visual?: {
+      pages?: string
+      pagesLabel?: string
+      templates?: string
+      templatesLabel?: string
+      checks?: string
+      checksLabel?: string
+    }
+  }
+  deliverable?: {
+    eyebrow?: string
+    heading?: string
+    paragraphs?: string[]
+    sample?: {
+      title?: string
+      tag?: string
+      summaryLabel?: string
+      summary?: string
+      rows?: AuditSampleRow[]
+      note?: string
+    }
+  }
+  cta?: {
+    eyebrow?: string
+    heading?: string
+    body?: string
+    button?: string
+    form?: AuditFormLabels
+  }
+  faq?: HomeFaq
+}
+
 /* ---------------------------------------------------------- site settings */
 
 export interface LinkItem {

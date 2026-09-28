@@ -1,0 +1,127 @@
+---
+/**
+ * Audit request form. With JS, `audit.ts` validates and posts JSON to `/api/contact`
+ * with `type: "audit"`. Without JS the form posts and redirects with `?sent=1`.
+ */
+import Eyebrow from '../Eyebrow.astro'
+import Highlight from './Highlight.astro'
+import {getRecaptchaSiteKey} from '../../../lib/recaptcha'
+import type {AuditPage} from '../../../lib/v2/types'
+
+interface Props {
+  cta: NonNullable<AuditPage['cta']>
+  sent?: boolean
+  error?: string
+}
+
+const {cta, sent = false, error} = Astro.props
+const form = cta.form ?? {}
+const siteKey = getRecaptchaSiteKey()
+
+const ERROR_MESSAGE = 'Κάτι πήγε στραβά. Δοκίμασε ξανά ή στείλε μου email.'
+const SUCCESS_MESSAGE =
+  form.success ?? 'Το πήρα. Θα ετοιμάσω την αναφορά και θα σου στείλω για να την περάσουμε μαζί.'
+const showSent = sent
+const showError = Boolean(error) && !sent
+const panelOpen = showSent || showError
+---
+
+<section class="sec au-cta" id="audit-request">
+  <div class="wrap au-cta-grid">
+    <div>
+      {cta.eyebrow ? <Eyebrow>{cta.eyebrow}</Eyebrow> : null}
+      {
+        cta.heading ? (
+          <h2 class="au-cta-h">
+            <Highlight text={cta.heading} />
+          </h2>
+        ) : null
+      }
+      {cta.body ? <p class="lead" style="margin-top:24px">{cta.body}</p> : null}
+    </div>
+
+    <form
+      class="form au-form"
+      id="auForm"
+      method="post"
+      action="/api/contact"
+      novalidate
+      data-recaptcha-key={siteKey}
+      data-error={ERROR_MESSAGE}
+      data-success={SUCCESS_MESSAGE}
+    >
+      <div class="hp" aria-hidden="true">
+        <label for="au-website">Website</label>
+        <input id="au-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+      <input type="hidden" name="formStartedAt" value={String(Date.now())} data-form-started />
+      <input type="hidden" name="privacyAccepted" value="1" />
+      <input type="hidden" name="type" value="audit" />
+
+      <div class="field">
+        <label for="au-url">{form.urlLabel ?? 'URL του site'}</label>
+        <input
+          id="au-url"
+          name="url"
+          type="text"
+          inputmode="url"
+          autocomplete="url"
+          placeholder={form.urlPlaceholder ?? 'https://www.to-site-sou.gr'}
+          required
+        />
+      </div>
+
+      <div class="f2">
+        <div class="field">
+          <label for="au-name">{form.nameLabel ?? 'Όνομα'}</label>
+          <input
+            id="au-name"
+            name="name"
+            autocomplete="name"
+            placeholder={form.namePlaceholder}
+            required
+          />
+        </div>
+        <div class="field">
+          <label for="au-mail">{form.emailLabel ?? 'Email'}</label>
+          <input
+            id="au-mail"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder={form.emailPlaceholder}
+            required
+          />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="au-note">{form.noteLabel ?? 'Κάτι που σε απασχολεί; (προαιρετικό)'}</label>
+        <input id="au-note" name="note" placeholder={form.notePlaceholder} />
+      </div>
+
+      <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+        <button class="btn btn-m mag" type="submit">
+          {cta.button ?? 'Ζήτησε τον έλεγχό σου'}
+          <span class="bars"><b></b><b></b></span>
+        </button>
+        {
+          form.hint ? (
+            <span style="font-size:13.5px;color:var(--muted)">{form.hint}</span>
+          ) : null
+        }
+      </div>
+
+      <div
+        class:list={['sent', {error: showError, 'is-visible': panelOpen}]}
+        id="auSent"
+        role="status"
+        aria-live="polite"
+        hidden={!panelOpen}
+      >
+        <b data-sent-title>{showError ? ERROR_MESSAGE : SUCCESS_MESSAGE}</b>
+        <span data-sent-note style="color:var(--muted);font-size:15px"></span>
+      </div>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,74 @@
+---
+import AuditChecks from '../components/v2/audit/AuditChecks.astro'
+import AuditFaq from '../components/v2/audit/AuditFaq.astro'
+import AuditHero from '../components/v2/audit/AuditHero.astro'
+import AuditHow from '../components/v2/audit/AuditHow.astro'
+import AuditReport from '../components/v2/audit/AuditReport.astro'
+import AuditRequest from '../components/v2/audit/AuditRequest.astro'
+import AuditWhy from '../components/v2/audit/AuditWhy.astro'
+import Base from '../layouts/Base.astro'
+import {getAuditPage} from '../lib/v2/cms'
+import {stripHighlights} from '../lib/v2/highlight'
+import {
+  buildBreadcrumbJsonLd,
+  buildFaqPageJsonLd,
+  buildProfessionalServiceJsonLd,
+  buildServiceJsonLd,
+} from '../lib/v2/json-ld'
+import {resolveSeo} from '../lib/v2/seo'
+import '../styles/v2-pages.css'
+import '../styles/v2-audit.css'
+
+export const prerender = false
+
+const page = await getAuditPage()
+
+if (!page) {
+  return new Response('Η σελίδα Audit δεν έχει περιεχόμενο στο Sanity.', {status: 404})
+}
+
+const {title, description} = resolveSeo(page.seo, {
+  title: 'Agent Readiness Audit · Side by Side',
+  description:
+    'Πλήρης τεχνικός έλεγχος site σε προσβασιμότητα, ταχύτητα, ασφάλεια και ετοιμότητα για AI εργαλεία.',
+})
+
+const faqItems = page.faq?.items ?? []
+const jsonLd = [
+  buildProfessionalServiceJsonLd(),
+  buildServiceJsonLd({
+    title: 'Agent Readiness Audit',
+    description: stripHighlights(description),
+    path: '/audit/',
+  }),
+  buildBreadcrumbJsonLd([
+    {name: 'Αρχική', path: '/'},
+    {name: 'Agent Readiness Audit', path: '/audit'},
+  ]),
+  ...(faqItems.length ? [buildFaqPageJsonLd(faqItems)] : []),
+]
+
+const sent = Astro.url.searchParams.get('sent') === '1'
+const error = Astro.url.searchParams.get('error') ?? undefined
+---
+
+<Base
+  title={title}
+  description={description}
+  canonicalPath="/audit/"
+  ogImage="/brand/og-audit.png"
+  jsonLd={jsonLd}
+>
+  <div data-page="audit" class="enter">
+    {page.hero ? <AuditHero hero={page.hero} /> : null}
+    {page.why ? <AuditWhy why={page.why} /> : null}
+    {page.checks ? <AuditChecks checks={page.checks} /> : null}
+    {page.how ? <AuditHow how={page.how} /> : null}
+    {page.deliverable ? <AuditReport deliverable={page.deliverable} /> : null}
+    {page.cta ? <AuditRequest cta={page.cta} sent={sent} error={error} /> : null}
+    {page.faq ? <AuditFaq faq={page.faq} /> : null}
+  </div>
+
+  <script src="../scripts/v2/audit.ts"></script>
+  <script src="../scripts/v2/magnetic.ts"></script>
+</Base>

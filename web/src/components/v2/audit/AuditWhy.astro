@@ -1,0 +1,34 @@
+---
+import Eyebrow from '../Eyebrow.astro'
+import Highlight from './Highlight.astro'
+import type {AuditPage} from '../../../lib/v2/types'
+
+interface Props {
+  why: NonNullable<AuditPage['why']>
+}
+
+const {why} = Astro.props
+const paragraphs = why.paragraphs ?? []
+---
+
+<section class="sec" style="padding-top:clamp(40px,6vw,80px)">
+  <div class="wrap au-why">
+    {why.eyebrow ? <Eyebrow>{why.eyebrow}</Eyebrow> : null}
+    {
+      why.statement ? (
+        <p class="au-big rv">
+          <Highlight text={why.statement} />
+        </p>
+      ) : null
+    }
+    {
+      paragraphs.length ? (
+        <div class="au-cols">
+          {paragraphs.map((paragraph) => (
+            <p class="rv">{paragraph}</p>
+          ))}
+        </div>
+      ) : null
+    }
+  </div>
+</section>

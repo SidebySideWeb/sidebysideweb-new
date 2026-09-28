@@ -1,0 +1,72 @@
+---
+import Eyebrow from '../Eyebrow.astro'
+import Highlight from './Highlight.astro'
+import type {AuditPage} from '../../../lib/v2/types'
+
+interface Props {
+  deliverable: NonNullable<AuditPage['deliverable']>
+}
+
+const {deliverable} = Astro.props
+const paragraphs = deliverable.paragraphs ?? []
+const sample = deliverable.sample
+const rows = sample?.rows ?? []
+
+function sevClass(severity?: string): string {
+  const s = (severity ?? '').toUpperCase()
+  if (s.includes('ΚΡΙΣΙΜ') || s === 'CRITICAL') return 's1'
+  if (s.includes('ΥΨΗΛ') || s === 'HIGH') return 's2'
+  return 's3'
+}
+---
+
+<section class="sec light au-get-sec">
+  <div class="wrap au-get">
+    <div>
+      {deliverable.eyebrow ? <Eyebrow>{deliverable.eyebrow}</Eyebrow> : null}
+      {
+        deliverable.heading ? (
+          <h2 class="rv">
+            <Highlight text={deliverable.heading} />
+          </h2>
+        ) : null
+      }
+      {paragraphs.map((paragraph) => (
+        <p class="rv">{paragraph}</p>
+      ))}
+    </div>
+    {
+      sample ? (
+        <div class="report rv" aria-label={sample.title ?? 'Παράδειγμα αναφοράς'}>
+          <div class="rp-hd">
+            <span class="rp-t">{sample.title ?? 'Αναφορά ελέγχου'}</span>
+            {sample.tag ? <span class="rp-tag">{sample.tag}</span> : null}
+          </div>
+          {
+            sample.summary ? (
+              <div class="rp-sum">
+                {sample.summaryLabel ? <span class="rp-k">{sample.summaryLabel}</span> : null}
+                <p>{sample.summary}</p>
+              </div>
+            ) : null
+          }
+          {
+            rows.length ? (
+              <div class="rp-rows">
+                {rows.map((row) => (
+                  <div class="rp-row">
+                    <span class:list={['sev', sevClass(row.severity)]}>{row.severity}</span>
+                    <span class="rp-f">{row.finding}</span>
+                    <span class="rp-c">{row.category}</span>
+                    <span class="rp-p">{row.priority}</span>
+                  </div>
+                ))}
+              </div>
+            ) : null
+          }
+          {sample.note ? <p class="rp-note">{sample.note}</p> : null}
+        </div>
+      ) : null
+    }
+  </div>
+</section>

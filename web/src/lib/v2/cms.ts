@@ -1,6 +1,7 @@
 import {client} from '../sanity'
 import {
   ABOUT_PAGE_QUERY,
+  AUDIT_PAGE_QUERY,
   CASE_SLUGS_QUERY,
   CASE_STUDY_QUERY,
   CONTACT_PAGE_QUERY,
@@ -12,6 +13,7 @@ import {
 } from './queries'
 import type {
   AboutPage,
+  AuditPage,
   CaseStudyPage,
   ContactPage,
   HomePage,
@@ -55,6 +57,10 @@ export async function getAboutPage(): Promise<AboutPage | null> {
 
 export async function getContactPage(): Promise<ContactPage | null> {
   return (await client.fetch<ContactPage | null>(CONTACT_PAGE_QUERY)) ?? null
+}
+
+export async function getAuditPage(): Promise<AuditPage | null> {
+  return (await client.fetch<AuditPage | null>(AUDIT_PAGE_QUERY)) ?? null
 }
 
 export async function getSiteSettingsV2(): Promise<SiteSettingsV2 | null> {

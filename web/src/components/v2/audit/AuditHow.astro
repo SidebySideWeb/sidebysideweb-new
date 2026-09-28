@@ -1,0 +1,57 @@
+---
+import Eyebrow from '../Eyebrow.astro'
+import Highlight from './Highlight.astro'
+import type {AuditPage} from '../../../lib/v2/types'
+
+interface Props {
+  how: NonNullable<AuditPage['how']>
+}
+
+const {how} = Astro.props
+const paragraphs = how.paragraphs ?? []
+const visual = how.visual ?? {}
+/** Five template cells highlighted in the 20×20 grid (prototype indices). */
+const KEYS = new Set([0, 87, 173, 262, 349])
+const cells = Array.from({length: 400}, (_, i) => KEYS.has(i))
+---
+
+<section class="sec">
+  <div class="wrap au-how">
+    <div>
+      {how.eyebrow ? <Eyebrow>{how.eyebrow}</Eyebrow> : null}
+      {
+        how.heading ? (
+          <h2 class="rv">
+            <Highlight text={how.heading} />
+          </h2>
+        ) : null
+      }
+      {paragraphs.map((paragraph) => (
+        <p class="rv">{paragraph}</p>
+      ))}
+    </div>
+    <figure
+      class="tpl rv"
+      aria-label={`${visual.pages ?? '400'} ${visual.pagesLabel ?? 'σελίδες'}, ${visual.templates ?? '5'} ${visual.templatesLabel ?? 'τύποι σελίδας'}`}
+    >
+      <div class="tpl-grid">
+        {cells.map((isKey) => (
+          <i class={isKey ? 'k' : undefined} />
+        ))}
+      </div>
+      <figcaption>
+        <span>
+          <b>{visual.pages ?? '400'}</b> {visual.pagesLabel ?? 'σελίδες'}
+        </span>
+        <span class="arrow" aria-hidden="true">→</span>
+        <span>
+          <b class="m">{visual.templates ?? '5'}</b> {visual.templatesLabel ?? 'τύποι σελίδας'}
+        </span>
+        <span class="arrow" aria-hidden="true">→</span>
+        <span>
+          <b>{visual.checks ?? '5'}</b> {visual.checksLabel ?? 'έλεγχοι'}
+        </span>
+      </figcaption>
+    </figure>
+  </div>
+</section>

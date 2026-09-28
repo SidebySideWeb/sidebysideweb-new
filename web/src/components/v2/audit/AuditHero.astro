@@ -1,0 +1,55 @@
+---
+import Button from '../Button.astro'
+import Eyebrow from '../Eyebrow.astro'
+import HeadingLines from '../HeadingLines.astro'
+import type {AuditPage} from '../../../lib/v2/types'
+
+interface Props {
+  hero: NonNullable<AuditPage['hero']>
+}
+
+const {hero} = Astro.props
+const readers = hero.readers ?? ['ΑΝΘΡΩΠΟΣ', 'AI ΕΡΓΑΛΕΙΟ']
+---
+
+<section class="phero au-hero">
+  <div class="wrap">
+    {hero.eyebrow ? <Eyebrow class="fade">{hero.eyebrow}</Eyebrow> : null}
+    {
+      hero.headingLines?.length ? (
+        <h1 class="au-h1">
+          <HeadingLines lines={hero.headingLines} />
+        </h1>
+      ) : null
+    }
+    <div class="au-hero-row">
+      {hero.subhead ? <p class="lead fade" style="--d:200;margin-top:0">{hero.subhead}</p> : null}
+      <div class="fade" style="--d:350">
+        <Button href="#audit-request" variant="m" bars magnetic dataJump="audit-request">
+          {hero.cta ?? 'Ζήτησε τον έλεγχό σου'}
+        </Button>
+      </div>
+    </div>
+    <div class="readers fade" style="--d:500" aria-hidden="true">
+      <div class="reader">
+        <span class="rl">{readers[0]}</span>
+        <div class="page">
+          <i style="width:60%"></i>
+          <i></i>
+          <i style="width:80%"></i>
+          <i class="btnl"></i>
+        </div>
+      </div>
+      <div class="scanwrap"><span class="scanl"></span></div>
+      <div class="reader ai">
+        <span class="rl">{readers[1] ?? 'AI ΕΡΓΑΛΕΙΟ'}</span>
+        <div class="page code">
+          <span>&lt;h1&gt;</span>
+          <span>schema: Product</span>
+          <span>alt: «…»</span>
+          <span>llms.txt</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

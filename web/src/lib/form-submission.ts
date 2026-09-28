@@ -9,6 +9,8 @@ export type ContactPayload = {
   phone?: string
   message: string
   privacyAccepted: boolean
+  /** `contact` (default) or `audit`. */
+  formType?: 'contact' | 'audit'
 }
 
 export async function saveContactSubmission(payload: ContactPayload) {
@@ -17,10 +19,11 @@ export async function saveContactSubmission(payload: ContactPayload) {
   }
 
   const fullName = `${payload.firstName} ${payload.lastName}`.trim()
+  const formType = payload.formType ?? 'contact'
 
   return writeClient.create({
     _type: 'formSubmission',
-    formType: 'contact',
+    formType,
     firstName: payload.firstName,
     lastName: payload.lastName,
     fullName,

@@ -14,6 +14,7 @@ const singletonTypes = [
   'processPage',
   'workPage',
   'aboutPageV2',
+  'auditPage',
   'contactPage',
   // v1
   'siteSettings',

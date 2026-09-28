@@ -7,6 +7,7 @@ const V2_SINGLETONS = [
   {id: 'processPage', title: 'Πώς δουλεύω', schemaType: 'processPage'},
   {id: 'workPage', title: 'Έργα', schemaType: 'workPage'},
   {id: 'aboutPageV2', title: 'Ποιος είμαι', schemaType: 'aboutPageV2'},
+  {id: 'auditPage', title: 'Audit', schemaType: 'auditPage'},
   {id: 'contactPage', title: 'Επικοινωνία', schemaType: 'contactPage'},
 ]
 
