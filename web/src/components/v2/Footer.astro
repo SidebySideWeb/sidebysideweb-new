@@ -1,10 +1,13 @@
 ---
-import {getSiteSettingsV2} from '../../lib/v2/cms'
 import {resolveHref} from '../../lib/v2/links'
-import type {FooterColumn, LinkItem} from '../../lib/v2/types'
+import type {FooterColumn, LinkItem, SiteSettingsV2} from '../../lib/v2/types'
 import Placeholder from './Placeholder.astro'
 
-const settings = await getSiteSettingsV2()
+interface Props {
+  settings?: SiteSettingsV2 | null
+}
+
+const {settings} = Astro.props
 
 const fallbackColumns: FooterColumn[] = [
   {

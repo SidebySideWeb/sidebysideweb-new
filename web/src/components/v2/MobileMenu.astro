@@ -1,16 +1,30 @@
 ---
-import {isActivePath} from '../../lib/v2/links'
+import {isActivePath, resolveHref} from '../../lib/v2/links'
+import type {LinkItem} from '../../lib/v2/types'
+
+interface Props {
+  nav?: LinkItem[] | null
+}
+
+const FALLBACK_NAV: LinkItem[] = [
+  {href: '/ypiresies', label: 'Υπηρεσίες'},
+  {href: '/pos-doulevo', label: 'Πώς δουλεύω'},
+  {href: '/erga', label: 'Έργα'},
+  {href: '/poios-eimai', label: 'Ποιος είμαι'},
+  {href: '/epikoinonia', label: 'Επικοινωνία'},
+]
+
+const {nav = FALLBACK_NAV} = Astro.props
+const path = Astro.url.pathname
 
 const links = [
   {href: '/', label: 'Αρχική', n: '00'},
-  {href: '/ypiresies', label: 'Υπηρεσίες', n: '01'},
-  {href: '/pos-doulevo', label: 'Πώς δουλεύω', n: '02'},
-  {href: '/erga', label: 'Έργα', n: '03'},
-  {href: '/poios-eimai', label: 'Ποιος είμαι', n: '04'},
-  {href: '/epikoinonia', label: 'Επικοινωνία', n: '05'},
-] as const
-
-const path = Astro.url.pathname
+  ...(nav?.length ? nav : FALLBACK_NAV).map((item, index) => ({
+    href: resolveHref(item.href),
+    label: item.label,
+    n: String(index + 1).padStart(2, '0'),
+  })),
+]
 ---
 
 <div class="mobile" id="mobile">

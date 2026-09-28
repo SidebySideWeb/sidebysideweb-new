@@ -1,15 +1,30 @@
 ---
-import {isActivePath} from '../../lib/v2/links'
+import {isActivePath, resolveHref} from '../../lib/v2/links'
+import type {Cta, LinkItem} from '../../lib/v2/types'
 import Button from './Button.astro'
 import Logo from './Logo.astro'
 
-const nav = [
+interface Props {
+  nav?: LinkItem[] | null
+  cta?: Cta | null
+}
+
+const FALLBACK_NAV: LinkItem[] = [
   {href: '/ypiresies', label: 'Υπηρεσίες'},
   {href: '/pos-doulevo', label: 'Πώς δουλεύω'},
   {href: '/erga', label: 'Έργα'},
   {href: '/poios-eimai', label: 'Ποιος είμαι'},
   {href: '/epikoinonia', label: 'Επικοινωνία'},
-] as const
+]
+
+const {nav = FALLBACK_NAV, cta} = Astro.props
+const items = (nav?.length ? nav : FALLBACK_NAV).map((item) => ({
+  label: item.label,
+  href: resolveHref(item.href),
+}))
+const headerCta = cta?.label
+  ? {label: cta.label, href: resolveHref(cta.href), variant: cta.variant ?? 'm'}
+  : {label: 'Κλείσε call', href: '/epikoinonia', variant: 'm' as const}
 
 const path = Astro.url.pathname
 const home = isActivePath(path, '/')
@@ -20,14 +35,16 @@ const home = isActivePath(path, '/')
     <Logo href="/" current={home} />
     <nav class="nav" aria-label="Κύριο μενού">
       {
-        nav.map((item) => (
+        items.map((item) => (
           <a href={item.href} aria-current={isActivePath(path, item.href) ? 'page' : undefined}>
             {item.label}
           </a>
         ))
       }
     </nav>
-    <Button href="/epikoinonia" variant="m" size="sm" magnetic>Κλείσε call</Button>
+    <Button href={headerCta.href} variant={headerCta.variant} size="sm" magnetic>
+      {headerCta.label}
+    </Button>
     <button
       class="menu-btn"
       id="menuBtn"

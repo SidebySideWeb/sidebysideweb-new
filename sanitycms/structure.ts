@@ -78,7 +78,7 @@ export const structure: StructureResolver = (S) =>
 
       S.listItem()
         .id('legacyV1')
-        .title('Legacy (v1)')
+        .title('Legacy (v1) — μη επεξεργάζεσαι για το live site')
         .child(
           S.list()
             .title('Legacy (v1)')
