@@ -1,6 +1,9 @@
 ---
 import PageHero from '../components/v2/PageHero.astro'
 import AboutBio from '../components/v2/pages/AboutBio.astro'
+import AboutNumbers from '../components/v2/pages/AboutNumbers.astro'
+import AboutSectorsBrands from '../components/v2/pages/AboutSectorsBrands.astro'
+import AboutTimeline from '../components/v2/pages/AboutTimeline.astro'
 import ProductsSection from '../components/v2/pages/ProductsSection.astro'
 import RolesSection from '../components/v2/pages/RolesSection.astro'
 import Base from '../layouts/Base.astro'
@@ -34,7 +37,15 @@ const jsonLd = buildProfessionalServiceJsonLd()
   <div data-page="about" class="enter">
     <PageHero hero={page.hero} />
     <AboutBio page={page} />
+    <AboutNumbers numbers={page.numbers} />
     <RolesSection section={page.rolesSection} />
+    <AboutSectorsBrands sectors={page.sectorsSection} brands={page.brandsSection} />
+    <AboutTimeline
+      timeline={page.timelineSection}
+      education={page.education}
+      tools={page.tools}
+      languages={page.languages}
+    />
     <ProductsSection section={page.productsSection} />
   </div>
 </Base>

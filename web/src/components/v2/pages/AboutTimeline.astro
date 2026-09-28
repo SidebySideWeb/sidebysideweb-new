@@ -1,0 +1,88 @@
+---
+/** Career timeline plus education / tools / languages. */
+import Eyebrow from '../Eyebrow.astro'
+import Lines from '../Lines.astro'
+import type {AboutEducationItem, AboutTimelineSection} from '../../../lib/v2/types'
+
+interface Props {
+  timeline?: AboutTimelineSection
+  education?: AboutEducationItem[]
+  tools?: string[]
+  languages?: string[]
+}
+
+const {timeline, education = [], tools = [], languages = []} = Astro.props
+const items = timeline?.items ?? []
+const hasExtras = education.length || tools.length || languages.length
+---
+
+{
+  items.length || hasExtras ? (
+    <section class="sec">
+      <div class="wrap">
+        {items.length ? (
+          <Fragment>
+            <div class="sec-hd">
+              <div>
+                {timeline?.eyebrow ? <Eyebrow>{timeline.eyebrow}</Eyebrow> : null}
+                {timeline?.heading ? (
+                  <h2 class="rv">
+                    <Lines text={timeline.heading} />
+                  </h2>
+                ) : null}
+              </div>
+            </div>
+            <div class="ctl">
+              {items.map((item) => (
+                <div class="tli rv">
+                  <span class="yr">{item.period}</span>
+                  <div>
+                    <h3>{item.title}</h3>
+                    {item.text ? <p>{item.text}</p> : null}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Fragment>
+        ) : null}
+
+        {hasExtras ? (
+          <div class="extras">
+            {education.length ? (
+              <div class="rv">
+                <Eyebrow>Σπουδές</Eyebrow>
+                <ul>
+                  {education.map((item) => (
+                    <li>
+                      <b>{item.label}</b> {item.text}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+            {tools.length ? (
+              <div class="rv">
+                <Eyebrow>Εργαλεία</Eyebrow>
+                <div class="stack small">
+                  {tools.map((tool) => (
+                    <span>{tool}</span>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+            {languages.length ? (
+              <div class="rv">
+                <Eyebrow>Γλώσσες</Eyebrow>
+                <ul>
+                  {languages.map((lang) => (
+                    <li>{lang}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
+    </section>
+  ) : null
+}

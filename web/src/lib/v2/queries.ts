@@ -177,11 +177,20 @@ export const CASE_SLUGS_QUERY = `*[_type == "caseStudyV2" && defined(slug.curren
 
 export const ABOUT_PAGE_QUERY = `*[_id == "aboutPageV2"][0]{
   hero${PAGE_HERO},
+  personName,
+  personRole,
   portrait{alt, "url": asset->url},
   portraitPlaceholder,
   bio,
   ctas[]${CTA},
-  rolesSection{eyebrow, heading, intro, roles[]{title, text}},
+  numbers[]{value, label},
+  rolesSection{eyebrow, heading, intro, roles[]{indexLabel, title, text, proof}},
+  sectorsSection{eyebrow, heading, items},
+  brandsSection{eyebrow, heading, note, items},
+  timelineSection{eyebrow, heading, items[]{period, title, text}},
+  education[]{label, text},
+  tools,
+  languages,
   productsSection{eyebrow, heading, cases[]->${CASE_CARD}},
   seo${SEO}
 }`

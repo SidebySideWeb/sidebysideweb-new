@@ -1,0 +1,27 @@
+---
+/** Marigold numbers strip on the about page. */
+import type {AboutNumber} from '../../../lib/v2/types'
+
+interface Props {
+  numbers?: AboutNumber[]
+}
+
+const {numbers = []} = Astro.props
+---
+
+{
+  numbers.length ? (
+    <section class="numband">
+      <div class="wrap">
+        <div class="nums">
+          {numbers.map((item) => (
+            <div class="rv">
+              <b>{item.value}</b>
+              {item.label ? <span>{item.label}</span> : null}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ) : null
+}

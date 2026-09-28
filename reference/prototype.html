@@ -458,6 +458,39 @@ fieldset.field{border:0;padding:0;margin:0}
 .doc p{color:var(--slate);font-size:16px}
 .doc .for{font-family:var(--mono);font-size:12px;color:var(--mari-d);letter-spacing:.04em}
 @media (max-width:860px){.docs{grid-template-columns:1fr}}
+/* about v2 */
+.numband{background:var(--mari);color:var(--ink);padding-block:clamp(40px,6vw,72px)}
+.nums{display:grid;grid-template-columns:repeat(5,1fr);gap:24px}
+.nums div{display:grid;gap:6px;border-left:2px solid rgba(19,35,46,.25);padding-left:18px}
+.nums b{font-size:clamp(40px,5.4vw,80px);font-weight:900;letter-spacing:-.05em;line-height:.9}
+.nums span{font-size:14.5px;line-height:1.35;max-width:18ch}
+@media (max-width:900px){.nums{grid-template-columns:repeat(2,1fr)}}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:900px){.pgrid{grid-template-columns:1fr}}
+.pcard{background:var(--ink);border:1px solid var(--line);border-radius:12px;padding:30px 28px;display:flex;flex-direction:column;gap:14px;transition:transform .5s var(--ease),border-color .3s}
+.pcard:hover{transform:translateY(-6px);border-color:rgba(240,180,41,.55)}
+.pcard .pi{font-family:var(--mono);font-size:12.5px;color:var(--mari)}
+.pcard h3{font-size:clamp(24px,2.4vw,32px);letter-spacing:-.03em}
+.pcard p{color:var(--muted);font-size:16px;flex:1}
+.pcard .proof{display:flex;gap:12px;align-items:flex-start;border-top:1px solid var(--line);padding-top:16px;font-family:var(--mono);font-size:12.5px;line-height:1.5;color:var(--paper)}
+.pcard .proof i{flex:none;width:6px;height:16px;background:var(--mari);border-radius:1px;margin-top:1px}
+.brands{display:flex;flex-wrap:wrap;gap:6px 0;margin-top:28px;align-items:baseline}
+.brands .br{font-size:clamp(26px,3.6vw,52px);font-weight:800;letter-spacing:-.04em;line-height:1.15;color:var(--ink);transition:color .25s;display:inline-flex;align-items:center}
+.brands .br::after{content:"";display:inline-block;width:.14em;height:.62em;margin-inline:.45em;background:var(--mari);border-radius:2px;box-shadow:-.24em -.1em 0 0 var(--mist)}
+.brands .br:last-child::after{display:none}
+.brands .br:hover{color:var(--mari-d)}
+.ctl{display:grid;border-top:1px solid var(--line)}
+.tli{display:grid;grid-template-columns:180px minmax(0,1fr);gap:32px;padding:28px 0;border-bottom:1px solid var(--line);transition:background .3s}
+.tli .yr{font-family:var(--mono);font-size:14px;color:var(--mari);padding-top:8px}
+.tli h3{font-size:clamp(24px,2.8vw,38px);letter-spacing:-.035em}
+.tli p{color:var(--muted);margin-top:8px;max-width:70ch}
+@media (max-width:700px){.tli{grid-template-columns:1fr;gap:8px}}
+.extras{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:64px}
+.extras ul{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:10px;color:var(--muted)}
+.extras li b{color:var(--paper)}
+.stack.small{margin-top:16px}
+.stack.small span{font-size:13px;padding:7px 12px}
+@media (max-width:900px){.extras{grid-template-columns:1fr}}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -504,22 +537,19 @@ fieldset.field{border:0;padding:0;margin:0}
       <span class="eyebrow fade" style="--d:0"><i><b></b><b></b></i>Τεχνικός συνεργάτης για επιχειρήσεις</span>
       <h1 style="margin-top:28px">
         <span class="ln"><span style="--i:0">Λύνω τα τεχνικά</span></span>
-        <span class="ln"><span style="--i:1">προβλήματα <span class="thin">που οι</span></span></span>
-        <span class="ln"><span style="--i:2"><span class="thin">άλλοι αφήνουν</span></span></span>
-        <span class="ln"><span style="--i:3" class="m">στη μέση.</span></span>
+        <span class="ln"><span style="--i:1">προβλήματα που</span></span>
+        <span class="ln"><span style="--i:2"><span class="thin">κανείς δεν θέλει</span></span></span>
+        <span class="ln"><span style="--i:3" class="m">να αγγίξει.</span></span>
       </h1>
       <div class="hero-row">
-        <p class="swapline fade" style="--d:200">Το <span class="swap" id="swap">ERP</span> σου δεν μιλάει με τίποτα άλλο; Εκεί ξεκινάω. Ανάλυση, αρχιτεκτονική και κώδικας από τον ίδιο άνθρωπο.</p>
+        <p class="swapline fade" style="--d:200">Το <span class="swap" id="swap">ERP</span> σου δεν μιλάει με τίποτα άλλο; Εκεί ξεκινάω. Ανάλυση, αρχιτεκτονική και υλοποίηση από τον ίδιο άνθρωπο.</p>
         <div class="ctas fade" style="--d:350">
           <a class="btn btn-m mag" href="#contact">Κλείσε discovery call <span class="bars"><b></b><b></b></span></a>
           <a class="btn btn-g mag" href="#work">Δες τα έργα</a>
         </div>
       </div>
       <div class="facts fade" style="--d:500">
-        <div><b data-count="1">1</b><span>υπεύθυνος, από την αρχή ως το τέλος</span></div>
-        <div><b><span data-count="6">6</span>–<span data-count="8">8</span></b><span>εβδομάδες Discovery με γραπτό πλάνο</span></div>
-        <div><b><span data-count="100">100</span><em>%</em></b><span>γραπτό scope πριν ξεκινήσουμε</span></div>
-        <div><b data-count="4">4</b><span>φάσεις, η καθεμία με γραπτό παραδοτέο</span></div>
+        <div><b><span data-count="17">17</span></b><span>χρόνια ανάμεσα σε business και τεχνολογία</span></div><div><b><span data-count="50">50</span><em>+</em></b><span>έργα που παρέδωσα ως Side by Side</span></div><div><b><span data-count="98">98</span><em>%</em></b><span>των πελατών συνεχίζουν να δουλεύουν μαζί μου</span></div><div><b><span data-count="1">1</span></b><span>υπεύθυνος, από το πρώτο call ως την υποστήριξη</span></div>
       </div>
     </div>
   </section>
@@ -622,7 +652,7 @@ fieldset.field{border:0;padding:0;margin:0}
     <div class="wrap">
       <div class="sec-hd">
         <div><span class="eyebrow"><i><b></b><b></b></i>Επιλεγμένα έργα</span><h2 class="rv">Πράγματα που έχτισα και τρέχουν.</h2></div>
-        <p class="rv">Τα δικά μου προϊόντα είναι η καλύτερη απόδειξη: τα σχεδίασα, τα έχτισα και τα συντηρώ.</p>
+        <p class="rv">Έργα πελατών και δικά μου προϊόντα. Για το καθένα: το πρόβλημα, τι αποφασίσαμε και τι άλλαξε.</p>
       </div>
       <div class="cases" id="homeCases"></div>
       <div style="margin-top:48px"><a class="btn btn-g mag" href="#work">Όλα τα έργα <svg width="18" height="18"><use href="#arr"/></svg></a></div>
@@ -644,12 +674,13 @@ fieldset.field{border:0;padding:0;margin:0}
       <div class="sec-hd"><div><span class="eyebrow"><i><b></b><b></b></i>Συχνές ερωτήσεις</span><h2 class="rv">Πριν μου στείλεις.</h2></div></div>
       <div class="faq">
         <details><summary>Γιατί να πληρώσω Discovery πριν την υλοποίηση;<i></i></summary><div class="ans">Γιατί τα περισσότερα έργα που αποτυγχάνουν δεν αποτυγχάνουν στον κώδικα, αλλά στο τι αποφασίστηκε να χτιστεί. Στο Discovery φεύγεις με γραπτό πλάνο, κόστος και χρονοδιάγραμμα. Είναι δικό σου, ακόμα κι αν δεν συνεχίσουμε μαζί.</div></details>
-        <details><summary>Δουλεύεις μόνος σου;<i></i></summary><div class="ans">Ναι, και αυτό είναι το πλεονέκτημα. Αν ένα έργο χρειαστεί επιπλέον ανθρώπους, το ξέρεις από την αρχή και η ευθύνη μένει σε μένα.</div></details>
-        <details><summary>Φτιάχνεις και απλά websites;<i></i></summary><div class="ans">Για απλά sites μικρών επιχειρήσεων υπάρχει το ftiaxesite.gr. Εδώ αναλαμβάνω έργα όπου το site είναι μέρος ενός μεγαλύτερου συστήματος: ERP, αποθήκη, B2B παραγγελίες, αυτοματισμοί.</div></details>
+        <details><summary>Δουλεύεις μόνος σου;<i></i></summary><div class="ans">Είμαι ο μοναδικός υπεύθυνος για κάθε έργο. Για μεγαλύτερα έργα συντονίζω εξωτερική ομάδα engineering. Το ξέρεις από την αρχή, και η ευθύνη μένει σε μένα.</div></details>
         <details><summary>Τι είναι BRD, FSD και RFP και ποιο χρειάζομαι;<i></i></summary><div class="ans">Το BRD περιγράφει τι χρειάζεται η επιχείρηση και γιατί. Το FSD περιγράφει πώς θα δουλεύει το σύστημα, ώστε ο developer να ξέρει ακριβώς τι χτίζει. Το RFP είναι το έγγραφο που στέλνεις σε προμηθευτές για να πάρεις προσφορές που συγκρίνονται μεταξύ τους. Αν δεν ξέρεις ποιο χρειάζεσαι, το βρίσκουμε μαζί σε ένα call.</div></details>
-        <details><summary>Συνεργάζεσαι με agencies;<i></i></summary><div class="ans">Ναι. Με web, marketing και διαφημιστικά γραφεία, ανά έργο. Εσείς έχετε τον πελάτη και τη δημιουργική ιδέα, εγώ αναλαμβάνω το τεχνικό κομμάτι, από την εκτίμηση πριν την προσφορά μέχρι την παράδοση.</div></details>
-        <details><summary>Τι γίνεται αν έχω ήδη έργο που κόλλησε;<i></i></summary><div class="ans">Ξεκινάμε με τεχνική συμβουλευτική με την ώρα. Κοιτάω τι υπάρχει, σου λέω ειλικρινά αν σώζεται και τι θα κοστίσει.</div></details>
-      </div>
+        <details><summary>Συνεργάζεσαι με agencies;<i></i></summary><div class="ans">Ναι, με web, marketing και διαφημιστικά γραφεία, ανά έργο. Εσύ έχεις τον πελάτη και τη δημιουργική ιδέα, εγώ αναλαμβάνω το τεχνικό κομμάτι, από την εκτίμηση πριν την προσφορά ως την παράδοση.</div></details>
+        <details><summary>Φτιάχνεις και απλά websites;<i></i></summary><div class="ans">Για απλά sites μικρών επιχειρήσεων υπάρχει το ftiaxesite.gr, με σταθερό εύρος και γρήγορη παράδοση. Εδώ αναλαμβάνω έργα όπου το site είναι μέρος ενός μεγαλύτερου συστήματος: ERP, αποθήκη, B2B παραγγελίες, πληρωμές, αυτοματισμοί.</div></details>
+        <details><summary>Τι γίνεται αν έχω ήδη έργο που κόλλησε;<i></i></summary><div class="ans">Ξεκινάμε με τεχνική συμβουλευτική με την ώρα. Κοιτάω τι υπάρχει και σου λέω ειλικρινά αν σώζεται, τι χρειάζεται και πόσο θα κοστίσει.</div></details>
+        <details><summary>Έχεις δουλέψει σε ρυθμιζόμενους κλάδους;<i></i></summary><div class="ans">Ναι. Έχω παραδώσει πλατφόρμες για τράπεζες και ασφαλιστικές, όπου Legal, Risk και Security εγκρίνουν κάθε release. Ξέρω να μετατρέπω απαιτήσεις συμμόρφωσης σε τεχνικές προδιαγραφές.</div></details>
+        </div>
     </div>
   </section>
 
@@ -671,7 +702,7 @@ fieldset.field{border:0;padding:0;margin:0}
     <div class="wrap">
       <span class="eyebrow fade"><i><b></b><b></b></i>Υπηρεσίες</span>
       <h1><span class="ln"><span style="--i:0">Ό,τι χρειάζεται</span></span><span class="ln"><span style="--i:1">για να <span class="m">δουλέψει.</span></span></span></h1>
-      <p class="lead fade" style="--d:200">Πολλοί τρόποι να δουλέψουμε μαζί. Όλοι ξεκινούν από το ίδιο σημείο: να καταλάβω πρώτα το πρόβλημα.</p>
+      <p class="lead fade" style="--d:200">Εννέα τρόποι να δουλέψουμε μαζί. Όλοι ξεκινούν από το ίδιο σημείο: να καταλάβω πρώτα το πρόβλημα.</p>
     </div>
   </section>
   <section class="sec" style="padding-top:0">
@@ -748,7 +779,7 @@ fieldset.field{border:0;padding:0;margin:0}
     <div class="wrap">
       <span class="eyebrow fade"><i><b></b><b></b></i>Έργα</span>
       <h1><span class="ln"><span style="--i:0">Όχι mockups.</span></span><span class="ln"><span style="--i:1" class="m">Συστήματα που τρέχουν.</span></span></h1>
-      <p class="lead fade" style="--d:200">Δικά μου προϊόντα και έργα πελατών. Για το καθένα: το πρόβλημα, τι αποφασίσαμε και τι άλλαξε.</p>
+      <p class="lead fade" style="--d:200">Έργα πελατών και δικά μου προϊόντα. Για το καθένα: το πρόβλημα, τι αποφασίσαμε και τι άλλαξε.</p>
     </div>
   </section>
   <section class="sec" style="padding-top:0">
@@ -771,41 +802,53 @@ fieldset.field{border:0;padding:0;margin:0}
   <section class="phero">
     <div class="wrap">
       <span class="eyebrow fade"><i><b></b><b></b></i>Ποιος είμαι</span>
-      <h1><span class="ln"><span style="--i:0">Ένας άνθρωπος.</span></span><span class="ln"><span style="--i:1" class="m">Ξεκάθαρη ευθύνη.</span></span></h1>
+      <h1><span class="ln"><span style="--i:0">Ένας άνθρωπος.</span></span><span class="ln"><span style="--i:1" class="m">Όλη η εικόνα.</span></span></h1>
+      <p class="lead fade" style="--d:200">17 χρόνια ανάμεσα στη διοίκηση και στους developers. Μεταφράζω αυτό που χρειάζεται η επιχείρηση σε κάτι που χτίζεται, και μετά το χτίζω.</p>
     </div>
   </section>
   <section class="sec" style="padding-top:0">
     <div class="wrap about-grid">
-      <div class="portrait rv"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="6" width="17" height="44" rx="2.5" fill="#F4F6F3"/><rect x="37" y="14" width="17" height="44" rx="2.5" fill="#F0B429"/></svg><span>[Φωτογραφία σου εδώ]<br>4:5, φυσικό φως, όχι stock</span></div>
+      <div class="portrait rv"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="6" width="17" height="44" rx="2.5" fill="#F4F6F3"/><rect x="37" y="14" width="17" height="44" rx="2.5" fill="#F0B429"/></svg><span><span class="ph">[Φωτογραφία σου, 4:5, φυσικό φως, όχι stock]</span></span></div>
       <div class="txt">
-        <p class="rv"><strong>Είμαι ο <span class="ph">[Όνομα Επώνυμο]</span>.</strong> Δουλεύω με επιχειρήσεις που έχουν ξεπεράσει τα έτοιμα εργαλεία και χρειάζονται κάποιον να δει την εικόνα ολόκληρη: τις διαδικασίες, τα συστήματα και τον κώδικα.</p>
-        <p class="rv">Ξεκινάω πάντα από την ανάλυση. Έχω δουλέψει ως <strong>business analyst, project και product manager</strong> και ως developer, οπότε μπορώ να μιλήσω με τη διοίκηση το πρωί και να γράψω τον κώδικα το απόγευμα.</p>
-        <p class="rv">Το Side by Side το έστησα για να δουλεύω όπως θα ήθελα να δουλεύουν μαζί μου: δίπλα στον πελάτη, με γραπτές δεσμεύσεις και χωρίς μεσάζοντες. <span class="ph">[1–2 προτάσεις για την πορεία σου, χρόνια εμπειρίας, κλάδους]</span></p>
+        <div class="rv" style="display:grid;gap:4px"><span class="eyebrow">Founder & Τεχνικός Σύμβουλος, Side by Side</span><span style="font-size:clamp(28px,3vw,40px);font-weight:800;letter-spacing:-.03em;line-height:1.05">Dimitrios Geronikolos</span></div>
+        <p class="rv"><strong>Είμαι ο Dimitrios Geronikolos.</strong> Δουλεύω 17 χρόνια στο σημείο όπου συναντιούνται οι επιχειρηματικές ανάγκες και η τεχνολογία: από το πρώτο discovery workshop ως το go-live και τη μακροχρόνια υποστήριξη.</p><p class="rv">Έχω δουλέψει ως product manager, delivery lead, head of PMO και technology manager, σε έργα για τράπεζες, ασφαλιστικές, μεγάλα retail brands και εκδοτικούς οίκους. Έχω στήσει και τρεις δικές μου επιχειρήσεις από το μηδέν, οπότε ξέρω τι σημαίνει κάθε απόφαση για το ταμείο, όχι μόνο για τον κώδικα.</p><p class="rv">Το Side by Side το ξεκίνησα το 2025 για να δουλεύω όπως θα ήθελα να δουλεύουν μαζί μου: ένας υπεύθυνος, όλα γραπτά, δίπλα στον πελάτη. Από τότε έχω παραδώσει πάνω από 50 έργα και το 98% των πελατών συνεχίζει να δουλεύει μαζί μου.</p><p class="rv">Χτίζω ο ίδιος, με σύγχρονα εργαλεία και AI-assisted ανάπτυξη. Για μεγαλύτερα έργα συντονίζω εξωτερική ομάδα engineering, με εμένα υπεύθυνο από την αρχή ως το τέλος.</p>
         <div class="rv" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px"><a class="btn btn-m mag" href="#contact">Ας γνωριστούμε <span class="bars"><b></b><b></b></span></a><a class="btn btn-g" href="#work">Δες τι έχω χτίσει</a></div>
+      </div>
+    </div>
+  </section>
+  <section class="numband"><div class="wrap"><div class="nums"><div class="rv"><b>17</b><span>χρόνια εμπειρίας</span></div><div class="rv"><b>50+</b><span>έργα ως Side by Side</span></div><div class="rv"><b>98%</b><span>διατήρηση πελατών</span></div><div class="rv"><b>~30%</b><span>λιγότερο rework με καλύτερες απαιτήσεις</span></div><div class="rv"><b>3</b><span>επιχειρήσεις που έστησα από το μηδέν</span></div></div></div></section>
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-hd"><div><span class="eyebrow"><i><b></b><b></b></i>Τι φέρνω στο τραπέζι</span><h2 class="rv">Έξι ρόλοι, ένας άνθρωπος.</h2></div><p class="rv">Συνήθως αυτοί είναι έξι διαφορετικοί άνθρωποι. Εδώ είναι ένας, οπότε τίποτα δεν χάνεται στη μετάφραση.</p></div>
+      <div class="pgrid"><article class="pcard rv"><span class="pi">01</span><h3>Ανάλυση &amp; απαιτήσεις</h3><p>Discovery workshops, BRD, FSD, user stories και acceptance criteria που η ομάδα μπορεί να χτίσει χωρίς ερωτήσεις.</p><div class="proof"><i></i><span>~30% λιγότερο rework με αυστηρότερες απαιτήσεις πριν την ανάπτυξη</span></div></article><article class="pcard rv"><span class="pi">02</span><h3>Αρχιτεκτονική &amp; integrations</h3><p>Λύσεις από άκρη σε άκρη πάνω σε APIs, ERP, CMS, payment providers και feeds τρίτων. Ξέρω τη διαφορά ανάμεσα σε αυτό που λέει η τεκμηρίωση και σε αυτό που κάνει το endpoint.</p><div class="proof"><i></i><span>Viva Wallet, IRIS και τραπεζικά gateways, ERP σε e-commerce</span></div></article><article class="pcard rv"><span class="pi">03</span><h3>Product management</h3><p>Όραμα, roadmap, backlog και μετρικές επιτυχίας. Ιεραρχώ με δεδομένα και ROI, και αλλάζω πορεία όταν τα δεδομένα διαφωνούν με τις υποθέσεις.</p><div class="proof"><i></i><span>Product owner για cloud ERP, founder τριών προϊόντων</span></div></article><article class="pcard rv"><span class="pi">04</span><h3>Project &amp; delivery management</h3><p>Scope, χρονοδιάγραμμα, εξαρτήσεις και ποιότητα σε πολλά έργα ταυτόχρονα. Ευθύνη για το P&amp;L από την εκτίμηση ως το τελικό περιθώριο.</p><div class="proof"><i></i><span>Ομάδες έως 7 ατόμων, delivery workflow που έγινε εταιρικό standard</span></div></article><article class="pcard rv"><span class="pi">05</span><h3>Ρυθμιζόμενοι κλάδοι</h3><p>Πλατφόρμες για τράπεζες και ασφαλιστικές, όπου Legal, Risk και Security εγκρίνουν κάθε release. Μετατρέπω απαιτήσεις συμμόρφωσης σε τεχνικές προδιαγραφές.</p><div class="proof"><i></i><span>Κύκλοι εγκρίσεων, security reviews και audits</span></div></article><article class="pcard rv"><span class="pi">06</span><h3>Υλοποίηση &amp; AI</h3><p>Χτίζω με Next.js, React, Node, Astro, Sanity και WordPress, σε AWS και Google Cloud. Χρησιμοποιώ Claude και Cursor καθημερινά και ξέρω πού βοηθούν και πού θέλουν έλεγχο.</p><div class="proof"><i></i><span>Prototypes σε μέρες, όχι εβδομάδες</span></div></article></div>
+    </div>
+  </section>
+  <section class="sec light">
+    <div class="wrap">
+      <div class="sec-hd"><div><span class="eyebrow"><i><b></b><b></b></i>Κλάδοι</span><h2 class="rv">Πού έχω δουλέψει.</h2></div></div>
+      <div class="stack" style="--line:var(--line-l)"><span>Τράπεζες &amp; leasing</span><span>Ασφαλιστικές</span><span>Retail &amp; e-commerce</span><span>Εκδόσεις</span><span>Ναυτιλία &amp; μεταφορές</span><span>Υποδομές</span><span>B2B &amp; ERP</span><span>Αθλητισμός &amp; live data</span></div>
+      <div style="margin-top:clamp(56px,8vw,96px)"><span class="eyebrow"><i><b></b><b></b></i>Έργα για</span><h3 class="rv" style="font-size:clamp(24px,2.6vw,34px);letter-spacing:-.03em;margin-top:14px;max-width:26ch">Brands που έχουν εμπιστευτεί έργα στα οποία ήμουν υπεύθυνος.</h3>
+      <div class="brands"><span class="br rv">Eurobank Leasing</span><span class="br rv">Τράπεζα Πειραιώς</span><span class="br rv">Eurolife</span><span class="br rv">Lacoste.gr</span><span class="br rv">Bodytalk</span><span class="br rv">Μεταίχμιο</span><span class="br rv">Politeianet</span><span class="br rv">Minoan Lines</span><span class="br rv">Zenith</span><span class="br rv">Νέα Αττική Οδός</span></div><p style="font-family:var(--mono);font-size:12.5px;color:var(--slate);margin-top:18px">Μέσα από ρόλους σε agencies και ως Side by Side.</p></div>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-hd"><div><span class="eyebrow"><i><b></b><b></b></i>Διαδρομή</span><h2 class="rv">17 χρόνια, με τη σειρά.</h2></div></div>
+      <div class="ctl"><div class="tli rv"><span class="yr">2025 –</span><div><h3>Side by Side &amp; ftiaxesite.gr</h3><p>Founder &amp; Τεχνικός Σύμβουλος. Discovery, αρχιτεκτονική, υλοποίηση και Fractional CTO για επιχειρήσεις και agencies. 50+ έργα, 98% διατήρηση πελατών.</p></div></div><div class="tli rv"><span class="yr">2021 – 2025</span><div><h3>Sleed</h3><p>Technology &amp; Innovation Manager, Head of PMO. Ανάλυση και κατεύθυνση λύσεων για e-commerce πλατφόρμες μεγάλων retail και εκδοτικών brands. Ευθύνη P&amp;L του τμήματος e-commerce.</p></div></div><div class="tli rv"><span class="yr">2018 – 2021</span><div><h3>Wedia</h3><p>Delivery Lead, Technical Project Manager. Πλατφόρμες για τράπεζες, ασφαλιστικές και εταιρικούς πελάτες, με ενσωμάτωση legacy συστημάτων.</p></div></div><div class="tli rv"><span class="yr">2018</span><div><h3>Generation Y</h3><p>Digital Account &amp; Project Manager. Redesign και booking πλατφόρμες.</p></div></div><div class="tli rv"><span class="yr">2017 – 2018</span><div><h3>IT Lab</h3><p>Product Manager, Business Cloud ERP. Από τις επιχειρησιακές διαδικασίες των πελατών ως τη λειτουργική προδιαγραφή.</p></div></div><div class="tli rv"><span class="yr">2012 – 2017</span><div><h3>Interactive Sports</h3><p>Founder. Ψηφιακή αθλητική πλατφόρμα από την ιδέα ως επιχείρηση, με 20+ αθλητικούς οργανισμούς και ομοσπονδίες και live data feeds.</p></div></div></div>
+      <div class="extras">
+        <div class="rv"><span class="eyebrow"><i><b></b><b></b></i>Σπουδές</span><ul><li><b>MSc</b> Product &amp; Systems Design Engineering, Πανεπιστήμιο Αιγαίου</li><li><b>Diploma</b> Sport Business Management, Sport Business Institute</li></ul></div>
+        <div class="rv"><span class="eyebrow"><i><b></b><b></b></i>Εργαλεία</span><div class="stack small"><span>Jira</span><span>Confluence</span><span>ClickUp</span><span>Notion</span><span>Figma</span><span>Google Analytics</span><span>GTM</span><span>Zapier</span><span>Claude</span><span>Cursor</span></div></div>
+        <div class="rv"><span class="eyebrow"><i><b></b><b></b></i>Γλώσσες</span><ul><li>Ελληνικά (μητρική)</li><li>Αγγλικά (άριστα, επαγγελματικό επίπεδο)</li></ul></div>
       </div>
     </div>
   </section>
   <section class="sec light">
     <div class="wrap">
-      <div class="sec-hd"><div><span class="eyebrow"><i><b></b><b></b></i>Τι φέρνω στο τραπέζι</span><h2 class="rv">Τέσσερις ρόλοι, ένας άνθρωπος.</h2></div><p class="rv">Συνήθως είναι τέσσερις διαφορετικοί άνθρωποι. Εδώ είναι ένας, οπότε τίποτα δεν χάνεται στη μετάφραση.</p></div>
-      <div class="skills">
-        <div class="skill rv"><h3>Business analysis</h3><p>Καταλαβαίνω πώς δουλεύει η επιχείρησή σου και πού πονάει.</p></div>
-        <div class="skill rv"><h3>Requirements</h3><p>Γράφω τι πρέπει να χτιστεί, ώστε να μην υπάρχουν παρεξηγήσεις.</p></div>
-        <div class="skill rv"><h3>Project &amp; product management</h3><p>Κρατάω το έργο σε χρόνο και budget, και το προϊόν στον σωστό δρόμο.</p></div>
-        <div class="skill rv"><h3>Development</h3><p>Χτίζω και συντηρώ τη λύση, από το front-end ως τα integrations.</p></div>
-      </div>
-    </div>
-  </section>
-  <section class="sec">
-    <div class="wrap">
       <div class="sec-hd"><div><span class="eyebrow"><i><b></b><b></b></i>Δικά μου προϊόντα</span><h2 class="rv">Δεν συμβουλεύω μόνο. Χτίζω και τρέχω τα δικά μου.</h2></div></div>
-      <div class="rows">
-        <a class="row" href="#case-kollekta"><span class="n">01</span><h3>kollekta.gr</h3><p>Πλατφόρμα για εταιρείες μόδας που μοιράζονται φωτογραφίες προϊόντων.</p><span class="pr">SaaS</span><span class="ar"><svg width="18" height="18"><use href="#arr"/></svg></span></a>
-        <a class="row" href="#case-ftiaxesite"><span class="n">02</span><h3>ftiaxesite.gr</h3><p>Websites για μικρές επιχειρήσεις.</p><span class="pr">Υπηρεσία</span><span class="ar"><svg width="18" height="18"><use href="#arr"/></svg></span></a>
-        <a class="row" href="#case-audit"><span class="n">03</span><h3>Audit tool</h3><p>Δωρεάν τεχνικός έλεγχος site.</p><span class="pr">Εργαλείο</span><span class="ar"><svg width="18" height="18"><use href="#arr"/></svg></span></a>
-      </div>
+      <div class="rows" style="--line:var(--line-l)"><a class="row" href="#case-kollekta"><span class="n">01</span><h3>kollekta.gr</h3><p>Πλατφόρμα όπου οι εταιρείες μόδας μοιράζονται συλλογές με τους πελάτες τους.</p><span class="pr">SaaS</span><span class="ar"><svg width="18" height="18"><use href="#arr"/></svg></span></a><a class="row" href="#case-ftiaxesite"><span class="n">02</span><h3>ftiaxesite.gr</h3><p>Τυποποιημένη υπηρεσία σε τέσσερα πακέτα, με κλειδωμένο εύρος και δεσμευτικό χρόνο παράδοσης.</p><span class="pr">προϊόν</span><span class="ar"><svg width="18" height="18"><use href="#arr"/></svg></span></a><a class="row" href="#case-audit-tool"><span class="n">03</span><h3><span class="ph">[Όνομα audit tool]</span></h3><p>Ελέγχει ταχύτητα, SEO και βασικά τεχνικά σημεία ενός site.</p><span class="pr">εργαλείο</span><span class="ar"><svg width="18" height="18"><use href="#arr"/></svg></span></a></div>
     </div>
   </section>
+  <section class="bigcta"><div class="wrap"><h2><a href="#contact">Ας γνωριστούμε.</a><br><span style="color:var(--mari)">Χωρίς δέσμευση.</span></h2><div class="row2"><a class="btn btn-m mag" href="#contact">Κλείσε ένα call <span class="bars"><b></b><b></b></span></a></div></div></section>
 </div>
 
 <!-- ================= CONTACT ================= -->
@@ -873,7 +916,7 @@ fieldset.field{border:0;padding:0;margin:0}
     <div class="ftr-grid">
       <div><p class="tagline">Δίπλα σου, από την ανάλυση ως τον κώδικα.</p><p style="color:var(--muted);font-size:15px;margin-top:12px">Τεχνικός συνεργάτης για ελληνικές επιχειρήσεις.</p></div>
       <div><h4>Σελίδες</h4><ul><li><a href="#services">Υπηρεσίες</a></li><li><a href="#process">Πώς δουλεύω</a></li><li><a href="#work">Έργα</a></li><li><a href="#about">Ποιος είμαι</a></li><li><a href="#contact">Επικοινωνία</a></li></ul></div>
-      <div><h4>Προϊόντα</h4><ul><li><a href="#case-kollekta">kollekta.gr</a></li><li><a href="#case-ftiaxesite">ftiaxesite.gr</a></li><li><a href="#case-audit">Audit tool</a></li></ul></div>
+      <div><h4>Προϊόντα</h4><ul><li><a href="#case-kollekta">kollekta.gr</a></li><li><a href="#case-ftiaxesite">ftiaxesite.gr</a></li><li><a href="#case-audit-tool">Audit tool</a></li></ul></div>
       <div><h4>Επαφή</h4><ul><li>dgeronikolos@<br>sidebysideweb.gr</li><li><a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn <span class="ph">[link]</span></a></li></ul></div>
     </div>
     <div class="giant" aria-hidden="true"><span>side</span><span class="gb"><b></b><b></b></span><span>side</span></div>
@@ -905,46 +948,11 @@ const ARR = '<svg width="22" height="22"><use href="#arr"/></svg>';
 const ph = s => s.replace(/\[([^\]]+)\]/g, '<span class="ph">[$1]</span>');
 /* ---------- case data ---------- */
 const CASES = [
-  { id:'kollekta', kind:'product', name:'kollekta.gr', tag:'Δικό μου SaaS', sector:'Fashion B2B', art:'kollekta',
-    headline:'Οι φωτογραφίες προϊόντων φτάνουν στον πελάτη έτοιμες για web.',
-    short:'Πλατφόρμα όπου οι εταιρείες μόδας μοιράζονται συλλογές με τους πελάτες τους.',
-    role:'Product, UX, full-stack', duration:'[διάρκεια]', stack:'[stack]',
-    problem:'Κάθε σεζόν οι εταιρείες μόδας στέλνουν εκατοντάδες φωτογραφίες προϊόντων σε καταστήματα και συνεργάτες. Συνήθως με links σε Drive ή WeTransfer, σε πλήρη ανάλυση και χωρίς οργάνωση ανά συλλογή. Ο παραλήπτης κατεβάζει gigabytes και μετά ψάχνει ποιος θα τις μικρύνει για το e-shop του.',
-    approach:'Ξεκίνησα από τη ροή μιας πραγματικής εταιρείας μόδας, που έγινε και ο πρώτος test user. Κατέγραψα πώς ανεβαίνουν οι φωτογραφίες, πώς οργανώνονται σε συλλογές και τι ακριβώς χρειάζεται ο παραλήπτης στο τέλος.',
-    solution:'Μια πλατφόρμα όπου η εταιρεία ανεβάζει τις συλλογές της και τις μοιράζεται με τους πελάτες της. Η μετατροπή σε web μέγεθος γίνεται αυτόματα, οπότε ο πελάτης παίρνει αρχεία έτοιμα για το e-shop του.',
-    results:[['[Χ]','εταιρείες μόδας στην πλατφόρμα'],['[Χ]%','μικρότερα αρχεία για web'],['[Χ] ώρες','λιγότερη χειροκίνητη δουλειά τον μήνα']] },
-  { id:'ftiaxesite', kind:'product', name:'ftiaxesite.gr', tag:'Δικό μου προϊόν', sector:'Μικρές επιχειρήσεις', art:'site',
-    headline:'Επαγγελματικό site για μικρές επιχειρήσεις, χωρίς ατελείωτα meetings.',
-    short:'Τυποποιημένη διαδικασία για γρήγορα, καθαρά websites μικρών επιχειρήσεων.',
-    role:'Ιδιοκτήτης, διαδικασία, ανάπτυξη', duration:'[από πότε τρέχει]', stack:'[stack]',
-    problem:'Πολλές μικρές επιχειρήσεις χρειάζονται ένα καθαρό, γρήγορο site αλλά δεν έχουν budget για custom έργο ούτε χρόνο για μήνες συναντήσεων.',
-    approach:'Τυποποίησα τη δουλειά: συγκεκριμένα βήματα, συγκεκριμένο περιεχόμενο που ζητάω από την αρχή και σταθερή τεχνική βάση που δεν ξαναχτίζεται κάθε φορά.',
-    solution:'Μια γραμμή παραγωγής για sites μικρών επιχειρήσεων που κρατά χαμηλό το κόστος χωρίς να ρίχνει την ποιότητα. Είναι και η πρώτη επαφή για πελάτες που αργότερα χρειάζονται κάτι πιο σύνθετο.',
-    results:[['[Χ]','sites σε λειτουργία'],['[Χ] μέρες','μέσος χρόνος παράδοσης'],['[Χ]','Lighthouse score']] },
-  { id:'audit', kind:'product', name:'Audit tool', tag:'Δικό μου εργαλείο', sector:'Web performance', art:'audit',
-    headline:'Δωρεάν τεχνικός έλεγχος site σε λίγα λεπτά, σε απλά ελληνικά.',
-    short:'Ελέγχει ταχύτητα, SEO και βασικά τεχνικά σημεία ενός site.',
-    role:'Product, ανάπτυξη', duration:'[διάρκεια]', stack:'[stack]',
-    problem:'Οι περισσότεροι ιδιοκτήτες δεν ξέρουν αν το site τους είναι αργό, αν έχει προβλήματα SEO ή τεχνικά κενά, μέχρι να αρχίσουν να χάνουν πελάτες.',
-    approach:'Ήθελα ένα εργαλείο που δίνει αποτέλεσμα αμέσως, χωρίς εγγραφή και χωρίς ορολογία. Κάθε εύρημα έχει εξήγηση για το τι σημαίνει για την επιχείρηση.',
-    solution:'Ένα εργαλείο που τρέχει έλεγχο και δίνει αναφορά με προτεραιότητες. Για πολλούς είναι η αρχή της κουβέντας για ένα Discovery.',
-    results:[['[Χ]','έλεγχοι που έχουν τρέξει'],['[Χ]%','μετατροπή σε call'],['[Χ] λεπτά','μέσος χρόνος αναφοράς']] },
-  { id:'erp', kind:'client', name:'[Πελάτης Α]', tag:'Placeholder έργου', sector:'[Χονδρεμπόριο]', art:'erp', placeholder:true,
-    headline:'ERP και e-shop που επιτέλους μιλάνε μεταξύ τους.',
-    short:'Παράδειγμα δομής: αντικατέστησε με πραγματικό έργο integration.',
-    role:'Discovery, αρχιτεκτονική, υλοποίηση', duration:'[διάρκεια]', stack:'[stack]',
-    problem:'[Περιέγραψε το πρόβλημα με τα λόγια του πελάτη. Π.χ. οι παραγγελίες του e-shop περνούσαν με το χέρι στο ERP, με λάθη στα αποθέματα.]',
-    approach:'[Τι έκανες στο Discovery, τι ανακάλυψες που δεν ήταν προφανές.]',
-    solution:'[Τι χτίστηκε, πώς συνδέθηκαν τα συστήματα, τι άλλαξε στην καθημερινότητα της ομάδας.]',
-    results:[['[Χ] ώρες','λιγότερη πληκτρολόγηση την εβδομάδα'],['[Χ]%','λιγότερα λάθη αποθέματος'],['[Χ]','παραγγελίες τη μέρα αυτόματα']] },
-  { id:'b2b', kind:'client', name:'[Πελάτης Β]', tag:'Placeholder έργου', sector:'[Κλάδος]', art:'b2b', placeholder:true,
-    headline:'B2B παραγγελίες χωρίς τηλέφωνα και Excel.',
-    short:'Παράδειγμα δομής: αντικατέστησε με πραγματικό έργο αυτοματοποίησης.',
-    role:'Αρχιτεκτονική, υλοποίηση, υποστήριξη', duration:'[διάρκεια]', stack:'[stack]',
-    problem:'[Το πρόβλημα όπως το ζούσε ο πελάτης.]',
-    approach:'[Πώς το προσέγγισες και γιατί.]',
-    solution:'[Η λύση και πώς τη χρησιμοποιεί σήμερα η ομάδα.]',
-    results:[['[Χ]','πελάτες παραγγέλνουν online'],['[Χ]%','λιγότερα τηλέφωνα'],['[Χ] €','μηνιαία εξοικονόμηση']] },
+{"id": "nea-attiki-odos", "kind": "client", "name": "Νέα Αττική Οδός", "tag": "Έργο πελάτη", "sector": "Υποδομές / δημόσια πληροφόρηση", "art": "erp", "headline": "Ίδια πληροφόρηση για το κοινό, περίπου 90% χαμηλότερο μηνιαίο κόστος.", "short": "Νέα ροή δημόσιας πληροφόρησης με XML feed και αυτοματισμό, χωρίς ούτε λεπτό διακοπής.", "role": "Ανάλυση, αρχιτεκτονική, υλοποίηση", "duration": "[διάρκεια]", "stack": "XML feed, αυτοματισμός, [stack]", "problem": "Η ροή που τροφοδοτούσε τη δημόσια πληροφόρηση [περιέγραψε: πώς δούλευε, γιατί κόστιζε ακριβά κάθε μήνα, τι ρίσκο είχε].", "approach": "Ξεκίνησα από το τι πρέπει να φτάνει στο κοινό και πόσο συχνά, και όχι από το υπάρχον σύστημα. Αυτό έδειξε ότι η ίδια πληροφόρηση μπορούσε να δίνεται με πολύ απλούστερη αρχιτεκτονική.", "solution": "Ξαναέστησα τη ροή με XML feed και αυτοματισμό. Η μετάβαση έγινε χωρίς διακοπή λειτουργίας και το κοινό δεν κατάλαβε τίποτα, εκτός από το ότι όλα συνέχισαν να δουλεύουν.", "results": [["~90%", "χαμηλότερο μηνιαίο κόστος λειτουργίας"], ["0", "λεπτά διακοπής στη μετάβαση"], ["[Χ]", "[π.χ. ενημερώσεις την ημέρα χωρίς χειροκίνητη δουλειά]"]], "reviewNote": "Επιβεβαίωσε ότι μπορεί να αναφερθεί δημόσια το όνομα του πελάτη και συμπλήρωσε τις λεπτομέρειες σε [αγκύλες]."},
+{"id": "metaixmio", "kind": "client", "name": "Εκδόσεις Μεταίχμιο", "tag": "Έργο πελάτη", "sector": "Εκδόσεις / e-commerce", "art": "b2b", "headline": "Ένα πρόγραμμα, τέσσερα τμήματα, ένα e-shop που μιλάει με το ERP.", "short": "UX/UI redesign, e-commerce, μεταφορά blog και σύνδεση με ERP για τέσσερα εσωτερικά τμήματα.", "role": "Επικεφαλής προγράμματος, ανάλυση, συντονισμός", "duration": "[διάρκεια]", "stack": "[stack]", "problem": "Τέσσερα εσωτερικά τμήματα με διαφορετικές ανάγκες από το ίδιο site: [περιέγραψε, π.χ. πωλήσεις, marketing, εκδοτικό, αποθήκη]. Το e-shop, το blog και το ERP δούλευαν χωριστά.", "approach": "Έτρεξα το έργο ως ένα πρόγραμμα με κοινές προτεραιότητες αντί για τέσσερα χωριστά αιτήματα. Κάθε τμήμα είχε λόγο στις απαιτήσεις, αλλά οι αποφάσεις πάρθηκαν με βάση την επίδραση στις πωλήσεις και τη λειτουργία.", "solution": "Νέο UX/UI, νέο e-commerce, μεταφορά του blog χωρίς απώλειες και σύνδεση με το ERP, ώστε προϊόντα, αποθέματα και παραγγελίες να συγχρονίζονται.", "results": [["4", "τμήματα σε ένα κοινό πρόγραμμα"], ["[Χ]%", "[π.χ. αύξηση μετατροπών ή μείωση χειροκίνητης δουλειάς]"], ["[Χ]", "[π.χ. άρθρα blog που μεταφέρθηκαν]"]], "reviewNote": "Επιβεβαίωσε ότι μπορεί να αναφερθεί δημόσια το όνομα του πελάτη και συμπλήρωσε αριθμούς αποτελεσμάτων."},
+{"id": "kollekta", "kind": "product", "name": "kollekta.gr", "tag": "Δικό μου SaaS", "sector": "Fashion B2B", "art": "kollekta", "headline": "Οι φωτογραφίες προϊόντων φτάνουν στον πελάτη έτοιμες για web.", "short": "Πλατφόρμα όπου οι εταιρείες μόδας μοιράζονται συλλογές με τους πελάτες τους.", "role": "Product, UX, ανάπτυξη", "duration": "[από πότε τρέχει]", "stack": "[stack]", "problem": "Κάθε σεζόν οι εταιρείες μόδας στέλνουν εκατοντάδες φωτογραφίες προϊόντων σε καταστήματα και συνεργάτες, συνήθως με links σε Drive ή WeTransfer, σε πλήρη ανάλυση και χωρίς οργάνωση ανά συλλογή. Ο παραλήπτης κατεβάζει gigabytes και μετά ψάχνει ποιος θα τις μικρύνει για το e-shop του.", "approach": "Ξεκίνησα από τη ροή μιας πραγματικής εταιρείας μόδας, που έγινε και ο πρώτος test user. Κατέγραψα πώς ανεβαίνουν οι φωτογραφίες, πώς οργανώνονται σε συλλογές και τι ακριβώς χρειάζεται ο παραλήπτης στο τέλος.", "solution": "Μια πλατφόρμα όπου η εταιρεία ανεβάζει τις συλλογές της και τις μοιράζεται με τους πελάτες της. Η μετατροπή σε web μέγεθος γίνεται αυτόματα, οπότε ο πελάτης παίρνει αρχεία έτοιμα για το e-shop του.", "results": [["[Χ]", "εταιρείες μόδας στην πλατφόρμα"], ["[Χ]%", "μικρότερα αρχεία για web"], ["[Χ] ώρες", "λιγότερη χειροκίνητη δουλειά τον μήνα"]], "reviewNote": "Συμπλήρωσε πραγματικούς αριθμούς."},
+{"id": "ftiaxesite", "kind": "product", "name": "ftiaxesite.gr", "tag": "Δικό μου προϊόν", "sector": "Μικρές επιχειρήσεις", "art": "site", "headline": "Επαγγελματικό site για μικρές επιχειρήσεις, με σταθερό εύρος και προσφορά σε 24 ώρες.", "short": "Τυποποιημένη υπηρεσία σε τέσσερα πακέτα, με κλειδωμένο εύρος και δεσμευτικό χρόνο παράδοσης.", "role": "Ιδιοκτήτης, product, ανάπτυξη", "duration": "από 2025", "stack": "[stack]", "problem": "Πολλές μικρές επιχειρήσεις χρειάζονται ένα καθαρό, γρήγορο site. Δεν έχουν budget για custom έργο ούτε χρόνο για μήνες συναντήσεων, και δεν ξέρουν τι ακριβώς θα πάρουν για τα χρήματά τους.", "approach": "Το σχεδίασα ως προϊόν και όχι ως υπηρεσία: τέσσερα πακέτα με κλειδωμένο εύρος, σαφή παραδοτέα και δεσμευτικό χρόνο παράδοσης. Η διαφάνεια στο τι παίρνεις και πότε είναι το βασικό πλεονέκτημα.", "solution": "Μια γραμμή παραγωγής για sites μικρών επιχειρήσεων, από την προσφορά μέσα σε 24 ώρες ως την παράδοση σε 5 έως 21 ημέρες. Για πολλούς πελάτες είναι και η αρχή για κάτι πιο σύνθετο.", "results": [["24 ώρες", "για προσφορά"], ["5–21", "ημέρες παράδοση, ανάλογα με το πακέτο"], ["4", "πακέτα με κλειδωμένο εύρος"]], "reviewNote": ""},
+{"id": "audit-tool", "kind": "product", "name": "[Όνομα audit tool]", "tag": "Δικό μου εργαλείο", "sector": "Web performance", "art": "audit", "headline": "Δωρεάν τεχνικός έλεγχος site σε λίγα λεπτά, σε απλά ελληνικά.", "short": "Ελέγχει ταχύτητα, SEO και βασικά τεχνικά σημεία ενός site.", "role": "Product, ανάπτυξη", "duration": "[από πότε τρέχει]", "stack": "[stack]", "problem": "Οι περισσότεροι ιδιοκτήτες δεν ξέρουν αν το site τους είναι αργό, αν έχει προβλήματα SEO ή τεχνικά κενά, μέχρι να αρχίσουν να χάνουν πελάτες.", "approach": "Ήθελα ένα εργαλείο που δίνει αποτέλεσμα αμέσως, χωρίς εγγραφή και χωρίς ορολογία. Κάθε εύρημα έχει εξήγηση για το τι σημαίνει για την επιχείρηση.", "solution": "Ένα εργαλείο που τρέχει τον έλεγχο και δίνει αναφορά με προτεραιότητες. Για πολλούς είναι η αρχή της κουβέντας για ένα Discovery.", "results": [["[Χ]", "έλεγχοι που έχουν τρέξει"], ["[Χ]%", "μετατροπή σε call"], ["[Χ] λεπτά", "μέσος χρόνος αναφοράς"]], "reviewNote": "Συμπλήρωσε όνομα, link και αριθμούς."}
 ];
 
 /* ---------- generative case art ---------- */
@@ -1013,7 +1021,7 @@ function renderCase(id) {
     <a class="back" href="#work">← Όλα τα έργα</a>
     <span class="eyebrow fade" style="display:flex"><i><b></b><b></b></i>${ph(c.name)} · ${c.tag}</span>
     <h1 style="margin-top:22px"><span class="ln"><span style="--i:0">${c.headline}</span></span></h1>
-    ${c.placeholder ? '<div class="note"><b>Placeholder</b><span>Η δομή είναι έτοιμη. Αντικατέστησε τα κείμενα σε [αγκύλες] με πραγματικό έργο και αριθμούς, με την άδεια του πελάτη.</span></div>' : '<div class="note"><b>Προς έλεγχο</b><span>Τα κείμενα είναι πρώτο draft από όσα ξέρω για το προϊόν. Τα [Χ] είναι θέσεις για πραγματικούς αριθμούς.</span></div>'}
+    ${c.reviewNote ? `<div class="note"><b>Προς έλεγχο</b><span>${c.reviewNote}</span></div>` : ''}
     <div class="cd-meta fade" style="--d:150"><div><span>Κλάδος</span><b>${ph(c.sector)}</b></div><div><span>Ρόλος</span><b>${c.role}</b></div><div><span>Διάρκεια</span><b>${ph(c.duration)}</b></div><div><span>Stack</span><b>${ph(c.stack)}</b></div></div>
     <div class="cd-art zoom">${art(c.art)}</div>
   </div></section>

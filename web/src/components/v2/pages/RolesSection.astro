@@ -1,5 +1,5 @@
 ---
-/** "Four roles, one person" on the about page. */
+/** Six skill pillars with proof lines. */
 import Eyebrow from '../Eyebrow.astro'
 import Lines from '../Lines.astro'
 import type {AboutRolesSection} from '../../../lib/v2/types'
@@ -14,7 +14,7 @@ const roles = section?.roles ?? []
 
 {
   roles.length ? (
-    <section class="sec light">
+    <section class="sec">
       <div class="wrap">
         <div class="sec-hd">
           <div>
@@ -27,12 +27,19 @@ const roles = section?.roles ?? []
           </div>
           {section?.intro ? <p class="rv">{section.intro}</p> : null}
         </div>
-        <div class="skills">
-          {roles.map((role) => (
-            <div class="skill rv">
+        <div class="pgrid">
+          {roles.map((role, index) => (
+            <article class="pcard rv">
+              <span class="pi">{role.indexLabel ?? String(index + 1).padStart(2, '0')}</span>
               <h3>{role.title}</h3>
               {role.text ? <p>{role.text}</p> : null}
-            </div>
+              {role.proof ? (
+                <div class="proof">
+                  <i></i>
+                  <span>{role.proof}</span>
+                </div>
+              ) : null}
+            </article>
           ))}
         </div>
       </div>

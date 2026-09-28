@@ -1,0 +1,67 @@
+---
+/** Sectors chip stack + brands band. */
+import Eyebrow from '../Eyebrow.astro'
+import Lines from '../Lines.astro'
+import type {AboutBrandsSection, AboutSectorsSection} from '../../../lib/v2/types'
+
+interface Props {
+  sectors?: AboutSectorsSection
+  brands?: AboutBrandsSection
+}
+
+const {sectors, brands} = Astro.props
+const sectorItems = sectors?.items ?? []
+const brandItems = brands?.items ?? []
+---
+
+{
+  sectorItems.length || brandItems.length ? (
+    <section class="sec light">
+      <div class="wrap">
+        {sectorItems.length ? (
+          <Fragment>
+            <div class="sec-hd">
+              <div>
+                {sectors?.eyebrow ? <Eyebrow>{sectors.eyebrow}</Eyebrow> : null}
+                {sectors?.heading ? (
+                  <h2 class="rv">
+                    <Lines text={sectors.heading} />
+                  </h2>
+                ) : null}
+              </div>
+            </div>
+            <div class="stack" style="--line:var(--line-l)">
+              {sectorItems.map((item) => (
+                <span>{item}</span>
+              ))}
+            </div>
+          </Fragment>
+        ) : null}
+
+        {brandItems.length ? (
+          <div style={sectorItems.length ? 'margin-top:clamp(56px,8vw,96px)' : undefined}>
+            {brands?.eyebrow ? <Eyebrow>{brands.eyebrow}</Eyebrow> : null}
+            {brands?.heading ? (
+              <h3
+                class="rv"
+                style="font-size:clamp(24px,2.6vw,34px);letter-spacing:-.03em;margin-top:14px;max-width:26ch"
+              >
+                <Lines text={brands.heading} />
+              </h3>
+            ) : null}
+            <div class="brands">
+              {brandItems.map((name) => (
+                <span class="br rv">{name}</span>
+              ))}
+            </div>
+            {brands?.note ? (
+              <p style="font-family:var(--mono);font-size:12.5px;color:var(--slate);margin-top:18px">
+                {brands.note}
+              </p>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
+    </section>
+  ) : null
+}

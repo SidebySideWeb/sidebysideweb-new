@@ -342,11 +342,53 @@ export interface AboutPortrait {
   alt?: string
 }
 
+export interface AboutNumber {
+  value: string
+  label?: string
+}
+
+export interface AboutPillar {
+  indexLabel?: string
+  title: string
+  text?: string
+  proof?: string
+}
+
 export interface AboutRolesSection {
   eyebrow?: string
   heading?: string
   intro?: string
-  roles?: BulletItem[]
+  roles?: AboutPillar[]
+}
+
+export interface AboutSectorsSection {
+  eyebrow?: string
+  heading?: string
+  items?: string[]
+}
+
+export interface AboutBrandsSection {
+  eyebrow?: string
+  heading?: string
+  note?: string
+  items?: string[]
+}
+
+export interface AboutTimelineItem {
+  period: string
+  title: string
+  text?: string
+}
+
+export interface AboutTimelineSection {
+  eyebrow?: string
+  heading?: string
+  items?: AboutTimelineItem[]
+}
+
+export interface AboutEducationItem {
+  label: string
+  text?: string
 }
 
 export interface AboutProductsSection {
@@ -357,11 +399,20 @@ export interface AboutProductsSection {
 
 export interface AboutPage {
   hero?: PageHeroBlock
+  personName?: string
+  personRole?: string
   portrait?: AboutPortrait | null
   portraitPlaceholder?: string
   bio?: RichText
   ctas?: Cta[]
+  numbers?: AboutNumber[]
   rolesSection?: AboutRolesSection
+  sectorsSection?: AboutSectorsSection
+  brandsSection?: AboutBrandsSection
+  timelineSection?: AboutTimelineSection
+  education?: AboutEducationItem[]
+  tools?: string[]
+  languages?: string[]
   productsSection?: AboutProductsSection
   seo?: SeoBlock
 }
