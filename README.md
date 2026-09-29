@@ -21,6 +21,9 @@ Astro + Sanity monorepo for the live site. One Sanity dataset: **`production`**.
 | `SITE_URL` | Canonical origin (`https://www.sidebysideweb.gr`) |
 | `PUBLIC_GTM_ID` | Google Tag Manager |
 | `PUBLIC_RECAPTCHA_SITE_KEY` / `RECAPTCHA_SECRET_KEY` | Contact form |
+| `RESEND_API_KEY` | Admin email on form submit (Resend) |
+| `ADMIN_NOTIFICATION_EMAIL` | Where form alerts go |
+| `RESEND_FROM_EMAIL` | Optional From override |
 | `CAL_COM_API_KEY` | Cal.com |
 | `SANITY_STUDIO_URL` | https://sidebysideweb.sanity.studio |
 
