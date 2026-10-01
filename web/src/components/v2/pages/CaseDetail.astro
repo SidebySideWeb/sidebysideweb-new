@@ -45,10 +45,17 @@ const ctaLabel = isAuditTool ? 'Ζήτησε τον έλεγχό σου' : 'Πε
 <section class="cd-hero">
   <div class="wrap">
     <a class="back" href="/erga">← Όλα τα έργα</a>
-    <Eyebrow class="fade" style="display:flex">
-      <Placeholder text={study.name} />
-      {study.tag ? ` · ${study.tag}` : null}
-    </Eyebrow>
+    <div class="cd-eyebrow-row fade">
+      <Eyebrow style="display:flex">
+        <Placeholder text={study.name} />
+        {study.tag ? ` · ${study.tag}` : null}
+      </Eyebrow>
+      {
+        study.asProjectManager ? (
+          <span class="cd-flag">Project Manager</span>
+        ) : null
+      }
+    </div>
     <h1 style="margin-top:22px">
       <span class="ln"><span style="--i:0">{study.headline}</span></span>
     </h1>

@@ -152,6 +152,7 @@ export const CASE_STUDY_QUERY = `*[_type == "caseStudyV2" && slug.current == $sl
   name,
   "slug": slug.current,
   kind,
+  asProjectManager,
   tag,
   sector,
   headline,
