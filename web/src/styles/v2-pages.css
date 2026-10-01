@@ -100,6 +100,9 @@
 .cd-body h2{font-size:clamp(28px,3.4vw,44px);letter-spacing:-.035em;position:sticky;top:100px;align-self:start}
 .cd-body p{font-size:clamp(18px,1.7vw,21px);line-height:1.6;color:var(--slate);max-width:60ch}
 .cd-block{border-top:1px solid var(--line-l);padding-block:48px}
+.cd-highlights{list-style:none;padding:0;margin:0;display:grid;gap:12px;max-width:52ch}
+.cd-highlights li{font-size:clamp(17px,1.6vw,20px);color:var(--slate);padding-left:1.1em;position:relative}
+.cd-highlights li::before{content:"";position:absolute;left:0;top:.55em;width:8px;height:8px;border-radius:1px;background:var(--mari)}
 @media (max-width:760px){.cd-body{grid-template-columns:1fr;gap:16px}.cd-body h2{position:static}}
 .results{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .res{background:var(--ink);color:var(--paper);border-radius:12px;padding:30px;display:grid;gap:10px}
