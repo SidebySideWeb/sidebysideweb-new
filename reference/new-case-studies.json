@@ -21,7 +21,7 @@
         "[theme / page builder]",
         "[plugins]"
       ],
-      "art": "kollekta",
+      "art": "fashion",
       "order": 1,
       "featured": true,
       "headline": "Ένα site που δείχνει τη συλλογή όπως τη βλέπεις στη βιτρίνα.",
@@ -69,7 +69,7 @@
         "React",
         "[hosting]"
       ],
-      "art": "site",
+      "art": "hospitality",
       "order": 2,
       "featured": true,
       "deliveredVia": "ftiaxesite.gr",
@@ -119,7 +119,7 @@
         "[βάση δεδομένων]",
         "[hosting]"
       ],
-      "art": "erp",
+      "art": "construction",
       "order": 3,
       "featured": true,
       "headline": "20 χρόνια δουλειάς, 500+ έργα, σε ένα site που τα δείχνει.",
@@ -167,7 +167,7 @@
         "[theme]",
         "[plugins]"
       ],
-      "art": "b2b",
+      "art": "media",
       "order": 4,
       "featured": false,
       "headline": "Το portal του ελαιολάδου, οργανωμένο για όσους ζουν από αυτό.",
@@ -216,7 +216,7 @@
         "[theme]",
         "[plugins]"
       ],
-      "art": "b2b",
+      "art": "media",
       "order": 5,
       "featured": false,
       "headline": "Καθημερινή ενημέρωση για όσους παράγουν και εμπορεύονται φρέσκα.",
@@ -266,7 +266,7 @@
         "[βάση δεδομένων]",
         "[hosting]"
       ],
-      "art": "audit",
+      "art": "sports",
       "order": 6,
       "featured": false,
       "headline": "Ένας σύλλογος που λειτουργεί σαν οικογένεια, με ένα site που ενημερώνει τους γονείς.",
@@ -314,7 +314,7 @@
         "Sanity CMS",
         "[hosting]"
       ],
-      "art": "audit",
+      "art": "sports",
       "order": 7,
       "featured": false,
       "headline": "230 αθλήτριες, 200+ μετάλλια, ένα site που τα χωράει όλα.",
@@ -362,7 +362,7 @@
         "[theme / builder]",
         "[form plugin]"
       ],
-      "art": "site",
+      "art": "travel",
       "order": 8,
       "featured": false,
       "headline": "Quiet luxury για ταξιδιώτες που δεν θέλουν να σκέφτονται τα logistics.",
@@ -410,7 +410,7 @@
         "MotoPress Hotel Booking",
         "[πληρωμές]"
       ],
-      "art": "site",
+      "art": "travel",
       "order": 9,
       "featured": false,
       "headline": "Απευθείας κρατήσεις για μια παραδοσιακή βίλα στην Κρήτη.",
