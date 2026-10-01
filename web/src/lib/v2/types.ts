@@ -151,7 +151,19 @@ export interface ProcessStepV2 {
   order?: number
 }
 
-export type CaseArtKey = 'kollekta' | 'site' | 'audit' | 'erp' | 'feed' | 'b2b'
+export type CaseArtKey =
+  | 'kollekta'
+  | 'site'
+  | 'audit'
+  | 'erp'
+  | 'feed'
+  | 'b2b'
+  | 'fashion'
+  | 'hospitality'
+  | 'construction'
+  | 'media'
+  | 'sports'
+  | 'travel'
 
 export interface CaseStudyV2 {
   _id: string

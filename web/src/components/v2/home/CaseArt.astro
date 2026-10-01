@@ -1,8 +1,7 @@
 ---
 /**
- * Generative case art, ported from the `art(k)` function in
- * `reference/prototype.html`. Animation classes (`flt`, `flow`, `scan`,
- * `grow`) are defined in `v2-home.css`.
+ * Generative case art. Shared animation classes (`flt`, `flow`, `scan`, `grow`)
+ * live in `v2-sections.css`.
  */
 import type {CaseArtKey} from '../../../lib/v2/types'
 
@@ -92,7 +91,6 @@ function erp() {
       <text x="400" y="380" text-anchor="middle" font-family="${MONO}" font-size="14" fill="#9AAAB2">παραγγελίες · αποθέματα · τιμές</text></svg>`
 }
 
-/** Public-info feed: social posts → XML → website (Νέα Αττική Οδός). */
 function feed() {
   const posts = [0, 1, 2]
     .map(
@@ -149,8 +147,173 @@ function b2b() {
   return `<svg ${V}><rect width="800" height="440" fill="#1A2F3C"/>${cards}</svg>`
 }
 
-const ART: Record<string, () => string> = {kollekta, site, audit, erp, feed, b2b}
-const html = (ART[artKey ?? ''] ?? b2b)()
+/** Fashion brand: lookbook rail → boutique. */
+function fashion() {
+  const looks = [0, 1, 2, 3]
+    .map(
+      (i) =>
+        `<g class="flt d${i % 4}">` +
+        `<rect x="${70 + i * 100}" y="${90 + (i % 2) * 20}" width="84" height="220" rx="8" fill="${i % 2 ? '#1A2F3C' : '#13232E'}"/>` +
+        `<rect x="${82 + i * 100}" y="${108 + (i % 2) * 20}" width="60" height="140" rx="4" fill="#F4F6F3" opacity=".92"/>` +
+        `<rect x="${90 + i * 100}" y="${260 + (i % 2) * 20}" width="44" height="10" rx="2" fill="#F0B429"/>` +
+        `</g>`,
+    )
+    .join('')
+
+  return `<svg ${V}><rect width="800" height="440" fill="#0B161D"/>
+      ${looks}
+      <path class="flow" d="M470 200 H540" stroke="#F0B429" stroke-width="5" fill="none"/>
+      <path d="M532 188 l14 12 -14 12" fill="none" stroke="#F0B429" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <g class="flt d2">
+        <rect x="540" y="110" width="200" height="220" rx="12" fill="#F4F6F3"/>
+        <rect x="560" y="140" width="70" height="100" rx="4" fill="#13232E"/>
+        <rect x="650" y="140" width="70" height="100" rx="4" fill="#1A2F3C"/>
+        <rect x="560" y="260" width="160" height="12" rx="2" fill="#D7DEDB"/>
+        <rect x="560" y="284" width="110" height="10" rx="2" fill="#9AAAB2"/>
+        <text x="640" y="330" text-anchor="middle" font-family="${MONO}" font-size="13" fill="#13232E">σεζόν · καταστήματα</text>
+      </g>
+      <text x="400" y="400" text-anchor="middle" font-family="${MONO}" font-size="14" fill="#9AAAB2">lookbook → boutique</text></svg>`
+}
+
+/** Hospitality: day parts + reservation. */
+function hospitality() {
+  const moments = [
+    {label: 'brunch', x: 80},
+    {label: 'φαγητό', x: 280},
+    {label: 'cocktails', x: 480},
+  ]
+    .map(
+      (m, i) =>
+        `<g class="flt d${i}">` +
+        `<rect x="${m.x}" y="100" width="170" height="160" rx="12" fill="${i === 2 ? '#F0B429' : '#13232E'}"/>` +
+        `<text x="${m.x + 85}" y="160" text-anchor="middle" font-family="${MONO}" font-size="14" fill="${i === 2 ? '#13232E' : '#F0B429'}">${m.label}</text>` +
+        `<rect x="${m.x + 30}" y="185" width="110" height="10" rx="2" fill="${i === 2 ? '#13232E' : '#52616B'}" opacity=".7"/>` +
+        `<rect x="${m.x + 40}" y="210" width="90" height="10" rx="2" fill="${i === 2 ? '#13232E' : '#2A3C47'}" opacity=".7"/>` +
+        `</g>`,
+    )
+    .join('')
+
+  return `<svg ${V}><rect width="800" height="440" fill="#1A2F3C"/>
+      ${moments}
+      <g class="flt d1">
+        <rect x="280" y="300" width="240" height="56" rx="28" fill="#F4F6F3"/>
+        <text x="400" y="335" text-anchor="middle" font-family="${MONO}" font-size="15" fill="#13232E">κλείσε τραπέζι</text>
+      </g>
+      <text x="400" y="400" text-anchor="middle" font-family="${MONO}" font-size="14" fill="#9AAAB2">μενού · δίγλωσσο · κρατήσεις</text></svg>`
+}
+
+/** Construction: aluminum frames / openings. */
+function construction() {
+  const frames = [0, 1, 2]
+    .map(
+      (i) =>
+        `<g class="flt d${i}">` +
+        `<rect x="${90 + i * 140}" y="${80 + i * 18}" width="120" height="200" rx="4" fill="none" stroke="#F0B429" stroke-width="8"/>` +
+        `<rect x="${102 + i * 140}" y="${92 + i * 18}" width="96" height="176" rx="2" fill="#13232E"/>` +
+        `<line x1="${150 + i * 140}" y1="${92 + i * 18}" x2="${150 + i * 140}" y2="${268 + i * 18}" stroke="#2A3C47" stroke-width="3"/>` +
+        `<line x1="${102 + i * 140}" y1="${180 + i * 18}" x2="${198 + i * 140}" y2="${180 + i * 18}" stroke="#2A3C47" stroke-width="3"/>` +
+        `</g>`,
+    )
+    .join('')
+
+  return `<svg ${V}><rect width="800" height="440" fill="#0B161D"/>
+      ${frames}
+      <g class="flt d2">
+        <rect x="520" y="120" width="220" height="180" rx="12" fill="#F4F6F3"/>
+        <text x="630" y="175" text-anchor="middle" font-family="${MONO}" font-size="15" fill="#13232E">500+ έργα</text>
+        <rect x="555" y="200" width="150" height="12" rx="2" fill="#D7DEDB"/>
+        <rect x="575" y="228" width="110" height="12" rx="2" fill="#9AAAB2"/>
+        <rect x="560" y="256" width="140" height="28" rx="6" fill="#F0B429"/>
+      </g>
+      <text x="400" y="400" text-anchor="middle" font-family="${MONO}" font-size="14" fill="#9AAAB2">κουφώματα · εξοικονομώ · προσφορές</text></svg>`
+}
+
+/** Media portal: stacked articles + magazine. */
+function media() {
+  const rows = [0, 1, 2, 3]
+    .map(
+      (i) =>
+        `<g class="flt d${i % 4}">` +
+        `<rect x="70" y="${70 + i * 70}" width="420" height="58" rx="8" fill="${i === 0 ? '#F0B429' : '#13232E'}"/>` +
+        `<rect x="90" y="${88 + i * 70}" width="${i === 0 ? 200 : 160}" height="10" rx="2" fill="${i === 0 ? '#13232E' : '#F4F6F3'}" opacity=".9"/>` +
+        `<rect x="90" y="${108 + i * 70}" width="280" height="8" rx="2" fill="${i === 0 ? '#13232E' : '#52616B'}" opacity=".55"/>` +
+        `</g>`,
+    )
+    .join('')
+
+  return `<svg ${V}><rect width="800" height="440" fill="#1A2F3C"/>
+      ${rows}
+      <g class="flt d2">
+        <rect x="540" y="90" width="190" height="250" rx="10" fill="#F4F6F3"/>
+        <rect x="560" y="120" width="150" height="20" rx="3" fill="#13232E"/>
+        <rect x="560" y="160" width="150" height="100" rx="4" fill="#D7DEDB"/>
+        <rect class="scan" x="560" y="160" width="150" height="2" fill="#F0B429" opacity=".8"/>
+        <text x="635" y="300" text-anchor="middle" font-family="${MONO}" font-size="13" fill="#13232E">περιοδικό</text>
+        <text x="635" y="322" text-anchor="middle" font-family="${MONO}" font-size="12" fill="#9AAAB2">newsletter</text>
+      </g>
+      <text x="400" y="400" text-anchor="middle" font-family="${MONO}" font-size="14" fill="#9AAAB2">ρεπορτάζ · tags · διαφήμιση</text></svg>`
+}
+
+/** Sports club: age bands + medal. */
+function sports() {
+  const bands = [0, 1, 2, 3]
+    .map(
+      (i) =>
+        `<g class="flt d${i}">` +
+        `<circle cx="${140 + i * 90}" cy="200" r="${48 - i * 4}" fill="none" stroke="${i === 3 ? '#F0B429' : '#52616B'}" stroke-width="6"/>` +
+        `<text x="${140 + i * 90}" y="206" text-anchor="middle" font-family="${MONO}" font-size="12" fill="${i === 3 ? '#F0B429' : '#9AAAB2'}">${['GfA', '6–Teen', 'Adults', 'Kids'][i]}</text>` +
+        `</g>`,
+    )
+    .join('')
+
+  return `<svg ${V}><rect width="800" height="440" fill="#0B161D"/>
+      ${bands}
+      <g class="flt d1">
+        <path d="M620 120 l28 56 62 9 -45 44 11 62 -56 -30 -56 30 11 -62 -45 -44 62 -9z" fill="#F0B429"/>
+        <text x="648" y="210" text-anchor="middle" font-family="${MONO}" font-size="13" fill="#13232E">200+</text>
+      </g>
+      <text x="400" y="360" text-anchor="middle" font-family="${MONO}" font-size="14" fill="#9AAAB2">τμήματα · διακρίσεις · εγγραφές</text>
+      <text x="400" y="400" text-anchor="middle" font-family="${MONO}" font-size="14" fill="#52616B">σύλλογος → γονείς</text></svg>`
+}
+
+/** Travel: route + booking card. */
+function travel() {
+  return `<svg ${V}><rect width="800" height="440" fill="#13232E"/>
+      <g class="flt">
+        <circle cx="140" cy="220" r="18" fill="#F0B429"/>
+        <circle cx="360" cy="140" r="14" fill="#F4F6F3"/>
+        <circle cx="320" cy="300" r="12" fill="#F4F6F3" opacity=".7"/>
+        <circle cx="480" cy="240" r="16" fill="#F0B429"/>
+        <path class="flow" d="M158 214 C 240 180, 280 160, 346 146" stroke="#F0B429" stroke-width="4" fill="none"/>
+        <path class="flow" d="M370 155 C 400 200, 420 230, 464 236" stroke="#9AAAB2" stroke-width="4" fill="none"/>
+        <path class="flow" d="M150 235 C 220 280, 260 300, 310 300" stroke="#52616B" stroke-width="3" fill="none"/>
+      </g>
+      <g class="flt d2">
+        <rect x="540" y="100" width="210" height="240" rx="14" fill="#F4F6F3"/>
+        <rect x="560" y="130" width="170" height="14" rx="3" fill="#13232E"/>
+        <rect x="560" y="160" width="120" height="10" rx="2" fill="#9AAAB2"/>
+        <rect x="560" y="200" width="170" height="70" rx="8" fill="#D7DEDB"/>
+        <rect x="560" y="290" width="170" height="28" rx="6" fill="#F0B429"/>
+        <text x="645" y="309" text-anchor="middle" font-family="${MONO}" font-size="12" fill="#13232E">κράτηση</text>
+      </g>
+      <text x="400" y="400" text-anchor="middle" font-family="${MONO}" font-size="14" fill="#9AAAB2">εκδρομές · VIP · διαθεσιμότητα</text></svg>`
+}
+
+const ART: Record<string, () => string> = {
+  kollekta,
+  site,
+  audit,
+  erp,
+  feed,
+  b2b,
+  fashion,
+  hospitality,
+  construction,
+  media,
+  sports,
+  travel,
+}
+const html = (ART[artKey ?? ''] ?? site)()
 ---
 
 <Fragment set:html={html} />
