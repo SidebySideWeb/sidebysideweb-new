@@ -15,12 +15,12 @@ const {study} = Astro.props
 
 const PLACEHOLDER_NOTE =
   'Η δομή είναι έτοιμη. Αντικατέστησε τα κείμενα σε [αγκύλες] με πραγματικό έργο και αριθμούς, με την άδεια του πελάτη.'
-const REVIEW_NOTE =
-  'Τα κείμενα είναι πρώτο draft από όσα ξέρω για το προϊόν. Τα [Χ] είναι θέσεις για πραγματικούς αριθμούς.'
 
 const note = study.isPlaceholder
   ? {label: 'Placeholder', text: PLACEHOLDER_NOTE}
-  : {label: 'Προς έλεγχο', text: study.reviewNote || REVIEW_NOTE}
+  : study.reviewNote?.trim()
+    ? {label: 'Προς έλεγχο', text: study.reviewNote.trim()}
+    : null
 
 const meta = [
   {label: 'Κλάδος', value: study.sector},
@@ -52,10 +52,14 @@ const ctaLabel = isAuditTool ? 'Ζήτησε τον έλεγχό σου' : 'Πε
     <h1 style="margin-top:22px">
       <span class="ln"><span style="--i:0">{study.headline}</span></span>
     </h1>
-    <div class="note">
-      <b>{note.label}</b>
-      <span>{note.text}</span>
-    </div>
+    {
+      note ? (
+        <div class="note">
+          <b>{note.label}</b>
+          <span>{note.text}</span>
+        </div>
+      ) : null
+    }
     {
       meta.length ? (
         <div class="cd-meta fade" style="--d:150">
