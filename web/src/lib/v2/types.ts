@@ -158,6 +158,8 @@ export interface CaseStudyV2 {
   name: string
   slug?: string
   kind?: 'product' | 'client'
+  /** Shown under the PM filter on /erga. */
+  asProjectManager?: boolean
   tag?: string
   sector?: string
   headline: string
@@ -320,6 +322,7 @@ export interface WorkFilterLabels {
   all?: string
   product?: string
   client?: string
+  pm?: string
 }
 
 export interface WorkPage {

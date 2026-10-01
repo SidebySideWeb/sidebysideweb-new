@@ -1,5 +1,5 @@
 ---
-/** Product / client filter for the work grid. Wired by `work-filter.ts`. */
+/** Work grid filters. Wired by `work-filter.ts`. */
 import type {WorkFilterLabels} from '../../../lib/v2/types'
 
 interface Props {
@@ -12,6 +12,11 @@ const filters = [
   {key: 'all', label: labels?.all ?? 'Όλα'},
   {key: 'product', label: labels?.product ?? 'Δικά μου προϊόντα'},
   {key: 'client', label: labels?.client ?? 'Έργα πελατών'},
+  {
+    key: 'pm',
+    label:
+      labels?.pm ?? 'Έργα πελατών που συμμετείχα ως Project Manager',
+  },
 ] as const
 ---
 

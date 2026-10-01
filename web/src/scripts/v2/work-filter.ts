@@ -1,10 +1,16 @@
-/** Product / client filter on the work page. */
+/** Product / client / PM filter on the work page. */
 type Cleanup = () => void
 
 let cleanup: Cleanup | null = null
 
 function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
+function matchesFilter(card: HTMLElement, filter: string): boolean {
+  if (filter === 'all') return true
+  if (filter === 'pm') return card.dataset.pm === '1'
+  return card.dataset.kind === filter
 }
 
 function initWorkFilter() {
@@ -24,7 +30,7 @@ function initWorkFilter() {
     const apply = () => {
       buttons.forEach((other) => other.setAttribute('aria-pressed', String(other === btn)))
       cards.forEach((card) => {
-        card.hidden = filter !== 'all' && card.dataset.kind !== filter
+        card.hidden = !matchesFilter(card, filter)
       })
     }
 

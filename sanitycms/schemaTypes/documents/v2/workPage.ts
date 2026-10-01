@@ -14,6 +14,12 @@ export const workPage = defineType({
         defineField({name: 'all', title: 'Όλα', type: 'string'}),
         defineField({name: 'product', title: 'Δικά μου προϊόντα', type: 'string'}),
         defineField({name: 'client', title: 'Έργα πελατών', type: 'string'}),
+        defineField({
+          name: 'pm',
+          title: 'Ως Project Manager',
+          type: 'string',
+          description: 'Έργα πελατών όπου συμμετείχες ως Project Manager',
+        }),
       ],
     }),
     defineField({name: 'seo', title: 'SEO', type: 'seo'}),

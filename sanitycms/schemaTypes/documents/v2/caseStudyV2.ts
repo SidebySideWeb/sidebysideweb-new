@@ -32,6 +32,14 @@ export const caseStudyV2 = defineType({
       },
     }),
     defineField({
+      name: 'asProjectManager',
+      title: 'Συμμετοχή ως Project Manager',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Εμφανίζεται στο φίλτρο «Έργα πελατών που συμμετείχα ως Project Manager».',
+      hidden: ({parent}) => parent?.kind !== 'client',
+    }),
+    defineField({
       name: 'tag',
       title: 'Ετικέτα',
       type: 'string',

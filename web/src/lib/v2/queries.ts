@@ -27,6 +27,7 @@ const CASE_CARD = `{
   name,
   "slug": slug.current,
   kind,
+  asProjectManager,
   tag,
   sector,
   headline,
@@ -141,7 +142,7 @@ export const PROCESS_PAGE_QUERY = `*[_id == "processPage"][0]{
 
 export const WORK_PAGE_QUERY = `*[_id == "workPage"][0]{
   hero${PAGE_HERO},
-  filterLabels{all, product, client},
+  filterLabels{all, product, client, pm},
   "cases": *[_type == "caseStudyV2"] | order(order asc)${CASE_CARD},
   seo${SEO}
 }`

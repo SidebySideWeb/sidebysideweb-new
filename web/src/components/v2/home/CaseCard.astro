@@ -19,6 +19,7 @@ const label = stripPlaceholders(`${study.name}: ${study.headline}`)
 <article
   class:list={['case', className, 'rv']}
   data-kind={study.kind}
+  data-pm={study.asProjectManager ? '1' : '0'}
   id={study.slug ? `card-${study.slug}` : undefined}
 >
   <a href={caseHref(study.slug)} class="art tilt" aria-label={label}>
