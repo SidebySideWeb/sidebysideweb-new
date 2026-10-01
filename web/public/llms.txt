@@ -19,10 +19,11 @@ Contact: https://www.sidebysideweb.gr/epikoinonia/
 ## Case studies
 
 - [Νέα Αττική Οδός](https://www.sidebysideweb.gr/erga/nea-attiki-odos/)
+- [Bluepoint Shops](https://www.sidebysideweb.gr/erga/bluepoint-shops/)
 - [Εκδόσεις Μεταίχμιο](https://www.sidebysideweb.gr/erga/metaixmio/)
 - [kollekta.gr](https://www.sidebysideweb.gr/erga/kollekta/)
 - [ftiaxesite.gr](https://www.sidebysideweb.gr/erga/ftiaxesite/)
-- [Audit tool](https://www.sidebysideweb.gr/erga/audit-tool/)
+- [Side Audit](https://www.sidebysideweb.gr/erga/audit-tool/)
 
 ## Notes for crawlers
 

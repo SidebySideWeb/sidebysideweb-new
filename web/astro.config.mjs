@@ -20,6 +20,7 @@ const SITEMAP_PAGES = [
   '/privacy-policy/',
   '/cookies-policy/',
   '/erga/nea-attiki-odos/',
+  '/erga/bluepoint-shops/',
   '/erga/metaixmio/',
   '/erga/kollekta/',
   '/erga/ftiaxesite/',

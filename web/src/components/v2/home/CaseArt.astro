@@ -92,6 +92,49 @@ function erp() {
       <text x="400" y="380" text-anchor="middle" font-family="${MONO}" font-size="14" fill="#9AAAB2">παραγγελίες · αποθέματα · τιμές</text></svg>`
 }
 
+/** Public-info feed: social posts → XML → website (Νέα Αττική Οδός). */
+function feed() {
+  const posts = [0, 1, 2]
+    .map(
+      (i) =>
+        `<g class="flt d${i}">` +
+        `<rect x="60" y="${80 + i * 100}" width="210" height="78" rx="10" fill="#13232E" stroke="#2A3C47" stroke-width="2"/>` +
+        `<circle cx="92" cy="${112 + i * 100}" r="14" fill="#1A2F3C"/>` +
+        `<text x="92" y="${117 + i * 100}" text-anchor="middle" font-family="${MONO}" font-size="16" font-weight="700" fill="#F0B429">X</text>` +
+        `<rect x="118" y="${100 + i * 100}" width="130" height="9" rx="2" fill="#F4F6F3" opacity=".85"/>` +
+        `<rect x="118" y="${118 + i * 100}" width="100" height="8" rx="2" fill="#52616B"/>` +
+        `<rect x="118" y="${134 + i * 100}" width="70" height="8" rx="2" fill="#2A3C47"/>` +
+        `</g>`,
+    )
+    .join('')
+
+  return `<svg ${V}><rect width="800" height="440" fill="#0B161D"/>
+      ${posts}
+      <path class="flow" d="M270 200 H330" stroke="#F0B429" stroke-width="5" fill="none"/>
+      <path d="M322 188 l14 12 -14 12" fill="none" stroke="#F0B429" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <g class="flt d1">
+        <rect x="330" y="145" width="140" height="150" rx="12" fill="#F0B429"/>
+        <text x="400" y="205" text-anchor="middle" font-family="${MONO}" font-size="22" font-weight="700" fill="#13232E">XML</text>
+        <text x="400" y="235" text-anchor="middle" font-family="${MONO}" font-size="14" fill="#13232E">feed</text>
+        <rect x="355" y="255" width="90" height="8" rx="2" fill="#13232E" opacity=".35"/>
+        <rect x="365" y="272" width="70" height="8" rx="2" fill="#13232E" opacity=".25"/>
+      </g>
+      <path class="flow" d="M470 200 H530" stroke="#F4F6F3" stroke-width="5" fill="none"/>
+      <path d="M522 188 l14 12 -14 12" fill="none" stroke="#F4F6F3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <g class="flt d2">
+        <rect x="530" y="95" width="220" height="250" rx="12" fill="#F4F6F3"/>
+        <rect x="530" y="95" width="220" height="28" rx="12" fill="#D7DEDB"/>
+        <circle cx="548" cy="109" r="5" fill="#9AAAB2"/><circle cx="566" cy="109" r="5" fill="#9AAAB2"/>
+        <rect x="550" y="145" width="180" height="14" rx="3" fill="#13232E"/>
+        <rect x="550" y="175" width="140" height="10" rx="2" fill="#9AAAB2"/>
+        <rect x="550" y="195" width="160" height="10" rx="2" fill="#9AAAB2"/>
+        <rect x="550" y="230" width="180" height="70" rx="6" fill="#13232E"/>
+        <rect class="scan" x="550" y="230" width="180" height="2" fill="#F0B429" opacity=".7"/>
+        <text x="640" y="275" text-anchor="middle" font-family="${MONO}" font-size="13" fill="#F0B429">live updates</text>
+      </g>
+      <text x="400" y="400" text-anchor="middle" font-family="${MONO}" font-size="14" fill="#9AAAB2">X → XML → site</text></svg>`
+}
+
 function b2b() {
   const cards = [0, 1, 2, 3]
     .map(
@@ -106,7 +149,7 @@ function b2b() {
   return `<svg ${V}><rect width="800" height="440" fill="#1A2F3C"/>${cards}</svg>`
 }
 
-const ART: Record<string, () => string> = {kollekta, site, audit, erp, b2b}
+const ART: Record<string, () => string> = {kollekta, site, audit, erp, feed, b2b}
 const html = (ART[artKey ?? ''] ?? b2b)()
 ---
 
