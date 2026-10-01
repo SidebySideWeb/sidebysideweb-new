@@ -2,6 +2,7 @@
 import Arrow from '../Arrow.astro'
 import Placeholder from '../Placeholder.astro'
 import CaseArt from './CaseArt.astro'
+import {categoryLabel} from '../../../lib/v2/case-categories'
 import {caseHref} from '../../../lib/v2/links'
 import {stripPlaceholders} from '../../../lib/v2/placeholder'
 import type {CaseStudyV2} from '../../../lib/v2/types'
@@ -14,12 +15,14 @@ interface Props {
 
 const {study, class: className} = Astro.props
 const label = stripPlaceholders(`${study.name}: ${study.headline}`)
+const metaBits = [categoryLabel(study.category) || study.sector, study.platform].filter(Boolean)
 ---
 
 <article
   class:list={['case', className, 'rv']}
   data-kind={study.kind}
   data-pm={study.asProjectManager ? '1' : '0'}
+  data-category={study.category ?? ''}
   id={study.slug ? `card-${study.slug}` : undefined}
 >
   <a href={caseHref(study.slug)} class="art tilt" aria-label={label}>
@@ -31,8 +34,8 @@ const label = stripPlaceholders(`${study.name}: ${study.headline}`)
     <h3>{study.headline}</h3>
     <span>
       <Placeholder text={study.name} />
-      {study.sector ? ' · ' : null}
-      <Placeholder text={study.sector} />
+      {metaBits.length ? ' · ' : null}
+      <Placeholder text={metaBits.join(' · ')} />
     </span>
   </div>
   {study.short ? <p class="sub">{study.short}</p> : null}

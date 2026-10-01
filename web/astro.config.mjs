@@ -25,6 +25,15 @@ const SITEMAP_PAGES = [
   '/erga/kollekta/',
   '/erga/ftiaxesite/',
   '/erga/audit-tool/',
+  '/erga/moutaki/',
+  '/erga/baroque-le-bistrot/',
+  '/erga/al-anastasiou/',
+  '/erga/elaiaskarpos/',
+  '/erga/fresher/',
+  '/erga/kallitechnia/',
+  '/erga/gas-euniki/',
+  '/erga/viar-travel/',
+  '/erga/casa-enastron/',
   '/audit/',
 ].map((path) => new URL(path, SITE_URL).href)
 

@@ -136,10 +136,11 @@ export function buildCaseStudyJsonLd(study: {
   headline: string
   short?: string
   slug: string
+  liveUrl?: string
 }): JsonLd {
   const url = absoluteUrl(withTrailingSlash(`/erga/${study.slug}`))
 
-  return {
+  const node: JsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',
     '@id': `${url}#case`,
@@ -152,4 +153,14 @@ export function buildCaseStudyJsonLd(study: {
     creator: {'@id': BUSINESS_ID},
     isPartOf: {'@id': WEBSITE_ID},
   }
+
+  if (study.liveUrl) {
+    node.about = {
+      '@type': 'WebSite',
+      url: study.liveUrl,
+      name: stripPlaceholders(study.name),
+    }
+  }
+
+  return node
 }

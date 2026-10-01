@@ -1,5 +1,14 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
+const CATEGORY_OPTIONS = [
+  {title: 'Μόδα', value: 'fashion'},
+  {title: 'Εστίαση', value: 'hospitality'},
+  {title: 'Κατασκευές', value: 'construction'},
+  {title: 'Μέσα ενημέρωσης', value: 'media'},
+  {title: 'Αθλητισμός', value: 'sports'},
+  {title: 'Τουρισμός', value: 'travel'},
+]
+
 export const caseStudyV2 = defineType({
   name: 'caseStudyV2',
   title: 'Έργο (v2)',
@@ -47,6 +56,20 @@ export const caseStudyV2 = defineType({
     }),
     defineField({name: 'sector', title: 'Κλάδος', type: 'string'}),
     defineField({
+      name: 'category',
+      title: 'Κατηγορία φίλτρου',
+      type: 'string',
+      options: {list: CATEGORY_OPTIONS},
+    }),
+    defineField({
+      name: 'liveUrl',
+      title: 'Live URL',
+      type: 'url',
+      description: 'Σύνδεσμος «Δες το live site».',
+    }),
+    defineField({name: 'platform', title: 'Πλατφόρμα', type: 'string'}),
+    defineField({name: 'cms', title: 'CMS', type: 'string'}),
+    defineField({
       name: 'headline',
       title: 'Τίτλος',
       type: 'text',
@@ -61,6 +84,18 @@ export const caseStudyV2 = defineType({
       title: 'Stack',
       type: 'array',
       of: [defineArrayMember({type: 'string'})],
+    }),
+    defineField({
+      name: 'highlights',
+      title: 'Τι περιλαμβάνει',
+      type: 'array',
+      of: [defineArrayMember({type: 'string'})],
+    }),
+    defineField({
+      name: 'deliveredVia',
+      title: 'Παραδόθηκε μέσω',
+      type: 'string',
+      description: 'Π.χ. ftiaxesite.gr',
     }),
     defineField({name: 'problem', title: 'Το πρόβλημα', type: 'text', rows: 6}),
     defineField({name: 'approach', title: 'Η προσέγγιση', type: 'text', rows: 6}),
@@ -93,6 +128,26 @@ export const caseStudyV2 = defineType({
       type: 'image',
       description: 'Αν οριστεί, αντικαθιστά το γραφικό.',
       options: {hotspot: true},
+      fields: [defineField({name: 'alt', title: 'Alt', type: 'string'})],
+    }),
+    defineField({
+      name: 'gallery',
+      title: 'Gallery',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'image',
+          options: {hotspot: true},
+          fields: [defineField({name: 'alt', title: 'Alt', type: 'string'})],
+        }),
+      ],
+    }),
+    defineField({
+      name: 'featured',
+      title: 'Επιλεγμένο (home)',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Δεν αλλάζει αυτόματα το home. Χρησιμοποιείται ως σήμανση.',
     }),
     defineField({
       name: 'isPlaceholder',
@@ -102,9 +157,10 @@ export const caseStudyV2 = defineType({
     }),
     defineField({
       name: 'reviewNote',
-      title: 'Σημείωση «Προς έλεγχο»',
+      title: 'Σημείωση (μόνο Studio)',
       type: 'text',
       rows: 3,
+      description: 'Εσωτερική. Δεν εμφανίζεται στο site.',
     }),
     defineField({
       name: 'order',

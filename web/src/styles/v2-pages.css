@@ -82,6 +82,10 @@
 .cd-hero .back:hover{color:var(--mari)}
 .cd-eyebrow-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px}
 .cd-flag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--night);background:var(--mari);padding:5px 10px;border-radius:3px;font-weight:600}
+.cd-live{margin-top:18px}
+.cd-live a{font-family:var(--mono);font-size:14px;letter-spacing:.04em;color:var(--mari)}
+.cd-live a:hover{color:var(--paper)}
+.cd-via{margin-top:8px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .cd-hero h1{font-size:clamp(44px,7.6vw,124px);line-height:.92;letter-spacing:-.05em;max-width:16ch}
 .cd-meta{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:56px}
 .cd-meta>div{padding:22px 20px 22px 0;display:grid;gap:4px}

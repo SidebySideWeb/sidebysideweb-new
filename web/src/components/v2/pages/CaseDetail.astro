@@ -16,16 +16,15 @@ const {study} = Astro.props
 const PLACEHOLDER_NOTE =
   'Η δομή είναι έτοιμη. Αντικατέστησε τα κείμενα σε [αγκύλες] με πραγματικό έργο και αριθμούς, με την άδεια του πελάτη.'
 
-const note = study.isPlaceholder
-  ? {label: 'Placeholder', text: PLACEHOLDER_NOTE}
-  : study.reviewNote?.trim()
-    ? {label: 'Προς έλεγχο', text: study.reviewNote.trim()}
-    : null
+/** reviewNote is Studio-only; never render it publicly. */
+const note = study.isPlaceholder ? {label: 'Placeholder', text: PLACEHOLDER_NOTE} : null
 
 const meta = [
   {label: 'Κλάδος', value: study.sector},
   {label: 'Ρόλος', value: study.role},
   {label: 'Διάρκεια', value: study.duration},
+  {label: 'Πλατφόρμα', value: study.platform},
+  {label: 'CMS', value: study.cms},
   {label: 'Stack', value: study.stack?.join(' · ')},
 ].filter((item) => Boolean(item.value))
 
@@ -36,6 +35,7 @@ const body = [
 ].filter((block) => Boolean(block.text))
 
 const results = study.results ?? []
+const highlights = study.highlights ?? []
 const next = study.nextCase
 const isAuditTool = study.slug === 'audit-tool'
 const ctaHref = isAuditTool ? '/audit' : '/epikoinonia'
@@ -65,6 +65,22 @@ const ctaLabel = isAuditTool ? 'Ζήτησε τον έλεγχό σου' : 'Πε
           <b>{note.label}</b>
           <span>{note.text}</span>
         </div>
+      ) : null
+    }
+    {
+      study.liveUrl ? (
+        <p class="cd-live fade" style="--d:80">
+          <a href={study.liveUrl} target="_blank" rel="noopener">
+            Δες το live site ↗
+          </a>
+        </p>
+      ) : null
+    }
+    {
+      study.deliveredVia ? (
+        <p class="cd-via fade" style="--d:100">
+          μέσω {study.deliveredVia}
+        </p>
       ) : null
     }
     {
@@ -98,6 +114,20 @@ const ctaLabel = isAuditTool ? 'Ζήτησε τον έλεγχό σου' : 'Πε
       ))
     }
     {
+      highlights.length ? (
+        <div class="cd-block">
+          <h2 style="font-size:clamp(28px,3.4vw,44px);margin-bottom:28px">Τι περιλαμβάνει</h2>
+          <ul class="cd-highlights">
+            {highlights.map((item) => (
+              <li class="rv">
+                <Placeholder text={item} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null
+    }
+    {
       results.length ? (
         <div class="cd-block">
           <h2 style="font-size:clamp(28px,3.4vw,44px);margin-bottom:28px">Τι άλλαξε</h2>
@@ -107,7 +137,9 @@ const ctaLabel = isAuditTool ? 'Ζήτησε τον έλεγχό σου' : 'Πε
                 <b>
                   <Placeholder text={result.value} />
                 </b>
-                <span>{result.label}</span>
+                <span>
+                  <Placeholder text={result.label} />
+                </span>
               </div>
             ))}
           </div>

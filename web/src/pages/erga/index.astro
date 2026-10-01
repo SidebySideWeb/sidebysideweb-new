@@ -31,7 +31,7 @@ const jsonLd = buildProfessionalServiceJsonLd()
 
     <section class="sec" style="padding-top:0">
       <div class="wrap">
-        <WorkFilters labels={page.filterLabels} />
+        <WorkFilters labels={page.filterLabels} cases={cases} />
         <div class="cases" id="workCases">
           {
             cases.map((study, index) => (

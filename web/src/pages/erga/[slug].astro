@@ -18,7 +18,7 @@ if (!study) {
 
 const name = stripPlaceholders(study.name)
 const {title, description} = resolveSeo(study.seo, {
-  title: `${name} · Side by Side`,
+  title: `${name} · Case study · Side by Side`,
   description: stripPlaceholders(study.short ?? study.headline),
 })
 
@@ -29,6 +29,7 @@ const jsonLd = [
     headline: study.headline,
     short: study.short,
     slug: caseSlug,
+    liveUrl: study.liveUrl,
   }),
   buildBreadcrumbJsonLd([
     {name: 'Αρχική', path: '/'},

@@ -1,23 +1,35 @@
 ---
-/** Work grid filters. Wired by `work-filter.ts`. */
-import type {WorkFilterLabels} from '../../../lib/v2/types'
+/** Work grid filters: kind + category. Wired by `work-filter.ts`. */
+import {CASE_CATEGORY_LABELS} from '../../../lib/v2/case-categories'
+import type {CaseStudyV2, WorkFilterLabels} from '../../../lib/v2/types'
 
 interface Props {
   labels?: WorkFilterLabels
+  cases?: CaseStudyV2[]
 }
 
-const {labels} = Astro.props
+const {labels, cases = []} = Astro.props
 
-const filters = [
+const kindFilters = [
   {key: 'all', label: labels?.all ?? 'Όλα'},
   {key: 'product', label: labels?.product ?? 'Δικά μου προϊόντα'},
   {key: 'client', label: labels?.client ?? 'Έργα πελατών'},
   {
     key: 'pm',
-    label:
-      labels?.pm ?? 'Έργα πελατών που συμμετείχα ως Project Manager',
+    label: labels?.pm ?? 'Έργα πελατών που συμμετείχα ως Project Manager',
   },
 ] as const
+
+const categoryKeys = [
+  ...new Set(cases.map((study) => study.category).filter(Boolean) as string[]),
+].sort((a, b) => (CASE_CATEGORY_LABELS[a] ?? a).localeCompare(CASE_CATEGORY_LABELS[b] ?? b, 'el'))
+
+const categoryFilters = categoryKeys.map((key) => ({
+  key: `cat:${key}`,
+  label: CASE_CATEGORY_LABELS[key] ?? key,
+}))
+
+const filters = [...kindFilters, ...categoryFilters]
 ---
 
 <div class="filters" role="group" aria-label="Φίλτρο έργων">

@@ -162,16 +162,23 @@ export interface CaseStudyV2 {
   asProjectManager?: boolean
   tag?: string
   sector?: string
+  category?: string
+  liveUrl?: string
+  platform?: string
+  cms?: string
   headline: string
   short?: string
   role?: string
   duration?: string
   stack?: string[]
+  highlights?: string[]
+  deliveredVia?: string
   problem?: string
   approach?: string
   solution?: string
   results?: ResultStat[]
   artKey?: CaseArtKey
+  featured?: boolean
   isPlaceholder?: boolean
   reviewNote?: string
   order?: number

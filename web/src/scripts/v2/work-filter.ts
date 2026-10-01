@@ -1,4 +1,4 @@
-/** Product / client / PM filter on the work page. */
+/** Kind + category filters on the work page. */
 type Cleanup = () => void
 
 let cleanup: Cleanup | null = null
@@ -10,6 +10,7 @@ function prefersReducedMotion() {
 function matchesFilter(card: HTMLElement, filter: string): boolean {
   if (filter === 'all') return true
   if (filter === 'pm') return card.dataset.pm === '1'
+  if (filter.startsWith('cat:')) return card.dataset.category === filter.slice(4)
   return card.dataset.kind === filter
 }
 
