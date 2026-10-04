@@ -1,5 +1,6 @@
 import {useEffect, useId, useState, type FormEvent} from 'react'
 import {createPortal} from 'react-dom'
+import {trackGenerateLead} from '../../lib/analytics'
 import {executeRecaptcha, loadRecaptchaV3} from '../../lib/recaptcha-client'
 
 export type ContactFormCopy = {
@@ -149,6 +150,7 @@ export default function ContactFormModal({copy, privacyHref, recaptchaSiteKey}: 
         throw new Error(data?.error ?? copy.genericError)
       }
 
+      trackGenerateLead('contact')
       setStatus('success')
     } catch (error) {
       setStatus('error')

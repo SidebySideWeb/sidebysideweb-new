@@ -2,6 +2,7 @@
  * Audit form: validate, then JSON post to `/api/contact` with type=audit.
  * Also handles `[data-jump]` smooth-scroll + focus on the URL field.
  */
+import {trackGenerateLead} from '../../lib/analytics'
 import {executeRecaptcha} from '../../lib/recaptcha-client'
 
 type Cleanup = () => void
@@ -54,6 +55,10 @@ function initAudit() {
 
   const startedAt = form.querySelector<HTMLInputElement>('[data-form-started]')
   if (startedAt) startedAt.value = String(Date.now())
+
+  if (new URLSearchParams(window.location.search).get('sent') === '1') {
+    trackGenerateLead('audit')
+  }
 
   const flagInvalid = (field: HTMLInputElement | HTMLTextAreaElement) => {
     field.focus()
@@ -138,6 +143,7 @@ function initAudit() {
         throw new Error(payload.error || `Request failed: ${response.status}`)
       }
 
+      trackGenerateLead('audit')
       report(successMessage, false)
       form.reset()
       if (startedAt) startedAt.value = String(Date.now())

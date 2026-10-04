@@ -2,6 +2,7 @@
  * Contact form: the prototype's inline validation, then a JSON post to
  * `/api/contact`. The `.sent` panel reports both outcomes inline.
  */
+import {trackGenerateLead} from '../../lib/analytics'
 import {executeRecaptcha} from '../../lib/recaptcha-client'
 
 type Cleanup = () => void
@@ -41,6 +42,11 @@ function initContact() {
   // Stamped on load so the API can reject submissions that arrive instantly.
   const startedAt = form.querySelector<HTMLInputElement>('[data-form-started]')
   if (startedAt) startedAt.value = String(Date.now())
+
+  // No-JS fallback: API redirects with ?sent=1
+  if (new URLSearchParams(window.location.search).get('sent') === '1') {
+    trackGenerateLead('contact')
+  }
 
   const flagInvalid = (field: HTMLInputElement | HTMLTextAreaElement) => {
     field.focus()
@@ -118,6 +124,7 @@ function initContact() {
         throw new Error(payload.error || `Request failed: ${response.status}`)
       }
 
+      trackGenerateLead('contact')
       report(successMessage, false)
       form.reset()
       if (startedAt) startedAt.value = String(Date.now())
